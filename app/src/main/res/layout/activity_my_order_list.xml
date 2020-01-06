@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".myOrderList.MyOrderListActivity">
+
+    <include
+        android:id="@+id/tooolbar"
+        layout="@layout/toolbar2" />
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tooolbar"
+        android:layout_marginTop="@dimen/padding"
+        android:background="@color/recycler">
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding"
+            android:text="Last 6 months"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text" />
+
+        <TextView
+            android:id="@+id/txtFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/padding"
+            android:text="Filter orders >>"
+            android:textColor="@color/toolbar" />
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rel"
+        android:layout_marginTop="@dimen/padding">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

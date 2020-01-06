@@ -1,0 +1,31 @@
+<resources>
+
+    <string name="app_name">Satyam</string>
+    <string name="welcome">Welcome</string>
+    <string name="privacy_policy"><u>Privacy Policy</u></string>
+    <string name="term_amp_condition"><u>Term &amp; Condition</u></string>
+    <string name="login"> Login</string>
+    <string name="login2"><u>Login</u></string>
+    <string name="dont">Don\'t have an account ? </string>
+    <string name="signup"><u>Sign up</u></string>
+    <string name="dont2">Already have an account ?</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="perviewDescrition">hello there it a descripation about product to see the more information click on the show more and see the more inforamtion ..after this click on the less shw and its size will b decressed automaticly</string>
+    <string name="yourorder">Your order is eligible for FREE Delivery.</string>
+    <string name="policy">By placing your order ,you agree to Innfedia privacy notice and  conditions of use</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="areyou">Are you sure you want to delete this item ?</string>
+    <string name="logout">Are you sure you want to Logout ?</string>
+    <string name="email">Enter your Email</string>
+    <string name="password">Enter your password</string>
+    <string name="please">Please wait...</string>
+    <string name="invalid">Invalid field</string>
+    <string name="forgot">Forgot Password?</string>
+    <string name="Goto">Go to the Login Screen </string>
+    <string name="noInternet">No Internet Connection</string>
+    <string name="rs">\u20B9</string>
+    <string name="quantity">Enter your product quantity</string>
+</resources>

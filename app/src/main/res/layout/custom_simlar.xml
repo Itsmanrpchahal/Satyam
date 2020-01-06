@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/new_arrivals"/>
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            style="@style/AVLoadingIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin"
+            android:visibility="invisible"
+            app:indicatorColor="@color/yellow"
+            app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView"
+            android:layout_marginLeft="5dp"
+            android:inputType="text"
+            android:maxWidth="140dp"
+            android:padding="5dp"
+            android:text="Product Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text" />
+
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productName"
+            android:layout_marginLeft="5dp"
+            android:inputType="text"
+            android:maxWidth="140dp"
+            android:padding="5dp"
+            android:text="1200.00"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/rel"
+        android:layout_marginLeft="5dp"
+        android:background="@color/gray" />
+
+</RelativeLayout>

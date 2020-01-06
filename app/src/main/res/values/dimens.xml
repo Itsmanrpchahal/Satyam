@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="heading">20sp</dimen>
+    <dimen name="margin">20dp</dimen>
+    <dimen name="topMargin">15dp</dimen>
+    <dimen name="padding">10dp</dimen>
+    <dimen name="text">14sp</dimen>
+    <dimen name="subheading">17sp</dimen>
+</resources>

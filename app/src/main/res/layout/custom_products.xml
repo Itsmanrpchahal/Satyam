@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/custom_productImage"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/new_arrive"/>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/yellow"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/custom_productImage"
+        android:paddingLeft="@dimen/padding"
+        android:paddingTop="@dimen/padding"
+        android:paddingRight="@dimen/padding">
+
+
+        <TextView
+            android:id="@+id/custom_productName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Product Name"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text" />
+
+        <RatingBar
+            android:id="@+id/custom_productRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/custom_productName"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/custom_productRating_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/custom_productName"
+            android:layout_marginLeft="@dimen/padding"
+            android:text="(4.5)"
+            android:layout_toRightOf="@id/custom_productRating"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text" />
+
+        <TextView
+            android:id="@+id/custom_productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/custom_productRating_number"
+            android:text="From 550$"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text" />
+
+        <TextView
+            android:id="@+id/custom_productDilvery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/custom_productPrice"
+            android:text="FREE Delivery"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="@dimen/text" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/relative"
+        android:layout_marginTop="@dimen/padding"
+        android:background="@color/gray" />
+</RelativeLayout>

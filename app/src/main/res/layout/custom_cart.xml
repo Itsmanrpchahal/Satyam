@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="110dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/womantop" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="60dp"
+                android:text="Product Name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text" />
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtName"
+                android:inputType="text"
+                android:maxHeight="50dp"
+                android:text="$ 250.00"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text" />
+
+            <TextView
+                android:id="@+id/txtStock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrice"
+                android:maxHeight="60dp"
+                android:text="In Stock"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text" />
+
+            <TextView
+
+                android:id="@+id/txtColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtStock"
+                android:maxHeight="60dp"
+                android:text="Color : Blue,Red,Green"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text" />
+
+            <TextView
+
+                android:id="@+id/txtSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtColor"
+                android:maxHeight="60dp"
+                android:text="Size : M, L, XL, XXL"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear">
+
+        <Spinner
+            android:id="@+id/spinnner"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding">
+
+        </Spinner>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/padding"
+            android:background="@color/colorBtnRed"
+            android:text="Delete"
+
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/linear2"
+        android:layout_marginTop="@dimen/padding"
+        android:background="@color/gary" />
+</RelativeLayout>

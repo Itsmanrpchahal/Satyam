@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".searchActivity.SearchActivity">
+
+    <include
+        android:id="@+id/tooolbar"
+        layout="@layout/toolbar2" />
+
+    <AutoCompleteTextView
+        android:layout_margin="@dimen/padding"
+        android:id="@+id/autoComplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tooolbar"
+        android:background="@drawable/white_bg"
+        android:drawableRight="@drawable/ic_searching"
+        android:drawableTint="@color/gray"
+        android:hint="Search"
+        android:inputType="text"
+        android:padding="@dimen/padding"
+        android:textColor="@color/black" />
+
+
+</RelativeLayout>

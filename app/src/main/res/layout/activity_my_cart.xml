@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".myCart.MyCartActivity">
+
+    <include
+        android:id="@+id/tooolbar"
+        layout="@layout/toolbar2" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrool_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tooolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/topMargin"
+                android:layout_marginTop="@dimen/topMargin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subtotal : "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text" />
+
+                <TextView
+                    android:id="@+id/txtItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="2*750"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text" />
+
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="= 1500"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/text" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/topMargin"
+                android:layout_marginTop="@dimen/topMargin"
+                android:drawableLeft="@drawable/ic_done"
+                android:drawablePadding="@dimen/topMargin"
+                android:paddingLeft="@dimen/topMargin"
+                android:text="@string/yourorder"
+                android:textColor="@color/green"
+                android:textSize="@dimen/text" />
+
+
+            <Button
+                android:id="@+id/btnProced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/topMargin"
+                android:background="@android:color/holo_green_light"
+                android:text="Proceed to Buy"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_secure" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/topMargin"
+                android:background="@color/gray" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/topMargin">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/topMargin"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/topMargin"
+                android:layout_marginTop="@dimen/topMargin"
+                android:text="Buy with Confidence"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/topMargin"
+                    android:maxWidth="180dp"
+                    android:text="All purchases are secure and guaraneed to arrive as describe"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/topMargin"
+                    android:src="@drawable/ic_security" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/topMargin"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/topMargin"
+                android:layout_marginTop="@dimen/topMargin"
+                android:text="More items to explore"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerMore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/topMargin"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/topMargin"
+                android:layout_marginTop="@dimen/topMargin"
+                android:text="Top pick up for you"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerTopPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <Button
+                android:id="@+id/btnProced2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/topMargin"
+                android:background="@android:color/holo_green_light"
+                android:text="Proceed to Buy"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text" />
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>

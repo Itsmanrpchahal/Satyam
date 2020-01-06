@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".myOrderList.myorderdetails.OrderDetailsActivity">
+
+    <include
+        android:id="@+id/tooolbar"
+        layout="@layout/toolbar2" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tooolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/topMargin">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/best_s" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/imageView"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/productName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/padding"
+                        android:text="Pruduct name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text" />
+
+
+                    <RatingBar
+                        android:id="@+id/productRating"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/padding"
+                        android:layout_marginTop="3dp"
+                        android:stepSize="5" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/topMargin">
+
+
+                <TextView
+                    android:id="@+id/txtDiliverData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_check"
+                    android:drawablePadding="@dimen/padding"
+                    android:gravity="center_vertical"
+                    android:text="Delivered Thursday ,10 Jan 2020 "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/txtPackageSigned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:text="Package was handed directly to the customer: Signed : Mohit"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/text" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/topMargin"
+                    android:background="@drawable/white_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/topMargin"
+                        android:padding="@dimen/padding"
+                        android:text="Give Feedback"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text" />
+
+
+                    <RatingBar
+                        android:id="@+id/ratingbar"
+                        style="@style/RatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/padding"
+                        android:numStars="5"
+                        android:stepSize="1" />
+
+                    <EditText
+                        android:id="@+id/edtComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/padding"
+                        android:background="@drawable/white_bg"
+                        android:gravity="start"
+                        android:hint="Comment here"
+                        android:inputType="text"
+                        android:minHeight="70dp"
+                        android:padding="@dimen/padding"
+                        android:textSize="@dimen/text" />
+
+                    <Button
+                        android:id="@+id/btnRate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/padding"
+                        android:background="@color/colorBtnRed"
+                        android:textColor="@color/white"
+                        android:padding="@dimen/padding"
+                        android:text="Rate now"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/text" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

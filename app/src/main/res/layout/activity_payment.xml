@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/recycler"
+    tools:context=".payment.PaymentActivity">
+
+    <include
+        android:id="@+id/tooolbar"
+        layout="@layout/toolbar2" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrool_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tooolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/topMargin"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textPolicy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/policy"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/gray"
+                android:textColorLink="@color/bule"
+                android:textSize="@dimen/text" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/topMargin"
+                android:background="@drawable/white_bg"
+                android:orientation="vertical"
+                android:padding="1dp">
+
+                <TextView
+                    android:id="@+id/txtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Address: D-152, First Floor, Phase 8, Industrial Area, Sahibzada Ajit Singh Nagar, Punjab 160055"
+                    android:padding="@dimen/padding"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtItemQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/padding"
+                        android:text="items:"
+                        android:textSize="@dimen/text" />
+
+
+                    <TextView
+                        android:id="@+id/txtItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="2"
+                        android:padding="@dimen/padding"
+                        android:textSize="@dimen/text" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/padding"
+                        android:text="Delivery:"
+                        android:textSize="@dimen/text" />
+
+
+                    <TextView
+                        android:id="@+id/txtDelivery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="Today"
+                        android:padding="@dimen/padding"
+                        android:textSize="@dimen/text" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/padding"
+                        android:text="Order Total:"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/txtOrderTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="1500.00"
+                        android:padding="@dimen/padding"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/topMargin"
+                android:background="@drawable/white_bg"
+                android:orientation="vertical"
+                android:padding="1dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/reyclerPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btnPayment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/topMargin"
+                android:background="@color/bule"
+                android:text="Pay with Paytm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text" />
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

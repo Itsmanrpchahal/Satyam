@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/dashImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/new_arrivals"
+        android:scaleType="centerCrop"
+        />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/yellow"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+    <TextView
+        android:id="@+id/dashText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_below="@id/dashImage"
+        android:layout_centerHorizontal="true"
+        android:text="Product Name"
+        android:layout_marginBottom="@dimen/padding"
+        android:textColor="@color/black"
+        android:textSize="@dimen/subheading" />
+
+
+</RelativeLayout>

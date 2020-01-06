@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#fe5c00</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gary">#b1b1b1</color>
+    <color name="recycler">#EAEDED</color>
+    <color name="gray">#b1b1b1</color>
+    <color name="bule">#4076E5</color>
+    <color name="red">#E54640</color>
+    <color name="green">#25AD06</color>
+    <color name="yellow">#F1C558</color>
+   <!-- <color name="toolbar">#253442</color>-->
+     <color name="toolbar">#fe5c00</color>
+     <color name="colorBtnRed">#fe5c00</color>
+    <color name="latestColor">#fe5c00</color>
+
+</resources>

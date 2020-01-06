@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/roundimageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/women"
+        app:riv_oval="true" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/topMargin"
+        android:layout_toRightOf="@id/roundimageView"
+        android:text="User Name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/ratingbar"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtName"
+        android:layout_marginLeft="@dimen/topMargin"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/roundimageView"
+        android:numStars="5"
+        android:stepSize="1" />
+
+    <com.borjabravo.readmoretextview.ReadMoreTextView
+        android:id="@+id/txtComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/roundimageView"
+        android:layout_margin="@dimen/padding"
+        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        app:colorClickableText="@color/bule"
+        app:trimCollapsedText="Read less"
+        app:trimExpandedText="Read more"
+        app:trimLength="100"
+        app:trimMode="trimModeLength" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/txtComment"
+        android:background="@color/gray" />
+
+
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tooolbar"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@color/toolbar"
+    android:elevation="3dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/topMargin">
+
+        <TextView
+            android:id="@+id/txtToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/subheading"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/toolbarSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding"
+            android:layout_toLeftOf="@id/toolbarCart"
+            android:src="@drawable/ic_searching" />
+
+
+        <ImageView
+            android:id="@+id/toolbarCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_shopping" />
+
+        <TextView
+            android:id="@+id/toolbarCartNumber"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingBottom="@dimen/padding"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>
