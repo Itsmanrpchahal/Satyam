@@ -34,10 +34,10 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("token","2");
+                startActivity(intent);
                 finish();
-
             }
         }, 3000);
 

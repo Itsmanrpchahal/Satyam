@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".opt.OTP_verify">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/loginclose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="#00FFFFFF"
+                android:src="@drawable/ic_close_theam_24dp"></ImageButton>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/applogo" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <TextView
+        android:id="@+id/logintext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_gravity="start"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="OTP send to your existing number"
+        android:textColor="@color/black"
+        android:textSize="16sp"></TextView>
+
+    <TextView
+        android:id="@+id/user_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logintext"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="+91000000000"
+        android:textSize="16sp"></TextView>
+
+    <TextView
+        android:id="@+id/editnumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logintext"
+        android:layout_gravity="start"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/user_number"
+        android:text="Edit"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"></TextView>
+
+
+    <com.mukesh.OtpView
+        android:id="@+id/otp_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editnumber"
+        android:layout_marginTop="16dp"
+        android:inputType="number"
+        android:textColor="@color/colorAccent"
+        app:itemCount="4"
+        app:lineColor="@color/colorAccent"
+        android:layout_centerHorizontal="true"
+        app:viewType="line" />
+
+
+    <TextView
+        android:id="@+id/resendotp_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/otp_view"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#00FFFFFF"
+        android:text="Resend OTP"
+        android:textColor="@color/colorAccent"></TextView>
+
+
+    <Button
+        android:id="@+id/verify_otp_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:background="@color/colorBtnRed"
+        android:text="Verify"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

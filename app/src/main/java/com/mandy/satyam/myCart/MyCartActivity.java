@@ -2,6 +2,8 @@ package com.mandy.satyam.myCart;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
@@ -10,32 +12,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.addressActivity.AddressActivity;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.GetMeesageApi;
-import com.mandy.satyam.myCart.exploremore.CartMoreAdapter;
-import com.mandy.satyam.myCart.exploremore.GetExploreMoreData;
-import com.mandy.satyam.myCart.topitems.GetTopDataApi;
-import com.mandy.satyam.myCart.topitems.TopItemsAdapter;
-import com.mandy.satyam.productDetails.apis.GetAddToCart;
 import com.mandy.satyam.R;
-import com.mandy.satyam.utils.SpacesItemDecoration;
-import com.mandy.satyam.utils.CheckInternet;
-import com.mandy.satyam.utils.Config;
+import com.mandy.satyam.addressActivity.AddressActivity;
+import com.mandy.satyam.myCart.exploremore.CartMoreAdapter;
+import com.mandy.satyam.myCart.topitems.TopItemsAdapter;
 import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
-
-import java.util.ArrayList;
+import com.mandy.satyam.utils.SpacesItemDecoration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Response;
 
 public class MyCartActivity extends AppCompatActivity {
 
@@ -59,9 +51,14 @@ public class MyCartActivity extends AppCompatActivity {
     Button btnProced2;
     @BindView(R.id.scrool_view)
     NestedScrollView scroolView;
-
     Dialog dialog;
     FragmentManager manager;
+    @BindView(R.id.search_bt)
+    ImageButton searchBt;
+    @BindView(R.id.filter_bt)
+    ImageButton filterBt;
+    @BindView(R.id.back)
+    ImageButton back;
 
 
     @Override
@@ -71,6 +68,9 @@ public class MyCartActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         dialog = ProgressBarClass.showProgressDialog(this);
         manager = getSupportFragmentManager();
+        searchBt.setVisibility(View.GONE);
+        filterBt.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

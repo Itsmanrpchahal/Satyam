@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.R;
 
@@ -53,7 +54,7 @@ public class UtilDialog {
                     dialog.dismiss();
                     SharedToken sharedToken = new SharedToken(context);
                     sharedToken.clearShaerd();
-                    Intent intent = new Intent(context, LoginActivity.class);
+                    Intent intent = new Intent(context, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                     ((Activity) context).finish();

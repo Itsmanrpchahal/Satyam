@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -30,10 +31,10 @@ import java.util.List;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
 
     Context context;
+    String tok;
 
     public ProductListAdapter(Context context) {
         this.context = context;
-
     }
 
     @NonNull
@@ -50,9 +51,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+
+
+                    Intent intent = new Intent(context, ProductDetailsActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+
+
 
             }
         });

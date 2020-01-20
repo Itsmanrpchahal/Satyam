@@ -1,28 +1,21 @@
 package com.mandy.satyam.myOrderList;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mandy.satyam.R;
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.utils.CheckInternet;
 import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Response;
 
 public class MyOrderListActivity extends AppCompatActivity {
 
@@ -39,6 +32,12 @@ public class MyOrderListActivity extends AppCompatActivity {
     @BindView(R.id.recyclerOrder)
     RecyclerView recyclerOrder;
     Dialog dialog;
+    @BindView(R.id.filter_bt)
+    ImageButton filterBt;
+    @BindView(R.id.search_bt)
+    ImageButton searchBt;
+    @BindView(R.id.back)
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,9 @@ public class MyOrderListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         dialog = ProgressBarClass.showProgressDialog(this);
 
+        filterBt.setVisibility(View.GONE);
+        searchBt.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

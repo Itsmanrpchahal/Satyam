@@ -7,6 +7,34 @@
     android:background="@color/white"
     tools:context=".signup.OtpActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:background="#00FFFFFF"></ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verify OTP"
+                android:textColor="@color/white"
+                android:textSize="@dimen/heading"
+                android:layout_centerInParent="true"
+                ></TextView>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/linear"

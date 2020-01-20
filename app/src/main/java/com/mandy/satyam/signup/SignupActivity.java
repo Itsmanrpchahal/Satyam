@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.retrofit.ApiInterface;
 import com.mandy.satyam.utils.CheckInternet;
 import com.mandy.satyam.utils.ProgressBarClass;
@@ -38,9 +39,8 @@ public class SignupActivity extends AppCompatActivity {
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), OtpActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
-
             }
         });
 

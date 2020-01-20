@@ -70,13 +70,15 @@ public class HomeFragment extends Fragment {
     TextView txtSeeDiscount;
     Unbinder unbinder;
     @BindView(R.id.txtSeeBest)
-    TextView txtSeeBest;
+    TextView txtSetxtSeeNeweBest;
     @BindView(R.id.linearNew)
     LinearLayout linearNew;
     @BindView(R.id.linearDiscount)
     LinearLayout linearDiscount;
     @BindView(R.id.linearBest)
     LinearLayout linearBest;
+    Bundle bundle;
+    String token;
 
 
     public HomeFragment() {
@@ -92,7 +94,10 @@ public class HomeFragment extends Fragment {
         dialog = ProgressBarClass.showProgressDialog(context);
 
         init();
-
+            if (bundle!=null)
+            {
+                token = bundle.getString("token");
+            }
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -121,7 +126,7 @@ public class HomeFragment extends Fragment {
 
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
         recyclerViewNew.setLayoutManager(layoutManager2);
-        NewArrivalAdapter arrivalAdapter = new NewArrivalAdapter(getActivity());
+        NewArrivalAdapter arrivalAdapter = new NewArrivalAdapter(getContext());
         recyclerViewNew.setAdapter(arrivalAdapter);
         recyclerViewNew.addItemDecoration(new SpacesItemDecoration(10));
 
@@ -170,10 +175,12 @@ public class HomeFragment extends Fragment {
         switch (view.getId()) {
             case R.id.txtSeeNew:
                 Intent intent = new Intent(context, ProductsActivity.class);
+                intent.putExtra("ProductType","New Arrivals");
                 startActivity(intent);
                 break;
             case R.id.txtSeeDiscount:
                 Intent intent1 = new Intent(context, ProductsActivity.class);
+                intent1.putExtra("ProductType","Discounted Items");
                 startActivity(intent1);
                 break;
         }
@@ -182,6 +189,7 @@ public class HomeFragment extends Fragment {
     @OnClick(R.id.txtSeeBest)
     public void onViewClicked() {
         Intent intent1 = new Intent(context, ProductsActivity.class);
+        intent1.putExtra("ProductType","Best Sell");
         startActivity(intent1);
 
     }

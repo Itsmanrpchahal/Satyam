@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.mandy.satyam.filterScreen.FilterActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/filter_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:src="@drawable/ic_close"></ImageButton>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Filters"
+                android:textColor="@color/white"
+                android:textSize="18sp"></TextView>
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey"
+                android:visibility="gone"
+                android:id="@+id/categories_recyler"></android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/brand_tab"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5sp"
+                android:text="Brand"
+                android:visibility="visible"
+                android:textColor="@color/black"
+                android:textSize="22sp"></TextView>
+
+
+            <TextView
+                android:id="@+id/size_tab"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5sp"
+                android:visibility="visible"
+                android:text="Size"
+                android:textColor="@color/black"
+                android:textSize="22sp"></TextView>
+
+            <TextView
+                android:id="@+id/colors_tab"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5sp"
+                android:visibility="visible"
+                android:text="Colors"
+                android:textColor="@color/black"
+                android:textSize="22sp"></TextView>
+
+            <TextView
+                android:id="@+id/price_tab"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center_vertical"
+                android:visibility="visible"
+                android:paddingLeft="5sp"
+                android:text="Price"
+                android:textColor="@color/black"
+                android:textSize="22sp"></TextView>
+
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/filter_recylcer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+</RelativeLayout>

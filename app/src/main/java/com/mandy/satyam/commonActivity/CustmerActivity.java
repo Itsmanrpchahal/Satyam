@@ -6,24 +6,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.mandy.satyam.GetMeesageApi;
 import com.mandy.satyam.R;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.utils.CheckInternet;
 import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Response;
 
 public class CustmerActivity extends AppCompatActivity {
 
@@ -36,6 +30,16 @@ public class CustmerActivity extends AppCompatActivity {
     EditText editText;
     @BindView(R.id.btnMail)
     Button btnMail;
+    @BindView(R.id.back)
+    ImageButton back;
+    @BindView(R.id.search_bt)
+    ImageButton searchBt;
+    @BindView(R.id.filter_bt)
+    ImageButton filterBt;
+    @BindView(R.id.txtPhone1)
+    TextView txtPhone1;
+    @BindView(R.id.txtPhone2)
+    TextView txtPhone2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,9 @@ public class CustmerActivity extends AppCompatActivity {
     }
 
     private void init() {
+        back.setVisibility(View.GONE);
+        filterBt.setVisibility(View.GONE);
+        searchBt.setVisibility(View.GONE);
         toolbar = (Toolbar) findViewById(R.id.tooolbar);
         textView = (TextView) findViewById(R.id.textView);
         textPhone1 = (TextView) findViewById(R.id.txtPhone1);

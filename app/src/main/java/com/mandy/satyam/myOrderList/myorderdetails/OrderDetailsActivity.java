@@ -1,57 +1,75 @@
 package com.mandy.satyam.myOrderList.myorderdetails;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.mandy.satyam.GetMeesageApi;
 import com.mandy.satyam.R;
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.utils.CheckInternet;
-import com.mandy.satyam.utils.Config;
+import com.mandy.satyam.myOrderList.TotoalProductAdapter;
 import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit2.Response;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
+    Dialog dialog;
     @BindView(R.id.tooolbar)
-    Toolbar toolbar;
+    Toolbar tooolbar;
     @BindView(R.id.textView)
     TextView textView;
+    @BindView(R.id.search_bt)
+    ImageButton searchBt;
+    @BindView(R.id.filter_bt)
+    ImageButton filterBt;
+    @BindView(R.id.numberoforders_tv)
+    TextView numberofordersTv;
+    @BindView(R.id.totalorders)
+    TextView totalorders;
+    @BindView(R.id.orderRecycler)
+    RecyclerView orderRecycler;
+    TotoalProductAdapter adapter;
+    @BindView(R.id.tv_OrderName)
+    TextView tvOrderName;
+    @BindView(R.id.tv_SubPrice)
+    TextView tvSubPrice;
+    @BindView(R.id.tv_tax)
+    TextView tvTax;
+    @BindView(R.id.tv_tax1)
+    TextView tvTax1;
+    @BindView(R.id.tv_devlerStatus)
+    TextView tvDevlerStatus;
+    @BindView(R.id.tv_delivery1)
+    TextView tvDelivery1;
+    @BindView(R.id.tv_total)
+    TextView tvTotal;
+    @BindView(R.id.tv_totalPrice)
+    TextView tvTotalPrice;
+    @BindView(R.id.layout_main)
+    RelativeLayout layoutMain;
+    @BindView(R.id.view)
+    View view;
+    @BindView(R.id.view1)
+    View view1;
+    @BindView(R.id.back)
+    ImageButton back;
     @BindView(R.id.imageView)
     ImageView imageView;
-    @BindView(R.id.productName)
-    TextView productName;
+    @BindView(R.id.ordernumber)
+    TextView ordernumber;
     @BindView(R.id.productRating)
     RatingBar productRating;
-    @BindView(R.id.txtDiliverData)
-    TextView txtDiliverData;
-    @BindView(R.id.txtPackageSigned)
-    TextView txtPackageSigned;
-    @BindView(R.id.ratingbar)
-    RatingBar ratingbar;
-    @BindView(R.id.edtComment)
-    EditText edtComment;
-    @BindView(R.id.btnRate)
-    Button btnRate;
-    Dialog dialog;
+    @BindView(R.id.deliveredtext)
+    TextView deliveredtext;
 
 
     @Override
@@ -59,19 +77,24 @@ public class OrderDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
         ButterKnife.bind(this);
+        tvSubPrice.setFocusable(true);
         dialog = ProgressBarClass.showProgressDialog(this);
-
-        setSupportActionBar(toolbar);
+        filterBt.setVisibility(View.GONE);
+        searchBt.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
+        setSupportActionBar(tooolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         textView.setText("My Order Details");
 
-
+        setData();
     }
 
-    @OnClick(R.id.btnRate)
-    public void onViewClicked() {
-       finish();
+    private void setData() {
+        adapter = new TotoalProductAdapter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        orderRecycler.setLayoutManager(linearLayoutManager);
+        orderRecycler.setAdapter(adapter);
     }
 
 

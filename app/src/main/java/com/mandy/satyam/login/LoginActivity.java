@@ -1,90 +1,90 @@
 package com.mandy.satyam.login;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.text.method.PasswordTransformationMethod;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mandy.satyam.signup.SignupActivity;
-import com.mandy.satyam.forgotPassword.ForgotPasswordActivity;
-import com.mandy.satyam.retrofit.ApiInterface;
 import com.mandy.satyam.MainActivity;
-import com.mandy.satyam.utils.CheckInternet;
-import com.mandy.satyam.utils.ProgressBarClass;
 import com.mandy.satyam.R;
-import com.mandy.satyam.retrofit.ServiceGenerator;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
+import com.mandy.satyam.opt.OTP_verify;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText edtPhone, edtPassword;
     Button btnLogin;
-    TextView txtSignup;
-    CheckBox checkBox;
-    TextView textForgot;
+
+    String token = "";
+    @BindView(R.id.loginclose)
+    ImageButton loginclose;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.logintext)
+    TextView logintext;
+    @BindView(R.id.ccp)
+    CountryCodePicker ccp;
+    @BindView(R.id.phone_number_et)
+    EditText phoneNumberEt;
+    @BindView(R.id.phn_no_layout)
+    LinearLayout phnNoLayout;
+    @BindView(R.id.set_otp_button)
+    Button set_otp_button;
+    @BindView(R.id.loginwith_email_tv)
+    TextView loginwith_email_tv;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 
-        init();
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+       /* btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("token", "1");
+                startActivity(intent);
+            }
+        });*/
 
+        listeners();
 
+    }
+
+    private void listeners() {
+        loginclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              finish();
             }
         });
 
-        textForgot.setOnClickListener(new View.OnClickListener() {
+        loginwith_email_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                Intent intent = new Intent(LoginActivity.this,EmailLogin.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        set_otp_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
                 startActivity(intent);
             }
         });
-
-
-        txtSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SignupActivity.class));
-                finish();
-            }
-        });
-
-
-
     }
-
-
-    // method for get all id's
-    private void init() {
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        txtSignup = (TextView) findViewById(R.id.txtSignup);
-        edtPassword = (EditText) findViewById(R.id.edtPassword);
-        edtPhone = (EditText) findViewById(R.id.edtPhone);
-        checkBox = (CheckBox) findViewById(R.id.passwordshow);
-        textForgot = (TextView) findViewById(R.id.txtForgot);
-    }
-
 }

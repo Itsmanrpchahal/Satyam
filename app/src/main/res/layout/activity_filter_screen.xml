@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.mandy.satyam.filterScreen.FilterScreen">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/filter_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close"
+                android:background="#00FFFFFF"></ImageButton>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filters"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_centerInParent="true"></TextView>
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="75dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            >
+
+            <TextView
+                android:id="@+id/brand_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brand"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"></TextView>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/brand_tv"
+                android:layout_marginTop="16dp"
+                android:id="@+id/brand_spinner"></Spinner>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:layout_below="@id/brand_spinner"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorAccent"></View>
+
+            <TextView
+                android:id="@+id/category_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:layout_below="@id/view1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"></TextView>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/category_tv"
+                android:layout_marginTop="16dp"
+                android:id="@+id/size_spinner"></Spinner>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:layout_below="@id/size_spinner"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorAccent"></View>
+
+
+            <TextView
+                android:id="@+id/colors_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Colors"
+                android:layout_below="@id/view2"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"></TextView>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/colors_tv"
+                android:layout_marginTop="16dp"
+                android:id="@+id/colors_spinner"></Spinner>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:layout_below="@id/colors_spinner"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorAccent"></View>
+
+            <TextView
+                android:id="@+id/price_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:layout_below="@id/view3"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"></TextView>
+
+            <com.jaygoo.widget.RangeSeekBar
+                android:id="@+id/rangeseekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price_tv"
+                app:rsb_max="100"
+                app:rsb_min="0"
+                app:rsb_progress_color="@color/colorAccent"
+                app:rsb_thumb_drawable="@drawable/circle_backgroundtheme"
+                android:layout_marginTop="16dp"
+                ></com.jaygoo.widget.RangeSeekBar>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rangeseekbar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/filter_startprice_tv"
+                    android:layout_below="@id/rangeseekbar"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Min Price"
+                    android:textColor="@color/black"></TextView>
+
+                <TextView
+                    android:id="@+id/filter_startprice"
+                    android:layout_below="@id/rangeseekbar"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹1"
+                    android:textColor="@color/gray"></TextView>
+            </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/rangeseekbar"
+               android:layout_alignParentRight="true"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/filter_endprice_tv"
+                   android:layout_below="@id/rangeseekbar"
+                   android:layout_alignParentRight="true"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Max Price"
+                   android:textColor="@color/black"></TextView>
+
+               <TextView
+                   android:id="@+id/filter_endprice"
+                   android:layout_below="@id/rangeseekbar"
+                   android:layout_alignParentRight="true"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="₹100"
+                   android:layout_gravity="end"
+                   android:textColor="@color/gray"></TextView>
+           </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/applyfilterbt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBtnRed"
+        android:text="Apply filters"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        ></Button>
+
+</RelativeLayout>

@@ -19,10 +19,12 @@ import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     Context context;
+    String tok;
 
 
     public CategoryAdapter(Context context) {
         this.context = context;
+
     }
 
     @NonNull

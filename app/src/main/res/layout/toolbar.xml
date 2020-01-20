@@ -8,7 +8,7 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/topMargin">
 
@@ -22,36 +22,59 @@
             android:textStyle="bold" />
 
 
+        <RelativeLayout
+            android:id="@+id/cartlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <ImageButton
+                android:id="@+id/product_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="#00FFFFFF"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_cart"
+                android:visibility="visible"></ImageButton>
+
+            <TextView
+                android:id="@+id/cart_count"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/circle_backgroundwhite"
+                android:text="5"
+                android:textSize="8sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="17dp"
+                android:textColor="@color/white"></TextView>
+        </RelativeLayout>
+
         <ImageView
             android:id="@+id/toolbarSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/padding"
-            android:layout_toLeftOf="@id/toolbarCart"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="45dp"
             android:src="@drawable/ic_searching" />
 
 
-        <ImageView
-            android:id="@+id/toolbarCart"
+        <TextView
+            android:id="@+id/loginmain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_shopping" />
-
-        <TextView
-            android:id="@+id/toolbarCartNumber"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:paddingBottom="@dimen/padding"
-            android:text="0"
+            android:visibility="gone"
+            android:text="Login"
+            android:textSize="12sp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text" />
-
+            android:drawableTop="@drawable/ic_account"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

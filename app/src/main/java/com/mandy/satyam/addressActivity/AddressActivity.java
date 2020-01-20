@@ -9,12 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.adapter.AddressAdapter;
 import com.mandy.satyam.addressActivity.addAddress.ADDAddressActivity;
-import com.mandy.satyam.payment.PaymentActivity;
-import com.mandy.satyam.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,6 +36,12 @@ public class AddressActivity extends AppCompatActivity {
     Button continueBtn;
     @BindView(R.id.linear5)
     LinearLayout linear5;
+    @BindView(R.id.back)
+    ImageButton back;
+    @BindView(R.id.search_bt)
+    ImageButton searchBt;
+    @BindView(R.id.filter_bt)
+    ImageButton filterBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,9 @@ public class AddressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_address);
         ButterKnife.bind(this);
 
+        back.setVisibility(View.GONE);
+        searchBt.setVisibility(View.GONE);
+        filterBt.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/custom_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="@dimen/padding"
+        android:scaleType="centerCrop"
+        android:src="@drawable/best_s"
+        app:riv_corner_radius="2dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/padding"
+        android:layout_marginRight="@dimen/padding"
+        android:layout_toLeftOf="@+id/image"
+        android:layout_toRightOf="@id/custom_image">
+
+
+        <TextView
+            android:id="@+id/txtData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/txtDispatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtData"
+            android:text="Product Price"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text" />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/padding"
+        android:src="@drawable/ic_arrow" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/custom_image"
+        android:layout_marginTop="@dimen/padding"
+        android:background="@color/gray" />
+</RelativeLayout>

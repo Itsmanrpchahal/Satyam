@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/topMargin"
+            android:padding="@dimen/padding"
+            android:text="Give Feedback"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text" />
+
+
+        <RatingBar
+            android:id="@+id/ratingbar"
+            style="@style/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/padding"
+            android:numStars="5"
+            android:stepSize="1" />
+
+        <EditText
+            android:id="@+id/edtComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding"
+            android:background="@drawable/white_bg"
+            android:gravity="start"
+            android:hint="Comment here"
+            android:inputType="text"
+            android:minHeight="70dp"
+            android:padding="@dimen/padding"
+            android:textSize="@dimen/text" />
+
+        <Button
+            android:id="@+id/btnRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/padding"
+            android:background="@color/colorBtnRed"
+            android:textColor="@color/white"
+            android:padding="@dimen/padding"
+            android:text="Rate now"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mandy.satyam.myOrderList.myorderdetails.returnProduct.ReturnProduct">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="@color/colorAccent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back_on_returnScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:background="#00FFFFFF"></ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Return Product"
+                android:textColor="@color/white"
+                android:textSize="@dimen/subheading"
+                android:layout_centerInParent="true"></TextView>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/refund_reason_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Reason for return"></TextView>
+
+                    <RelativeLayout
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/refund_reason_tv"
+                        android:background="@drawable/white_bg">
+
+                        <EditText
+                            android:id="@+id/reason_for_return"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:maxLines="5"
+                            android:scrollbars="vertical"
+                            android:layout_margin="5sp"></EditText>
+                    </RelativeLayout>
+
+
+                    <ImageView
+                        android:id="@+id/product_image"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:scaleType="fitXY"
+                        android:layout_below="@id/view"
+                        android:layout_marginTop="@dimen/topMargin"
+                        android:layout_centerHorizontal="true"></ImageView>
+
+                    <Button
+                        android:id="@+id/upload_image_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:text="Upload Image"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorAccent"
+                        android:textAllCaps="false"
+                        android:textSize="12sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/product_image"
+                        android:textColor="@color/white"
+                        android:padding="5sp"></Button>
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/summary_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Summary"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_below="@id/cardview"
+                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginLeft="16dp"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/summary_tv">
+
+                <RelativeLayout
+                    android:id="@+id/layout_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_OrderName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="15dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:padding="3dp"
+                        android:text="Sub-Total"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_SubPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="₹150"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:padding="3dp"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_tax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_below="@id/tv_OrderName"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:padding="3dp"
+                        android:text="Tax"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_tax1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/tv_SubPrice"
+                        android:text="15%"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:padding="3dp"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_returncharge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_below="@id/tv_tax"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:padding="3dp"
+                        android:text="Return Charge"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_returncharge1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/tv_tax1"
+                        android:text="₹150"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:padding="3dp"/>
+
+
+
+                    <TextView
+                        android:id="@+id/tv_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_below="@+id/tv_returncharge"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Total"
+                        android:padding="3dp"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_totalPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:padding="3dp"
+                        android:layout_below="@id/tv_returncharge1"
+                        android:text="₹22.00"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/return_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="16dp"
+                android:text="Return"
+                android:textColor="@color/white"
+                android:textAllCaps="false"></Button>
+        </RelativeLayout>
+
+</RelativeLayout>

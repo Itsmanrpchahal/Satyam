@@ -4,15 +4,51 @@
     android:layout_height="wrap_content"
     android:background="@color/toolbar">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        android:background="#00FFFFFF"></ImageButton>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginRight="?android:attr/actionBarSize"
         android:gravity="center"
+        android:text="Title"
         android:textColor="@color/white"
         android:textSize="@dimen/subheading"
         android:textStyle="bold" />
+
+
+
+    <ImageButton
+        android:id="@+id/search_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_searching"
+        android:background="#00FFFFFF"
+        android:layout_toLeftOf="@id/filter_bt"
+        android:layout_marginRight="16sp"></ImageButton>
+
+    <ImageButton
+        android:id="@+id/filter_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_filter"
+        android:background="#00FFFFFF"></ImageButton>
+
+</RelativeLayout>
+
+
 
 </android.support.v7.widget.Toolbar>

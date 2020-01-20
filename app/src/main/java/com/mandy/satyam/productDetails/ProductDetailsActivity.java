@@ -14,40 +14,29 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
+import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.AddressActivity;
 import com.mandy.satyam.commentActivity.CommentActivity;
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
 import com.mandy.satyam.productDetails.adapter.SizeAdapter;
-import com.mandy.satyam.productDetails.adapter.ViewPagerProductImageAdapter;
-import com.mandy.satyam.R;
-import com.mandy.satyam.productDetails.apis.GetAddToCart;
-import com.mandy.satyam.productDetails.apis.GetProductDetailsApi;
-import com.mandy.satyam.utils.SpacesItemDecoration;
-import com.mandy.satyam.utils.CheckInternet;
-import com.mandy.satyam.utils.Config;
 import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
-import com.mandy.satyam.productList.GetProductList;
+import com.mandy.satyam.utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
-import retrofit2.Response;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -95,9 +84,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
     public static ViewPager viewPager2;
     public static NestedScrollView nestedScrollView;
 
-    ArrayList<String> array_image ;
+    ArrayList<String> array_image;
     Dialog dialog;
     String token, id, catId, sizeId, colorId;
+    @BindView(R.id.filter_bt)
+    ImageButton filterBt;
+    @BindView(R.id.nestedScoll)
+    NestedScrollView nestedScoll;
+    @BindView(R.id.search_bt)
+    ImageButton searchBt;
+    @BindView(R.id.back)
+    ImageButton back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +105,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         viewPager2 = (ViewPager) findViewById(R.id.viewPager2);
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScoll);
 
+        filterBt.setVisibility(View.GONE);
+        searchBt.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -145,7 +145,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         array_image.add(String.valueOf(R.drawable.bestseller));
         array_image.add(String.valueOf(R.drawable.image_d));
 
-        PagerAdapter adapterpager = new ViewPagerAdapter(this,array_image);
+        PagerAdapter adapterpager = new ViewPagerAdapter(this, array_image);
         viewPager.setAdapter(adapterpager);
         circleindecator.setViewPager(viewPager);
     }

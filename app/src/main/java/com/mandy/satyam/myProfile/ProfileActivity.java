@@ -2,52 +2,30 @@ package com.mandy.satyam.myProfile;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.R;
-import com.mandy.satyam.retrofit.ServiceGenerator;
-import com.mandy.satyam.utils.CheckInternet;
+import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.utils.ProgressBarClass;
 import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
 import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
 import com.zfdang.multiple_images_selector.SelectorSettings;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -75,6 +53,12 @@ public class ProfileActivity extends AppCompatActivity {
     MultipartBody.Part part;
     private final int RESULT_LOAD_IMAGE = 12;
     Dialog dialog;
+    @BindView(R.id.back)
+    ImageButton back;
+    @BindView(R.id.search_bt)
+    ImageButton searchBt;
+    @BindView(R.id.filter_bt)
+    ImageButton filterBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +66,10 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         Fresco.initialize(this);
+
+        back.setVisibility(View.GONE);
+        searchBt.setVisibility(View.GONE);
+        filterBt.setVisibility(View.GONE);
         dialog = ProgressBarClass.showProgressDialog(this);
 
         setSupportActionBar(toolbar);

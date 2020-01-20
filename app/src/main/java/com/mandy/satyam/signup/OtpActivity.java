@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.mandy.satyam.retrofit.ApiInterface;
@@ -26,8 +27,9 @@ import retrofit2.Response;
 
 public class OtpActivity extends AppCompatActivity {
 
-    Button button;
+    Button btnVerify;
     EditText edtOtp;
+    ImageButton back;
     String phone;
     String id;
 
@@ -35,17 +37,31 @@ public class OtpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
-        button = findViewById(R.id.btnVerify);
+        btnVerify = findViewById(R.id.btnVerify);
         edtOtp = findViewById(R.id.edtOtp);
+        back = findViewById(R.id.back_otp);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        listerners();
+
+    }
+
+    private void listerners() {
+
+        btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OtpActivity.this, MainActivity.class));
-                finish();
+                startActivity(new Intent(OtpActivity.this, CreatePasswordScreen.class));
+
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OtpActivity.this,SignupActivity.class));
+                finish();
+            }
+        });
     }
 
 
