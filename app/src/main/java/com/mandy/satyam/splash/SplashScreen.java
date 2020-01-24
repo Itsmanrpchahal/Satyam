@@ -1,21 +1,19 @@
-package com.mandy.satyam.commonActivity;
+package com.mandy.satyam.splash;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
-import com.mandy.satyam.utils.SharedToken;
+import com.mandy.satyam.baseclass.BaseClass;
+import com.mandy.satyam.baseclass.Constants;
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends BaseClass {
 
     ImageView imageView;
     TextView textView;
@@ -29,15 +27,27 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         imageView = findViewById(R.id.imageView);
-        textView = findViewById(R.id.text);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("token","2");
-                startActivity(intent);
-                finish();
+
+                if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
+                {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("token", "login");
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("token", "logout");
+                    startActivity(intent);
+                    finish();
+                }
+//                Toast.makeText(SplashScreen.this, ""+getStringVal(Constants.LOGIN_STATUS), Toast.LENGTH_SHORT).show();
+
+
+
             }
         }, 3000);
 

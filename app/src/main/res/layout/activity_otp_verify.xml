@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".opt.OTP_verify">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:src="@drawable/applogo" />
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <TextView
@@ -43,7 +43,7 @@
         android:layout_below="@id/toolbar"
         android:layout_gravity="start"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/defaultmargin_large"
         android:text="OTP send to your existing number"
         android:textColor="@color/black"
         android:textSize="16sp"></TextView>
@@ -72,25 +72,32 @@
         android:textSize="16sp"></TextView>
 
 
-    <com.mukesh.OtpView
-        android:id="@+id/otp_view"
+    <com.chaos.view.PinView
+        android:id="@+id/otpView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editnumber"
-        android:layout_marginTop="16dp"
-        android:inputType="number"
-        android:textColor="@color/colorAccent"
-        app:itemCount="4"
-        app:lineColor="@color/colorAccent"
+        android:layout_below="@+id/editnumber"
         android:layout_centerHorizontal="true"
-        app:viewType="line" />
-
+        android:layout_marginTop="45dp"
+        android:inputType="number"
+        android:padding="5dp"
+        android:text=""
+        style="@style/PinWidget.PinView"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        app:cursorColor="@color/colorAccent"
+        app:cursorWidth="2dp"
+        app:hideLineWhenFilled="false"
+        app:itemCount="4"
+        app:itemSpacing="5dp"
+        app:viewType="line">
+    </com.chaos.view.PinView>
 
     <TextView
         android:id="@+id/resendotp_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/otp_view"
+        android:layout_below="@id/otpView"
         android:layout_alignParentRight="true"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"

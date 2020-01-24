@@ -1,9 +1,9 @@
-package com.mandy.satyam.login;
+package com.mandy.satyam.login.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginApi {
+public class Login {
 
     @SerializedName("status")
     @Expose
@@ -41,33 +41,31 @@ public class LoginApi {
 
     public class Data {
 
-        @SerializedName("name")
+        @SerializedName("user_id")
         @Expose
-        private String name;
-        @SerializedName("id")
-        @Expose
-        private Integer id;
+        private Integer userId;
         @SerializedName("email")
         @Expose
         private String email;
+        @SerializedName("firstname")
+        @Expose
+        private String firstname;
+        @SerializedName("lastname")
+        @Expose
+        private String lastname;
+        @SerializedName("avatar")
+        @Expose
+        private String avatar;
         @SerializedName("token")
         @Expose
         private String token;
 
-        public String getName() {
-            return name;
+        public Integer getUserId() {
+            return userId;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
+        public void setUserId(Integer userId) {
+            this.userId = userId;
         }
 
         public String getEmail() {
@@ -76,6 +74,30 @@ public class LoginApi {
 
         public void setEmail(String email) {
             this.email = email;
+        }
+
+        public String getFirstname() {
+            return firstname;
+        }
+
+        public void setFirstname(String firstname) {
+            this.firstname = firstname;
+        }
+
+        public String getLastname() {
+            return lastname;
+        }
+
+        public void setLastname(String lastname) {
+            this.lastname = lastname;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
         }
 
         public String getToken() {

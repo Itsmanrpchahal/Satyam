@@ -9,7 +9,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="@dimen/padding"
+        android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
         android:src="@drawable/best_s"
         app:riv_corner_radius="2dp" />
@@ -18,8 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/padding"
-        android:layout_marginRight="@dimen/padding"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/image"
         android:layout_toRightOf="@id/custom_image">
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="Product Name"
             android:textColor="@color/green"
-            android:textSize="@dimen/text"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
 
@@ -41,7 +41,7 @@
             android:layout_below="@+id/txtData"
             android:text="Product Price"
             android:textColor="@color/green"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
 
@@ -51,13 +51,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/padding"
+        android:layout_marginRight="16dp"
         android:src="@drawable/ic_arrow" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/custom_image"
-        android:layout_marginTop="@dimen/padding"
+        android:layout_marginTop="16dp"
         android:background="@color/gray" />
 </RelativeLayout>

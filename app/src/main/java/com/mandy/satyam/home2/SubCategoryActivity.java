@@ -1,31 +1,22 @@
 package com.mandy.satyam.home2;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.controller.Controller;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.mandy.satyam.R;
 import com.mandy.satyam.utils.SpacesItemDecoration;
-import com.mandy.satyam.utils.CheckInternet;
-import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
 import com.mandy.satyam.home2.adapter.BottomWearAdapter;
 import com.mandy.satyam.home2.adapter.ExploreMoreAdapter;
 import com.mandy.satyam.home2.adapter.TopWearAdapter;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Response;
 
 public class SubCategoryActivity extends AppCompatActivity {
 
@@ -49,7 +40,7 @@ public class SubCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sub_category);
         ButterKnife.bind(this);
 
-        dialog = ProgressBarClass.showProgressDialog(this);
+
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);

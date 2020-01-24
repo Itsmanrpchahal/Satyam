@@ -4,11 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -17,27 +12,21 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.mandy.satyam.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.GetMeesageApi;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.myCart.CartAdapter;
 import com.mandy.satyam.R;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.termsandcondition.TermsActivity;
-import com.mandy.satyam.utils.CheckInternet;
 import com.mandy.satyam.utils.Config;
-import com.mandy.satyam.utils.ProgressBarClass;
 import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
 import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
-
 import org.json.JSONArray;
-
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,8 +36,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -75,7 +62,6 @@ public class PaymentActivity extends AppCompatActivity {
     @BindView(R.id.txtItemQuantity)
     TextView txtItemQuantity;
 
-    Controller controller;
     SharedToken sharedToken;
     String token, address, Cid, userId, totalPrice, website, callbackUrl, orderId, checkSomeCode;
     Dialog dialog;
@@ -90,10 +76,9 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.BuyItemsList) this, (Controller.IncreseItemQuantity) this, (Controller.DeleteItems) this, (Controller.GetCheckSome) this, (Controller.SaveOrder) this, (Controller.ClearCart) this);
 
         sharedToken = new SharedToken(this);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
         dialog.show();
 
         token = "Bearer " + sharedToken.getShared();
@@ -108,11 +93,8 @@ public class PaymentActivity extends AppCompatActivity {
             quan = getIntent().getStringExtra("quan");
         }
 
-        if (CheckInternet.isInternetAvailable(this)) {
-            controller.getBuyItemsList(token, Cid, color, size, quan);
-        } else {
+
             startActivity(new Intent(this, NoInternetActivity.class));
-        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
@@ -201,12 +183,10 @@ public class PaymentActivity extends AppCompatActivity {
         orderId = df.format(c.getTime());
         website = "WEBSTAGING";
         callbackUrl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=" + orderId;
-        if (CheckInternet.isInternetAvailable(this)) {
-            dialog.show();
-            controller.setGetCheckSome(token, Config.GET_MID, orderId, userId, "Retail", "WAP", totalPrice, website, callbackUrl);
-        } else {
+
+
             startActivity(new Intent(this, NoInternetActivity.class));
-        }
+
     }
 
 
@@ -235,7 +215,6 @@ public class PaymentActivity extends AppCompatActivity {
             public void onTransactionResponse(Bundle inResponse) {
                 dialog.show();
                 transationId = inResponse.getString("TXNID");
-                controller.setSaveOrder(token, orderId, address, totalPrice, transationId, jsonArray);
 
             }
 

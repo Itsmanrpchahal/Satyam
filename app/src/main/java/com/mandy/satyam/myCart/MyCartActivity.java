@@ -2,27 +2,24 @@ package com.mandy.satyam.myCart;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.AddressActivity;
 import com.mandy.satyam.myCart.exploremore.CartMoreAdapter;
 import com.mandy.satyam.myCart.topitems.TopItemsAdapter;
-import com.mandy.satyam.utils.ProgressBarClass;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 
 import butterknife.BindView;
@@ -66,7 +63,7 @@ public class MyCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cart);
         ButterKnife.bind(this);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
         manager = getSupportFragmentManager();
         searchBt.setVisibility(View.GONE);
         filterBt.setVisibility(View.GONE);

@@ -2,7 +2,9 @@ package com.mandy.satyam.utils;
 
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
+
+import com.google.android.material.snackbar.Snackbar;
+
 
 public class Snack {
     public static Snackbar snackbar(Activity context, String string) {

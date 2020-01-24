@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/toolbar">
@@ -23,7 +23,7 @@
         android:gravity="center"
         android:text="Title"
         android:textColor="@color/white"
-        android:textSize="@dimen/subheading"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 
@@ -51,4 +51,4 @@
 
 
 
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>

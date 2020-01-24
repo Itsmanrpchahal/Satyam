@@ -44,7 +44,7 @@
         android:singleLine="true"
         android:text="Product Name"
         android:textColor="@color/black"
-        android:textSize="@dimen/text"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <RelativeLayout
@@ -73,7 +73,7 @@
             android:layout_toRightOf="@id/custom_productRating"
             android:text="(4.5)"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -85,7 +85,7 @@
         android:layout_below="@id/relative"
         android:text="From  $550"
         android:textColor="@color/red"
-        android:textSize="@dimen/text" />
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/custom_productDilvery"
@@ -94,10 +94,10 @@
         android:layout_below="@id/custom_productPrice"
         android:layout_marginTop="3dp"
         android:background="@color/recycler"
-        android:padding="@dimen/padding"
+        android:padding="16dp"
         android:text="Add  to Cart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        android:textSize="@dimen/text"
+        android:textSize="16sp"
         android:visibility="gone" />
 </RelativeLayout>

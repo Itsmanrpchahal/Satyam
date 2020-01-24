@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,7 +32,7 @@
 
             android:inputType="textEmailAddress"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
 
         <RelativeLayout
@@ -47,7 +47,7 @@
                 android:hint="Phone No."
                 android:inputType="number"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
 
         </RelativeLayout>
@@ -62,7 +62,7 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/edtConfirmPassword"
@@ -73,7 +73,7 @@
             android:hint="Confirm Password"
             android:inputType="textPassword"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
 
         <Button
@@ -104,9 +104,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:paddingTop="@dimen/padding"
-                android:paddingRight="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"
                 android:text="@string/login2"
                 android:textColor="@color/colorBtnRed"
                 android:textStyle="bold" />
@@ -115,4 +115,4 @@
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -11,22 +11,22 @@
         android:id="@+id/tooolbar"
         layout="@layout/toolbar2" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_address"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/linear5"
         android:layout_below="@id/tooolbar"
-        android:layout_marginTop="@dimen/padding">
+        android:layout_marginTop="16dp">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/linear5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/topMargin"
+        android:layout_margin="20dp"
         android:orientation="vertical">
 
         <Button
@@ -37,18 +37,18 @@
             android:textColor="@color/white"
             android:text="Add Address"
             android:textAllCaps="false"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/continue_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding"
+            android:layout_marginTop="16dp"
             android:background="@android:color/holo_green_light"
             android:text="Continue To Payment"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

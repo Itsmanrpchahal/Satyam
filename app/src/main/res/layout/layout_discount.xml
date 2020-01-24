@@ -30,10 +30,10 @@
         android:layout_below="@id/dashImage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:layout_marginBottom="@dimen/padding"
+        android:layout_marginBottom="16dp"
         android:text="Product Name"
         android:textColor="@color/black"
-        android:textSize="@dimen/subheading" />
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

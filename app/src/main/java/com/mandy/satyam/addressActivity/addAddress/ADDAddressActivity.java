@@ -2,8 +2,7 @@ package com.mandy.satyam.addressActivity.addAddress;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,9 +10,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.mandy.satyam.R;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.utils.ProgressBarClass;
 import com.mandy.satyam.utils.SharedToken;
 
 import butterknife.BindView;
@@ -24,7 +25,6 @@ public class ADDAddressActivity extends AppCompatActivity {
 
     SharedToken sharedToken;
     String name, mobile, postcode, town, state, flat, near;
-    Controller controller;
     Dialog dialog;
 
     @BindView(R.id.tooolbar)
@@ -60,7 +60,7 @@ public class ADDAddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addaddress);
         ButterKnife.bind(this);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
 
         filterBt.setVisibility(View.GONE);
         searchBt.setVisibility(View.GONE);

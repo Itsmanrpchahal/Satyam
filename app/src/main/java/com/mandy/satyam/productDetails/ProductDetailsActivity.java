@@ -3,13 +3,6 @@ package com.mandy.satyam.productDetails;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +13,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.AddressActivity;
@@ -28,7 +29,6 @@ import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
 import com.mandy.satyam.productDetails.adapter.SizeAdapter;
-import com.mandy.satyam.utils.ProgressBarClass;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
         viewPager2 = (ViewPager) findViewById(R.id.viewPager2);
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScoll);
 

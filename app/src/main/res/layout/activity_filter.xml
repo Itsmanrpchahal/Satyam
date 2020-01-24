@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context="com.mandy.satyam.filterScreen.FilterActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
+                android:layout_centerVertical="true"
                 android:src="@drawable/ic_close"></ImageButton>
 
 
@@ -32,9 +33,19 @@
                 android:text="Filters"
                 android:textColor="@color/white"
                 android:textSize="18sp"></TextView>
+
+            <Button
+                android:id="@+id/resetFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:layout_alignParentRight="true"
+                android:text="Reset"
+                android:textColor="@color/white"
+                android:textAllCaps="false"></Button>
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,12 +58,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/grey"
                 android:visibility="gone"
-                android:id="@+id/categories_recyler"></android.support.v7.widget.RecyclerView>
+                android:id="@+id/categories_recyler"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/brand_tab"
@@ -102,11 +113,22 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filter_recylcer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            ></android.support.v7.widget.RecyclerView>
+            ></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/apllyFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:layout_margin="@dimen/defaultmargin"
+        android:text="Apply"
+        android:textAllCaps="false"
+        android:textColor="@color/white"></Button>
 </RelativeLayout>

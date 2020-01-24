@@ -2,10 +2,6 @@ package com.mandy.satyam.myOrderList.myorderdetails;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,9 +9,13 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.mandy.satyam.R;
 import com.mandy.satyam.myOrderList.TotoalProductAdapter;
-import com.mandy.satyam.utils.ProgressBarClass;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,7 +78,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_details);
         ButterKnife.bind(this);
         tvSubPrice.setFocusable(true);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
         filterBt.setVisibility(View.GONE);
         searchBt.setVisibility(View.GONE);
         back.setVisibility(View.GONE);

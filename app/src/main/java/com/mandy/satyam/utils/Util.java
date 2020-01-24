@@ -1,14 +1,25 @@
 package com.mandy.satyam.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Base64;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mandy.satyam.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,7 +30,55 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+
+
 public class Util {
+
+
+
+    //check internet is online or not
+    public static boolean isOnline(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public static Dialog showDialog(Context context) {
+        Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.custom_progress);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.dismiss();
+        return dialog;
+    }
+
+    public static void showToastMessage(Context context, String message, Drawable drawable){
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View layout = inflater.inflate( R.layout.custom_toast, null );
+        // set a message
+        TextView text = (TextView) layout.findViewById(R.id.txtvw);
+        text.setText(message);
+
+        ImageView imageView = layout.findViewById(R.id.image);
+        imageView.setImageDrawable(drawable);
+
+        // Toast...
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.BOTTOM, 0, 30);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
 
     public static MultipartBody.Part sendImageFileToserver(Bitmap bitMap, String image, Context context) throws IOException {
 

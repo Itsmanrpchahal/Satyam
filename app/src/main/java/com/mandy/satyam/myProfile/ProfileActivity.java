@@ -3,25 +3,20 @@ package com.mandy.satyam.myProfile;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandy.satyam.R;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.utils.ProgressBarClass;
 import com.mandy.satyam.utils.SharedToken;
 import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
 import com.zfdang.multiple_images_selector.SelectorSettings;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,7 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.btnEdit)
     Button btnEdit;
 
-    Controller controller;
     ArrayList<String> image_uris = new ArrayList<>();
     String token;
     SharedToken sharedToken;
@@ -70,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         back.setVisibility(View.GONE);
         searchBt.setVisibility(View.GONE);
         filterBt.setVisibility(View.GONE);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

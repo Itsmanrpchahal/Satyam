@@ -20,9 +20,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/margin"
-            android:layout_marginTop="@dimen/topMargin"
-            android:layout_marginRight="@dimen/margin"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/defaultmargin"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -31,7 +31,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:clickable="false"
                 android:scaleType="centerCrop"
                 app:riv_oval="true" />
@@ -41,64 +41,64 @@
                 android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding"
+                android:layout_marginTop="16dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:hint="Full Name"
-                android:padding="@dimen/padding"
+                android:padding="16dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding"
+                android:layout_marginTop="16dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:hint="Email (opational)"
                 android:inputType="textEmailAddress"
-                android:padding="@dimen/padding"
+                android:padding="16dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
 
             <EditText
                 android:id="@+id/edtPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding"
+                android:layout_marginTop="16dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:hint="Phone No."
                 android:inputType="number"
-                android:padding="@dimen/padding"
+                android:padding="16dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/yellow"
                 android:text="Update Profile"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/colorBtnRed"
                 android:textColor="@color/white"
                 android:text="Edit Profile"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
 
         </LinearLayout>

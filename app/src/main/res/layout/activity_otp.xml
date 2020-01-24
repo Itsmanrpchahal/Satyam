@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".signup.OtpActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent">
@@ -28,13 +28,13 @@
                 android:layout_height="wrap_content"
                 android:text="Verify OTP"
                 android:textColor="@color/white"
-                android:textSize="@dimen/heading"
+                android:textSize="18sp"
                 android:layout_centerInParent="true"
                 ></TextView>
 
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/linear"
@@ -59,17 +59,17 @@
             android:layout_marginTop="50dp"
             android:hint="Enter your OTP"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnVerify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/topMargin"
+            android:layout_marginTop="20dp"
             android:background="@color/colorBtnRed"
             android:text="Verify otp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
 

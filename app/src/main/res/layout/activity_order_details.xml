@@ -42,10 +42,10 @@
                     android:id="@+id/ordernumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/padding"
+                    android:layout_marginLeft="16dp"
                     android:text="Order ID"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
 
                 <RatingBar
@@ -53,7 +53,7 @@
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/padding"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="3dp"
                     android:stepSize="5" />
 
@@ -62,11 +62,11 @@
                     android:id="@+id/deliveredtext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/padding"
+                    android:layout_marginLeft="16dp"
                     android:text="Delivered"
                     android:layout_marginTop="5sp"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
@@ -219,13 +219,13 @@
                 android:layout_margin="16dp"
                 android:layout_below="@id/totalorders"></View>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/orderRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view1"
                 android:focusable="false"
-                android:layout_margin="@dimen/topMargin"></android.support.v7.widget.RecyclerView>
+                android:layout_margin="20dp"></androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>
 

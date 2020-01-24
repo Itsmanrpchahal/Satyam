@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".login.LoginActivity">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                     android:src="@drawable/applogo" />
             </RelativeLayout>
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
 
         <TextView
@@ -44,7 +44,7 @@
             android:textColor="@color/black"
             android:textSize="22sp"
             android:layout_below="@id/toolbar"
-            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginTop="@dimen/defaultmargin_large"
             android:layout_gravity="start"
             android:layout_marginLeft="16dp"
             ></TextView>

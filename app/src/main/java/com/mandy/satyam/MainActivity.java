@@ -8,16 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +21,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.crashlytics.android.Crashlytics;
+import com.google.android.material.navigation.NavigationView;
+import com.mandy.satyam.baseclass.BaseClass;
+import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.commonActivity.CustmerActivity;
 import com.mandy.satyam.homeFragment.HomeFragment;
 import com.mandy.satyam.login.LoginActivity;
@@ -48,7 +52,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseClass {
 
     public static ProfileApi.Data data;
 
@@ -141,13 +145,15 @@ public class MainActivity extends AppCompatActivity {
         loginmain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
 
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -168,8 +174,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem myorderlist = menu.findItem(R.id.myorderlist);
         MenuItem mycart = menu.findItem(R.id.cart);
         MenuItem profile = menu.findItem(R.id.my_profile);
-        typeIntent = getIntent().getStringExtra("token");
-        if (typeIntent.equals("1")) {
+        if (getStringVal(Constants.LOGIN_STATUS).equals("login")) {
             textLogout.setTitle("Logout");
         } else {
             String logutText = (String) textLogout.getTitle();
@@ -193,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.home:
                         drawerNavigation.closeDrawers();
                         Intent inten = new Intent(getApplicationContext(), MainActivity.class);
-                        inten.putExtra("token", typeIntent);
                         startActivity(inten);
                         break;
 
@@ -341,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
+                clearStringVal(Constants.LOGIN_STATUS);
             }
         });
     }

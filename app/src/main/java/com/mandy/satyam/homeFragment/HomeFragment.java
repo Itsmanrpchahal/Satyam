@@ -4,38 +4,33 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.mandy.satyam.R;
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.baseclass.BaseFrag;
+import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.dashboardproducts.ProductsActivity;
 import com.mandy.satyam.homeFragment.adapter.BestSellAdapter;
 import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.adapter.DiscountedAdapter;
 import com.mandy.satyam.homeFragment.adapter.NewArrivalAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
-import com.mandy.satyam.homeFragment.apis.BannerApi;
 import com.mandy.satyam.homeFragment.apis.CategoryApi;
 import com.mandy.satyam.productList.GetProductList;
-import com.mandy.satyam.utils.CheckInternet;
-import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.Snack;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -46,10 +41,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import retrofit2.Response;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFrag {
 
     View view;
     ArrayList<CategoryApi.Datum> arrayCategory = new ArrayList<>();
@@ -61,7 +55,6 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerViewCategory, recyclerViewNew, recyclerViewDiscount, recyclerViewBestSell;
     FragmentManager manager;
     Context context;
-    Controller controller;
     Dialog dialog;
 
     @BindView(R.id.txtSeeNew)
@@ -91,13 +84,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        dialog = ProgressBarClass.showProgressDialog(context);
 
         init();
-            if (bundle!=null)
-            {
-                token = bundle.getString("token");
-            }
+
         unbinder = ButterKnife.bind(this, view);
         return view;
     }

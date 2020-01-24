@@ -1,27 +1,18 @@
 package com.mandy.satyam.commentActivity;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.mandy.satyam.R;
-import com.mandy.satyam.commonActivity.NoInternetActivity;
-import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.utils.CheckInternet;
-import com.mandy.satyam.utils.ProgressBarClass;
-import com.mandy.satyam.utils.SharedToken;
-import com.mandy.satyam.utils.Snack;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.mandy.satyam.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Response;
 
 public class CommentActivity extends AppCompatActivity {
 
@@ -42,7 +33,7 @@ public class CommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         ButterKnife.bind(this);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
 
 
 

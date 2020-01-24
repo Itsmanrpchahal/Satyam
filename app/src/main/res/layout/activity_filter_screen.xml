@@ -7,7 +7,7 @@
     android:background="#ffffff"
     tools:context="com.mandy.satyam.filterScreen.FilterScreen">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent">
@@ -33,7 +33,7 @@
                 android:layout_centerInParent="true"></TextView>
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -12,7 +12,7 @@
         layout="@layout/toolbar2" />
 
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tooolbar">
@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/topMargin"
+            android:layout_margin="20dp"
             android:orientation="vertical"
             android:padding="1dp">
 
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -39,11 +39,11 @@
                 android:background="@color/white"
                 android:hint="Full Name"
                 android:inputType="text"
-                android:paddingTop="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -54,10 +54,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:text="Phone no"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -67,11 +67,11 @@
                 android:background="@color/white"
                 android:hint="Mobile number"
                 android:inputType="number"
-                android:paddingTop="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -82,10 +82,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:text="Postcode"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -95,11 +95,11 @@
                 android:background="@color/white"
                 android:hint="Postcode"
                 android:inputType="number"
-                android:paddingTop="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -110,10 +110,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:text="Town/City"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
 
@@ -124,11 +124,11 @@
                 android:background="@color/white"
                 android:hint="Town/City"
                 android:inputType="text"
-                android:paddingTop="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -139,10 +139,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:text="State"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -152,10 +152,10 @@
                 android:background="@color/white"
                 android:hint="State"
                 android:inputType="text"
-                android:paddingTop="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -166,10 +166,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:text="Address"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
 
@@ -180,11 +180,11 @@
                 android:background="@color/white"
                 android:hint="Flat,House no,Building,Company"
                 android:inputType="text"
-                android:paddingTop="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -195,10 +195,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:text="Landmark"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/text"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -208,11 +208,11 @@
                 android:background="@color/white"
                 android:hint="Landmark e.g. near apollo hospital"
                 android:inputType="text"
-                android:paddingTop="@dimen/padding"
-                android:paddingBottom="@dimen/padding"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -228,9 +228,9 @@
                 android:text="Add Address"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

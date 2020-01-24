@@ -10,19 +10,19 @@
     <include
         android:id="@+id/tooolbar"
         layout="@layout/toolbar2" />
-    <android.support.v4.view.ViewPager
+    <androidx.core.view.ViewPager
         android:id="@+id/viewPager2"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScoll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tooolbar"
-        android:paddingTop="@dimen/padding">
+        android:paddingTop="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,8 +33,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/topMargin"
-                android:layout_marginRight="@dimen/topMargin">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
                 <TextView
                     android:id="@+id/txtproductName"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtproductName"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text"
+                    android:textSize="16sp"
                     android:text="Lorem Ipsum is simply dummy text ."
                     />
 
@@ -82,7 +82,7 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text"
+                        android:textSize="16sp"
                         android:text="(3.5)"/>
 
                 </LinearLayout>
@@ -100,27 +100,27 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/padding"
+                    android:layout_marginBottom="16dp"
                     android:elevation="1dp"
                     android:outlineAmbientShadowColor="@color/yellow"
                     android:outlineSpotShadowColor="@color/toolbar">
 
                 </me.relex.circleindicator.CircleIndicator>
 
-                <android.support.v4.view.ViewPager
+                <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
-                    android:layout_marginTop="@dimen/topMargin">
+                    android:layout_marginTop="20dp">
 
-                </android.support.v4.view.ViewPager>
+                </androidx.viewpager.widget.ViewPager>
 
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/topMargin"
+                android:layout_margin="20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:text="Price: "
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
                 <RelativeLayout
                     android:layout_width="70dp"
@@ -150,7 +150,7 @@
                         android:gravity="center"
                         android:text="499.00"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/text" />
+                        android:textSize="16sp" />
                 </RelativeLayout>
 
 
@@ -159,11 +159,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginLeft="@dimen/defaultmargin"
                     android:gravity="center"
                     android:text="399.00"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -171,14 +171,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/recycler" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/topMargin"
+                android:layout_margin="20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -186,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:text="Color:"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -194,24 +194,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text"
+                    android:textSize="16sp"
                     android:textStyle="normal" />
 
 
             </LinearLayout>
 
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/topMargin"
+                android:layout_margin="20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:text="Size:"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -227,17 +227,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text"
+                    android:textSize="16sp"
                     android:textStyle="normal" />
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <View
                 android:layout_width="match_parent"
@@ -247,17 +247,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/topMargin"
+                android:layout_marginLeft="20dp"
                 android:text="Descripation"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/subheading" />
+                android:textSize="18sp" />
 
             <com.borjabravo.readmoretextview.ReadMoreTextView
                 android:id="@+id/perview_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/topMargin"
+                android:layout_margin="20dp"
                 app:colorClickableText="@color/bule"
                 app:trimCollapsedText="Read less"
                 app:trimExpandedText="Read more"
@@ -269,16 +269,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/topMargin"
+                android:layout_marginLeft="20dp"
                 android:text="Features"
                 android:textColor="@color/black"
-                android:textSize="@dimen/subheading" />
+                android:textSize="18sp" />
 
             <com.borjabravo.readmoretextview.ReadMoreTextView
                 android:id="@+id/txtFeture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/topMargin"
+                android:layout_margin="20dp"
                 app:colorClickableText="@color/bule"
                 app:trimCollapsedText="Read less"
                 app:trimExpandedText="Read more"
@@ -291,39 +291,39 @@
                 android:id="@+id/btnAddCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/topMargin"
+                android:layout_margin="20dp"
                 android:background="@color/colorBtnRed"
                 android:textColor="@color/white"
                 android:text="Add to Cart"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
 
             <Button
                 android:id="@+id/btnBuynow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/topMargin"
-                android:layout_marginRight="@dimen/topMargin"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@android:color/holo_green_light"
                 android:text="Buy Now"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/recycler" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/topMargin"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:text="See Related items"
                 android:textColor="@color/black"
-                android:textSize="@dimen/subheading" />
+                android:textSize="18sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerRelated"
@@ -335,6 +335,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

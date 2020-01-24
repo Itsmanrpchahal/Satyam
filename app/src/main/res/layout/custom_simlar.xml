@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/defaultmargin"
             android:visibility="invisible"
             app:indicatorColor="@color/yellow"
             app:indicatorName="BallSpinFadeLoaderIndicator" />
@@ -39,7 +39,7 @@
             android:padding="5dp"
             android:text="Product Name"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/productPrice"
@@ -52,7 +52,7 @@
             android:padding="5dp"
             android:text="1200.00"
             android:textColor="@color/red"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 

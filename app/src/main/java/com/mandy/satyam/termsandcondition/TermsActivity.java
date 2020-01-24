@@ -2,14 +2,14 @@ package com.mandy.satyam.termsandcondition;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.mandy.satyam.R;
-import com.mandy.satyam.utils.ProgressBarClass;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +37,7 @@ public class TermsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms);
         ButterKnife.bind(this);
-        dialog = ProgressBarClass.showProgressDialog(this);
+
         type = getIntent().getStringExtra("T");
 
         init();

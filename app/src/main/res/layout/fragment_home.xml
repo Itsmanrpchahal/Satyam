@@ -9,7 +9,7 @@
     tools:context=".homeFragment.HomeFragment">
 
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrool_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,27 +20,27 @@
             android:background="@color/recycler"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/recycler">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp">
 
-                <android.support.v4.view.ViewPager
+                <androidx.viewpager.widget.ViewPager
                     android:id="@+id/recyclerOffer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                </android.support.v4.view.ViewPager>
+                </androidx.viewpager.widget.ViewPager>
 
-                <android.support.design.widget.TabLayout
+                <com.google.android.material.tabs.TabLayout
                     android:id="@+id/indicator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -56,21 +56,21 @@
                 android:id="@+id/linearNew"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginTop="@dimen/defaultmargin"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/topMargin">
+                    android:layout_margin="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="New Arrivals"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/heading"
+                        android:textSize="18sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -79,22 +79,22 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="2dp"
-                        android:paddingLeft="@dimen/padding"
-                        android:paddingRight="@dimen/padding"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:text="See more"
                         android:textColor="@color/toolbar"
-                        android:textSize="@dimen/heading"
+                        android:textSize="18sp"
                         android:textStyle="normal" />
 
                 </RelativeLayout>
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerNew"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -104,21 +104,21 @@
                 android:id="@+id/linearDiscount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginTop="@dimen/defaultmargin"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/topMargin">
+                    android:layout_margin="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Discounted items"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/heading"
+                        android:textSize="18sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -126,21 +126,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:paddingLeft="@dimen/padding"
-                        android:paddingRight="@dimen/padding"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:text="See more"
-                        android:textColor="@color/toolbar"                        android:textSize="@dimen/heading"
+                        android:textColor="@color/toolbar"                        android:textSize="18sp"
                         android:textStyle="normal" />
 
                 </RelativeLayout>
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerDiscount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -149,21 +149,21 @@
                 android:id="@+id/linearBest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginTop="@dimen/defaultmargin"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/topMargin">
+                    android:layout_margin="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Best Sell"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/heading"
+                        android:textSize="18sp"
                         android:textStyle="normal" />
 
                     <TextView
@@ -171,22 +171,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:paddingLeft="@dimen/padding"
-                        android:paddingRight="@dimen/padding"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:text="See more"
                         android:textColor="@color/toolbar"
-                        android:textSize="@dimen/heading"
+                        android:textSize="18sp"
                         android:textStyle="normal" />
 
                 </RelativeLayout>
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerBestSell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -194,7 +194,7 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </RelativeLayout>

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tooolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,9 +16,9 @@
             android:gravity="center"
             android:text=" Product quantity"
             android:textColor="@color/white"
-            android:textSize="@dimen/text"
+            android:textSize="16sp"
             android:textStyle="bold" />
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/txtItemQuantity"
@@ -29,7 +29,7 @@
         android:gravity="center"
         android:text="@string/quantity"
         android:textColor="@color/black"
-        android:textSize="@dimen/text"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <EditText
@@ -38,20 +38,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txtItemQuantity"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/topMargin"
+        android:layout_marginTop="20dp"
         android:hint=" "
         android:inputType="number"
         android:minWidth="80dp"
-        android:padding="@dimen/padding"
+        android:padding="16dp"
         android:textColor="@color/black"
-        android:textSize="@dimen/text" />
+        android:textSize="16sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/edtQuantity"
-        android:layout_marginTop="@dimen/topMargin"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <Button

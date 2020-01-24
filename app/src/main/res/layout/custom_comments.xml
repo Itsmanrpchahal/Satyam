@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding">
+    android:padding="16dp">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/roundimageView"
@@ -17,11 +17,11 @@
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/topMargin"
+        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/roundimageView"
         android:text="User Name"
         android:textColor="@color/black"
-        android:textSize="@dimen/text"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <RatingBar
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtName"
-        android:layout_marginLeft="@dimen/topMargin"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/roundimageView"
         android:numStars="5"
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/roundimageView"
-        android:layout_margin="@dimen/padding"
+        android:layout_margin="16dp"
         android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry"
         app:colorClickableText="@color/bule"
         app:trimCollapsedText="Read less"

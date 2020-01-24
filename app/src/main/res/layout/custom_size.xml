@@ -10,7 +10,7 @@
         android:layout_height="30dp"
         android:minWidth="70dp"
         android:textColor="@color/white"
-        android:textSize="@dimen/text"
+        android:textSize="16sp"
         android:text="M"
         android:gravity="center"
         android:textStyle=""

@@ -11,7 +11,7 @@
         android:id="@+id/tooolbar"
         layout="@layout/toolbar2" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tooolbar">
@@ -25,27 +25,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/topMargin"
-                    android:layout_marginTop="@dimen/topMargin"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
                     android:text="Top wear"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/heading"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerTop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/topMargin">
+                    android:layout_marginTop="20dp">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -54,27 +54,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/topMargin"
-                    android:layout_marginTop="@dimen/topMargin"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
                     android:text="Bottom wear"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/heading"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerBottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/topMargin">
+                    android:layout_marginTop="20dp">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -82,27 +82,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/topMargin"
-                    android:layout_marginTop="@dimen/topMargin"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
                     android:text="Explore More"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/heading"
+                    android:textSize="18sp"
                     android:textStyle="normal" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerExploreMore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/topMargin">
+                    android:layout_marginTop="20dp">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -110,6 +110,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

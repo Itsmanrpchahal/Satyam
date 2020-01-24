@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tooolbar"
-        android:padding="@dimen/padding"
+        android:padding="16dp"
         android:text="Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book."
         android:textColor="@color/black"
-        android:textSize="@dimen/text" />
+        android:textSize="16sp" />
 </RelativeLayout>

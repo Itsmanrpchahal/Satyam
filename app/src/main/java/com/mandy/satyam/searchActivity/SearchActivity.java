@@ -2,15 +2,15 @@ package com.mandy.satyam.searchActivity;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.mandy.satyam.R;
-import com.mandy.satyam.utils.ProgressBarClass;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,6 @@ public class SearchActivity extends AppCompatActivity {
         searchBt.setVisibility(View.GONE);
         filterBt.setVisibility(View.GONE);
 
-        dialog = ProgressBarClass.showProgressDialog(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);

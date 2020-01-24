@@ -1,25 +1,31 @@
 package com.mandy.satyam.login;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.mandy.satyam.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.mandy.satyam.R;
+import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.opt.OTP_verify;
+import com.mandy.satyam.utils.Util;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements Controller.LoginCheck {
     Button btnLogin;
 
     String token = "";
@@ -39,6 +45,10 @@ public class LoginActivity extends AppCompatActivity {
     Button set_otp_button;
     @BindView(R.id.loginwith_email_tv)
     TextView loginwith_email_tv;
+    String type = "phone";
+    Dialog dialog;
+    Controller controller;
+    String phone, countrycode;
 
 
     @Override
@@ -46,17 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-
-       /* btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("token", "1");
-                startActivity(intent);
-            }
-        });*/
+        controller = new Controller(this);
+        dialog = Util.showDialog(LoginActivity.this);
 
         listeners();
 
@@ -66,14 +67,14 @@ public class LoginActivity extends AppCompatActivity {
         loginclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              finish();
+                finish();
             }
         });
 
         loginwith_email_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,EmailLogin.class);
+                Intent intent = new Intent(LoginActivity.this, EmailLogin.class);
                 startActivity(intent);
                 finish();
             }
@@ -82,9 +83,44 @@ public class LoginActivity extends AppCompatActivity {
         set_otp_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
-                startActivity(intent);
+
+                phone = phoneNumberEt.getText().toString();
+                countrycode = ccp.getSelectedCountryCode();
+
+                if (!phone.equals("")) {
+
+                    if (Util.isOnline(LoginActivity.this) != false) {
+                        dialog.show();
+                        controller.setLoginCheck(countrycode+""+phone, type);
+
+                    } else {
+                        Util.showToastMessage(LoginActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                    }
+                } else {
+                    phoneNumberEt.setFocusable(true);
+                    phoneNumberEt.setError("Enter Phone number");
+                }
             }
         });
+    }
+
+    @Override
+    public void onSuccessLoginCheck(Response<LoginCheck> loginCheckResponse) {
+        dialog.dismiss();
+        if (loginCheckResponse.body().getStatus() == 200) {
+            Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
+            intent.putExtra("OTP", loginCheckResponse.body().getData().getOtp().toString());
+            intent.putExtra("phonenumber",countrycode+""+phone);
+            startActivity(intent);
+
+        } else {
+            Util.showToastMessage(LoginActivity.this, loginCheckResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        dialog.dismiss();
+        Util.showToastMessage(LoginActivity.this, error, getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
     }
 }

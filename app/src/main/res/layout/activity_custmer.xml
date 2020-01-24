@@ -17,21 +17,21 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tooolbar"
         android:orientation="vertical"
-        android:padding="@dimen/topMargin">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contact us"
             android:textColor="@color/black"
-            android:textSize="@dimen/subheading"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/topMargin"
+            android:layout_marginTop="20dp"
             android:background="@drawable/white_bg"
             android:orientation="vertical">
 
@@ -43,20 +43,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding"
+                    android:padding="16dp"
                     android:text="Phone : "
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtPhone1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autoLink="phone"
-                    android:padding="@dimen/padding"
+                    android:padding="16dp"
                     android:text="8872411756"
                     android:textColor="@color/bule"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -69,20 +69,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding"
+                    android:padding="16dp"
                     android:text="Phone : "
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtPhone2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="phone"
-                    android:padding="@dimen/padding"
+                    android:padding="16dp"
                     android:text="887247846"
                     android:textColor="@color/bule"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -93,16 +93,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/topMargin"
+            android:layout_marginTop="20dp"
             android:text="or"
             android:textColor="@color/gray"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/topMargin"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -113,19 +113,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/padding"
+                    android:padding="16dp"
                     android:text="Email : "
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="email"
-                    android:padding="@dimen/padding"
+                    android:padding="16dp"
                     android:text="useremail451@gmail.com"
                     android:textColorLink="@color/bule"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -138,8 +138,8 @@
                 android:hint="Comment here.."
                 android:inputType="textMultiLine"
                 android:minHeight="150dp"
-                android:padding="@dimen/padding"
-                android:textSize="@dimen/text" />
+                android:padding="16dp"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnMail"
@@ -149,9 +149,9 @@
                 android:layout_marginTop="25dp"
                 android:background="@color/colorBtnRed"
                 android:textColor="@color/white"
-                android:padding="@dimen/padding"
+                android:padding="16dp"
                 android:text="Send mail"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

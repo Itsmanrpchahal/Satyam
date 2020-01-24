@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".login.EmailLogin">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                 android:src="@drawable/applogo" />
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 
     <TextView
@@ -44,7 +44,7 @@
         android:textColor="@color/black"
         android:textSize="22sp"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/defaultmargin_large"
         android:layout_gravity="start"
         android:layout_marginLeft="16dp"
         ></TextView>
@@ -73,6 +73,28 @@
             android:layout_margin="8dp"></EditText>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/pass_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phn_no_layout"
+        android:background="@drawable/theam_round_"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/password_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:backgroundTint="#00FFFFFF"
+            android:layout_margin="8dp"></EditText>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/loginwithnumber_tv"
         android:layout_width="wrap_content"
@@ -83,8 +105,26 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:textColor="@color/colorAccent"
-        android:layout_below="@id/phn_no_layout"
+        android:layout_below="@id/pass_layout"
         ></TextView>
+
+    <RelativeLayout
+        android:id="@+id/password_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@+id/phn_no_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Password  "
+            android:textColor="@color/black"
+            android:layout_gravity="left"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/white"></TextView>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -111,6 +151,19 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorBtnRed"
         android:text="Continue"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+
+    <Button
+        android:id="@+id/login_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorBtnRed"
+        android:text="SignIn"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 

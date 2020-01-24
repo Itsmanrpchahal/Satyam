@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:paddingLeft="@dimen/padding"
-    android:paddingRight="@dimen/padding"
-    android:paddingBottom="@dimen/padding">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/address_radio_btn"
@@ -14,17 +14,17 @@
         android:background="@color/white"
         android:button="@null"
         android:drawableLeft="@drawable/ic_check"
-        android:drawablePadding="@dimen/padding"
+        android:drawablePadding="16dp"
         android:gravity="start|center"
         android:text="Address: D-152, First Floor, Phase 8, Industrial Area, Sahibzada Ajit Singh Nagar, Punjab 160055"
         android:textColor="@color/black"
-        android:textSize="@dimen/text" />
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/address_radio_btn"
-        android:layout_marginTop="@dimen/padding"
+        android:layout_marginTop="16dp"
         android:background="@color/gray" />
 
 </RelativeLayout>

@@ -11,7 +11,7 @@
         android:id="@+id/tooolbar"
         layout="@layout/toolbar2" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrool_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/topMargin"
+            android:layout_margin="20dp"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
@@ -33,13 +33,13 @@
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/gray"
                 android:textColorLink="@color/bule"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/white_bg"
                 android:orientation="vertical"
                 android:padding="1dp">
@@ -51,9 +51,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Address: D-152, First Floor, Phase 8, Industrial Area, Sahibzada Ajit Singh Nagar, Punjab 160055"
-                    android:padding="@dimen/padding"
+                    android:padding="16dp"
                     android:singleLine="true"
-                    android:textSize="@dimen/text" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -70,9 +70,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:padding="@dimen/padding"
+                        android:padding="16dp"
                         android:text="items:"
-                        android:textSize="@dimen/text" />
+                        android:textSize="16sp" />
 
 
                     <TextView
@@ -82,8 +82,8 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="2"
-                        android:padding="@dimen/padding"
-                        android:textSize="@dimen/text" />
+                        android:padding="16dp"
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -98,9 +98,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:padding="@dimen/padding"
+                        android:padding="16dp"
                         android:text="Delivery:"
-                        android:textSize="@dimen/text" />
+                        android:textSize="16sp" />
 
 
                     <TextView
@@ -110,8 +110,8 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="Today"
-                        android:padding="@dimen/padding"
-                        android:textSize="@dimen/text" />
+                        android:padding="16dp"
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -125,10 +125,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:padding="@dimen/padding"
+                        android:padding="16dp"
                         android:text="Order Total:"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
 
@@ -139,9 +139,9 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="1500.00"
-                        android:padding="@dimen/padding"
+                        android:padding="16dp"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
 
@@ -154,17 +154,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/white_bg"
                 android:orientation="vertical"
                 android:padding="1dp">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reyclerPayment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -174,16 +174,16 @@
                 android:id="@+id/btnPayment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/topMargin"
+                android:layout_marginTop="20dp"
                 android:background="@color/bule"
                 android:text="Pay with Paytm"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

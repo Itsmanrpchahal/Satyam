@@ -10,8 +10,8 @@
         android:id="@+id/tooolbar"
         layout="@layout/toolbar2" />
 
-    <android.support.v7.widget.RecyclerView
-        android:paddingTop="@dimen/padding"
+    <androidx.recyclerview.widget.RecyclerView
+        android:paddingTop="16dp"
         android:id="@+id/recyclerProduct"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,6 +19,6 @@
         android:background="@color/recycler"
         android:overScrollMode="never">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

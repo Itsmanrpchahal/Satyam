@@ -29,9 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/custom_productImage"
-        android:paddingLeft="@dimen/padding"
-        android:paddingTop="@dimen/padding"
-        android:paddingRight="@dimen/padding">
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp">
 
 
         <TextView
@@ -43,7 +43,7 @@
             android:text="Product Name"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <RatingBar
             android:id="@+id/custom_productRating"
@@ -62,11 +62,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/custom_productName"
-            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginLeft="16dp"
             android:text="(4.5)"
             android:layout_toRightOf="@id/custom_productRating"
             android:textColor="@color/black"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/custom_productPrice"
@@ -75,7 +75,7 @@
             android:layout_below="@id/custom_productRating_number"
             android:text="From 550$"
             android:textColor="@color/red"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/custom_productDilvery"
@@ -84,13 +84,13 @@
             android:layout_below="@id/custom_productPrice"
             android:text="FREE Delivery"
             android:textColor="@android:color/holo_green_dark"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/relative"
-        android:layout_marginTop="@dimen/padding"
+        android:layout_marginTop="16dp"
         android:background="@color/gray" />
 </RelativeLayout>

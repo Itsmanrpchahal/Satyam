@@ -4,47 +4,47 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="@dimen/topMargin">
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/topMargin"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/areyou"
         android:textColor="@color/black"
-        android:textSize="@dimen/subheading"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/topMargin"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding"
+            android:layout_margin="16dp"
             android:layout_weight="1"
             android:background="@android:color/holo_green_light"
             android:text="Cancel"
             android:textColor="@color/white"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding"
+            android:layout_margin="16dp"
             android:layout_weight="1"
             android:background="@color/colorBtnRed"
             android:text="Logout"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/text" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
