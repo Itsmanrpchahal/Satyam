@@ -121,18 +121,19 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
             @Override
             public void onClick(View v) {
                 String pass = passwordEt.getText().toString();
-                dialog.show();
+
                 if (TextUtils.isEmpty(passwordEt.getText().toString()))
                 {
                     passwordEt.setError("Enter Password");
                     passwordEt.setFocusable(true);
-                }else {
+                }else if (Util.isOnline(EmailLogin.this) != false) {
+                    dialog.show();
                     controller.setLogin(email,"email",pass);
+                }else {
+                    Util.showToastMessage(EmailLogin.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
             }
         });
-
-
     }
 
     @Override
@@ -158,6 +159,12 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
         if (loginResponse.body().getStatus()==200)
         {
             setStringVal(Constants.LOGIN_STATUS,"login");
+            setStringVal(Constants.EMAIL,loginResponse.body().getData().getEmail());
+            setStringVal(Constants.FIRSTNAME,loginResponse.body().getData().getFirstname());
+            setStringVal(Constants.LASTNAME,loginResponse.body().getData().getLastname());
+            setStringVal(Constants.USER_ID,loginResponse.body().getData().getUserId().toString());
+            setStringVal(Constants.AVATAR,loginResponse.body().getData().getAvatar());
+            setStringVal(Constants.USERTOKEN,loginResponse.body().getData().getToken());
             Intent intent = new Intent(EmailLogin.this, MainActivity.class);
             startActivity(intent);
             finish();

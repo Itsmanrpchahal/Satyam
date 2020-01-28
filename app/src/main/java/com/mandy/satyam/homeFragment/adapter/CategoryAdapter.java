@@ -8,14 +8,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mandy.satyam.R;
+import com.mandy.satyam.homeFragment.response.HomePageResponse;
+
+import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     Context context;
     String tok;
+    ArrayList<HomePageResponse.Data.Category> categories = new ArrayList<>();
 
 
-    public CategoryAdapter(Context context) {
+    public CategoryAdapter(Context context, ArrayList<HomePageResponse.Data.Category> categories) {
         this.context = context;
+        this.categories = categories;
 
     }
 
@@ -29,11 +34,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+
+        viewHolder.textView.setText(categories.get(i).getCategoryName());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return categories.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

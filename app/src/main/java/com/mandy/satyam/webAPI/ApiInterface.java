@@ -1,5 +1,6 @@
 package com.mandy.satyam.webAPI;
 
+import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 
@@ -21,6 +22,11 @@ public interface ApiInterface {
             @Query("email_or_phone") String email_or_phone,
             @Query("login_type") String login_type,
             @Query("password") String password
+
+    );
+
+    @POST("homepage")
+    Call<HomePageResponse> homepage(
 
     );
 }

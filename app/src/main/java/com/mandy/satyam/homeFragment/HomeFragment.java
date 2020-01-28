@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,6 +24,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseFrag;
 import com.mandy.satyam.baseclass.Constants;
+import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.dashboardproducts.ProductsActivity;
 import com.mandy.satyam.homeFragment.adapter.BestSellAdapter;
 import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
@@ -30,6 +32,7 @@ import com.mandy.satyam.homeFragment.adapter.DiscountedAdapter;
 import com.mandy.satyam.homeFragment.adapter.NewArrivalAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
 import com.mandy.satyam.homeFragment.apis.CategoryApi;
+import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.productList.GetProductList;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 
@@ -41,9 +44,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Response;
 
 
-public class HomeFragment extends BaseFrag {
+public class HomeFragment extends BaseFrag implements Controller.HomePage {
 
     View view;
     ArrayList<CategoryApi.Datum> arrayCategory = new ArrayList<>();
@@ -72,6 +76,9 @@ public class HomeFragment extends BaseFrag {
     LinearLayout linearBest;
     Bundle bundle;
     String token;
+    ArrayList<HomePageResponse.Data.Category> categories = new ArrayList<>();
+    ArrayList<HomePageResponse.Data.Banner> banners = new ArrayList<>();
+    Controller controller;
 
 
     public HomeFragment() {
@@ -86,8 +93,11 @@ public class HomeFragment extends BaseFrag {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         init();
-
+        controller = new Controller(HomeFragment.this);
+        controller.setHomePage();
         unbinder = ButterKnife.bind(this, view);
+
+
         return view;
     }
 
@@ -107,11 +117,6 @@ public class HomeFragment extends BaseFrag {
 
         manager = getActivity().getSupportFragmentManager();
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewCategory.setLayoutManager(layoutManager);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity());
-        recyclerViewCategory.setAdapter(categoryAdapter);
-        categoryAdapter.notifyDataSetChanged();
 
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
         recyclerViewNew.setLayoutManager(layoutManager2);
@@ -130,19 +135,19 @@ public class HomeFragment extends BaseFrag {
         BestSellAdapter bestSellAdapter = new BestSellAdapter(context);
         recyclerViewBestSell.setAdapter(bestSellAdapter);
         recyclerViewBestSell.addItemDecoration(new SpacesItemDecoration(10));
-        setOfferImage();
+
 
     }
 
 
     //set image into view pager
-    private void setOfferImage() {
+    private void setOfferImage(ArrayList<HomePageResponse.Data.Banner> banner) {
         final PagerAdapter adapter;
 
         TabLayout tabLayout;
         tabLayout = view.findViewById(R.id.indicator);
 
-        adapter = new ViewPagerAdapter(context, array_image);
+        adapter = new ViewPagerAdapter(context, banner);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager, true);
 
@@ -181,6 +186,37 @@ public class HomeFragment extends BaseFrag {
         intent1.putExtra("ProductType","Best Sell");
         startActivity(intent1);
 
+    }
+
+    @Override
+    public void onSucessHome(Response<HomePageResponse> homePageResponseResponse) {
+        if (homePageResponseResponse.body().getStatus()==200)
+        {
+            for (int i=0;i<homePageResponseResponse.body().getData().getCategories().size();i++)
+            {
+                HomePageResponse.Data.Category category = homePageResponseResponse.body().getData().getCategories().get(i);
+                categories.add(category);
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                recyclerViewCategory.setLayoutManager(layoutManager);
+                CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(),categories);
+                recyclerViewCategory.setAdapter(categoryAdapter);
+                categoryAdapter.notifyDataSetChanged();
+            }
+
+
+            for (int i=0;i<homePageResponseResponse.body().getData().getBanners().size();i++)
+            {
+                HomePageResponse.Data.Banner banner = homePageResponseResponse.body().getData().getBanners().get(i);
+                banners.add(banner);
+                setOfferImage(banners);
+            }
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
     }
 
     // timer for change image

@@ -1,5 +1,6 @@
 package com.mandy.satyam.opt;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +16,10 @@ import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
+import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.login.LoginActivity;
+import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.utils.Util;
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
@@ -24,8 +28,9 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
-public class OTP_verify extends BaseClass {
+public class OTP_verify extends BaseClass implements Controller.LoginCheck {
 
 
     @BindView(R.id.loginclose)
@@ -48,18 +53,22 @@ public class OTP_verify extends BaseClass {
     @BindView(R.id.otpView)
     PinView otpView;
     SmsVerifyCatcher smsVerifyCatcher;
+    Controller controller;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp_verify);
         ButterKnife.bind(this);
+        dialog = Util.showDialog(OTP_verify.this);
         intent = getIntent();
         if (intent != null) {
             phonenumber = intent.getStringExtra("phonenumber");
             otp = intent.getStringExtra("OTP");
             userNumber.setText("+" + phonenumber);
         }
+        controller = new Controller(this);
         lisenters();
     }
 
@@ -85,7 +94,13 @@ public class OTP_verify extends BaseClass {
         resendotpTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (Util.isOnline(OTP_verify.this) != false) {
+                    dialog.show();
+                    controller.setLoginCheck(phonenumber, "phone");
+
+                } else {
+                    Util.showToastMessage(OTP_verify.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                }
             }
         });
 
@@ -101,13 +116,12 @@ public class OTP_verify extends BaseClass {
         verifyOtpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (otp.equals(otpView.getText().toString()))
-                {
-                    setStringVal(Constants.LOGIN_STATUS,"login");
+                if (otp.equals(otpView.getText().toString())) {
+                    setStringVal(Constants.LOGIN_STATUS, "login");
                     Intent intent = new Intent(OTP_verify.this, MainActivity.class);
                     startActivity(intent);
                     finish();
-                }else {
+                } else {
                     otpView.setLineColor(getResources().getColor(R.color.red));
                     otpView.setText("");
                 }
@@ -125,5 +139,19 @@ public class OTP_verify extends BaseClass {
             code = m.group(0);
         }
         return code;
+    }
+
+    @Override
+    public void onSuccessLoginCheck(Response<LoginCheck> loginCheckResponse) {
+        if (loginCheckResponse.body().getStatus() == 200) {
+            dialog.dismiss();
+            Util.showToastMessage(OTP_verify.this, "OTP sent", getResources().getDrawable(R.drawable.ic_present_to_all_black_24dp));
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        dialog.dismiss();
+        Util.showToastMessage(OTP_verify.this, error, getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
     }
 }

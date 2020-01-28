@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -89,7 +90,7 @@ public class MainActivity extends BaseClass {
     String typeIntent = "";
     @BindView(R.id.loginmain)
     TextView loginmain;
-
+    String firstname,lastname,avatar,email;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +99,13 @@ public class MainActivity extends BaseClass {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
         ImageView imgvw = (ImageView) hView.findViewById(R.id.imageView);
         TextView tv = (TextView) hView.findViewById(R.id.textView);
+        if (!Constants.FIRSTNAME.equalsIgnoreCase(""))
+        {
+            tv.setText(getStringVal(Constants.FIRSTNAME+" "+Constants.LASTNAME));
+        }
         //checkPermissions();
         mToggle = new ActionBarDrawerToggle(this, drawerNavigation, R.string.open, R.string.close);
 

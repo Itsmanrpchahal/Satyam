@@ -145,9 +145,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         array_image.add(String.valueOf(R.drawable.bestseller));
         array_image.add(String.valueOf(R.drawable.image_d));
 
-        PagerAdapter adapterpager = new ViewPagerAdapter(this, array_image);
+       /* PagerAdapter adapterpager = new ViewPagerAdapter(this, array_image);
         viewPager.setAdapter(adapterpager);
-        circleindecator.setViewPager(viewPager);
+        circleindecator.setViewPager(viewPager);*/
     }
 
     @OnClick({R.id.btnAddCart, R.id.btnBuynow})

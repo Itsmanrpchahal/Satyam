@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.mandy.satyam.R;
+import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.productList.ProductListActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -23,11 +25,12 @@ import java.util.ArrayList;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
-    ArrayList<String> array_image;
+    ArrayList<HomePageResponse.Data.Banner> array_image;
     Context context;
 
 
-    public ViewPagerAdapter(Context context, ArrayList<String> array_image) {
+
+    public ViewPagerAdapter(Context context, ArrayList<HomePageResponse.Data.Banner> array_image) {
         this.context = context;
         this.array_image = array_image;
 
@@ -51,7 +54,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemview = inflater.inflate(R.layout.item, container, false);
         trailimg = itemview.findViewById(R.id.trailImage);
-        trailimg.setImageResource(Integer.parseInt(array_image.get(position)));
+        Glide.with(context).load(array_image.get(position).toString()).into(trailimg);
+//        trailimg.setImageResource(array_image.get(position));
         avLoadingIndicatorView = itemview.findViewById(R.id.avi);
        /* Glide.with(context).load(array_image.get(position)).listener(new RequestListener<Drawable>() {
             @Override

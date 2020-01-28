@@ -1,5 +1,6 @@
 package com.mandy.satyam.controller;
 
+import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.webAPI.WebAPI;
@@ -13,6 +14,7 @@ public class Controller {
     public WebAPI webAPI;
     public LoginCheck loginCheck;
     public Login login;
+    public HomePage homePage;
 
 
     //logincheck
@@ -26,6 +28,13 @@ public class Controller {
         loginCheck = loginCheck1;
         webAPI = new WebAPI();
         login = login1;
+    }
+
+    //HomePage
+    public Controller(HomePage homePage1)
+    {
+        homePage = homePage1;
+        webAPI = new WebAPI();
     }
 
     //ToDo: Rest API's
@@ -66,6 +75,25 @@ public class Controller {
         });
     }
 
+    public void setHomePage()
+    {
+        webAPI.getApi().homepage().enqueue(new Callback<HomePageResponse>() {
+            @Override
+            public void onResponse(Call<HomePageResponse> call, Response<HomePageResponse> response) {
+                if (response!=null)
+                {
+                    Response<HomePageResponse> homePageResponseResponse = response;
+                    homePage.onSucessHome(homePageResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomePageResponse> call, Throwable t) {
+                homePage.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface LoginCheck {
         void onSuccessLoginCheck(Response<com.mandy.satyam.login.model.LoginCheck> loginCheckResponse);
         void onError(String error);
@@ -73,6 +101,11 @@ public class Controller {
 
     public interface Login{
         void onsetLogin(Response<com.mandy.satyam.login.model.Login> loginResponse);
+        void onError(String error);
+    }
+
+    public interface HomePage{
+        void onSucessHome(Response<HomePageResponse> homePageResponseResponse);
         void onError(String error);
     }
 }
