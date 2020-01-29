@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -102,11 +103,14 @@ public class MainActivity extends BaseClass {
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
         ImageView imgvw = (ImageView) hView.findViewById(R.id.imageView);
         TextView tv = (TextView) hView.findViewById(R.id.textView);
-        if (!Constants.FIRSTNAME.equalsIgnoreCase(""))
+      /*  if (!Constants.FIRSTNAME.equalsIgnoreCase(""))
         {
-            tv.setText(getStringVal(Constants.FIRSTNAME+" "+Constants.LASTNAME));
-        }
+            tv.setText(getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME));
+        }else {
+            tv.setText("Hello Guest");
+        }*/
         //checkPermissions();
+//        Toast.makeText(this, ""+getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME), Toast.LENGTH_SHORT).show();
         mToggle = new ActionBarDrawerToggle(this, drawerNavigation, R.string.open, R.string.close);
 
         drawerNavigation.addDrawerListener(mToggle);

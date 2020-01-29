@@ -50,9 +50,9 @@ public class ProductListActivity extends AppCompatActivity {
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerProduct.setLayoutManager(layoutManager);
-        ProductListAdapter adapter = new ProductListAdapter(this);
-        recyclerProduct.setAdapter(adapter);
-        recyclerProduct.addItemDecoration(new SpacesItemDecoration(10));
+//        ProductListAdapter adapter = new ProductListAdapter(this, images);
+//        recyclerProduct.setAdapter(adapter);
+//        recyclerProduct.addItemDecoration(new SpacesItemDecoration(10));
 
 
     }

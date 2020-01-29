@@ -62,29 +62,14 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/home_products_recyler"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="New Arrivals"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/txtSeeNew"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="2dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:text="See more"
-                        android:textColor="@color/toolbar"
-                        android:textSize="18sp"
-                        android:textStyle="normal" />
+                        android:background="@color/white"
+                        ></androidx.recyclerview.widget.RecyclerView>
 
                 </RelativeLayout>
 
@@ -96,103 +81,9 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-
             </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/linearDiscount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/defaultmargin"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Discounted items"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/txtSeeDiscount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:text="See more"
-                        android:textColor="@color/toolbar"                        android:textSize="18sp"
-                        android:textStyle="normal" />
-
-                </RelativeLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerDiscount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearBest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/defaultmargin"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Best Sell"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/txtSeeBest"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:text="See more"
-                        android:textColor="@color/toolbar"
-                        android:textSize="18sp"
-                        android:textStyle="normal" />
-
-                </RelativeLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerBestSell"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-
-            </LinearLayout>
-
-
         </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

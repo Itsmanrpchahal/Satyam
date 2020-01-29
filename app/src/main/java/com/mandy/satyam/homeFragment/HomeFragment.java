@@ -8,13 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -26,23 +22,20 @@ import com.mandy.satyam.baseclass.BaseFrag;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.dashboardproducts.ProductsActivity;
-import com.mandy.satyam.homeFragment.adapter.BestSellAdapter;
 import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
-import com.mandy.satyam.homeFragment.adapter.DiscountedAdapter;
-import com.mandy.satyam.homeFragment.adapter.NewArrivalAdapter;
+import com.mandy.satyam.homeFragment.adapter.SectionAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
-import com.mandy.satyam.homeFragment.apis.CategoryApi;
+import com.mandy.satyam.homeFragment.interfaces.IF_getCategoryID;
+import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.productList.GetProductList;
-import com.mandy.satyam.utils.SpacesItemDecoration;
+import com.mandy.satyam.utils.Util;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Response;
 
@@ -50,36 +43,24 @@ import retrofit2.Response;
 public class HomeFragment extends BaseFrag implements Controller.HomePage {
 
     View view;
-    ArrayList<CategoryApi.Datum> arrayCategory = new ArrayList<>();
     ArrayList<GetProductList.Datum> arrayNewArrivals = new ArrayList<>();
     ArrayList<GetProductList.Datum> arrayDiscounted = new ArrayList<>();
     ArrayList<String> array_image;
 
     ViewPager viewPager;
-    RecyclerView recyclerViewCategory, recyclerViewNew, recyclerViewDiscount, recyclerViewBestSell;
     FragmentManager manager;
     Context context;
     Dialog dialog;
 
-    @BindView(R.id.txtSeeNew)
-    TextView txtSeeNew;
-    @BindView(R.id.txtSeeDiscount)
-    TextView txtSeeDiscount;
     Unbinder unbinder;
-    @BindView(R.id.txtSeeBest)
-    TextView txtSetxtSeeNeweBest;
-    @BindView(R.id.linearNew)
-    LinearLayout linearNew;
-    @BindView(R.id.linearDiscount)
-    LinearLayout linearDiscount;
-    @BindView(R.id.linearBest)
-    LinearLayout linearBest;
     Bundle bundle;
     String token;
     ArrayList<HomePageResponse.Data.Category> categories = new ArrayList<>();
     ArrayList<HomePageResponse.Data.Banner> banners = new ArrayList<>();
+    ArrayList<HomePageResponse.Data.Section> sections = new ArrayList<>();
     Controller controller;
-
+    RecyclerView home_products_recyler,recyclerViewCategory;
+    Dialog progressDialog;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -91,9 +72,12 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        progressDialog = Util.showDialog(getContext());
+        progressDialog.show();
         init();
-        controller = new Controller(HomeFragment.this);
+        Log.d("CONSUMER",getStringVal(Constants.CONSUMER_SECRET)+"  "+getStringVal(Constants.CONSUMER_KEY));
+
+        controller = new Controller((Controller.HomePage)HomeFragment.this);
         controller.setHomePage();
         unbinder = ButterKnife.bind(this, view);
 
@@ -108,35 +92,12 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         array_image.add(String.valueOf(R.drawable.bestseller));
         array_image.add(String.valueOf(R.drawable.image_d));
 
-        recyclerViewCategory = (RecyclerView) view.findViewById(R.id.recyclerCategory);
-        recyclerViewNew = (RecyclerView) view.findViewById(R.id.recyclerNew);
-        recyclerViewDiscount = (RecyclerView) view.findViewById(R.id.recyclerDiscount);
-        recyclerViewBestSell = (RecyclerView) view.findViewById(R.id.recyclerBestSell);
         viewPager = (ViewPager) view.findViewById(R.id.recyclerOffer);
+        recyclerViewCategory = view.findViewById(R.id.recyclerCategory);
+        home_products_recyler = view.findViewById(R.id.home_products_recyler);
 
 
         manager = getActivity().getSupportFragmentManager();
-
-
-        GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
-        recyclerViewNew.setLayoutManager(layoutManager2);
-        NewArrivalAdapter arrivalAdapter = new NewArrivalAdapter(getContext());
-        recyclerViewNew.setAdapter(arrivalAdapter);
-        recyclerViewNew.addItemDecoration(new SpacesItemDecoration(10));
-
-        GridLayoutManager layoutManager3 = new GridLayoutManager(getContext(), 2);
-        recyclerViewDiscount.setLayoutManager(layoutManager3);
-        DiscountedAdapter discountedAdapter = new DiscountedAdapter(getContext());
-        recyclerViewDiscount.setAdapter(discountedAdapter);
-        recyclerViewDiscount.addItemDecoration(new SpacesItemDecoration(10));
-
-        GridLayoutManager layoutManager4 = new GridLayoutManager(getContext(), 2);
-        recyclerViewBestSell.setLayoutManager(layoutManager4);
-        BestSellAdapter bestSellAdapter = new BestSellAdapter(context);
-        recyclerViewBestSell.setAdapter(bestSellAdapter);
-        recyclerViewBestSell.addItemDecoration(new SpacesItemDecoration(10));
-
-
     }
 
 
@@ -164,32 +125,10 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.txtSeeNew, R.id.txtSeeDiscount})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.txtSeeNew:
-                Intent intent = new Intent(context, ProductsActivity.class);
-                intent.putExtra("ProductType","New Arrivals");
-                startActivity(intent);
-                break;
-            case R.id.txtSeeDiscount:
-                Intent intent1 = new Intent(context, ProductsActivity.class);
-                intent1.putExtra("ProductType","Discounted Items");
-                startActivity(intent1);
-                break;
-        }
-    }
-
-    @OnClick(R.id.txtSeeBest)
-    public void onViewClicked() {
-        Intent intent1 = new Intent(context, ProductsActivity.class);
-        intent1.putExtra("ProductType","Best Sell");
-        startActivity(intent1);
-
-    }
 
     @Override
     public void onSucessHome(Response<HomePageResponse> homePageResponseResponse) {
+        progressDialog.dismiss();
         if (homePageResponseResponse.body().getStatus()==200)
         {
             for (int i=0;i<homePageResponseResponse.body().getData().getCategories().size();i++)
@@ -211,12 +150,38 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
                 banners.add(banner);
                 setOfferImage(banners);
             }
+
+
+            for (int i=0;i<homePageResponseResponse.body().getData().getSections().size();i++)
+            {
+                HomePageResponse.Data.Section section = homePageResponseResponse.body().getData().getSections().get(i);
+                sections.add(section);
+                setSections(sections);
+            }
+        }else {
+          Util.showToastMessage(getContext(),homePageResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
+    }
+
+    private void setSections(ArrayList<HomePageResponse.Data.Section> sections) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        home_products_recyler.setLayoutManager(layoutManager);
+        SectionAdapter sectionAdapter = new SectionAdapter(getActivity(),sections);
+        home_products_recyler.setAdapter(sectionAdapter);
+        sectionAdapter.notifyDataSetChanged();
+        /*sectionAdapter.SectionAdapter(new IF_getCategoryID() {
+            @Override
+            public void catID(String ID) {
+                progressDialog.show();
+               controller.setRelatedPrducts("ck_548941c93a5e2e01b319e36ec5a5c242f7e3c7a5",getStringVal(Constants.CONSUMER_SECRET),ID);
+            }
+        });*/
     }
 
     @Override
     public void onError(String error) {
-        Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
+       Util.showToastMessage(getContext(),error,getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
     }
 
     // timer for change image

@@ -12,18 +12,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.R;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import java.util.ArrayList;
 
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
 
     Context context;
     String tok;
+    ArrayList<Categoriesroducts.Datum.Image> imageArrayList;
+    ArrayList<Categoriesroducts.Datum> datumArrayList;
 
-    public ProductListAdapter(Context context) {
+
+    public ProductListAdapter(Context context, ArrayList<Categoriesroducts.Datum.Image> images,ArrayList<Categoriesroducts.Datum> datumArrayList1) {
         this.context = context;
+        this.imageArrayList = images;
+        this.datumArrayList = datumArrayList1;
     }
 
     @NonNull
@@ -37,16 +46,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
+        Glide.with(context).load(imageArrayList.get(i).getSrc().toString()).placeholder(R.drawable.image_d).into(viewHolder.imageView);
+        viewHolder.txtProductName.setText(datumArrayList.get(i).getName());
+        viewHolder.txtPrice.setText("$"+datumArrayList.get(i).getPrice());
+        viewHolder.ratingBar.setRating(Float.parseFloat(datumArrayList.get(i).getAverageRating()));
+        viewHolder.txtRatingUser.setText("("+datumArrayList.get(i).getAverageRating());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                    Intent intent = new Intent(context, ProductDetailsActivity.class);
+                    /*Intent intent = new Intent(context, ProductDetailsActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-
-
+                    context.startActivity(intent);*/
 
             }
         });
@@ -55,7 +65,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public int getItemCount() {
-        return 10;
+        return imageArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

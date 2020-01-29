@@ -5,6 +5,7 @@ import android.content.Context;
 
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemview = inflater.inflate(R.layout.item, container, false);
         trailimg = itemview.findViewById(R.id.trailImage);
-        Glide.with(context).load(array_image.get(position).toString()).into(trailimg);
+        Glide.with(context).load(array_image.get(position).getImage()).into(trailimg);
+        Log.d("Images",array_image.get(position).getImage().toString());
 //        trailimg.setImageResource(array_image.get(position));
         avLoadingIndicatorView = itemview.findViewById(R.id.avi);
        /* Glide.with(context).load(array_image.get(position)).listener(new RequestListener<Drawable>() {
@@ -69,15 +71,6 @@ public class ViewPagerAdapter extends PagerAdapter {
                 return false;
             }
         }).into(trailimg);*/
-
-        trailimg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ProductListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
 
         ((ViewPager) container).addView(itemview);
 
