@@ -33,7 +33,7 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
         controller = new Controller(this);
-        controller.setKeys();
+        controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
         imageView = findViewById(R.id.imageView);
 
 

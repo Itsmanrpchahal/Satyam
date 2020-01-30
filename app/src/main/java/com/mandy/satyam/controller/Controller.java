@@ -1,15 +1,22 @@
 package com.mandy.satyam.controller;
 
+import android.util.Log;
+
 import com.mandy.satyam.KeysResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.webAPI.WebAPI;
 
+import java.util.List;
+
+import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Header;
 
 public class Controller {
 
@@ -19,6 +26,7 @@ public class Controller {
     public HomePage homePage;
     public Keys keys;
     public RelatedPrducts relatedPrducts;
+    public ProductDetail productDetail;
 
 
     //logincheck
@@ -41,12 +49,19 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
+    //related
     public Controller(RelatedPrducts relatedPrducts1)
     {
         relatedPrducts = relatedPrducts1;
         webAPI = new WebAPI();
     }
 
+    //productDetail
+    public Controller(ProductDetail productDetail1)
+    {
+        productDetail = productDetail1;
+        webAPI = new WebAPI();
+    }
     //Keys
     public Controller(Keys keys1)
     {
@@ -111,9 +126,9 @@ public class Controller {
         });
     }
 
-    public void setKeys()
+    public void setKeys(String token)
     {
-        webAPI.getApi().keys().enqueue(new Callback<KeysResponse>() {
+        webAPI.getApi().keys(token).enqueue(new Callback<KeysResponse>() {
             @Override
             public void onResponse(Call<KeysResponse> call, Response<KeysResponse> response) {
                 if (response!=null)
@@ -130,9 +145,9 @@ public class Controller {
         });
     }
 
-    public void setRelatedPrducts(String cosumerKey,String consumerSecret,String category)
+    public void setRelatedPrducts(String cosumerKey,String consumerSecret,String category,String page)
     {
-        webAPI.getApi().homeResponse(cosumerKey,consumerSecret,category).enqueue(new Callback<Categoriesroducts>() {
+        webAPI.getApi().homeResponse(cosumerKey,consumerSecret,category,page).enqueue(new Callback<Categoriesroducts>() {
             @Override
             public void onResponse(Call<Categoriesroducts> call, Response<Categoriesroducts> response) {
                 if (response!=null)
@@ -145,6 +160,25 @@ public class Controller {
             @Override
             public void onFailure(Call<Categoriesroducts> call, Throwable t) {
                 relatedPrducts.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setProductDetail(String id,String cosumerKey,String consumerSecret)
+    {
+        webAPI.getApi().productDetail(id,cosumerKey,consumerSecret).enqueue(new Callback<ProductDetailResponse>() {
+            @Override
+            public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
+                if (response!=null)
+                {
+                    Response<ProductDetailResponse> productDetailResponseResponse = response;
+                    productDetail.onSuccessProductDetail(productDetailResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductDetailResponse> call, Throwable t) {
+                productDetail.onError(t.getMessage());
             }
         });
     }
@@ -173,4 +207,9 @@ public class Controller {
         void onSucessRelated(Response<Categoriesroducts> homePageResponseResponse);
         void onError(String error);
     }
+
+    public interface ProductDetail{
+        void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse);
+        void onError(String error);
+    };
 }

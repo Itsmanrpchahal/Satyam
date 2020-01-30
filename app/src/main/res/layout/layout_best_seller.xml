@@ -10,6 +10,7 @@
         android:id="@+id/dashImage"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:padding="@dimen/margin_dp8"
         android:src="@drawable/bestseller"
         android:scaleType="fitXY"
         />
@@ -20,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_dp5"
-        android:maxLines="3"
+        android:maxLines="2"
+        android:textAlignment="center"
         android:layout_below="@id/dashImage"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"

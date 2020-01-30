@@ -5,11 +5,14 @@ import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 
 import retrofit2.Call;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -35,12 +38,23 @@ public interface ApiInterface {
 
     @POST("wp-json/os/v1/woo_keys")
     Call<KeysResponse> keys
-            ();
+            (
+                    @Query("token") String token
+            );
 
     @GET("wp-json/wc/v3/products")
     Call<Categoriesroducts> homeResponse(
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret,
-            @Query("category") String category
+            @Query("category") String category,
+            @Query("page") String page
+    );
+
+    @GET("wp-json/wc/v3/products/{input}")
+    Call<ProductDetailResponse> productDetail(
+            @Path("input") String id,
+            @Query("consumer_key") String consumer_key,
+            @Query("consumer_secret") String consumer_secret
+
     );
 }

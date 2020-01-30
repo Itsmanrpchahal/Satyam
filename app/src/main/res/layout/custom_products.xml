@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_dp2"
     android:background="@color/white">
 
 
@@ -10,28 +11,19 @@
         android:id="@+id/custom_productImage"
         android:layout_width="match_parent"
         android:layout_height="185dp"
+        android:padding="@dimen/margin_dp8"
         android:scaleType="centerCrop"
         android:src="@drawable/new_arrive"/>
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi"
-        style="@style/AVLoadingIndicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="invisible"
-        app:indicatorColor="@color/yellow"
-        app:indicatorName="BallSpinFadeLoaderIndicator" />
 
     <RelativeLayout
         android:id="@+id/relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/custom_productImage"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp">
 
 
         <TextView
@@ -43,7 +35,7 @@
             android:text="Product Name"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <RatingBar
             android:id="@+id/custom_productRating"
@@ -62,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/custom_productName"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:text="(4.5)"
             android:layout_toRightOf="@id/custom_productRating"
             android:textColor="@color/black"
@@ -75,7 +67,7 @@
             android:layout_below="@id/custom_productRating_number"
             android:text="From 550$"
             android:textColor="@color/red"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/custom_productDilvery"
@@ -84,7 +76,7 @@
             android:layout_below="@id/custom_productPrice"
             android:text="FREE Delivery"
             android:textColor="@android:color/holo_green_dark"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <View

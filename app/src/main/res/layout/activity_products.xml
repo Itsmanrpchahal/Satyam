@@ -11,16 +11,45 @@
         android:id="@+id/tooolbar"
         layout="@layout/toolbar2" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:paddingTop="16dp"
-        android:id="@+id/recyclerProduct"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tooolbar"
+        android:layout_height="wrap_content"
         android:background="@color/recycler"
-        android:overScrollMode="never">
+        android:layout_below="@id/tooolbar">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="16dp"
+                android:id="@+id/recyclerProduct"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/recycler"
+                android:overScrollMode="never">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <Button
+                android:id="@+id/seemorebt"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerProduct"
+                android:layout_centerHorizontal="true"
+                android:text="See More"
+                android:textAllCaps="false"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:padding="@dimen/margin_dp5"
+                android:layout_margin="@dimen/margin_dp10"></Button>
+
+        </RelativeLayout>
+    </ScrollView>
+
 
 
 
