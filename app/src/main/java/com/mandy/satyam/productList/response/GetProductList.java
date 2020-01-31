@@ -1,4 +1,4 @@
-package com.mandy.satyam.productList;
+package com.mandy.satyam.productList.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

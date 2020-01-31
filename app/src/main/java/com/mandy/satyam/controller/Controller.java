@@ -8,6 +8,7 @@ import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
+import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.webAPI.WebAPI;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class Controller {
     public Keys keys;
     public RelatedPrducts relatedPrducts;
     public ProductDetail productDetail;
+    public ProductSubCategories subCategory;
 
 
     //logincheck
@@ -50,9 +52,10 @@ public class Controller {
     }
 
     //related
-    public Controller(RelatedPrducts relatedPrducts1)
+    public Controller(RelatedPrducts relatedPrducts1,ProductSubCategories subCategory1)
     {
         relatedPrducts = relatedPrducts1;
+        subCategory = subCategory1;
         webAPI = new WebAPI();
     }
 
@@ -183,6 +186,26 @@ public class Controller {
         });
     }
 
+
+    public void setSubCategory(String category_id)
+    {
+        webAPI.getApi().subcategories(category_id).enqueue(new Callback<SubCategory>() {
+            @Override
+            public void onResponse(Call<SubCategory> call, Response<SubCategory> response) {
+                if (response!=null)
+                {
+                    Response<SubCategory> subCategoryResponse = response;
+                    subCategory.onSuccessSubcate(subCategoryResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SubCategory> call, Throwable t) {
+                subCategory.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface LoginCheck {
         void onSuccessLoginCheck(Response<com.mandy.satyam.login.model.LoginCheck> loginCheckResponse);
         void onError(String error);
@@ -212,4 +235,9 @@ public class Controller {
         void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse);
         void onError(String error);
     };
+
+    public interface ProductSubCategories{
+        void onSuccessSubcate(Response<SubCategory> subCategoryResponse);
+        void onError(String error);
+    }
 }

@@ -24,10 +24,7 @@
         <activity android:name=".myOrderList.myorderdetails.SubOrderDeatial" />
         <activity android:name=".myOrderList.myorderdetails.returnProduct.ReturnProduct" />
         <activity android:name=".filterScreen.FilterScreen" />
-        <activity android:name=".dashboardproducts.ProductsActivity" />
-        <activity
-            android:name=".productList.ProductListActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".productList.ProductsActivity" />
         <activity
             android:name=".productDetails.ProductDetailsActivity"
             android:screenOrientation="portrait" />

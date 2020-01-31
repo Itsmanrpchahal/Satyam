@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mandy.satyam.productDetails.onClick;
-import com.mandy.satyam.productList.GetProductList;
+import com.mandy.satyam.productList.response.GetProductList;
 import com.mandy.satyam.R;
 import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;

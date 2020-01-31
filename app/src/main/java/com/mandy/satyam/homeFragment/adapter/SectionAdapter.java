@@ -8,19 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
-import com.mandy.satyam.dashboardproducts.ProductsActivity;
+import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.homeFragment.interfaces.IF_getCategoryID;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

@@ -1,18 +1,16 @@
-package com.mandy.satyam.dashboardproducts;
+package com.mandy.satyam.productList;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
@@ -20,11 +18,13 @@ import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.filterScreen.FilterActivity;
+import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
-import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productList.adapter.ProductListAdapter;
+import com.mandy.satyam.productList.adapter.SubCategoryAdapter;
+import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
 
@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
 import retrofit2.Response;
 
 //Manpreet Work
-public class ProductsActivity extends BaseClass implements Controller.RelatedPrducts {
+public class ProductsActivity extends BaseClass implements Controller.RelatedPrducts, Controller.ProductSubCategories {
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
     @BindView(R.id.textView)
@@ -58,8 +58,11 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     int headerList;
     ArrayList<Categoriesroducts.Datum.Image> images = new ArrayList<>();
     ArrayList<Categoriesroducts.Datum> datumArrayList = new ArrayList<Categoriesroducts.Datum>();
+    ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
     @BindView(R.id.seemorebt)
     Button seemorebt;
+    @BindView(R.id.subcategoryrecycler)
+    RecyclerView subcategoryrecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
         setContentView(R.layout.activity_products);
         ButterKnife.bind(this);
         progressDialog = Util.showDialog(ProductsActivity.this);
-        controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this);
+        controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this, (Controller.ProductSubCategories) this);
         back.setVisibility(View.GONE);
 
 
@@ -86,6 +89,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             if (Util.isOnline(ProductsActivity.this) != false) {
                 progressDialog.show();
                 controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount));
+                controller.setSubCategory(catID);
             } else {
                 Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
             }
@@ -184,6 +188,28 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
     }
 
+
+    @Override
+    public void onSuccessSubcate(Response<SubCategory> subCategoryResponse) {
+        progressDialog.dismiss();
+        if (subCategoryResponse.body().getStatus() == 200) {
+
+            for (int i = 0; i < subCategoryResponse.body().getData().size(); i++) {
+                SubCategory.Datum datum = subCategoryResponse.body().getData().get(i);
+                subCategories.add(datum);
+                setSubCategory(subCategories);
+            }
+        }
+
+    }
+
+    private void setSubCategory(ArrayList<SubCategory.Datum> subCategories) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ProductsActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        subcategoryrecycler.setLayoutManager(layoutManager);
+        SubCategoryAdapter categoryAdapter = new SubCategoryAdapter(this, subCategories);
+        subcategoryrecycler.setAdapter(categoryAdapter);
+        categoryAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onError(String error) {

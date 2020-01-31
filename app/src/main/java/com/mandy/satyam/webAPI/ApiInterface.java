@@ -6,6 +6,7 @@ import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
+import com.mandy.satyam.productList.response.SubCategory;
 
 import retrofit2.Call;
 import retrofit2.http.FormUrlEncoded;
@@ -56,5 +57,10 @@ public interface ApiInterface {
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret
 
+    );
+
+    @POST("wp-json/os/v1/sub_categories")
+    Call<SubCategory> subcategories(
+            @Query("category_id") String category_id
     );
 }

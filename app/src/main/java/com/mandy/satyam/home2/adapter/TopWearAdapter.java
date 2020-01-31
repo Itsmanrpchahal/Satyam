@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mandy.satyam.home2.GetSubCategoryApi;
 import com.mandy.satyam.R;
-import com.mandy.satyam.productList.ProductListActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
@@ -54,9 +53,9 @@ public class TopWearAdapter extends RecyclerView.Adapter<TopWearAdapter.ViewHold
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductListActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+//                Intent intent = new Intent(context, ProductListActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(intent);
 
             }
         });

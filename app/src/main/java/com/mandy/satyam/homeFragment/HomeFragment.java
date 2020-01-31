@@ -2,13 +2,11 @@ package com.mandy.satyam.homeFragment;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,14 +19,11 @@ import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseFrag;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.dashboardproducts.ProductsActivity;
 import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.adapter.SectionAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
-import com.mandy.satyam.homeFragment.interfaces.IF_getCategoryID;
-import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
-import com.mandy.satyam.productList.GetProductList;
+import com.mandy.satyam.productList.response.GetProductList;
 import com.mandy.satyam.utils.Util;
 
 import java.util.ArrayList;

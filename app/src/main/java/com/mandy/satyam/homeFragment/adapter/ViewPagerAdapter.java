@@ -4,7 +4,6 @@ package com.mandy.satyam.homeFragment.adapter;
 import android.content.Context;
 
 
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.mandy.satyam.R;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
-import com.mandy.satyam.productList.ProductListActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
