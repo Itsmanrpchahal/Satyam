@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mandy.satyam.productDetails.apis.GetProductDetailsApi;
 import com.mandy.satyam.R;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
 
     Context context;
-    List<GetProductDetailsApi.Size> arrayList;
     int pos;
 
     // interface to refresh the list

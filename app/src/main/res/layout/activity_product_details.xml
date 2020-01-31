@@ -48,42 +48,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtproductName"
                     android:textColor="@color/black"
-                    android:layout_alignLeft="@id/linear"
                     android:textSize="16sp"
                     android:layout_alignParentLeft="true"
                     android:text=""
                     />
 
 
-                <LinearLayout
-                    android:id="@+id/linear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/txtSubProductName"
-                    android:orientation="horizontal">
-
-                    <RatingBar
-                        android:id="@+id/ratingbar"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:isIndicator="true"
-                        android:numStars="5"
-                        android:paddingTop="3dp"
-                        android:paddingBottom="3dp" />
-
-                    <TextView
-                        android:id="@+id/txtratingNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="(3.5)"/>
-
-                </LinearLayout>
             </RelativeLayout>
 
 
@@ -95,8 +65,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_height="220dp">
 
                 </androidx.viewpager.widget.ViewPager>
 
@@ -114,23 +83,25 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/pricelayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/pricelayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Price: "
-                    android:textColor="@color/gray"
-                    android:textSize="16sp" />
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content">
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Price: "
+                        android:textColor="@color/gray"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtMRP"
@@ -142,21 +113,63 @@
                         android:text=""
                         android:textColor="@color/gray"
                         android:textSize="16sp" />
-                </RelativeLayout>
 
 
-                <TextView
-                    android:id="@+id/txtPrice"
+                    <TextView
+                        android:id="@+id/txtPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/defaultmargin"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/red"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/margin_dp10"
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/ratingbar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/defaultmargin"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/red"
-                    android:textSize="16sp" />
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp" />
+
+                <TextView
+                    android:id="@+id/txtratingNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="(3.5)"/>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/stocktexttv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:layout_marginRight="@dimen/margin_dp16"
+                android:layout_marginTop="@dimen/margin_dp10"
+                android:background="@color/colorAccent"
+                android:padding="@dimen/margin_dp10"
+                android:textColor="@color/white"></TextView>
 
             <View
                 android:layout_width="match_parent"
@@ -166,10 +179,13 @@
 
 
             <LinearLayout
+                android:id="@+id/colorlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:visibility="gone"
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="@dimen/margin_dp16"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
                 <TextView
@@ -192,18 +208,12 @@
             </LinearLayout>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
                 android:visibility="gone"
                 android:orientation="horizontal">
 
@@ -239,9 +249,10 @@
                 android:background="@color/recycler" />
 
             <TextView
+                android:id="@+id/desc_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/margin_dp16"
                 android:text="Descripation"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/black"
@@ -251,19 +262,21 @@
                 android:id="@+id/perview_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:layout_marginRight="@dimen/margin_dp16"
+                android:layout_marginTop="@dimen/margin_dp16"
                 app:colorClickableText="@color/bule"
                 app:trimCollapsedText="Read less"
                 app:trimExpandedText="Read more"
                 app:trimLength="150"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
                 app:trimMode="trimModeLength" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:layout_marginTop="@dimen/margin_dp10"
                 android:text="Features"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -272,7 +285,7 @@
                 android:id="@+id/txtFeture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="@dimen/margin_dp16"
                 app:colorClickableText="@color/bule"
                 app:trimCollapsedText="Read less"
                 app:trimExpandedText="Read more"
@@ -285,7 +298,9 @@
                 android:id="@+id/btnAddCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:layout_marginRight="@dimen/margin_dp16"
+                android:layout_marginTop="@dimen/margin_dp16"
                 android:background="@color/colorBtnRed"
                 android:textColor="@color/white"
                 android:text="Add to Cart"
@@ -296,8 +311,9 @@
                 android:id="@+id/btnBuynow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginTop="@dimen/margin_dp16"
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:layout_marginRight="@dimen/margin_dp16"
                 android:background="@android:color/holo_green_light"
                 android:text="Buy Now"
                 android:textColor="@color/white"
@@ -307,14 +323,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/margin_dp16"
                 android:background="@color/recycler" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="@dimen/margin_dp16"
+                android:layout_marginTop="@dimen/margin_dp16"
                 android:text="See Related items"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -323,6 +339,14 @@
                 android:id="@+id/recyclerRelated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
             </androidx.recyclerview.widget.RecyclerView>
 

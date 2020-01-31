@@ -53,7 +53,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         ImageView trailimg;
         final AVLoadingIndicatorView avLoadingIndicatorView;
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemview = inflater.inflate(R.layout.item, container, false);
+        View itemview = inflater.inflate(R.layout.item1, container, false);
         trailimg = itemview.findViewById(R.id.trailImage);
         Glide.with(context).load(array_image.get(position).getImage()).into(trailimg);
         Log.d("Images",array_image.get(position).getImage().toString());

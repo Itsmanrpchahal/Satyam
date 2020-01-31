@@ -1,22 +1,27 @@
 package com.mandy.satyam.productDetails.adapter;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mandy.satyam.productDetails.apis.GetProductDetailsApi;
 import com.mandy.satyam.R;
+import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
     Context context;
-    List<GetProductDetailsApi.Color> arrayList;
+    ArrayList<String> attributes;
 
     int pos;
 
@@ -32,8 +37,9 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
     }
 
 
-    public ColorAdapter(Context context ) {
+    public ColorAdapter(Context context, ArrayList<String> array_color) {
         this.context = context;
+        this.attributes = array_color;
     }
 
     @NonNull
@@ -71,11 +77,12 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
             }
         });*/
 
+        viewHolder.textView.setBackgroundColor(Color.parseColor("#"+attributes.get(i)));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return attributes.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

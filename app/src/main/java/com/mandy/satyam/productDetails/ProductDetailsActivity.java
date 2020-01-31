@@ -94,6 +94,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public static NestedScrollView nestedScrollView;
 
     ArrayList<ProductDetailResponse.Data.Image> array_image = new ArrayList<>();
+    ArrayList<String> array_color = new ArrayList<String>();
     Dialog dialog;
     String token, id, catId, sizeId, colorId;
     @BindView(R.id.filter_bt)
@@ -111,6 +112,13 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     RelativeLayout layout;
     @BindView(R.id.pricelayout)
     LinearLayout pricelayout;
+    @BindView(R.id.desc_tv)
+    TextView descTv;
+    @BindView(R.id.colorlayout)
+    LinearLayout colorlayout;
+    @BindView(R.id.stocktexttv)
+    TextView stocktexttv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,11 +159,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             }
         });
 
-        ColorAdapter colorAdapter = new ColorAdapter(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerColor.setLayoutManager(linearLayoutManager);
-        recyclerColor.setAdapter(colorAdapter);
-        recyclerColor.addItemDecoration(new SpacesItemDecoration(10));
 
         SizeAdapter adapter = new SizeAdapter(this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -233,21 +236,68 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             String cat = productDetailResponseResponse.body().getData().getName().substring(0, 1);
             String small = productDetailResponseResponse.body().getData().getName().toLowerCase().substring(1);
             txtproductName.setText(cat + small);
-            txtMRP.setText("$ " + productDetailResponseResponse.body().getData().getSalePrice());
-            txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            txtPrice.setText("$ " + productDetailResponseResponse.body().getData().getPrice());
-            perviewDescription.setText(Html.fromHtml(productDetailResponseResponse.body().getData().getDescription()));
+            if (productDetailResponseResponse.body().getData().getSalePrice().equals("")) {
+                txtMRP.setVisibility(View.GONE);
+                txtPrice.setText("$ " + productDetailResponseResponse.body().getData().getPrice());
+            } else {
+                txtMRP.setText("$ " + productDetailResponseResponse.body().getData().getSalePrice());
+                txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                txtPrice.setText("$ " + productDetailResponseResponse.body().getData().getPrice());
+            }
+            stocktexttv.setText(productDetailResponseResponse.body().getData().getStockStatus());
+           perviewDescription.setText(Html.fromHtml(productDetailResponseResponse.body().getData().getDescription()));
+            if (perviewDescription.getText().toString().equals("")) {
+                descTv.setVisibility(View.GONE);
+                perviewDescription.setVisibility(View.GONE);
+            }
+            ratingbar.setRating(productDetailResponseResponse.body().getData().getRatingCount());
+            txtratingNumber.setText("(" + productDetailResponseResponse.body().getData().getAverageRating() + ")");
 
             for (int i = 0; i < productDetailResponseResponse.body().getData().getImages().size(); i++) {
                 ProductDetailResponse.Data.Image image = productDetailResponseResponse.body().getData().getImages().get(i);
                 array_image.add(image);
                 setOfferImage(array_image);
             }
+
+
+            for (int i1 = 0; i1 < productDetailResponseResponse.body().getData().getColors().size(); i1++) {
+                String color = productDetailResponseResponse.body().getData().getColors().get(i1);
+
+                if (color != null) {
+                    String[] name = color.split(":#");
+                    if (name.length == 2) {
+                        String Fname = name[1];
+                        array_color.add(Fname);
+
+                        setColor(array_color);
+                    } else {
+//                        String Fname = name[0];
+                        array_color.add("00E54640");
+                    }
+
+
+                }
+
+            }
+
+
+            if (productDetailResponseResponse.body().getData().getAttributes().size() == 0) {
+                colorlayout.setVisibility(View.GONE);
+                recyclerColor.setVisibility(View.GONE);
+            }
         } else {
             Toast.makeText(this, "" + productDetailResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
         }
 
 
+    }
+
+    private void setColor(ArrayList<String> array_color) {
+        ColorAdapter colorAdapter = new ColorAdapter(this, array_color);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerColor.setLayoutManager(linearLayoutManager);
+        recyclerColor.setAdapter(colorAdapter);
+        recyclerColor.addItemDecoration(new SpacesItemDecoration(5));
     }
 
     //set image into view pager
@@ -261,8 +311,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager, true);
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
+      /*  Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);*/
     }
 
     // timer for change image
