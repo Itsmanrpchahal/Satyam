@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/labeled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2974F0">
+
+        <TextView
+            android:id="@+id/categorynametext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/txtSeeNew"
+            android:textSize="18sp"
+            android:text="nh"
+            android:inputType="textCapSentences"
+            android:padding="@dimen/textsize_sp16"
+            android:singleLine="true"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/txtSeeNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="end"
+            android:padding="@dimen/textsize_sp16"
+            android:text="See more"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/products"
+        android:layout_below="@id/labeled"
+        android:layout_width="match_parent"
+        android:background="@color/grey"
+        android:layout_margin="@dimen/margin_dp3"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>
