@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -103,6 +104,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 startActivity(intent);
             }
         });
+
     }
 
 
