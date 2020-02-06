@@ -18,7 +18,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/image_d"
+            android:src="@drawable/ic_satyamplaceholder"
             app:riv_oval="true" />
 
         <TextView

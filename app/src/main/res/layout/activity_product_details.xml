@@ -278,6 +278,7 @@
                 android:layout_marginLeft="@dimen/margin_dp16"
                 android:layout_marginTop="@dimen/margin_dp10"
                 android:text="Features"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -287,6 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_dp16"
                 app:colorClickableText="@color/bule"
+                android:visibility="gone"
                 app:trimCollapsedText="Read less"
                 app:trimExpandedText="Read more"
                 app:trimLength="150"
@@ -327,6 +329,7 @@
                 android:background="@color/recycler" />
 
             <TextView
+                android:id="@+id/seerelatedTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_dp16"

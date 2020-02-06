@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.productList.adapter.ProductListAdapter;
 import com.mandy.satyam.productList.adapter.SubCategoryAdapter;
+import com.mandy.satyam.productList.interface_.GetSubCate_IF;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
@@ -203,12 +205,27 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
     }
 
-    private void setSubCategory(ArrayList<SubCategory.Datum> subCategories) {
+    private void setSubCategory(ArrayList<SubCategory.Datum> subCategorie) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(ProductsActivity.this, LinearLayoutManager.HORIZONTAL, false);
         subcategoryrecycler.setLayoutManager(layoutManager);
-        SubCategoryAdapter categoryAdapter = new SubCategoryAdapter(this, subCategories);
+        SubCategoryAdapter categoryAdapter = new SubCategoryAdapter(this, subCategorie);
         subcategoryrecycler.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
+        categoryAdapter.SubCategoryAdapter(new GetSubCate_IF() {
+            @Override
+            public void getCateID(String id) {
+                catID = id;
+                if (Util.isOnline(ProductsActivity.this) != false) {
+                    progressDialog.show();
+                    images.clear();
+                    datumArrayList.clear();
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), id, String.valueOf(pageCount));
+                } else {
+                    Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                }
+
+            }
+        });
     }
 
     @Override

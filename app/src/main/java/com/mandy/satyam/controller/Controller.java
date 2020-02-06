@@ -5,6 +5,7 @@ import android.util.Log;
 import com.mandy.satyam.KeysResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
+import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
@@ -29,7 +30,7 @@ public class Controller {
     public RelatedPrducts relatedPrducts;
     public ProductDetail productDetail;
     public ProductSubCategories subCategory;
-
+    public ClearCart clearCart;
 
     //logincheck
     public Controller(LoginCheck loginCheck1) {
@@ -37,9 +38,11 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
+
     //logincheck login
-    public Controller(LoginCheck loginCheck1,Login login1) {
+    public Controller(LoginCheck loginCheck1,Login login1,ClearCart clearCart1) {
         loginCheck = loginCheck1;
+        clearCart = clearCart1;
         webAPI = new WebAPI();
         login = login1;
     }
@@ -60,9 +63,10 @@ public class Controller {
     }
 
     //productDetail
-    public Controller(ProductDetail productDetail1)
+    public Controller(ProductDetail productDetail1,RelatedPrducts relatedPrducts1)
     {
         productDetail = productDetail1;
+        relatedPrducts = relatedPrducts1;
         webAPI = new WebAPI();
     }
     //Keys
@@ -238,6 +242,11 @@ public class Controller {
 
     public interface ProductSubCategories{
         void onSuccessSubcate(Response<SubCategory> subCategoryResponse);
+        void onError(String error);
+    }
+
+    public interface ClearCart{
+        void onSuccessClearCart(Response<com.mandy.satyam.login.model.ClearCart> response);
         void onError(String error);
     }
 }

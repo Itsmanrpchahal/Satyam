@@ -41,10 +41,10 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
 
     @Override
     public void onSuccess(Response<KeysResponse> keysResponseResponse) {
-            if (keysResponseResponse.body().getStatus()==200)
-            {
-                setStringVal(Constants.CONSUMER_KEY,keysResponseResponse.body().getData().getConsumerKey());
-                setStringVal(Constants.CONSUMER_SECRET,keysResponseResponse.body().getData().getConsumerSecret());
+//            if (keysResponseResponse.body().getStatus()==200)
+//            {
+//                setStringVal(Constants.CONSUMER_KEY,keysResponseResponse.body().getData().getConsumerKey());
+//                setStringVal(Constants.CONSUMER_SECRET,keysResponseResponse.body().getData().getConsumerSecret());
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -64,9 +64,9 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
                         }
                     }
                 }, 3000);
-            }else {
-                Util.showToastMessage(this,keysResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
-            }
+//            }else {
+//                Util.showToastMessage(this,keysResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+//            }
     }
 
     @Override

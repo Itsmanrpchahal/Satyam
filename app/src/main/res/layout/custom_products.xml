@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="185dp"
         android:padding="@dimen/margin_dp8"
-        android:scaleType="centerCrop"
-        android:src="@drawable/new_arrive"/>
+        android:src="@drawable/ic_satyamplaceholder"/>
 
 
     <RelativeLayout

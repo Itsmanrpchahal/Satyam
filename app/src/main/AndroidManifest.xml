@@ -71,8 +71,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".commonActivity.CustmerActivity" />
-        <activity android:name=".signup.OtpActivity" />
+        <activity android:name=".commonActivity.CustmerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".signup.OtpActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".payment.PaymentActivity"
             android:screenOrientation="portrait" />

@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.mandy.satyam.R;
+import com.mandy.satyam.baseclass.BaseClass;
+import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.opt.OTP_verify;
@@ -25,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements Controller.LoginCheck {
+public class LoginActivity extends BaseClass implements Controller.LoginCheck {
     Button btnLogin;
 
     String token = "";
@@ -107,12 +109,13 @@ public class LoginActivity extends AppCompatActivity implements Controller.Login
     @Override
     public void onSuccessLoginCheck(Response<LoginCheck> loginCheckResponse) {
         dialog.dismiss();
+        Toast.makeText(this, ""+loginCheckResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
         if (loginCheckResponse.body().getStatus() == 200) {
+            setStringVal(Constants.LOGIN_STATUS,"login");
             Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
             intent.putExtra("OTP", loginCheckResponse.body().getData().getOtp().toString());
             intent.putExtra("phonenumber",countrycode+""+phone);
             startActivity(intent);
-
         } else {
             Util.showToastMessage(LoginActivity.this, loginCheckResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }

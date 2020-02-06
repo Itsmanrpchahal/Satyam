@@ -59,6 +59,12 @@ public class Login {
         @SerializedName("token")
         @Expose
         private String token;
+        @SerializedName("consumer_key")
+        @Expose
+        private String consumerKey;
+        @SerializedName("consumer_secret")
+        @Expose
+        private String consumerSecret;
 
         public Integer getUserId() {
             return userId;
@@ -106,6 +112,22 @@ public class Login {
 
         public void setToken(String token) {
             this.token = token;
+        }
+
+        public String getConsumerKey() {
+            return consumerKey;
+        }
+
+        public void setConsumerKey(String consumerKey) {
+            this.consumerKey = consumerKey;
+        }
+
+        public String getConsumerSecret() {
+            return consumerSecret;
+        }
+
+        public void setConsumerSecret(String consumerSecret) {
+            this.consumerSecret = consumerSecret;
         }
 
     }

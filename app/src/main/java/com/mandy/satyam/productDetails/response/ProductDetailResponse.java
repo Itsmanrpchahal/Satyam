@@ -198,7 +198,7 @@ public class ProductDetailResponse {
         private Integer ratingCount;
         @SerializedName("related_ids")
         @Expose
-        private List<Integer> relatedIds = null;
+        private List<RelatedId> relatedIds = null;
         @SerializedName("upsell_ids")
         @Expose
         private List<Object> upsellIds = null;
@@ -664,11 +664,11 @@ public class ProductDetailResponse {
             this.ratingCount = ratingCount;
         }
 
-        public List<Integer> getRelatedIds() {
+        public List<RelatedId> getRelatedIds() {
             return relatedIds;
         }
 
-        public void setRelatedIds(List<Integer> relatedIds) {
+        public void setRelatedIds(List<RelatedId> relatedIds) {
             this.relatedIds = relatedIds;
         }
 
@@ -817,6 +817,99 @@ public class ProductDetailResponse {
             public void setKey(String key) {
                 this.key = key;
             }
+        }
+
+        public class RelatedId {
+
+            @SerializedName("product_id")
+            @Expose
+            private Integer productId;
+            @SerializedName("product_name")
+            @Expose
+            private String productName;
+            @SerializedName("product_price")
+            @Expose
+            private String productPrice;
+            @SerializedName("product_regular_price")
+            @Expose
+            private String productRegularPrice;
+            @SerializedName("product_sale_price")
+            @Expose
+            private String productSalePrice;
+            @SerializedName("product_image")
+            @Expose
+            private String productImage;
+            @SerializedName("currency")
+            @Expose
+            private String currency;
+            @SerializedName("currency_symbol")
+            @Expose
+            private String currencySymbol;
+
+            public Integer getProductId() {
+                return productId;
+            }
+
+            public void setProductId(Integer productId) {
+                this.productId = productId;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public void setProductName(String productName) {
+                this.productName = productName;
+            }
+
+            public String getProductPrice() {
+                return productPrice;
+            }
+
+            public void setProductPrice(String productPrice) {
+                this.productPrice = productPrice;
+            }
+
+            public String getProductRegularPrice() {
+                return productRegularPrice;
+            }
+
+            public void setProductRegularPrice(String productRegularPrice) {
+                this.productRegularPrice = productRegularPrice;
+            }
+
+            public String getProductSalePrice() {
+                return productSalePrice;
+            }
+
+            public void setProductSalePrice(String productSalePrice) {
+                this.productSalePrice = productSalePrice;
+            }
+
+            public String getProductImage() {
+                return productImage;
+            }
+
+            public void setProductImage(String productImage) {
+                this.productImage = productImage;
+            }
+
+            public String getCurrency() {
+                return currency;
+            }
+
+            public void setCurrency(String currency) {
+                this.currency = currency;
+            }
+
+            public String getCurrencySymbol() {
+                return currencySymbol;
+            }
+
+            public void setCurrencySymbol(String currencySymbol) {
+                this.currencySymbol = currencySymbol;
+            }
+
         }
 
         public class Image {

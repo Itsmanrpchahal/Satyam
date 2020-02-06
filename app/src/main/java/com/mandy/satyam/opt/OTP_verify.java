@@ -3,11 +3,13 @@ package com.mandy.satyam.opt;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,6 +20,8 @@ import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.login.LoginActivity;
+import com.mandy.satyam.login.model.ClearCart;
+import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.utils.Util;
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
@@ -30,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class OTP_verify extends BaseClass implements Controller.LoginCheck {
+public class OTP_verify extends BaseClass implements Controller.LoginCheck, Controller.Login ,Controller.ClearCart{
 
 
     @BindView(R.id.loginclose)
@@ -68,7 +72,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck {
             otp = intent.getStringExtra("OTP");
             userNumber.setText("+" + phonenumber);
         }
-        controller = new Controller(this);
+        controller = new Controller((Controller.LoginCheck) this, (Controller.Login) OTP_verify.this,(Controller.ClearCart)this);
         lisenters();
     }
 
@@ -97,6 +101,19 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck {
                 if (Util.isOnline(OTP_verify.this) != false) {
                     dialog.show();
                     controller.setLoginCheck(phonenumber, "phone");
+                    new CountDownTimer(30000, 1000) {
+
+                        public void onTick(long millisUntilFinished) {
+                            resendotpTv.setText("seconds remaining: " + millisUntilFinished / 1000);
+                            resendotpTv.setClickable(false);
+                            //here you can have your logic to set text to edittext
+                        }
+
+                        public void onFinish() {
+                            resendotpTv.setText("Resend OTP");
+                        }
+
+                    }.start();
 
                 } else {
                     Util.showToastMessage(OTP_verify.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -116,11 +133,13 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck {
         verifyOtpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (otp.equals(otpView.getText().toString())) {
-                    setStringVal(Constants.LOGIN_STATUS, "login");
-                    Intent intent = new Intent(OTP_verify.this, MainActivity.class);
+                    dialog.dismiss();
+                    Intent intent = new Intent(OTP_verify.this,MainActivity.class);
                     startActivity(intent);
                     finish();
+
                 } else {
                     otpView.setLineColor(getResources().getColor(R.color.red));
                     otpView.setText("");
@@ -146,6 +165,29 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck {
         if (loginCheckResponse.body().getStatus() == 200) {
             dialog.dismiss();
             Util.showToastMessage(OTP_verify.this, "OTP sent", getResources().getDrawable(R.drawable.ic_present_to_all_black_24dp));
+        }
+    }
+
+    @Override
+    public void onsetLogin(Response<Login> loginResponse) {
+        dialog.dismiss();
+        if (loginResponse != null) {
+            if (loginResponse.body().getStatus() == 200) {
+                Toast.makeText(this, ""+loginResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
+                setStringVal(Constants.LOGIN_STATUS, "login");
+                Intent intent = new Intent(OTP_verify.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    }
+
+    @Override
+    public void onSuccessClearCart(Response<ClearCart> response) {
+        if (response.body().getStatus()==200)
+        {
+            Toast.makeText(this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+            controller.setLogin(phonenumber, "phone", otp);
         }
     }
 

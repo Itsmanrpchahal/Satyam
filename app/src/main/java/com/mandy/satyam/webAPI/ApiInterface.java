@@ -29,7 +29,6 @@ public interface ApiInterface {
             @Query("email_or_phone") String email_or_phone,
             @Query("login_type") String login_type,
             @Query("password") String password
-
     );
 
     @POST("wp-json/os/v1/homepage")

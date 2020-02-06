@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,6 +21,7 @@ import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.utils.Util;
@@ -28,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Controller.Login{
+public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Controller.Login,Controller.ClearCart{
 
     @BindView(R.id.loginclose)
     ImageButton loginclose;
@@ -56,13 +58,14 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
     RelativeLayout passwordLayout;
     @BindView(R.id.login_bt)
     Button loginBt;
+    String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_login);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.LoginCheck)this,(Controller.Login)this);
+        controller = new Controller((Controller.LoginCheck)this,(Controller.Login)this,(Controller.ClearCart)this);
         dialog = Util.showDialog(EmailLogin.this);
         lisenters();
     }
@@ -120,7 +123,7 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
         loginBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pass = passwordEt.getText().toString();
+                 pass = passwordEt.getText().toString();
 
                 if (TextUtils.isEmpty(passwordEt.getText().toString()))
                 {
@@ -159,6 +162,8 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
         if (loginResponse.body().getStatus()==200)
         {
             setStringVal(Constants.LOGIN_STATUS,"login");
+            setStringVal(Constants.CONSUMER_SECRET,loginResponse.body().getData().getConsumerSecret());
+            setStringVal(Constants.CONSUMER_KEY,loginResponse.body().getData().getConsumerKey());
             setStringVal(Constants.EMAIL,loginResponse.body().getData().getEmail());
             setStringVal(Constants.FIRSTNAME,loginResponse.body().getData().getFirstname());
             setStringVal(Constants.LASTNAME,loginResponse.body().getData().getLastname());
@@ -170,6 +175,15 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
             finish();
         }else {
             Util.showToastMessage(EmailLogin.this, loginResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        }
+    }
+
+    @Override
+    public void onSuccessClearCart(Response<ClearCart> response) {
+        if (response.body().getStatus()==200)
+        {
+            Toast.makeText(this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+            controller.setLogin(email,"email",pass);
         }
     }
 

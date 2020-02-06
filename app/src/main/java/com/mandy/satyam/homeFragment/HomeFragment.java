@@ -23,6 +23,8 @@ import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.adapter.SectionAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
+import com.mandy.satyam.productList.ProductsActivity;
+import com.mandy.satyam.productList.interface_.GetSubCate_IF;
 import com.mandy.satyam.productList.response.GetProductList;
 import com.mandy.satyam.utils.Util;
 
@@ -86,7 +88,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         array_image = new ArrayList<String>();
         array_image.add(String.valueOf(R.drawable.best_s));
         array_image.add(String.valueOf(R.drawable.bestseller));
-        array_image.add(String.valueOf(R.drawable.image_d));
+        array_image.add(String.valueOf(R.drawable.ic_satyamplaceholder));
 
         viewPager = (ViewPager) view.findViewById(R.id.recyclerOffer);
         recyclerViewCategory = view.findViewById(R.id.recyclerCategory);
@@ -165,13 +167,6 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         SectionAdapter sectionAdapter = new SectionAdapter(getActivity(),sections);
         home_products_recyler.setAdapter(sectionAdapter);
         sectionAdapter.notifyDataSetChanged();
-        /*sectionAdapter.SectionAdapter(new IF_getCategoryID() {
-            @Override
-            public void catID(String ID) {
-                progressDialog.show();
-               controller.setRelatedPrducts("ck_548941c93a5e2e01b319e36ec5a5c242f7e3c7a5",getStringVal(Constants.CONSUMER_SECRET),ID);
-            }
-        });*/
     }
 
     @Override

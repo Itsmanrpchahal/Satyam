@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.ViewHolder> {
 
@@ -40,8 +42,16 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     public void onBindViewHolder(@NonNull HomeProductAdapter.ViewHolder holder, int position) {
         String cat = categoryProducts.get(position).getProductName().substring(0,1);
         String small = categoryProducts.get(position).getProductName().toLowerCase().substring(1);
-        Glide.with(context).load(categoryProducts.get(position).getProductImage().toString()).placeholder(R.drawable.image_d).into(holder.imageView);
+        Glide.with(context).load(categoryProducts.get(position).getProductImage().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
         holder.textView.setText(cat+small);
+
+//        Collections.reverse(categoryProducts);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
     }
 
     @Override

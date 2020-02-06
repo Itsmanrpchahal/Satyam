@@ -3,6 +3,7 @@ package com.mandy.satyam.homeFragment.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
             HomeProductAdapter adapter =new HomeProductAdapter(context,categoryProducts);
             holder.products.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            Log.d("Category",categoryProducts.get(0).getProductName());
         }
 
         holder.txtSeeNew.setOnClickListener(new View.OnClickListener() {

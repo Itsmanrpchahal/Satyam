@@ -11,7 +11,7 @@
         android:layout_width="140dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_d" />
+        android:src="@drawable/ic_satyamplaceholder" />
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi"
