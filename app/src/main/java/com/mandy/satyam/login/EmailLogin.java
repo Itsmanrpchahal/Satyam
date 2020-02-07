@@ -162,17 +162,16 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
         if (loginResponse.body().getStatus()==200)
         {
             setStringVal(Constants.LOGIN_STATUS,"login");
-            setStringVal(Constants.CONSUMER_SECRET,loginResponse.body().getData().getConsumerSecret());
-            setStringVal(Constants.CONSUMER_KEY,loginResponse.body().getData().getConsumerKey());
+            setStringVal(Constants.CONSUMER_KEY_LOGIN,loginResponse.body().getData().getConsumerSecret());
+            setStringVal(Constants.CONSUMER_SECRET_LOGIN,loginResponse.body().getData().getConsumerKey());
             setStringVal(Constants.EMAIL,loginResponse.body().getData().getEmail());
             setStringVal(Constants.FIRSTNAME,loginResponse.body().getData().getFirstname());
             setStringVal(Constants.LASTNAME,loginResponse.body().getData().getLastname());
             setStringVal(Constants.USER_ID,loginResponse.body().getData().getUserId().toString());
             setStringVal(Constants.AVATAR,loginResponse.body().getData().getAvatar());
             setStringVal(Constants.USERTOKEN,loginResponse.body().getData().getToken());
-            Intent intent = new Intent(EmailLogin.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            controller.setClearCart();
+
         }else {
             Util.showToastMessage(EmailLogin.this, loginResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
@@ -182,8 +181,9 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
     public void onSuccessClearCart(Response<ClearCart> response) {
         if (response.body().getStatus()==200)
         {
-            Toast.makeText(this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
-            controller.setLogin(email,"email",pass);
+            Intent intent = new Intent(EmailLogin.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

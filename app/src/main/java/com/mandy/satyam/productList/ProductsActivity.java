@@ -135,32 +135,41 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     public void onSucessRelated(Response<Categoriesroducts> homePageResponseResponse) {
         progressDialog.dismiss();
         seemorebt.setVisibility(View.VISIBLE);
-        headerList = Integer.parseInt(homePageResponseResponse.headers().get("X-WP-TotalPages"));
+        if (homePageResponseResponse.isSuccessful())
+        {
+            if (homePageResponseResponse.body().getStatus()==200)
+            {
+                headerList = Integer.parseInt(homePageResponseResponse.headers().get("X-WP-TotalPages"));
+                for (int i = 0; i < homePageResponseResponse.body().getData().size(); i++) {
 
-
-        for (int i = 0; i < homePageResponseResponse.body().getData().size(); i++) {
-
-            if (homePageResponseResponse.body().getData().get(i).getImages().size() >= 1) {
-                Categoriesroducts.Datum.Image image = homePageResponseResponse.body().getData().get(i).getImages().get(0);
-                images.add(image);
+                    if (homePageResponseResponse.body().getData().get(i).getImages().size() >= 1) {
+                        Categoriesroducts.Datum.Image image = homePageResponseResponse.body().getData().get(i).getImages().get(0);
+                        images.add(image);
+                    }
+                    //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
+                    datumArrayList.add(homePageResponseResponse.body().getData().get(i));
+                }
+                GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+                recyclerProduct.setLayoutManager(layoutManager);
+                ProductListAdapter adapter = new ProductListAdapter(this, images, datumArrayList);
+                recyclerProduct.setAdapter(adapter);
+                adapter.ProductListAdapter(new product_id_IF() {
+                    @Override
+                    public void getProductID(String id) {
+                        Intent intent = new Intent(ProductsActivity.this, ProductDetailsActivity.class);
+                        intent.putExtra("productID", id);
+                        startActivity(intent);
+                    }
+                });
+            }else if (homePageResponseResponse.body().getStatus()==401)
+            {
+                dialog.dismiss();
+                Toast.makeText(this, ""+homePageResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
             }
-            //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
-            datumArrayList.add(homePageResponseResponse.body().getData().get(i));
         }
 
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        recyclerProduct.setLayoutManager(layoutManager);
-        ProductListAdapter adapter = new ProductListAdapter(this, images, datumArrayList);
-        recyclerProduct.setAdapter(adapter);
-        adapter.ProductListAdapter(new product_id_IF() {
-            @Override
-            public void getProductID(String id) {
-                Intent intent = new Intent(ProductsActivity.this, ProductDetailsActivity.class);
-                intent.putExtra("productID", id);
-                startActivity(intent);
-            }
-        });
+
 
         seemorebt.setOnClickListener(new View.OnClickListener() {
             @Override

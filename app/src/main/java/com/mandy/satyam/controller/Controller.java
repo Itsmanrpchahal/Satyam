@@ -210,6 +210,25 @@ public class Controller {
         });
     }
 
+    public void setClearCart()
+    {
+        webAPI.getApi().clearCart().enqueue(new Callback<com.mandy.satyam.login.model.ClearCart>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.login.model.ClearCart> call, Response<com.mandy.satyam.login.model.ClearCart> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.login.model.ClearCart> clearCartResponse = response;
+                    clearCart.onSuccessClearCart(clearCartResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.login.model.ClearCart> call, Throwable t) {
+                clearCart.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface LoginCheck {
         void onSuccessLoginCheck(Response<com.mandy.satyam.login.model.LoginCheck> loginCheckResponse);
         void onError(String error);
@@ -249,4 +268,6 @@ public class Controller {
         void onSuccessClearCart(Response<com.mandy.satyam.login.model.ClearCart> response);
         void onError(String error);
     }
+
+
 }

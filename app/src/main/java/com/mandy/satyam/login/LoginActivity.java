@@ -109,7 +109,6 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
     @Override
     public void onSuccessLoginCheck(Response<LoginCheck> loginCheckResponse) {
         dialog.dismiss();
-        Toast.makeText(this, ""+loginCheckResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
         if (loginCheckResponse.body().getStatus() == 200) {
             setStringVal(Constants.LOGIN_STATUS,"login");
             Intent intent = new Intent(LoginActivity.this, OTP_verify.class);

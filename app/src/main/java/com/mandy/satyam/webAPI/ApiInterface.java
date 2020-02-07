@@ -3,6 +3,7 @@ package com.mandy.satyam.webAPI;
 import com.mandy.satyam.KeysResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
+import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
@@ -62,4 +63,7 @@ public interface ApiInterface {
     Call<SubCategory> subcategories(
             @Query("category_id") String category_id
     );
+
+    @POST("wp-json/cocart/v1/clear")
+    Call<ClearCart> clearCart();
 }

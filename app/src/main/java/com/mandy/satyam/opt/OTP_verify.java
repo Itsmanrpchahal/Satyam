@@ -135,11 +135,8 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
             public void onClick(View v) {
 
                 if (otp.equals(otpView.getText().toString())) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(OTP_verify.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
-
+                    dialog.show();
+                    controller.setLogin(phonenumber,"phone",otp);
                 } else {
                     otpView.setLineColor(getResources().getColor(R.color.red));
                     otpView.setText("");
@@ -173,11 +170,10 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
         dialog.dismiss();
         if (loginResponse != null) {
             if (loginResponse.body().getStatus() == 200) {
-                Toast.makeText(this, ""+loginResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
+                setStringVal(Constants.CONSUMER_KEY_LOGIN,loginResponse.body().getData().getConsumerKey());
+                setStringVal(Constants.CONSUMER_SECRET_LOGIN,loginResponse.body().getData().getConsumerSecret());
                 setStringVal(Constants.LOGIN_STATUS, "login");
-                Intent intent = new Intent(OTP_verify.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                controller.setClearCart();
             }
         }
     }
@@ -186,7 +182,9 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
     public void onSuccessClearCart(Response<ClearCart> response) {
         if (response.body().getStatus()==200)
         {
-            Toast.makeText(this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(OTP_verify.this, MainActivity.class);
+            startActivity(intent);
+            finish();
             controller.setLogin(phonenumber, "phone", otp);
         }
     }
