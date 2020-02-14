@@ -4,26 +4,54 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandy.satyam.R;
+import com.mandy.satyam.baseclass.Constants;
+import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.myCart.IF.AddCartQuantity;
+import com.mandy.satyam.myCart.IF.RemoveCartIF;
+import com.mandy.satyam.myCart.IF.RemoveCartItem;
+import com.mandy.satyam.myCart.response.GetCartProducts;
+import com.mandy.satyam.myCart.response.UpdateCart;
 import com.mandy.satyam.utils.Util;
+
+import java.util.ArrayList;
+
+import retrofit2.Response;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
     int count1 ;
+    ArrayList<GetCartProducts.Datum> arrayList =new ArrayList<>();
+    AddCartQuantity addCartQuantity;
+    RemoveCartItem removeCartItem;
+    RemoveCartIF removeCartIF;
+    Controller controller;
+    String token;
 
+    public void CartAdapter(RemoveCartIF removeCartIF) {
+        this.removeCartIF = removeCartIF;
+    }
 
-    public CartAdapter(Context context) {
+    public void CartAdapter(AddCartQuantity addCartQuantity) {
+        this.addCartQuantity = addCartQuantity;
+    }
+
+    public void CartAdapter(RemoveCartItem removeCartItem) {
+        this.removeCartItem = removeCartItem;
+    }
+
+    public CartAdapter(Context context, ArrayList<GetCartProducts.Datum> getCartProductsArrayList) {
         this.context = context;
+        this.arrayList = getCartProductsArrayList;
 
     }
 
@@ -38,17 +66,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
+        GetCartProducts.Datum datum = arrayList.get(i);
+        Glide.with(context).load(datum.getProductImage()).placeholder(R.drawable.ic_satyamplaceholder).into(viewHolder.cart_product_image);
+        viewHolder.product_name.setText(datum.getProductName());
+        viewHolder.count_tv.setText(String.valueOf(datum.getQuantity()));
+//        viewHolder.product_category.setText(datum.);
+//        viewHolder.product_price.setText(datum.getProductPrice());
+
         viewHolder.add_item_from_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (1<=15)
-                {
-                    count1 =0;
-                    count1 = 1+1;
-                    viewHolder.count_tv.setText(String.valueOf(count1));
-                }else {
-                    Util.showToastMessage(context,"15 is maximum",context.getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
-                }
+                        count1 = 0;
+                        count1 = 1+arrayList.get(i).getQuantity();
+                        arrayList.get(i).setQuantity(count1);
+                        addCartQuantity.onSuccess(String.valueOf(datum.getQuantity()),datum.getCartId());
+                        viewHolder.count_tv.setText(String.valueOf(datum.getQuantity()));
+
             }
         });
 
@@ -56,22 +89,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         viewHolder.remove_item_from_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (10 >= 2) {
+                if (datum.getQuantity() >= 2) {
                     count1 = 0;
-                    count1 = 10 - 1;
-                    viewHolder.count_tv.setText(String.valueOf(count1));
+                    count1 = arrayList.get(i).getQuantity()-1;
+                    arrayList.get(i).setQuantity(count1);
+                    addCartQuantity.onSuccess(String.valueOf(datum.getQuantity()),datum.getCartId());
+                    viewHolder.count_tv.setText(String.valueOf(datum.getQuantity()));
 
                 } else {
                     Util.showToastMessage(context,"1 is minimum",context.getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                 }
             }
         });
+
+        viewHolder.cart_item_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeCartIF.cartID(datum.getCartId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return arrayList.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageButton remove_item_from_cart,add_item_from_cart,cart_item_cancel;

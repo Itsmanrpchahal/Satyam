@@ -225,7 +225,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="25dp"
                 android:background="@color/colorBtnRed"
-                android:text="Add Address"
+                android:text="Done"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp" />

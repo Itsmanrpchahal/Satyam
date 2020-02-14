@@ -9,23 +9,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.mandy.satyam.R;
+import com.mandy.satyam.addressActivity.response.GetAddress;
+import com.mandy.satyam.addressActivity.response.UpdateAddress;
+import com.mandy.satyam.baseclass.BaseClass;
+import com.mandy.satyam.baseclass.Constants;
+import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.utils.SharedToken;
+import com.mandy.satyam.utils.Util;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
 
-public class ADDAddressActivity extends AppCompatActivity {
-
-    SharedToken sharedToken;
-    String name, mobile, postcode, town, state, flat, near;
-    Dialog dialog;
+public class ADDAddressActivity extends BaseClass implements Controller.GetAddress,Controller.UpdateAddress {
 
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
@@ -54,22 +60,82 @@ public class ADDAddressActivity extends AppCompatActivity {
     ImageButton searchBt;
     @BindView(R.id.filter_bt)
     ImageButton filterBt;
+    Controller controller;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addaddress);
         ButterKnife.bind(this);
-
+        dialog = Util.showDialog(this);
+        dialog.show();
+        controller = new Controller((Controller.GetAddress)this,(Controller.UpdateAddress)this);
+        controller.setGetAddress(getStringVal(Constants.USER_ID),getStringVal(Constants.CONSUMER_KEY),getStringVal(Constants.CONSUMER_SECRET));
 
         filterBt.setVisibility(View.GONE);
         searchBt.setVisibility(View.GONE);
-        back.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         textView.setText("Add Address");
+        listners();
 
+    }
+
+    private void listners() {
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) &&
+                        TextUtils.isEmpty(edtTown.getText().toString())  && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
+                        TextUtils.isEmpty(edtNear.getText().toString()))
+                {
+
+                    edtName.setError("Enter Name");
+                    edtMobile.setError("Enter Mobile number");
+                    edtPostcode.setError("Enter Postcode");
+                    edtTown.setError("Enter city");
+                    edtState.setError("Enter State");
+                    edtFlat.setError("Enter Address");
+                    edtNear.setError("Enter Landmark");
+                }else if (TextUtils.isEmpty(edtName.getText().toString()))
+                {
+                    edtName.setError("Enter Name");
+                }else if (TextUtils.isEmpty(edtMobile.getText().toString()))
+                {
+                    edtMobile.setError("Enter Mobile number");
+                }else if (TextUtils.isEmpty(edtPostcode.getText().toString()))
+                {
+                    edtPostcode.setError("Enter Postcode");
+                }else if (TextUtils.isEmpty(edtTown.getText().toString()))
+                {
+                    edtTown.setError("Enter city");
+                }else if (TextUtils.isEmpty(edtState.getText().toString()))
+                {
+                    edtState.setError("Enter State");
+                }else if (TextUtils.isEmpty(edtFlat.getText().toString()))
+                {
+                    edtFlat.setError("Enter Address");
+                }else if (TextUtils.isEmpty(edtNear.getText().toString()))
+                {
+                    edtNear.setError("Enter Landmark");
+                }else {
+                    dialog.show();
+                    controller.setUpdateAddress(getStringVal(Constants.USER_ID),getStringVal(Constants.CONSUMER_KEY),getStringVal(Constants.CONSUMER_SECRET),
+                            edtName.getText().toString(),edtFlat.getText().toString(),edtNear.getText().toString(),edtTown.getText().toString(),
+                            edtPostcode.getText().toString(),edtState.getText().toString(),edtMobile.getText().toString());
+                }
+            }
+        });
     }
 
     @OnClick(R.id.btnAdd)
@@ -120,5 +186,38 @@ public class ADDAddressActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onSuccessGetAddress(Response<GetAddress> response) {
+        dialog.dismiss();
+        if (response!=null)
+        {
+            if (response.body().getStatus()==200)
+            {
+                edtName.setText(response.body().getData().getBilling().getFirstName());
+                edtMobile.setText(response.body().getData().getBilling().getPhone());
+                edtPostcode.setText(response.body().getData().getBilling().getPostcode());
+                edtTown.setText(response.body().getData().getBilling().getCity());
+                edtState.setText(response.body().getData().getBilling().getState());
+                edtFlat.setText(response.body().getData().getBilling().getAddress1());
+                edtNear.setText(response.body().getData().getBilling().getAddress2());
+            }
+        }
+    }
+
+    @Override
+    public void onSuccessUpdateAddress(Response<UpdateAddress> response) {
+        dialog.dismiss();
+        if (response.isSuccessful())
+        {
+            Toast.makeText(this, "Address Updated "+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        dialog.dismiss();
+        Util.showToastMessage(this,error,getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
     }
 }

@@ -37,8 +37,8 @@ import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
 import com.mandy.satyam.productDetails.adapter.SizeAdapter;
 import com.mandy.satyam.productDetails.adapter.ViewPagerProductImageAdapter;
+import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
-import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
 
@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail,Controller.RelatedPrducts {
+public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail,Controller.RelatedPrducts ,Controller.AddToCart{
 
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
@@ -123,6 +123,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     ArrayList<ProductDetailResponse.Data.RelatedId> relatedIDs = new ArrayList<>();
     @BindView(R.id.seerelatedTV)
     TextView seerelatedTV;
+    String getProductID;
 
 
     @Override
@@ -130,7 +131,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.ProductDetail)this,(Controller.RelatedPrducts)this);
+        controller = new Controller((Controller.ProductDetail)this,(Controller.RelatedPrducts)this,(Controller.AddToCart)this);
         progressDialog = Util.showDialog(this);
         intent = getIntent();
         if (intent != null) {
@@ -149,10 +150,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
         filterBt.setVisibility(View.INVISIBLE);
         searchBt.setVisibility(View.INVISIBLE);
-        back.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         textView.setText("Product Details");
 
         linear.setOnClickListener(new View.OnClickListener() {
@@ -177,10 +177,16 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAddCart:
-                Toast.makeText(this, "Item add into cart", Toast.LENGTH_SHORT).show();
+                progressDialog.show();
+                controller.setAddToCart(getProductID,"1","",getStringVal(Constants.USERTOKEN));
+//               controller.setAddToCart(getStringVal(Constants.CONSUMER_KEY_LOGIN),getStringVal(Constants.CONSUMER_SECRET_LOGIN),getProductID,"1");
                 break;
             case R.id.btnBuynow:
                 Adddialog();
+                break;
+
+            case R.id.back:
+                onBackPressed();
                 break;
         }
     }
@@ -243,6 +249,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 txtPrice.setText("$ " + productDetailResponseResponse.body().getData().getPrice());
             }
+            getProductID = productDetailResponseResponse.body().getData().getId().toString();
             stocktexttv.setText(productDetailResponseResponse.body().getData().getStockStatus());
             perviewDescription.setText(Html.fromHtml(productDetailResponseResponse.body().getData().getDescription()));
             if (perviewDescription.getText().toString().equals("")) {
@@ -372,6 +379,14 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 //            }
 //        }
 
+    }
+
+
+    @Override
+    public void onSuccessAddToCart(Response<AddToCart> response) {
+        progressDialog.dismiss();
+
+        Toast.makeText(this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

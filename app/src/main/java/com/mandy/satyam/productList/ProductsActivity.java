@@ -73,14 +73,14 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
         ButterKnife.bind(this);
         progressDialog = Util.showDialog(ProductsActivity.this);
         controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this, (Controller.ProductSubCategories) this);
-        back.setVisibility(View.GONE);
+
 
 
         listerners();
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         intent = getIntent();
         if (intent != null) {
             ProductType = intent.getStringExtra("ProductType");
@@ -120,6 +120,13 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             public void onClick(View v) {
                 Intent intent = new Intent(ProductsActivity.this, FilterActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

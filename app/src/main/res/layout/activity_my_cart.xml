@@ -152,6 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:visibility="gone"
                 android:text="More items to explore"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -159,6 +160,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerMore"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -177,12 +179,14 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Top pick up for you"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerTopPickup"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

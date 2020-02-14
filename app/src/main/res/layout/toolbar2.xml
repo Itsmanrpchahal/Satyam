@@ -2,6 +2,15 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    android:contentInsetRight="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp"
     android:background="@color/toolbar">
 
 <RelativeLayout
@@ -13,15 +22,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_back"
+        android:layout_marginLeft="@dimen/defaultmargin"
         android:background="#00FFFFFF"></ImageButton>
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/search_bt"
-        android:layout_marginRight="@dimen/margin_dp10"
-        android:layout_marginLeft="@dimen/margin_dp10"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:singleLine="true"
@@ -29,8 +37,6 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
-
-
 
     <ImageButton
         android:id="@+id/search_bt"
@@ -52,7 +58,6 @@
         android:background="#00FFFFFF"></ImageButton>
 
 </RelativeLayout>
-
 
 
 </androidx.appcompat.widget.Toolbar>

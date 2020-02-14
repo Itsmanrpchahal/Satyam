@@ -1,24 +1,21 @@
 package com.mandy.satyam.controller;
 
-import android.util.Log;
-
 import com.mandy.satyam.KeysResponse;
+import com.mandy.satyam.addressActivity.response.GetAddress;
+import com.mandy.satyam.addressActivity.response.UpdateAddress;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
-import com.mandy.satyam.login.model.ClearCart;
-import com.mandy.satyam.login.model.Login;
-import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.myCart.response.RemoveCartItem;
+import com.mandy.satyam.myCart.response.UpdateCart;
+import com.mandy.satyam.myProfile.response.GetProfile;
+import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.webAPI.WebAPI;
 
-import java.util.List;
-
-import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Header;
 
 public class Controller {
 
@@ -31,6 +28,14 @@ public class Controller {
     public ProductDetail productDetail;
     public ProductSubCategories subCategory;
     public ClearCart clearCart;
+    public AddToCart addToCart;
+    public GetCartProducts getCartProducts;
+    public UpdateCart updateCart;
+    public RemoveCartItem removeCartItem;
+    public GetProfile getProfile;
+    public GetAddress getAddress;
+    public UpdateAddress updateAddress;
+
 
     //logincheck
     public Controller(LoginCheck loginCheck1) {
@@ -63,16 +68,53 @@ public class Controller {
     }
 
     //productDetail
-    public Controller(ProductDetail productDetail1,RelatedPrducts relatedPrducts1)
+    public Controller(ProductDetail productDetail1,RelatedPrducts relatedPrducts1,AddToCart addToCart1)
     {
         productDetail = productDetail1;
         relatedPrducts = relatedPrducts1;
+        addToCart = addToCart1;
         webAPI = new WebAPI();
     }
     //Keys
     public Controller(Keys keys1)
     {
         keys = keys1;
+        webAPI = new WebAPI();
+    }
+
+    //Clear Cart
+    public Controller(ClearCart clearCart1)
+    {
+        clearCart = clearCart1;
+        webAPI = new WebAPI();
+    }
+
+    //add to cart
+    public Controller(AddToCart addToCart1)
+    {
+        addToCart = addToCart1;
+        webAPI = new WebAPI();
+    }
+
+    //getCartProducts
+    public Controller(GetCartProducts getCartProducts1,UpdateCart updateCart1,RemoveCartItem removeCartItem1)
+    {
+        getCartProducts = getCartProducts1;
+        updateCart = updateCart1;
+        removeCartItem = removeCartItem1;
+        webAPI = new WebAPI();
+    }
+
+    public Controller(GetProfile getProfile1)
+    {
+        getProfile = getProfile1;
+        webAPI = new WebAPI();
+    }
+
+    public Controller(GetAddress getAddress1,UpdateAddress updateAddress1)
+    {
+        getAddress = getAddress1;
+        updateAddress = updateAddress1;
         webAPI = new WebAPI();
     }
 
@@ -229,6 +271,142 @@ public class Controller {
         });
     }
 
+
+    public void setGetCartProducts(String token)
+    {
+        webAPI.getApi().getCartProducts(token).enqueue(new Callback<com.mandy.satyam.myCart.response.GetCartProducts>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.myCart.response.GetCartProducts> call, Response<com.mandy.satyam.myCart.response.GetCartProducts> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.myCart.response.GetCartProducts> cartProductsResponse = response;
+                    getCartProducts.onSuccessGetCart(cartProductsResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.myCart.response.GetCartProducts> call, Throwable t) {
+                getCartProducts.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setAddToCart(String product_id,String quantity,String variation_id,String token)
+    {
+        webAPI.getApi().addtoCart(product_id,quantity,variation_id,token).enqueue(new Callback<com.mandy.satyam.productDetails.response.AddToCart>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.productDetails.response.AddToCart> call, Response<com.mandy.satyam.productDetails.response.AddToCart> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.productDetails.response.AddToCart> addToCartResponse = response;
+                    addToCart.onSuccessAddToCart(addToCartResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.productDetails.response.AddToCart> call, Throwable t) {
+                    addToCart.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setUpdateCart(String cart_id,String token,String quantity)
+    {
+        webAPI.getApi().updateCart(cart_id,token,quantity).enqueue(new Callback<com.mandy.satyam.myCart.response.UpdateCart>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.myCart.response.UpdateCart> call, Response<com.mandy.satyam.myCart.response.UpdateCart> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.myCart.response.UpdateCart> updateCartResponse = response;
+                    updateCart.onSuccessUpdateCart(updateCartResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.myCart.response.UpdateCart> call, Throwable t) {
+                updateCart.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setRemoveCartItem(String cart_id,String user_id,String token)
+    {
+        webAPI.getApi().removeCartItem(cart_id,user_id,token).enqueue(new Callback<com.mandy.satyam.myCart.response.RemoveCartItem>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.myCart.response.RemoveCartItem> call, Response<com.mandy.satyam.myCart.response.RemoveCartItem> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.myCart.response.RemoveCartItem> removeCartItemResponse = response;
+                    removeCartItem.onSuccessRemoveCartItem(removeCartItemResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.myCart.response.RemoveCartItem> call, Throwable t) {
+                removeCartItem.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setGetProfile(String token)
+    {
+        webAPI.getApi().getProfile(token).enqueue(new Callback<com.mandy.satyam.myProfile.response.GetProfile>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.myProfile.response.GetProfile> call, Response<com.mandy.satyam.myProfile.response.GetProfile> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.myProfile.response.GetProfile> getProfileResponse = response;
+                    getProfile.onSuccessGetProfile(getProfileResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.myProfile.response.GetProfile> call, Throwable t) {
+                    getProfile.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setGetAddress(String userID,String consumerkey,String consumerSecret)
+    {
+        webAPI.getApi().getAddress(userID,consumerkey,consumerSecret).enqueue(new Callback<com.mandy.satyam.addressActivity.response.GetAddress>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.addressActivity.response.GetAddress> call, Response<com.mandy.satyam.addressActivity.response.GetAddress> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.addressActivity.response.GetAddress> getAddressResponse = response;
+                    getAddress.onSuccessGetAddress(getAddressResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.addressActivity.response.GetAddress> call, Throwable t) {
+            getAddress.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setUpdateAddress(String input,String consumer_key,String consumer_screat,String first_name,String address_1,
+                                 String address_2,String city,String postcode,String state,String phone)
+    {
+        webAPI.getApi().updateAddress(input,consumer_key,consumer_screat,first_name,address_1,address_2,city,postcode,state,phone).enqueue(new Callback<com.mandy.satyam.addressActivity.response.UpdateAddress>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.addressActivity.response.UpdateAddress> call, Response<com.mandy.satyam.addressActivity.response.UpdateAddress> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.addressActivity.response.UpdateAddress> updateAddressResponse = response;
+                    updateAddress.onSuccessUpdateAddress(updateAddressResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.addressActivity.response.UpdateAddress> call, Throwable t) {
+                updateAddress.onError(t.getMessage());
+            }
+        });
+    }
+
+
     public interface LoginCheck {
         void onSuccessLoginCheck(Response<com.mandy.satyam.login.model.LoginCheck> loginCheckResponse);
         void onError(String error);
@@ -269,5 +447,39 @@ public class Controller {
         void onError(String error);
     }
 
+    public interface AddToCart{
+        void onSuccessAddToCart(Response<com.mandy.satyam.productDetails.response.AddToCart> response);
+        void onError(String error);
+    }
+
+    public interface GetCartProducts{
+        void onSuccessGetCart(Response<com.mandy.satyam.myCart.response.GetCartProducts> response);
+        void onError(String error);
+    }
+
+    public interface UpdateCart{
+        void onSuccessUpdateCart(Response<com.mandy.satyam.myCart.response.UpdateCart> response);
+        void onError(String error);
+    }
+
+    public interface RemoveCartItem{
+        void onSuccessRemoveCartItem(Response<com.mandy.satyam.myCart.response.RemoveCartItem> response);
+        void onError(String error);
+    }
+
+    public interface GetProfile{
+        void onSuccessGetProfile(Response<com.mandy.satyam.myProfile.response.GetProfile> response);
+        void onError(String error);
+    }
+
+    public interface GetAddress{
+        void onSuccessGetAddress(Response<com.mandy.satyam.addressActivity.response.GetAddress> response);
+        void onError(String error);
+    }
+
+    public interface UpdateAddress{
+        void onSuccessUpdateAddress(Response<com.mandy.satyam.addressActivity.response.UpdateAddress> response);
+        void onError(String error);
+    }
 
 }

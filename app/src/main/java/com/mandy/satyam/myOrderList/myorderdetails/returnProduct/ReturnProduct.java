@@ -27,11 +27,6 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.mandy.satyam.R;
 import com.mandy.satyam.utils.Util;
-import com.vansuita.pickimage.bean.PickResult;
-import com.vansuita.pickimage.bundle.PickSetup;
-import com.vansuita.pickimage.dialog.PickImageDialog;
-import com.vansuita.pickimage.listeners.IPickClick;
-import com.vansuita.pickimage.listeners.IPickResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.MultipartBody;
 
-public class ReturnProduct extends AppCompatActivity implements IPickResult {
+public class ReturnProduct extends AppCompatActivity {
 
     @BindView(R.id.back_on_returnScreen)
     ImageButton backOnReturnScreen;
@@ -103,12 +98,12 @@ public class ReturnProduct extends AppCompatActivity implements IPickResult {
             @Override
             public void onClick(View v) {
 
-                uploadImage();
+//                uploadImage();
             }
         });
     }
 
-    private void uploadImage() {
+    /*private void uploadImage() {
         PickImageDialog.build(new PickSetup().setButtonOrientation(LinearLayout.HORIZONTAL)).show(ReturnProduct.this).setOnClick(new IPickClick() {
             @Override
             public void onGalleryClick() {
@@ -138,7 +133,7 @@ public class ReturnProduct extends AppCompatActivity implements IPickResult {
             }
 
         });
-    }
+    }*/
 
 
     @Override
@@ -190,20 +185,5 @@ public class ReturnProduct extends AppCompatActivity implements IPickResult {
         }
     }
 
-    @Override
-    public void onPickResult(PickResult r) {
-        if (r.getError() == null) {
-            try {
-                part = Util.sendImageFileToserver(bitmap, "user_image", ReturnProduct.this);
 
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            //Handle possible errors
-            Toast.makeText(this, r.getError().getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
 }

@@ -162,8 +162,8 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
         if (loginResponse.body().getStatus()==200)
         {
             setStringVal(Constants.LOGIN_STATUS,"login");
-            setStringVal(Constants.CONSUMER_KEY_LOGIN,loginResponse.body().getData().getConsumerSecret());
-            setStringVal(Constants.CONSUMER_SECRET_LOGIN,loginResponse.body().getData().getConsumerKey());
+            setStringVal(Constants.CONSUMER_KEY_LOGIN,loginResponse.body().getData().getConsumerKey());
+            setStringVal(Constants.CONSUMER_SECRET_LOGIN,loginResponse.body().getData().getConsumerSecret());
             setStringVal(Constants.EMAIL,loginResponse.body().getData().getEmail());
             setStringVal(Constants.FIRSTNAME,loginResponse.body().getData().getFirstname());
             setStringVal(Constants.LASTNAME,loginResponse.body().getData().getLastname());

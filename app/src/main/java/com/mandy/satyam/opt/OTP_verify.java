@@ -172,6 +172,8 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
             if (loginResponse.body().getStatus() == 200) {
                 setStringVal(Constants.CONSUMER_KEY_LOGIN,loginResponse.body().getData().getConsumerKey());
                 setStringVal(Constants.CONSUMER_SECRET_LOGIN,loginResponse.body().getData().getConsumerSecret());
+                setStringVal(Constants.USER_ID, String.valueOf(loginResponse.body().getData().getUserId()));
+                setStringVal(Constants.USERTOKEN,loginResponse.body().getData().getToken());
                 setStringVal(Constants.LOGIN_STATUS, "login");
                 controller.setClearCart();
             }
@@ -185,7 +187,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
             Intent intent = new Intent(OTP_verify.this, MainActivity.class);
             startActivity(intent);
             finish();
-            controller.setLogin(phonenumber, "phone", otp);
+//            controller.setLogin(phonenumber, "phone", otp);
         }
     }
 

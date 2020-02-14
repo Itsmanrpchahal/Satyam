@@ -49,10 +49,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
     FragmentManager manager;
     Context context;
     Dialog dialog;
-
     Unbinder unbinder;
-    Bundle bundle;
-    String token;
     ArrayList<HomePageResponse.Data.Category> categories = new ArrayList<>();
     ArrayList<HomePageResponse.Data.Banner> banners = new ArrayList<>();
     ArrayList<HomePageResponse.Data.Section> sections = new ArrayList<>();

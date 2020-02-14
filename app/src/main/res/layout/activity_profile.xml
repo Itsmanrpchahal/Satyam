@@ -15,93 +15,196 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tooolbar">
+        android:layout_marginTop="@dimen/margin_dp55">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/defaultmargin"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="@dimen/defaultmargin"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/imageView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="20dp"
-                android:clickable="false"
+                android:id="@+id/profile_userimage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/defaultmargin"
                 android:scaleType="centerCrop"
-                app:riv_oval="true" />
+                android:src="@drawable/ic_satyamplaceholder"
+                app:riv_oval="true"
+                app:riv_border_width="2dp"
+                ></com.makeramen.roundedimageview.RoundedImageView>
 
-
-            <EditText
-                android:id="@+id/edtName"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/profile_username"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="center"
-                android:hint="Full Name"
-                android:padding="16dp"
+                android:text="Username"
+                android:textSize="@dimen/largetext"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_below="@id/profile_userimage"
+                android:layout_centerHorizontal="true"></TextView>
 
-            <EditText
-                android:id="@+id/edtEmail"
+
+
+            <View
+                android:id="@+id/profile_view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/profile_username"
+                android:layout_marginTop="5dp"
+                android:background="#000000"></View>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="center"
-                android:hint="Email (opational)"
-                android:inputType="textEmailAddress"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_below="@id/profile_view1"
+                android:layout_margin="@dimen/defaultmargin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Username"></TextView>
+
+                <EditText
+                    android:id="@+id/profile_usernameet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username"
+                    android:editable="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normaltext"
+                    android:focusable="false"
+                    android:inputType="textPersonName"
+                    android:layout_marginTop="@dimen/margin_dp6"></EditText>
 
 
-            <EditText
-                android:id="@+id/edtPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="center"
-                android:hint="Phone No."
-                android:inputType="number"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <View
+                    android:id="@+id/profile_view11"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/profile_usernameet"
+                    android:layout_marginTop="5dp"></View>
 
-            <Button
-                android:id="@+id/btnProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/yellow"
-                android:text="Update Profile"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Email"></TextView>
 
-            <Button
-                android:id="@+id/btnEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorBtnRed"
-                android:textColor="@color/white"
-                android:text="Edit Profile"
-                android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/profile_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="email@gmail.com"
+                    android:textColor="@color/black"
+                    android:inputType="textEmailAddress"
+                    android:editable="false"
+                    android:textSize="@dimen/normaltext"
+                    android:focusable="false"
+                    android:layout_marginTop="@dimen/margin_dp6"></EditText>
 
 
-        </LinearLayout>
+                <View
+                    android:id="@+id/profile_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/profile_email"
+                    android:layout_marginTop="5dp"></View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Phone"></TextView>
+
+                <EditText
+                    android:id="@+id/profile_phnno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="+5151161"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normaltext"
+                    android:editable="false"
+                    android:inputType="number"
+                    android:focusable="false"
+                    android:layout_marginTop="@dimen/margin_dp6"></EditText>
+
+
+                <View
+                    android:id="@+id/profile_view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/profile_phnno"
+                    android:layout_marginTop="5dp"></View>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Password"></TextView>
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="**********"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normaltext"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="@dimen/margin_dp6"></EditText>
+
+
+                <View
+                    android:id="@+id/profile_view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/password"
+                    android:layout_marginTop="5dp"></View>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/defaultmargin"
+                    android:text="Confirm Password"></TextView>
+
+                <EditText
+                    android:id="@+id/confirmpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="**********"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normaltext"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="@dimen/margin_dp6"></EditText>
+
+
+                <View
+                    android:id="@+id/setting_view6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/confirmpassword"
+                    android:layout_marginTop="5dp"></View>
+
+
+                <Button
+                    android:id="@+id/profile_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_margin="@dimen/defaultmargin"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/white"
+                    android:text="Edit Profile"
+                    android:textAllCaps="false">
+
+                </Button>
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </ScrollView>
 

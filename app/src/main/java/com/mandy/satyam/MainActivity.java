@@ -38,8 +38,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.commonActivity.CustmerActivity;
+import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.HomeFragment;
 import com.mandy.satyam.login.LoginActivity;
+import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.myCart.MyCartActivity;
 import com.mandy.satyam.myOrderList.MyOrderListActivity;
 import com.mandy.satyam.myProfile.ProfileActivity;
@@ -53,8 +55,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
+import retrofit2.Response;
 
-public class MainActivity extends BaseClass {
+public class MainActivity extends BaseClass implements Controller.Keys {
 
     public static ProfileApi.Data data;
 
@@ -91,7 +94,7 @@ public class MainActivity extends BaseClass {
     String typeIntent = "";
     @BindView(R.id.loginmain)
     TextView loginmain;
-    String firstname,lastname,avatar,email;
+    Controller controller;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,8 @@ public class MainActivity extends BaseClass {
         Fabric.with(MainActivity.this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        controller  = new Controller(this);
+        controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
 
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
         ImageView imgvw = (ImageView) hView.findViewById(R.id.imageView);
@@ -158,7 +163,6 @@ public class MainActivity extends BaseClass {
                 startActivity(intent);
             }
         });
-
 
     }
 
@@ -231,6 +235,7 @@ public class MainActivity extends BaseClass {
 
                         if (logutText.equals("Login")) {
                             Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+
                             startActivity(intent2);
                         } else {
                             logutText = "Login";
@@ -356,5 +361,20 @@ public class MainActivity extends BaseClass {
                 clearStringVal(Constants.LOGIN_STATUS);
             }
         });
+    }
+
+
+    @Override
+    public void onSuccess(Response<KeysResponse> keysResponseResponse) {
+        if (keysResponseResponse.isSuccessful())
+        {
+            setStringVal(Constants.CONSUMER_SECRET,keysResponseResponse.body().getData().getConsumerSecret());
+            setStringVal(Constants.CONSUMER_KEY,keysResponseResponse.body().getData().getConsumerKey());
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+
     }
 }
