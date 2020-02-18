@@ -12,6 +12,33 @@
         android:layout_height="match_parent"
         android:layout_marginRight="20dp">
 
+        <AutoCompleteTextView
+            android:id="@+id/searchProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:imeOptions="actionDone"
+            android:layout_toLeftOf="@id/searchProducts"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/white"
+            android:layout_marginRight="@dimen/margin_dp10"></AutoCompleteTextView>
+
+
+        <ImageButton
+            android:id="@+id/searchProducts"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_searching"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:background="#00FFFFFF"></ImageButton>
+
         <TextView
             android:id="@+id/txtToolbar"
             android:layout_width="wrap_content"

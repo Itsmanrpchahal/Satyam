@@ -100,4 +100,7 @@ dependencies {
     implementation 'com.github.joielechong:countrycodepicker:2.4.1'
 
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
+
+    //range seekbar
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
 }

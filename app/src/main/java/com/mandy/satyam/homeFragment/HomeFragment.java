@@ -19,6 +19,7 @@ import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseFrag;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.adapter.SectionAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
@@ -76,7 +77,6 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         controller.setHomePage();
         unbinder = ButterKnife.bind(this, view);
 
-
         return view;
     }
 
@@ -90,7 +90,6 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         viewPager = (ViewPager) view.findViewById(R.id.recyclerOffer);
         recyclerViewCategory = view.findViewById(R.id.recyclerCategory);
         home_products_recyler = view.findViewById(R.id.home_products_recyler);
-
 
         manager = getActivity().getSupportFragmentManager();
     }
@@ -165,6 +164,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         home_products_recyler.setAdapter(sectionAdapter);
         sectionAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void onError(String error) {

@@ -3,8 +3,14 @@ package com.mandy.satyam.productList;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,8 +24,9 @@ import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.filterScreen.Adapter.FilterProductAdapter;
 import com.mandy.satyam.filterScreen.FilterActivity;
-import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
+import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
@@ -27,9 +34,9 @@ import com.mandy.satyam.productList.adapter.ProductListAdapter;
 import com.mandy.satyam.productList.adapter.SubCategoryAdapter;
 import com.mandy.satyam.productList.interface_.GetSubCate_IF;
 import com.mandy.satyam.productList.response.SubCategory;
-import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -37,7 +44,7 @@ import butterknife.ButterKnife;
 import retrofit2.Response;
 
 //Manpreet Work
-public class ProductsActivity extends BaseClass implements Controller.RelatedPrducts, Controller.ProductSubCategories {
+public class ProductsActivity extends BaseClass implements Controller.RelatedPrducts, Controller.ProductSubCategories, Controller.GetFilterProducts {
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
     @BindView(R.id.textView)
@@ -46,7 +53,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     RecyclerView recyclerProduct;
     Dialog dialog;
     Intent intent;
-    String ProductType;
+    String ProductType, maxPrice, minPrice;
     @BindView(R.id.filter_bt)
     ImageButton filterBt;
     @BindView(R.id.search_bt)
@@ -59,12 +66,19 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     int pageCount = 1;
     int headerList;
     ArrayList<Categoriesroducts.Datum.Image> images = new ArrayList<>();
+    ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
     ArrayList<Categoriesroducts.Datum> datumArrayList = new ArrayList<Categoriesroducts.Datum>();
+    ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
     ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
     @BindView(R.id.seemorebt)
     Button seemorebt;
     @BindView(R.id.subcategoryrecycler)
     RecyclerView subcategoryrecycler;
+    @BindView(R.id.searchProduct)
+    AutoCompleteTextView searchProduct;
+    @BindView(R.id.searchProducts)
+    ImageButton searchProducts;
+    String search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +86,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
         setContentView(R.layout.activity_products);
         ButterKnife.bind(this);
         progressDialog = Util.showDialog(ProductsActivity.this);
-        controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this, (Controller.ProductSubCategories) this);
-
+        controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this, (Controller.ProductSubCategories) this, (Controller.GetFilterProducts) this);
 
 
         listerners();
@@ -83,33 +96,41 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         intent = getIntent();
         if (intent != null) {
-            ProductType = intent.getStringExtra("ProductType");
-            catID = intent.getStringExtra("cateID");
-            String cat = ProductType.substring(0, 1);
-            String small = ProductType.toLowerCase().substring(1);
-            textView.setText(cat + small);
-            if (Util.isOnline(ProductsActivity.this) != false) {
+            if (intent.getStringExtra("isFrom").equals("HomePage")) {
+                ProductType = intent.getStringExtra("ProductType");
+                catID = intent.getStringExtra("cateID");
+                String cat = ProductType.substring(0, 1);
+                String small = ProductType.toLowerCase().substring(1);
+                textView.setText(cat + small);
+                if (Util.isOnline(ProductsActivity.this) != false) {
+                    progressDialog.show();
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount));
+                    controller.setSubCategory(catID);
+                } else {
+                    Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                }
+            }else if (intent.getStringExtra("isFrom").equals("main"))
+            {
+                search = intent.getStringExtra("search");
+                textView.setText("Filter Products");
                 progressDialog.show();
-                controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount));
-                controller.setSubCategory(catID);
-            } else {
-                Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                searchProducts(search);
+            }else {
+                textView.setText("Filter Products");
+                progressDialog.show();
+                maxPrice = intent.getStringExtra("endPrice");
+                minPrice = intent.getStringExtra("startPrice");
+                catID = intent.getStringExtra("catID");
+                if (Util.isOnline(ProductsActivity.this) != false) {
+                    progressDialog.show();
+                    controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "");
+                    controller.setSubCategory(catID);
+                } else {
+                    Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                }
             }
-        }
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        recyclerProduct.setLayoutManager(layoutManager);
-        ProductListAdapter adapter = new ProductListAdapter(this, images, datumArrayList);
-        recyclerProduct.setAdapter(adapter);
-        recyclerProduct.addItemDecoration(new SpacesItemDecoration(5));
-        adapter.ProductListAdapter(new product_id_IF() {
-            @Override
-            public void getProductID(String id) {
-                Intent intent = new Intent(ProductsActivity.this, ProductDetailsActivity.class);
-                intent.putExtra("productID", id);
-                startActivity(intent);
-            }
-        });
+        }
 
     }
 
@@ -119,6 +140,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductsActivity.this, FilterActivity.class);
+                intent.putExtra("cateID", catID);
                 startActivity(intent);
             }
         });
@@ -129,6 +151,62 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 onBackPressed();
             }
         });
+
+        searchBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setVisibility(View.GONE);
+                searchProduct.setVisibility(View.VISIBLE);
+                searchProducts.setVisibility(View.VISIBLE);
+                filterBt.setVisibility(View.GONE);
+                searchBt.setVisibility(View.GONE);
+            }
+        });
+
+        searchProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                textView.setVisibility(View.VISIBLE);
+//                searchProduct.setVisibility(View.GONE);
+//                searchBt.setVisibility(View.VISIBLE);
+//                filterBt.setVisibility(View.VISIBLE);
+//                seemorebt.setVisibility(View.VISIBLE);
+                searchProducts(searchProduct.getText().toString());
+                images.clear();
+                datumArrayList.clear();
+                filterDatumArraylist.clear();
+                filterImages.clear();
+            }
+        });
+
+
+
+
+    }
+
+    private void searchProduct() {
+
+         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        searchProduct.setAdapter(arrayAdapter);
+
+        searchProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String message = arrayAdapter.getItem(position);
+                searchProducts(message);
+            }
+        });
+    }
+
+    private void searchProducts(String s) {
+        if (Util.isOnline(ProductsActivity.this) != false) {
+            progressDialog.show();
+            controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s);
+            controller.setSubCategory(catID);
+        } else {
+            Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+        }
+
     }
 
 
@@ -142,10 +220,8 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     public void onSucessRelated(Response<Categoriesroducts> homePageResponseResponse) {
         progressDialog.dismiss();
         seemorebt.setVisibility(View.VISIBLE);
-        if (homePageResponseResponse.isSuccessful())
-        {
-            if (homePageResponseResponse.body().getStatus()==200)
-            {
+        if (homePageResponseResponse.isSuccessful()) {
+            if (homePageResponseResponse.body().getStatus() == 200) {
                 headerList = Integer.parseInt(homePageResponseResponse.headers().get("X-WP-TotalPages"));
                 for (int i = 0; i < homePageResponseResponse.body().getData().size(); i++) {
 
@@ -168,14 +244,11 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                         startActivity(intent);
                     }
                 });
-            }else if (homePageResponseResponse.body().getStatus()==401)
-            {
+            } else if (homePageResponseResponse.body().getStatus() == 401) {
                 dialog.dismiss();
-                Toast.makeText(this, ""+homePageResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "" + homePageResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
             }
         }
-
-
 
 
         seemorebt.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +315,71 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
             }
         });
+    }
+
+    @Override
+    public void onSuccessGetFilterProducts(Response<FilterResponse> responseResponse) {
+        progressDialog.dismiss();
+        if (responseResponse.isSuccessful()) {
+            if (responseResponse.body().getStatus() == 200) {
+                headerList = Integer.parseInt(responseResponse.headers().get("X-WP-TotalPages"));
+
+                for (int i = 0; i < responseResponse.body().getData().size(); i++) {
+
+                    if (responseResponse.body().getData().get(i).getImages().size() >= 1) {
+                        FilterResponse.Datum.Image image = responseResponse.body().getData().get(i).getImages().get(0);
+                        filterImages.add(image);
+                    }
+
+                    //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
+                    filterDatumArraylist.add(responseResponse.body().getData().get(i));
+                }
+                GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+                recyclerProduct.setLayoutManager(layoutManager);
+                FilterProductAdapter adapter = new FilterProductAdapter(this, filterImages, filterDatumArraylist);
+                recyclerProduct.setAdapter(adapter);
+                adapter.ProductListAdapter(new product_id_IF() {
+                    @Override
+                    public void getProductID(String id) {
+                        Intent intent = new Intent(ProductsActivity.this, ProductDetailsActivity.class);
+                        intent.putExtra("productID", id);
+                        startActivity(intent);
+                    }
+                });
+
+                seemorebt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        progressDialog.show();
+                        if (pageCount < headerList) {
+                            pageCount = 1 + pageCount;
+                            if (Util.isOnline(ProductsActivity.this) != false) {
+                                progressDialog.show();
+                                controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "");
+                            } else {
+                                Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                            }
+                        } else {
+                            seemorebt.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+                if (pageCount == headerList) {
+                    seemorebt.setVisibility(View.GONE);
+                } else {
+                    seemorebt.setVisibility(View.VISIBLE);
+                }
+
+
+            } else {
+                Util.showToastMessage(this, responseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+            }
+        } else {
+            Util.showToastMessage(this, responseResponse.message(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        }
+
+
     }
 
     @Override

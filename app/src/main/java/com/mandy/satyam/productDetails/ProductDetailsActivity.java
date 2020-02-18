@@ -32,6 +32,7 @@ import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.commentActivity.CommentActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
+import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
@@ -177,8 +178,15 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAddCart:
-                progressDialog.show();
-                controller.setAddToCart(getProductID,"1","",getStringVal(Constants.USERTOKEN));
+
+                if (getStringVal(Constants.USER_ID).equals(""))
+                {
+                    Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }else {
+                    progressDialog.show();
+                    controller.setAddToCart(getProductID,"1","",getStringVal(Constants.USERTOKEN));
+                }
 //               controller.setAddToCart(getStringVal(Constants.CONSUMER_KEY_LOGIN),getStringVal(Constants.CONSUMER_SECRET_LOGIN),getProductID,"1");
                 break;
             case R.id.btnBuynow:
@@ -243,11 +251,11 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
             if (productDetailResponseResponse.body().getData().getSalePrice().equals("")) {
                 txtMRP.setVisibility(View.GONE);
-                txtPrice.setText("$ " + productDetailResponseResponse.body().getData().getPrice());
+                txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
             } else {
-                txtMRP.setText("$ " + productDetailResponseResponse.body().getData().getSalePrice());
+                txtMRP.setText("₹ " + productDetailResponseResponse.body().getData().getSalePrice());
                 txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                txtPrice.setText("$ " + productDetailResponseResponse.body().getData().getPrice());
+                txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
             }
             getProductID = productDetailResponseResponse.body().getData().getId().toString();
             stocktexttv.setText(productDetailResponseResponse.body().getData().getStockStatus());

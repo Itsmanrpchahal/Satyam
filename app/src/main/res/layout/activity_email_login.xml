@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:inputType="textWebEmailAddress"
             android:backgroundTint="#00FFFFFF"
+            android:imeOptions="actionDone"
             android:layout_margin="8dp"></EditText>
     </LinearLayout>
 

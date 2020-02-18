@@ -61,30 +61,71 @@
                 android:layout_margin="@dimen/defaultmargin"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/defaultmargin"
-                    android:text="Username"></TextView>
-
-                <EditText
-                    android:id="@+id/profile_usernameet"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
-                    android:editable="false"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/normaltext"
-                    android:focusable="false"
-                    android:inputType="textPersonName"
-                    android:layout_marginTop="@dimen/margin_dp6"></EditText>
+                    android:weightSum="2"
+                    android:id="@+id/usernamelayut"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/defaultmargin"
+                            android:text="Firstname"></TextView>
+
+                        <EditText
+                            android:id="@+id/profile_usernameet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Firstname"
+                            android:enabled="false"
+                            android:imeOptions="actionNext"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/normaltext"
+                            android:inputType="textPersonName"
+                            android:layout_marginTop="@dimen/margin_dp6"></EditText>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/defaultmargin"
+                            android:text="Lastname"></TextView>
+
+                        <EditText
+                            android:id="@+id/profile_lastname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Lastname"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/normaltext"
+                            android:enabled="false"
+                            android:inputType="textPersonName"
+                            android:layout_marginTop="@dimen/margin_dp6"></EditText>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
 
 
                 <View
                     android:id="@+id/profile_view11"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/profile_usernameet"
+                    android:layout_below="@id/usernamelayut"
                     android:layout_marginTop="5dp"></View>
 
                 <TextView
@@ -100,9 +141,8 @@
                     android:hint="email@gmail.com"
                     android:textColor="@color/black"
                     android:inputType="textEmailAddress"
-                    android:editable="false"
                     android:textSize="@dimen/normaltext"
-                    android:focusable="false"
+                    android:enabled="false"
                     android:layout_marginTop="@dimen/margin_dp6"></EditText>
 
 
@@ -123,12 +163,12 @@
                     android:id="@+id/profile_phnno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:hint="+5151161"
                     android:textColor="@color/black"
                     android:textSize="@dimen/normaltext"
                     android:editable="false"
                     android:inputType="number"
-                    android:focusable="false"
                     android:layout_marginTop="@dimen/margin_dp6"></EditText>
 
 
@@ -141,6 +181,7 @@
 
 
                 <TextView
+                    android:id="@+id/passwordtv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/defaultmargin"
@@ -166,6 +207,7 @@
 
 
                 <TextView
+                    android:id="@+id/cpasswordtv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/defaultmargin"

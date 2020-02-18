@@ -7,22 +7,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -33,21 +30,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.commonActivity.CustmerActivity;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.HomeFragment;
 import com.mandy.satyam.login.LoginActivity;
-import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.myCart.MyCartActivity;
 import com.mandy.satyam.myOrderList.MyOrderListActivity;
 import com.mandy.satyam.myProfile.ProfileActivity;
 import com.mandy.satyam.myProfile.ProfileApi;
+import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.searchActivity.SearchActivity;
 import com.mandy.satyam.termsandcondition.TermsActivity;
+import com.mandy.satyam.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +95,13 @@ public class MainActivity extends BaseClass implements Controller.Keys {
     @BindView(R.id.loginmain)
     TextView loginmain;
     Controller controller;
+    @BindView(R.id.searchProduct)
+    AutoCompleteTextView searchProduct;
+    @BindView(R.id.searchProducts)
+    ImageButton searchProducts;
+    ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
+    ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,18 +109,16 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         Fabric.with(MainActivity.this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        controller  = new Controller(this);
+        controller = new Controller((Controller.Keys)this);
         controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
 
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
         ImageView imgvw = (ImageView) hView.findViewById(R.id.imageView);
         TextView tv = (TextView) hView.findViewById(R.id.textView);
-      /*  if (!Constants.FIRSTNAME.equalsIgnoreCase(""))
-        {
-            tv.setText(getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME));
-        }else {
-            tv.setText("Hello Guest");
-        }*/
+
+        tv.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME));
+        Glide.with(this).load(getStringVal(Constants.AVATAR)).placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
+
         //checkPermissions();
 //        Toast.makeText(this, ""+getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME), Toast.LENGTH_SHORT).show();
         mToggle = new ActionBarDrawerToggle(this, drawerNavigation, R.string.open, R.string.close);
@@ -135,14 +140,23 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         // framelayout.setVisibility(View.VISIBLE);
 
 
-        onNavigationClick();
+        lisenters();
+
+    }
+
+    private void lisenters() {
 
         toolbarSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //done
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                startActivity(intent);
+               toolbarSearch.setVisibility(View.GONE);
+               productCart.setVisibility(View.GONE);
+               cartCount.setVisibility(View.GONE);
+               cartlayout.setVisibility(View.GONE);
+                txtToolbar.setVisibility(View.GONE);
+               searchProduct.setVisibility(View.VISIBLE);
+                searchProducts.setVisibility(View.VISIBLE);
             }
         });
 
@@ -164,8 +178,23 @@ public class MainActivity extends BaseClass implements Controller.Keys {
             }
         });
 
+        searchProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,ProductsActivity.class);
+                intent.putExtra("isFrom","main");
+                intent.putExtra("search",searchProduct.getText().toString());
+                startActivity(intent);
+            }
+        });
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onNavigationClick();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -366,10 +395,9 @@ public class MainActivity extends BaseClass implements Controller.Keys {
 
     @Override
     public void onSuccess(Response<KeysResponse> keysResponseResponse) {
-        if (keysResponseResponse.isSuccessful())
-        {
-            setStringVal(Constants.CONSUMER_SECRET,keysResponseResponse.body().getData().getConsumerSecret());
-            setStringVal(Constants.CONSUMER_KEY,keysResponseResponse.body().getData().getConsumerKey());
+        if (keysResponseResponse.isSuccessful()) {
+            setStringVal(Constants.CONSUMER_SECRET, keysResponseResponse.body().getData().getConsumerSecret());
+            setStringVal(Constants.CONSUMER_KEY, keysResponseResponse.body().getData().getConsumerKey());
         }
     }
 

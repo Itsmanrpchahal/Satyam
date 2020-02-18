@@ -12,7 +12,6 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/best_s"
         app:riv_corner_radius="2dp" />
 
     <com.wang.avi.AVLoadingIndicatorView

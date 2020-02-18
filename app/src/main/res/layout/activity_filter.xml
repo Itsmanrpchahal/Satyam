@@ -51,73 +51,68 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey"
-                android:visibility="gone"
-                android:id="@+id/categories_recyler"></androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:id="@+id/brand_tab"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="5sp"
-                android:text="Brand"
-                android:visibility="visible"
-                android:textColor="@color/black"
-                android:textSize="22sp"></TextView>
+        android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/size_tab"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="5sp"
-                android:visibility="visible"
-                android:text="Size"
-                android:textColor="@color/black"
-                android:textSize="22sp"></TextView>
-
-            <TextView
-                android:id="@+id/colors_tab"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="5sp"
-                android:visibility="visible"
-                android:text="Colors"
-                android:textColor="@color/black"
-                android:textSize="22sp"></TextView>
-
-            <TextView
-                android:id="@+id/price_tab"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center_vertical"
-                android:visibility="visible"
-                android:paddingLeft="5sp"
-                android:text="Price"
-                android:textColor="@color/black"
-                android:textSize="22sp"></TextView>
-
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filter_recylcer"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            ></androidx.recyclerview.widget.RecyclerView>
+            android:text="Price Range"
+            android:layout_margin="@dimen/defaultmargin"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"></TextView>
+
+        <com.jaygoo.widget.RangeSeekBar
+            android:id="@+id/rangeseekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:rsb_gravity="center"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="@dimen/defaultmargin"
+            app:rsb_indicator_text_color="@color/colorAccent"
+            app:rsb_progress_color="@color/colorAccent"
+            app:rsb_thumb_drawable="@drawable/circle_backgroundtheme"
+            ></com.jaygoo.widget.RangeSeekBar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="@dimen/defaultmargin">
+
+            <TextView
+                android:id="@+id/startprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/black"></TextView>
+
+            <TextView
+                android:id="@+id/endprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text=""
+                android:textColor="@color/black"></TextView>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Brand"
+            android:layout_margin="@dimen/defaultmargin"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"></TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/brandRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="@dimen/defaultmargin"
+            android:layout_marginBottom="@dimen/margin_dp100"></androidx.recyclerview.widget.RecyclerView>
+
 
     </LinearLayout>
 

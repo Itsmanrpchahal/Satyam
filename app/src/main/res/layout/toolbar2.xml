@@ -13,14 +13,47 @@
     app:contentInsetEnd="0dp"
     android:background="@color/toolbar">
 
+
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <AutoCompleteTextView
+        android:id="@+id/searchProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/back"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:imeOptions="actionDone"
+        android:layout_toLeftOf="@id/searchProducts"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_dp10"
+        android:backgroundTint="@color/white"
+        android:layout_marginRight="@dimen/margin_dp10"></AutoCompleteTextView>
+
+
+    <ImageButton
+        android:id="@+id/searchProducts"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_searching"
+        android:layout_marginLeft="@dimen/defaultmargin"
+        android:background="#00FFFFFF"></ImageButton>
+
 
     <ImageButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_back"
         android:layout_marginLeft="@dimen/defaultmargin"
         android:background="#00FFFFFF"></ImageButton>
@@ -33,10 +66,12 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:singleLine="true"
+        android:layout_centerVertical="true"
         android:text="Title"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
+
 
     <ImageButton
         android:id="@+id/search_bt"
@@ -44,6 +79,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_searching"
         android:background="#00FFFFFF"
+        android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/filter_bt"
         android:layout_marginRight="16sp"></ImageButton>
 

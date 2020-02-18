@@ -7,39 +7,61 @@ import java.util.List;
 
 public class SubCategory {
 
-@SerializedName("status")
-@Expose
-private Integer status;
-@SerializedName("message")
-@Expose
-private String message;
-@SerializedName("data")
-@Expose
-private List<Datum> data = null;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("data")
+    @Expose
+    private List<Datum> data = null;
+    @SerializedName("min_price")
+    @Expose
+    private Integer minPrice;
+    @SerializedName("max_price")
+    @Expose
+    private Integer maxPrice;
 
-public Integer getStatus() {
-return status;
-}
+    public Integer getStatus() {
+        return status;
+    }
 
-public void setStatus(Integer status) {
-this.status = status;
-}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-public String getMessage() {
-return message;
-}
+    public String getMessage() {
+        return message;
+    }
 
-public void setMessage(String message) {
-this.message = message;
-}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-public List<Datum> getData() {
-return data;
-}
+    public List<Datum> getData() {
+        return data;
+    }
 
-public void setData(List<Datum> data) {
-this.data = data;
-}
+    public void setData(List<Datum> data) {
+        this.data = data;
+    }
+
+    public Integer getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(Integer minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public Integer getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(Integer maxPrice) {
+        this.maxPrice = maxPrice;
+    }
 
     public class Datum {
 

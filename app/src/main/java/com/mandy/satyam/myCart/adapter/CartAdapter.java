@@ -1,4 +1,4 @@
-package com.mandy.satyam.myCart;
+package com.mandy.satyam.myCart.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,18 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandy.satyam.R;
-import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.myCart.IF.AddCartQuantity;
 import com.mandy.satyam.myCart.IF.RemoveCartIF;
 import com.mandy.satyam.myCart.IF.RemoveCartItem;
 import com.mandy.satyam.myCart.response.GetCartProducts;
-import com.mandy.satyam.myCart.response.UpdateCart;
 import com.mandy.satyam.utils.Util;
 
 import java.util.ArrayList;
-
-import retrofit2.Response;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
@@ -70,8 +65,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         Glide.with(context).load(datum.getProductImage()).placeholder(R.drawable.ic_satyamplaceholder).into(viewHolder.cart_product_image);
         viewHolder.product_name.setText(datum.getProductName());
         viewHolder.count_tv.setText(String.valueOf(datum.getQuantity()));
-//        viewHolder.product_category.setText(datum.);
-//        viewHolder.product_price.setText(datum.getProductPrice());
+        viewHolder.product_category.setVisibility(View.GONE);
+        viewHolder.product_price.setText("₹"+datum.getProductPrice());
 
         viewHolder.add_item_from_cart.setOnClickListener(new View.OnClickListener() {
             @Override

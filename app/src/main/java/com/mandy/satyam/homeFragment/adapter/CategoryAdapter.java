@@ -65,6 +65,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 selectedPosition = viewHolder.getAdapterPosition();
                 notifyItemChanged(selectedPosition);
                 Intent intent = new Intent(context, ProductsActivity.class);
+                intent.putExtra("isFrom","FilterScreen");
                 intent.putExtra("cateID",categories.get(i).getCategoryId().toString());
                 intent.putExtra("ProductType",categories.get(i).getCategoryName());
                 context.startActivity(intent);

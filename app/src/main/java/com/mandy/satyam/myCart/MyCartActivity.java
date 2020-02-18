@@ -16,21 +16,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jaygoo.widget.Utils;
 import com.mandy.satyam.R;
-import com.mandy.satyam.addressActivity.AddressActivity;
 import com.mandy.satyam.addressActivity.addAddress.ADDAddressActivity;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.myCart.IF.AddCartQuantity;
 import com.mandy.satyam.myCart.IF.RemoveCartIF;
-import com.mandy.satyam.myCart.exploremore.CartMoreAdapter;
+import com.mandy.satyam.myCart.adapter.CartAdapter;
 import com.mandy.satyam.myCart.response.GetCartProducts;
 import com.mandy.satyam.myCart.response.RemoveCartItem;
 import com.mandy.satyam.myCart.response.UpdateCart;
-import com.mandy.satyam.myCart.topitems.TopItemsAdapter;
-import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
 
@@ -75,7 +71,9 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     ArrayList<GetCartProducts.Datum> getCartProductsArrayList = new ArrayList<>();
     Controller controller;
     Dialog progressdialog;
-    AddCartQuantity addCartQuantity;
+    public  ArrayList<Integer> quantity = new ArrayList<>();
+    public  ArrayList<String> product_id = new ArrayList<>();
+    String totalquantity;
 
 
     @Override
@@ -106,20 +104,6 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
         });
 
 
-        CartMoreAdapter adapter = new CartMoreAdapter(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerMore.setLayoutManager(linearLayoutManager);
-        recyclerMore.setAdapter(adapter);
-        recyclerMore.addItemDecoration(new SpacesItemDecoration(5));
-
-
-        //set top liste items
-
-        TopItemsAdapter adapter2 = new TopItemsAdapter(this);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerTopPickup.setLayoutManager(linearLayoutManager2);
-        recyclerTopPickup.setAdapter(adapter2);
-        recyclerTopPickup.addItemDecoration(new SpacesItemDecoration(5));
 
         listeners();
 
@@ -133,6 +117,8 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                 onBackPressed();
             }
         });
+
+
     }
 
     @OnClick({R.id.btnProced, R.id.btnProced2})
@@ -150,7 +136,8 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
 
     private void sendData() {
         Intent intent = new Intent(this, ADDAddressActivity.class);
-        intent.putExtra("Cid", "0");
+        intent.putExtra("product_id", product_id);
+        intent.putExtra("quantity",quantity);
         startActivity(intent);
     }
 
@@ -166,8 +153,16 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
         if (response.isSuccessful()) {
             if (response.body().getStatus() == 200) {
                 for (int i = 0; i < response.body().getData().size(); i++) {
+
+                    if (response.body().getData().size()==0)
+                    {
+                        btnProced.setVisibility(View.GONE);
+                        btnProced2.setVisibility(View.GONE);
+                    }
                     GetCartProducts.Datum datum = response.body().getData().get(i);
                     getCartProductsArrayList.add(datum);
+                    quantity.add(getCartProductsArrayList.get(i).getQuantity());
+                    product_id.add(getCartProductsArrayList.get(i).getProductId());
 
                     // set data into cart
                     CartAdapter adapter3 = new CartAdapter(this, getCartProductsArrayList);

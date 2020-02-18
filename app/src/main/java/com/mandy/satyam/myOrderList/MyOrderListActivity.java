@@ -13,11 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
+import com.mandy.satyam.baseclass.BaseClass;
+import com.mandy.satyam.baseclass.Constants;
+import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.myOrderList.adapter.GetAllOrdersAdapter;
+import com.mandy.satyam.myOrderList.response.GetAllOrders;
+import com.mandy.satyam.utils.Util;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
-public class MyOrderListActivity extends AppCompatActivity {
+public class MyOrderListActivity extends BaseClass implements Controller.GetAllOrders {
 
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
@@ -38,33 +47,43 @@ public class MyOrderListActivity extends AppCompatActivity {
     ImageButton searchBt;
     @BindView(R.id.back)
     ImageButton back;
+    Controller controller;
+    Dialog progressDialog;
+    ArrayList<GetAllOrders.Datum> getAllOrders  = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order_list);
         ButterKnife.bind(this);
-
+        progressDialog = Util.showDialog(this);
+        progressDialog.show();
+        controller = new Controller(this);
+        controller.setGetAllOrders(getStringVal(Constants.USER_ID),getStringVal(Constants.CONSUMER_KEY),getStringVal(Constants.CONSUMER_SECRET),"my_orders");
 
         filterBt.setVisibility(View.GONE);
         searchBt.setVisibility(View.GONE);
-        back.setVisibility(View.GONE);
+        back.setVisibility(View.VISIBLE);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         textView.setText("My Order List");
-        setRecyclerView();
+        listerners();
 
     }
 
-
-    private void setRecyclerView() {
-        YourOrderAdapter adapter = new YourOrderAdapter(this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerOrder.setLayoutManager(linearLayoutManager);
-        recyclerOrder.setAdapter(adapter);
+    private void listerners() {
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
+
+
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -72,4 +91,26 @@ public class MyOrderListActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onSuccessGetAllOrders(Response<GetAllOrders> response) {
+        progressDialog.dismiss();
+        if (response.isSuccessful())
+        {
+            for (int i=0;i<response.body().getData().size();i++)
+            {
+                GetAllOrders.Datum datum = response.body().getData().get(i);
+                getAllOrders.add(datum);
+                GetAllOrdersAdapter adapter = new GetAllOrdersAdapter(this,getAllOrders);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                recyclerOrder.setLayoutManager(linearLayoutManager);
+                recyclerOrder.setAdapter(adapter);
+            }
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+        progressDialog.dismiss();
+        Util.showToastMessage(this,""+error,getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+    }
 }

@@ -74,6 +74,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductsActivity.class);
+                intent.putExtra("isFrom","HomePage");
                 intent.putExtra("cateID",sections.get(position).getCategoryId().toString());
                 intent.putExtra("ProductType",sections.get(position).getCategoryTitle());
                 context.startActivity(intent);
