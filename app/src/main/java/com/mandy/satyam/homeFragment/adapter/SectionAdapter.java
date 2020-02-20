@@ -64,11 +64,13 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
         {
             HomePageResponse.Data.Section.CategoryProduct categoryProduct = sections.get(position).getCategoryProducts().get(i);
             categoryProducts.add(categoryProduct);
-            HomeProductAdapter adapter =new HomeProductAdapter(context,categoryProducts);
+            HomeProductAdapter adapter =new HomeProductAdapter(context,categoryProducts,sections.get(position).getCategoryId().toString(),sections.get(position).getCategoryTitle());
             holder.products.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             Log.d("Category",categoryProducts.get(0).getProductName());
         }
+
+
 
         holder.txtSeeNew.setOnClickListener(new View.OnClickListener() {
             @Override

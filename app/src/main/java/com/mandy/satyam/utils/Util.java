@@ -1,8 +1,11 @@
 package com.mandy.satyam.utils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -21,6 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.mandy.satyam.R;
 
 import java.io.ByteArrayOutputStream;
@@ -29,6 +35,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -38,7 +46,35 @@ import okhttp3.RequestBody;
 
 public class Util {
 
+    private static final int MULTIPLE_PERMISSIONS = 10;
+    Context context;
 
+    //permissions
+    public static String[] permissions = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+            };
+
+
+    public static boolean checkPermissions(Context context) {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p : permissions) {
+            result = ContextCompat.checkSelfPermission(context, p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions((Activity) context, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
+            return false;
+        } else {
+        }
+        return true;
+    }
 
     //check internet is online or not
     public static boolean isOnline(Context context) {
@@ -78,7 +114,7 @@ public class Util {
 
         // Toast...
         Toast toast = new Toast(context);
-        toast.setGravity(Gravity.BOTTOM, 0, 30);
+        toast.setGravity(Gravity.BOTTOM, 0, 40);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();

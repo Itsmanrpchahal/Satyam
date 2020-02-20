@@ -1,47 +1,47 @@
-package com.mandy.satyam.myOrderList.response;
+package com.mandy.satyam.addressActivity.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GetAllOrders {
+public class PlaceCartOrder {
 
-    @SerializedName("status")
-    @Expose
-    private Integer status;
-    @SerializedName("message")
-    @Expose
-    private String message;
-    @SerializedName("data")
-    @Expose
-    private List<Datum> data = null;
+@SerializedName("status")
+@Expose
+private Integer status;
+@SerializedName("message")
+@Expose
+private String message;
+@SerializedName("data")
+@Expose
+private Data data;
 
-    public Integer getStatus() {
-        return status;
-    }
+public Integer getStatus() {
+return status;
+}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+public void setStatus(Integer status) {
+this.status = status;
+}
 
-    public String getMessage() {
-        return message;
-    }
+public String getMessage() {
+return message;
+}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+public void setMessage(String message) {
+this.message = message;
+}
 
-    public List<Datum> getData() {
-        return data;
-    }
+public Data getData() {
+return data;
+}
 
-    public void setData(List<Datum> data) {
-        this.data = data;
-    }
+public void setData(Data data) {
+this.data = data;
+}
 
-    public class Datum {
+    public class Data {
 
         @SerializedName("id")
         @Expose
@@ -145,9 +145,7 @@ public class GetAllOrders {
         @SerializedName("cart_hash")
         @Expose
         private String cartHash;
-      /* *//* @SerializedName("meta_data")
-        @Expose
-        private List<MetaDatum> metaData = null;*/
+
         @SerializedName("line_items")
         @Expose
         private List<LineItem> lineItems = null;
@@ -448,13 +446,6 @@ public class GetAllOrders {
             this.cartHash = cartHash;
         }
 
-       /* public List<MetaDatum> getMetaData() {
-            return metaData;
-        }
-
-        public void setMetaData(List<MetaDatum> metaData) {
-            this.metaData = metaData;
-        }*/
 
         public List<LineItem> getLineItems() {
             return lineItems;
@@ -758,44 +749,6 @@ public class GetAllOrders {
 
         }
 
-        /*public class MetaDatum {
-
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("key")
-            @Expose
-            private String key;
-            @SerializedName("value")
-            @Expose
-            private String value;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public String getKey() {
-                return key;
-            }
-
-            public void setKey(String key) {
-                this.key = key;
-            }
-
-            public String getValue() {
-                return value;
-            }
-
-            public void setValue(String value) {
-                this.value = value;
-            }
-
-        }*/
-
         public class LineItem {
 
             @SerializedName("id")
@@ -831,18 +784,12 @@ public class GetAllOrders {
             @SerializedName("taxes")
             @Expose
             private List<Object> taxes = null;
-           /* @SerializedName("meta_data")
-            @Expose
-            private List<MetaDatum_> metaData = null;*/
             @SerializedName("sku")
             @Expose
             private String sku;
             @SerializedName("price")
             @Expose
-            private String price;
-            @SerializedName("product_image")
-            @Expose
-            private String productImage;
+            private Integer price;
 
             public Integer getId() {
                 return id;
@@ -932,14 +879,7 @@ public class GetAllOrders {
                 this.taxes = taxes;
             }
 
-            /*public List<MetaDatum_> getMetaData() {
-                return metaData;
-            }
 
-            public void setMetaData(List<MetaDatum_> metaData) {
-                this.metaData = metaData;
-            }
-*/
             public String getSku() {
                 return sku;
             }
@@ -948,59 +888,13 @@ public class GetAllOrders {
                 this.sku = sku;
             }
 
-            public String getPrice() {
+            public Integer getPrice() {
                 return price;
             }
 
-            public void setPrice(String price) {
+            public void setPrice(Integer price) {
                 this.price = price;
             }
-
-            public String getProductImage() {
-                return productImage;
-            }
-
-            public void setProductImage(String productImage) {
-                this.productImage = productImage;
-            }
-
-            /*public class MetaDatum_ {
-
-                @SerializedName("id")
-                @Expose
-                private Integer id;
-                @SerializedName("key")
-                @Expose
-                private String key;
-                @SerializedName("value")
-                @Expose
-                private String value;
-
-                public Integer getId() {
-                    return id;
-                }
-
-                public void setId(Integer id) {
-                    this.id = id;
-                }
-
-                public String getKey() {
-                    return key;
-                }
-
-                public void setKey(String key) {
-                    this.key = key;
-                }
-
-                public String getValue() {
-                    return value;
-                }
-
-                public void setValue(String value) {
-                    this.value = value;
-                }
-
-            }*/
 
         }
 
@@ -1076,12 +970,12 @@ public class GetAllOrders {
                 @SerializedName("zip")
                 @Expose
                 private String zip;
-                @SerializedName("state")
-                @Expose
-                private String state;
                 @SerializedName("country")
                 @Expose
                 private String country;
+                @SerializedName("state")
+                @Expose
+                private String state;
 
                 public String getStreet1() {
                     return street1;
@@ -1115,14 +1009,6 @@ public class GetAllOrders {
                     this.zip = zip;
                 }
 
-                public String getState() {
-                    return state;
-                }
-
-                public void setState(String state) {
-                    this.state = state;
-                }
-
                 public String getCountry() {
                     return country;
                 }
@@ -1131,9 +1017,18 @@ public class GetAllOrders {
                     this.country = country;
                 }
 
+                public String getState() {
+                    return state;
+                }
+
+                public void setState(String state) {
+                    this.state = state;
+                }
+
             }
 
         }
+
 
         public class Links {
 
@@ -1143,9 +1038,6 @@ public class GetAllOrders {
             @SerializedName("collection")
             @Expose
             private List<Collection> collection = null;
-            @SerializedName("customer")
-            @Expose
-            private List<Customer> customer = null;
 
             public List<Self> getSelf() {
                 return self;
@@ -1161,14 +1053,6 @@ public class GetAllOrders {
 
             public void setCollection(List<Collection> collection) {
                 this.collection = collection;
-            }
-
-            public List<Customer> getCustomer() {
-                return customer;
-            }
-
-            public void setCustomer(List<Customer> customer) {
-                this.customer = customer;
             }
 
             public class Self {
@@ -1203,21 +1087,6 @@ public class GetAllOrders {
 
             }
 
-            public class Customer {
-
-                @SerializedName("href")
-                @Expose
-                private String href;
-
-                public String getHref() {
-                    return href;
-                }
-
-                public void setHref(String href) {
-                    this.href = href;
-                }
-
-            }
         }
     }
 }

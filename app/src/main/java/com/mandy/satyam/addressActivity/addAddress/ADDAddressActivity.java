@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.response.GetAddress;
 import com.mandy.satyam.addressActivity.response.UpdateAddress;
@@ -23,6 +25,10 @@ import com.mandy.satyam.placeorder.CreateOrder;
 import com.mandy.satyam.placeorder.CreateOrderPojo;
 import com.mandy.satyam.utils.Util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -31,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-public class ADDAddressActivity extends BaseClass implements Controller.GetAddress, Controller.UpdateAddress, Controller.PlaceOrder {
+public class ADDAddressActivity extends BaseClass implements Controller.GetAddress, Controller.UpdateAddress, Controller.PlaceOrder, Controller.PlaceOrder1 {
 
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
@@ -67,11 +73,11 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
     @BindView(R.id.edtLName)
     EditText edtLName;
     Intent intent;
-    ArrayList<Serializable> product_id = new ArrayList<Serializable>();
-    ArrayList<Serializable> quantity = new ArrayList<Serializable>();
+    String product_id, quantity, q;
     @BindView(R.id.edtemail)
     EditText edtemail;
     CreateOrderPojo createOrderPojo;
+    String product_id_quantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,12 +87,24 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         ButterKnife.bind(this);
         dialog = Util.showDialog(this);
         dialog.show();
-        controller = new Controller((Controller.GetAddress) this, (Controller.UpdateAddress) this, (Controller.PlaceOrder) this);
+        controller = new Controller((Controller.GetAddress) this, (Controller.UpdateAddress) this, (Controller.PlaceOrder) this, (Controller.PlaceOrder1) this);
         controller.setGetAddress(getStringVal(Constants.USER_ID), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
 
         if (intent != null) {
-            product_id.add(intent.getSerializableExtra("product_id"));
-            quantity.add(intent.getSerializableExtra("quantity"));
+
+            if (intent.getStringExtra("isFrom").equals("BuyBT")) {
+                product_id = intent.getStringExtra("productID");
+                quantity = intent.getStringExtra("quantity");
+            } else {
+//                product_idA = String.valueOf(intent.getSerializableExtra("product_id"));
+//                /**/product_idA.add(intent.getSerializableExtra("product_id"));
+////                quantityA.add(intent.getSerializableExtra("quantity"));
+//
+//                addJSON(new String[]{product_idA},quantityA);
+                product_id_quantity = intent.getStringExtra("product_id_quantity");
+                Log.d("JSONNEW", product_id_quantity);
+            }
+
         }
         filterBt.setVisibility(View.GONE);
         searchBt.setVisibility(View.GONE);
@@ -96,6 +114,11 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         textView.setText("Add Address");
         listners();
     }
+
+
+//[{"product_id":"18969","quantity":1},
+// {"product_id":"18973","quantity":1}]
+
 
     private void listners() {
         back.setOnClickListener(new View.OnClickListener() {
@@ -108,13 +131,98 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
-                controller.setPlaceOrder("bacs","Direct Bank Transfer","true",edtName.getText().toString(),edtLName.getText().toString(),
-                        edtFlat.getText().toString(),"",edtTown.getText().toString(),edtState.getText().toString(),edtPostcode.getText().toString(),
-                        "India",edtemail.getText().toString(),edtMobile.getText().toString(),edtName.getText().toString(),edtLName.getText().toString(),
-                        edtFlat.getText().toString(),"",edtTown.getText().toString(),edtState.getText().toString(),edtPostcode.getText().toString(),
-                        "India",product_id,quantity,getStringVal(Constants.CONSUMER_KEY),getStringVal(Constants.CONSUMER_SECRET),
-                        getStringVal(Constants.USER_ID),"create_order");
+                if (intent.getStringExtra("isFrom").equals("BuyBT")) {
+                    if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
+                            TextUtils.isEmpty(edtemail.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
+                            TextUtils.isEmpty(edtNear.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtTown.getText().toString())) {
+                        edtName.setError("");
+                        edtLName.setError("");
+                        edtMobile.setError("");
+                        edtemail.setError("");
+                        edtPostcode.setError("");
+                        edtFlat.setError("");
+                        edtNear.setError("");
+                        edtState.setError("");
+                        edtTown.setError("");
+                    } else if (TextUtils.isEmpty(edtName.getText().toString())) {
+                        edtName.setError("");
+                    } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
+                        edtLName.setError("");
+                    } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
+                        edtMobile.setError("");
+                    } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
+                        edtemail.setError("");
+                    } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
+                        edtPostcode.setError("");
+                    } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
+                        edtFlat.setError("");
+                    } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
+                        edtNear.setError("");
+                    } else if (TextUtils.isEmpty(edtState.getText().toString())) {
+                        edtState.setError("");
+                    } else if (TextUtils.isEmpty(edtTown.getText().toString())) {
+                        edtTown.setError("");
+                    } else {
+                        if (Util.isOnline(ADDAddressActivity.this) != false) {
+                            dialog.show();
+                            controller.setPlaceOrder("bacs", "Direct Bank Transfer", "true", edtName.getText().toString(), edtLName.getText().toString(),
+                                    edtFlat.getText().toString(), "", edtTown.getText().toString(), edtState.getText().toString(), edtPostcode.getText().toString(),
+                                    "India", edtemail.getText().toString(), edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
+                                    edtFlat.getText().toString(), "", edtTown.getText().toString(), edtState.getText().toString(), edtPostcode.getText().toString(),
+                                    "India", product_id, quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
+                                    getStringVal(Constants.USER_ID), "create_order");
+                        } else {
+                            Util.showToastMessage(ADDAddressActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                        }
+                    }
+                } else {
+                    dialog.dismiss();
+                    if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
+                            TextUtils.isEmpty(edtemail.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
+                            TextUtils.isEmpty(edtNear.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtTown.getText().toString())) {
+                        edtName.setError("");
+                        edtLName.setError("");
+                        edtMobile.setError("");
+                        edtemail.setError("");
+                        edtPostcode.setError("");
+                        edtFlat.setError("");
+                        edtNear.setError("");
+                        edtState.setError("");
+                        edtTown.setError("");
+                    } else if (TextUtils.isEmpty(edtName.getText().toString())) {
+                        edtName.setError("");
+                    } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
+                        edtLName.setError("");
+                    } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
+                        edtMobile.setError("");
+                    } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
+                        edtemail.setError("");
+                    } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
+                        edtPostcode.setError("");
+                    } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
+                        edtFlat.setError("");
+                    } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
+                        edtNear.setError("");
+                    } else if (TextUtils.isEmpty(edtState.getText().toString())) {
+                        edtState.setError("");
+                    } else if (TextUtils.isEmpty(edtTown.getText().toString())) {
+                        edtTown.setError("");
+                    } else {
+                        if (Util.isOnline(ADDAddressActivity.this) != false) {
+                            dialog.show();
+                            controller.setPlaceOrder1_("bacs", "Direct Bank Transfer", "true", edtName.getText().toString(), edtLName.getText().toString(),
+                                    edtFlat.getText().toString(), "", edtTown.getText().toString(), edtState.getText().toString(), edtPostcode.getText().toString(),
+                                    "India", edtemail.getText().toString(), edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
+                                    edtFlat.getText().toString(), "", edtTown.getText().toString(), edtState.getText().toString(), edtPostcode.getText().toString(),
+                                    "India", product_id_quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
+                                    getStringVal(Constants.USER_ID), "create_order");
+                        } else {
+                            dialog.dismiss();
+                            Util.showToastMessage(ADDAddressActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                        }
+                    }
+
+                }
             }
         });
 
@@ -122,52 +230,57 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             @Override
             public void onClick(View v) {
 
-                if (btnAedit.getText().toString().equals("Change Address")) {
-                    btnAedit.setText("Save");
-                    edtName.setEnabled(true);
-                    edtLName.setEnabled(true);
-                    edtemail.setEnabled(true);
-                    edtMobile.setEnabled(true);
-                    edtPostcode.setEnabled(true);
-                    edtTown.setEnabled(true);
-                    edtState.setEnabled(true);
-                    edtFlat.setEnabled(true);
-                    edtNear.setEnabled(true);
-                } else {
-                    if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) &&
-                            TextUtils.isEmpty(edtTown.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
-                            TextUtils.isEmpty(edtNear.getText().toString())) {
-
-                        edtName.setError("Enter Firstname");
-                        edtLName.setError("Enter Lastname");
-                        edtMobile.setError("Enter Mobile number");
-                        edtPostcode.setError("Enter Postcode");
-                        edtTown.setError("Enter city");
-                        edtState.setError("Enter State");
-                        edtFlat.setError("Enter Address");
-                        edtNear.setError("Enter Landmark");
-                    } else if (TextUtils.isEmpty(edtName.getText().toString())) {
-                        edtName.setError("Enter Name");
-                    } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
-                        edtLName.setError("Enter Lastname");
-                    } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
-                        edtMobile.setError("Enter Mobile number");
-                    } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
-                        edtPostcode.setError("Enter Postcode");
-                    } else if (TextUtils.isEmpty(edtTown.getText().toString())) {
-                        edtTown.setError("Enter city");
-                    } else if (TextUtils.isEmpty(edtState.getText().toString())) {
-                        edtState.setError("Enter State");
-                    } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
-                        edtFlat.setError("Enter Address");
-                    } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
-                        edtNear.setError("Enter Landmark");
+                if (Util.isOnline(ADDAddressActivity.this) != false) {
+                    dialog.show();
+                    if (btnAedit.getText().toString().equals("Change Address")) {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtTown.setEnabled(true);
+                        edtState.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
                     } else {
-                        dialog.show();
-                        controller.setUpdateAddress(getStringVal(Constants.USER_ID), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
-                                edtName.getText().toString() + " " + edtLName.getText().toString(), edtFlat.getText().toString(), edtNear.getText().toString(), edtTown.getText().toString(),
-                                edtPostcode.getText().toString(), edtState.getText().toString(), edtMobile.getText().toString());
+                        if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) &&
+                                TextUtils.isEmpty(edtTown.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
+                                TextUtils.isEmpty(edtNear.getText().toString())) {
+
+                            edtName.setError("Enter Firstname");
+                            edtLName.setError("Enter Lastname");
+                            edtMobile.setError("Enter Mobile number");
+                            edtPostcode.setError("Enter Postcode");
+                            edtTown.setError("Enter city");
+                            edtState.setError("Enter State");
+                            edtFlat.setError("Enter Address");
+                            edtNear.setError("Enter Landmark");
+                        } else if (TextUtils.isEmpty(edtName.getText().toString())) {
+                            edtName.setError("Enter Name");
+                        } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
+                            edtLName.setError("Enter Lastname");
+                        } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
+                            edtMobile.setError("Enter Mobile number");
+                        } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
+                            edtPostcode.setError("Enter Postcode");
+                        } else if (TextUtils.isEmpty(edtTown.getText().toString())) {
+                            edtTown.setError("Enter city");
+                        } else if (TextUtils.isEmpty(edtState.getText().toString())) {
+                            edtState.setError("Enter State");
+                        } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
+                            edtFlat.setError("Enter Address");
+                        } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
+                            edtNear.setError("Enter Landmark");
+                        } else {
+                            dialog.show();
+                            controller.setUpdateAddress(getStringVal(Constants.USER_ID), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
+                                    edtName.getText().toString() + " " + edtLName.getText().toString(), edtFlat.getText().toString(), edtNear.getText().toString(), edtTown.getText().toString(),
+                                    edtPostcode.getText().toString(), edtState.getText().toString(), edtMobile.getText().toString());
+                        }
                     }
+                } else {
+                    Util.showToastMessage(ADDAddressActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
             }
         });
@@ -254,9 +367,32 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
     public void onSuccessPlaceOrder(Response<CreateOrder> response) {
         dialog.dismiss();
         if (response.isSuccessful()) {
-            Toast.makeText(this, "g jhj " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+            if (response.body().getStatus() == 200) {
+                Util.showToastMessage(this, "Order Placed", getResources().getDrawable(R.drawable.app_icon));
+                Intent intent = new Intent(ADDAddressActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
+            }
+
         }
-        Toast.makeText(this, "RESPOMSE "+response.code(), Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onSuccessPlaceOrder1(Response<CreateOrder> response) {
+        dialog.dismiss();
+        if (response.isSuccessful()) {
+            if (response.body().getStatus() == 200) {
+                Intent intent = new Intent(ADDAddressActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                Util.showToastMessage(this, "Order Placed", getResources().getDrawable(R.drawable.app_icon));
+            } else {
+                Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
+            }
+        }
     }
 
     @Override

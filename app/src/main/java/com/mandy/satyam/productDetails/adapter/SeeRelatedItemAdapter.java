@@ -51,7 +51,7 @@ public class SeeRelatedItemAdapter extends RecyclerView.Adapter<SeeRelatedItemAd
 
         Glide.with(context).load(relatedID.get(i).getProductImage().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(viewHolder.imageView);
         viewHolder.txtName.setText(relatedID.get(i).getProductName());
-        viewHolder.txtPrice.setText("$ "+relatedID.get(i).getProductPrice());
+        viewHolder.txtPrice.setText("₹"+relatedID.get(i).getProductPrice());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

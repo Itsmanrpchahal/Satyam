@@ -159,10 +159,16 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
 
     @Override
     public void onSuccessLoginCheck(Response<LoginCheck> loginCheckResponse) {
-        if (loginCheckResponse.body().getStatus() == 200) {
-            dialog.dismiss();
-            Util.showToastMessage(OTP_verify.this, "OTP sent", getResources().getDrawable(R.drawable.ic_present_to_all_black_24dp));
+        if (loginCheckResponse.isSuccessful())
+        {
+            if (loginCheckResponse.body().getStatus() == 200) {
+                dialog.dismiss();
+                Util.showToastMessage(OTP_verify.this, "OTP sent", getResources().getDrawable(R.drawable.ic_present_to_all_black_24dp));
+            }
+        }else {
+            Util.showToastMessage(OTP_verify.this,loginCheckResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
+
     }
 
     @Override
@@ -170,6 +176,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
         dialog.dismiss();
         if (loginResponse != null) {
             if (loginResponse.body().getStatus() == 200) {
+                setStringVal(Constants.LOGIN_STATUS,"login");
                 setStringVal(Constants.CONSUMER_KEY_LOGIN,loginResponse.body().getData().getConsumerKey());
                 setStringVal(Constants.CONSUMER_SECRET_LOGIN,loginResponse.body().getData().getConsumerSecret());
                 setStringVal(Constants.AVATAR,loginResponse.body().getData().getAvatar());
@@ -180,6 +187,8 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
                 setStringVal(Constants.LOGIN_STATUS, "login");
                 controller.setClearCart();
             }
+        }else {
+            Util.showToastMessage(this,loginResponse.message(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
     }
 

@@ -13,6 +13,7 @@ import com.mandy.satyam.myCart.response.GetCartProducts;
 import com.mandy.satyam.myCart.response.RemoveCartItem;
 import com.mandy.satyam.myCart.response.UpdateCart;
 import com.mandy.satyam.myOrderList.response.GetAllOrders;
+import com.mandy.satyam.myOrderList.response.GetOrderDetail;
 import com.mandy.satyam.myProfile.response.GetProfile;
 import com.mandy.satyam.myProfile.response.UpdateProfile;
 import com.mandy.satyam.placeorder.CreateOrder;
@@ -152,7 +153,7 @@ public interface ApiInterface {
 
 
 
-    @POST("wp-json/wc/v3/orders")
+    @POST("wp-json/os/v1/create_order")
     Call<CreateOrder> createOrder(
             @Query("payment_method") String payment_method,
             @Query("payment_method_title") String payment_method_title,
@@ -175,8 +176,7 @@ public interface ApiInterface {
             @Query("shipping[state]") String Sstate,
             @Query("shipping[postcode]") String Spostcode,
             @Query("shipping[country]") String Scountry,
-            @Query("line_items[product_id]")ArrayList<Serializable> productID,
-            @Query("line_items[quantity]") ArrayList<Serializable> quantity,
+            @Query("line_items")String line_items,
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret,
             @Query("customer_id") String customer_id,
@@ -210,5 +210,13 @@ public interface ApiInterface {
             @Query("min_price") String min_price,
             @Query("max_price") String max_price,
             @Query("search") String search
+    );
+
+    @GET("wp-json/wc/v3/orders/{input}")
+    Call<GetOrderDetail> getOrderDetail(
+            @Path("input") String id,
+            @Query("consumer_key") String consumer_key,
+            @Query("consumer_secret") String consumer_secret,
+            @Query("amr_slug") String amr_slug
     );
 }

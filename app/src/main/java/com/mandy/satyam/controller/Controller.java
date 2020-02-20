@@ -12,6 +12,7 @@ import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.myCart.response.RemoveCartItem;
 import com.mandy.satyam.myCart.response.UpdateCart;
 import com.mandy.satyam.myOrderList.response.GetAllOrders;
+import com.mandy.satyam.myOrderList.response.GetOrderDetail;
 import com.mandy.satyam.myProfile.response.GetProfile;
 import com.mandy.satyam.myProfile.response.UpdateProfile;
 import com.mandy.satyam.placeorder.CreateOrder;
@@ -49,8 +50,10 @@ public class Controller {
     public UpdateAddress updateAddress;
     public UpdateProfile updateProfile;
     public PlaceOrder placeOrder;
+    public PlaceOrder1 placeOrder1_;
     public GetAllOrders getAllOrders;
     public GetFilterProducts getFilterProducts;
+    public GetOrderDetails getOrderDetails;
 
 
     //logincheck
@@ -128,15 +131,23 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
-    public Controller(GetAddress getAddress1, UpdateAddress updateAddress1, PlaceOrder placeOrder1) {
+    public Controller(GetAddress getAddress1, UpdateAddress updateAddress1, PlaceOrder placeOrder1,PlaceOrder1 placeOrder1__) {
         getAddress = getAddress1;
         updateAddress = updateAddress1;
         placeOrder = placeOrder1;
+        placeOrder1_ = placeOrder1__;
         webAPI = new WebAPI();
     }
 
     public Controller(ProductSubCategories subCategory1) {
         subCategory = subCategory1;
+        webAPI = new WebAPI();
+    }
+
+    //getOrderDetail
+    public Controller(GetOrderDetails getOrderDetails1)
+    {
+        getOrderDetails = getOrderDetails1;
         webAPI = new WebAPI();
     }
 
@@ -417,9 +428,31 @@ public class Controller {
         });
     }
 
+    public void setPlaceOrder1_(String payment_method, String payment_method_title, String set_paid, String first_name, String last_name, String address_1,
+                              String address_2, String city, String state, String postcode, String country, String email, String phone, String Sfirst_name, String Slast_name,
+                              String Saddress_1, String Saddress_2, String Scity, String Sstate, String Spostcode, String Scountry, String productID_quantity
+            , String consumer_key, String consumer_secret, String customer_id, String amr_slug) {
+
+
+        webAPI.getApi().createOrder(payment_method, payment_method_title, set_paid, first_name, last_name, address_1, address_2, city, state, postcode, country, email, phone, Sfirst_name, Slast_name, Saddress_1, Saddress_2, Scity, Sstate, Spostcode, Scountry, productID_quantity, consumer_key, consumer_secret, customer_id, amr_slug).enqueue(new Callback<CreateOrder>() {
+            @Override
+            public void onResponse(Call<CreateOrder> call, Response<CreateOrder> response) {
+                if (response != null) {
+                    Response<CreateOrder> createOrderResponse = response;
+                    placeOrder.onSuccessPlaceOrder(createOrderResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateOrder> call, Throwable t) {
+                placeOrder.onError(t.getMessage());
+            }
+        });
+    }
+
     public void setPlaceOrder(String payment_method, String payment_method_title, String set_paid, String first_name, String last_name, String address_1,
                               String address_2, String city, String state, String postcode, String country, String email, String phone, String Sfirst_name, String Slast_name,
-                              String Saddress_1, String Saddress_2, String Scity, String Sstate, String Spostcode, String Scountry, ArrayList<Serializable> productID, ArrayList<Serializable> quantity
+                              String Saddress_1, String Saddress_2, String Scity, String Sstate, String Spostcode, String Scountry, String productID, String quantity
             , String consumer_key, String consumer_secret, String customer_id, String amr_slug) {
         CreateOrderPojo createOrderPojo = new CreateOrderPojo();
         createOrderPojo.setPaymentMethod(payment_method);
@@ -450,8 +483,8 @@ public class Controller {
         shipping.setCountry(Scountry);
         createOrderPojo.setShipping(shipping);
         CreateOrderPojo.LineItem lineItem = new CreateOrderPojo.LineItem();
-        lineItem.setProductId(18105);
-        lineItem.setQuantity(1);
+        lineItem.setProductId(Integer.valueOf(productID));
+        lineItem.setQuantity(Integer.valueOf(quantity));
         ArrayList<CreateOrderPojo.LineItem> lineItems = new ArrayList<>();
         lineItems.add(lineItem);
         createOrderPojo.setLineItems(lineItems);
@@ -502,6 +535,24 @@ public class Controller {
             @Override
             public void onFailure(Call<FilterResponse> call, Throwable t) {
                 getFilterProducts.onError(t.getMessage());
+            }
+        });
+    }
+    public void setGetOrderDetails(String id,String consumerkey,String consumerSecret,String amr_slug)
+    {
+        webAPI.getApi().getOrderDetail(id, consumerkey, consumerSecret,amr_slug).enqueue(new Callback<GetOrderDetail>() {
+            @Override
+            public void onResponse(Call<GetOrderDetail> call, Response<GetOrderDetail> response) {
+                if (response.isSuccessful())
+                {
+                    Response<GetOrderDetail> getOrderDetailResponse = response;
+                    getOrderDetails.onSuccessGetOrderDetail(getOrderDetailResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetOrderDetail> call, Throwable t) {
+                getOrderDetails.onError(t.getMessage());
             }
         });
     }
@@ -611,6 +662,12 @@ public class Controller {
         void onError(String error);
     }
 
+    public interface PlaceOrder1 {
+        void onSuccessPlaceOrder1(Response<CreateOrder> response);
+
+        void onError(String error);
+    }
+
     public interface GetAllOrders {
         void onSuccessGetAllOrders(Response<com.mandy.satyam.myOrderList.response.GetAllOrders> response);
 
@@ -620,6 +677,11 @@ public class Controller {
     public interface GetFilterProducts {
         void onSuccessGetFilterProducts(Response<FilterResponse> responseResponse);
 
+        void onError(String error);
+    }
+
+    public interface GetOrderDetails{
+        void onSuccessGetOrderDetail(Response<GetOrderDetail> response);
         void onError(String error);
     }
 

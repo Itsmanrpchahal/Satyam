@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,9 @@ import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.michaelrocks.libphonenumber.android.NumberParseException;
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
+import io.michaelrocks.libphonenumber.android.Phonenumber;
 import retrofit2.Response;
 
 public class LoginActivity extends BaseClass implements Controller.LoginCheck {
@@ -91,13 +96,22 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
 
                 if (!phone.equals("")) {
 
-                    if (Util.isOnline(LoginActivity.this) != false) {
-                        dialog.show();
-                        controller.setLoginCheck(countrycode+""+phone, type);
+                    if (isValidPhoneNumber(phone) == true)
+                    {
+                        if (validateUsing_libphonenumber(countrycode,phone)==true)
+                        {
+                            if (Util.isOnline(LoginActivity.this) != false) {
+                                dialog.show();
+                                controller.setLoginCheck(countrycode+""+phone, type);
 
-                    } else {
-                        Util.showToastMessage(LoginActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                            } else {
+                                Util.showToastMessage(LoginActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                            }
+                        }else {
+                            Util.showToastMessage(LoginActivity.this,"Invalid Phone Number",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+                        }
                     }
+                    
                 } else {
                     phoneNumberEt.setFocusable(true);
                     phoneNumberEt.setError("Enter Phone number");
@@ -106,11 +120,40 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
         });
     }
 
+    private boolean isValidPhoneNumber(CharSequence phoneNumber) {
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            return Patterns.PHONE.matcher(phoneNumber).matches();
+        }
+        return false;
+    }
+
+    private boolean validateUsing_libphonenumber(String countryCode, String phNumber) {
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.createInstance(this);
+        String isoCode = phoneNumberUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
+        Phonenumber.PhoneNumber phoneNumber = null;
+        try {
+            //phoneNumber = phoneNumberUtil.parse(phNumber, "IN");  //if you want to pass region code
+            phoneNumber = phoneNumberUtil.parse(phNumber, isoCode);
+        } catch (NumberParseException e) {
+            System.err.println(e);
+        }
+
+        boolean isValid = phoneNumberUtil.isValidNumber(phoneNumber);
+        if (isValid) {
+            String internationalFormat = phoneNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+//            Toast.makeText(this, "Phone Number is Valid" + internationalFormat, Toast.LENGTH_LONG).show();
+            return true;
+        } else {
+//            Toast.makeText(this, "Phone Number is Invalid" + phoneNumber, Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
+
     @Override
     public void onSuccessLoginCheck(Response<LoginCheck> loginCheckResponse) {
         dialog.dismiss();
         if (loginCheckResponse.body().getStatus() == 200) {
-            setStringVal(Constants.LOGIN_STATUS,"login");
+//            setStringVal(Constants.LOGIN_STATUS,"login");
             Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
             intent.putExtra("OTP", loginCheckResponse.body().getData().getOtp().toString());
             intent.putExtra("phonenumber",countrycode+""+phone);

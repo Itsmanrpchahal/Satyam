@@ -19,6 +19,7 @@ import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseFrag;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.filterScreen.FilterActivity;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.adapter.SectionAdapter;
@@ -68,13 +69,19 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        Util.checkPermissions(getContext() );
         progressDialog = Util.showDialog(getContext());
         progressDialog.show();
         init();
         Log.d("CONSUMER",getStringVal(Constants.CONSUMER_SECRET)+"  "+getStringVal(Constants.CONSUMER_KEY));
 
         controller = new Controller((Controller.HomePage)HomeFragment.this);
-        controller.setHomePage();
+        if (Util.isOnline(getContext()) != false) {
+            controller.setHomePage();
+        } else {
+            Util.showToastMessage(getContext(), "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+        }
+
         unbinder = ButterKnife.bind(this, view);
 
         return view;

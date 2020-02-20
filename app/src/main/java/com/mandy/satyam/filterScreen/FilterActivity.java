@@ -22,6 +22,7 @@ import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.filterScreen.Adapter.FilterAdapter;
 import com.mandy.satyam.filterScreen.filterIF.FilterCateidIF;
+import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.utils.Util;
@@ -54,7 +55,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     Dialog dialog;
     ArrayList<SubCategory.Datum> subcate = new ArrayList<>();
     Intent intent;
-    String catID,startPrice,endPrice;
+    String catID, startPrice, endPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +66,14 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         dialog.show();
         controller = new Controller(this);
 
-        if (intent!=null)
-        {
+        if (intent != null) {
             catID = intent.getStringExtra("cateID");
-            controller.setSubCategory(catID);
+            if (Util.isOnline(FilterActivity.this) != false) {
+                controller.setSubCategory(catID);
+
+            } else {
+                Util.showToastMessage(FilterActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+            }
         }
 
         ButterKnife.bind(this);
@@ -108,15 +113,15 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
                 if (Util.isOnline(FilterActivity.this) != false) {
                     Intent intent = new Intent(FilterActivity.this, ProductsActivity.class);
-                    intent.putExtra("isFrom","FilterScreen");
-                    intent.putExtra("startPrice",startPrice);
-                    intent.putExtra("catID",catID);
-                    intent.putExtra("endPrice",endPrice);
+                    intent.putExtra("isFrom", "FilterScreen");
+                    intent.putExtra("startPrice", startPrice);
+                    intent.putExtra("catID", catID);
+                    intent.putExtra("endPrice", endPrice);
                     startActivity(intent);
                 } else {
                     Util.showToastMessage(FilterActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
-             }
+            }
         });
 
     }
@@ -134,18 +139,15 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onSuccessSubcate(Response<SubCategory> subCategoryResponse) {
         dialog.dismiss();
-        if (subCategoryResponse.isSuccessful())
-        {
-            if (subCategoryResponse.body().getStatus()==200)
-            {
-                rangeseekbar.setRange(Float.valueOf(subCategoryResponse.body().getMinPrice()),Float.valueOf(subCategoryResponse.body().getMaxPrice()));
-                startprice.setText("₹"+subCategoryResponse.body().getMinPrice());
-                endprice.setText("₹"+subCategoryResponse.body().getMaxPrice());
-                for (int i=0;i<subCategoryResponse.body().getData().size();i++)
-                {
+        if (subCategoryResponse.isSuccessful()) {
+            if (subCategoryResponse.body().getStatus() == 200) {
+                rangeseekbar.setRange(Float.valueOf(subCategoryResponse.body().getMinPrice()), Float.valueOf(subCategoryResponse.body().getMaxPrice()));
+                startprice.setText("₹" + subCategoryResponse.body().getMinPrice());
+                endprice.setText("₹" + subCategoryResponse.body().getMaxPrice());
+                for (int i = 0; i < subCategoryResponse.body().getData().size(); i++) {
                     SubCategory.Datum datum = subCategoryResponse.body().getData().get(i);
                     subcate.add(datum);
-                    FilterAdapter filterAdapter = new FilterAdapter(this,subcate);
+                    FilterAdapter filterAdapter = new FilterAdapter(this, subcate);
                     LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
                     brandRecycler.setLayoutManager(linearLayoutManager3);
                     brandRecycler.setAdapter(filterAdapter);
@@ -164,6 +166,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onError(String error) {
         dialog.dismiss();
-        Util.showToastMessage(this,error,getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        Util.showToastMessage(this, error, getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
     }
 }

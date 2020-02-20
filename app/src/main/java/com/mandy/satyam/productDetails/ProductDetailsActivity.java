@@ -27,12 +27,14 @@ import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.google.android.material.tabs.TabLayout;
 import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.AddressActivity;
+import com.mandy.satyam.addressActivity.addAddress.ADDAddressActivity;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.commentActivity.CommentActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.login.LoginActivity;
+import com.mandy.satyam.placeorder.CreateOrder;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
@@ -165,6 +167,13 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         SizeAdapter adapter = new SizeAdapter(this);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -185,16 +194,29 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     startActivity(intent);
                 }else {
                     progressDialog.show();
-                    controller.setAddToCart(getProductID,"1","",getStringVal(Constants.USERTOKEN));
+
+                    if (Util.isOnline(ProductDetailsActivity.this) != false) {
+                        progressDialog.show();
+                        controller.setAddToCart(getProductID,"1","",getStringVal(Constants.USERTOKEN));
+                    } else {
+                        Util.showToastMessage(ProductDetailsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                    }
+
                 }
 //               controller.setAddToCart(getStringVal(Constants.CONSUMER_KEY_LOGIN),getStringVal(Constants.CONSUMER_SECRET_LOGIN),getProductID,"1");
                 break;
             case R.id.btnBuynow:
-                Adddialog();
-                break;
-
-            case R.id.back:
-                onBackPressed();
+                if (getStringVal(Constants.USER_ID).equals(""))
+                {
+                    Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
+                    intent.putExtra("productID",productID);
+                    intent.putExtra("quantity","1");
+                    intent.putExtra("isFrom","BuyBT");
+                    startActivity(intent);
+                }
                 break;
         }
     }
@@ -224,7 +246,10 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 if (TextUtils.isEmpty(editText.getText().toString())) {
                     editText.setError("Enter the quantity");
                 } else {
-                    Intent intent = new Intent(ProductDetailsActivity.this, AddressActivity.class);
+                    Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
+                    intent.putExtra("productID",productID);
+                    intent.putExtra("quantity",editText.getText().toString());
+                    intent.putExtra("isFrom","BuyBT");
                     startActivity(intent);
                     quantityDialog.dismiss();
                 }
@@ -394,7 +419,15 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public void onSuccessAddToCart(Response<AddToCart> response) {
         progressDialog.dismiss();
 
-        Toast.makeText(this, ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+        if (response.isSuccessful())
+        {
+            if (response.body().getStatus()==200)
+            {
+                Util.showToastMessage(this,response.body().getMessage(),getResources().getDrawable(R.drawable.ic_shopping_cart));
+            }
+        }else {
+            Util.showToastMessage(this,response.message(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        }
     }
 
     @Override

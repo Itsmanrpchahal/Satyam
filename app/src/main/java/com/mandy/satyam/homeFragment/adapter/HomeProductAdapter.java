@@ -1,6 +1,7 @@
 package com.mandy.satyam.homeFragment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.mandy.satyam.R;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
+import com.mandy.satyam.productList.ProductsActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
@@ -23,11 +25,15 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
 
     Context context;
     ArrayList<HomePageResponse.Data.Section.CategoryProduct> categoryProducts = new ArrayList<>();
+    String catID;
+    String productType;
 
 
-    public HomeProductAdapter(Context context, ArrayList<HomePageResponse.Data.Section.CategoryProduct> categoryProducts) {
+    public HomeProductAdapter(Context context, ArrayList<HomePageResponse.Data.Section.CategoryProduct> categoryProducts,String catID,String productType) {
         this.context = context;
         this.categoryProducts = categoryProducts;
+        this.catID = catID;
+        this.productType = productType;
     }
 
     @NonNull
@@ -49,6 +55,12 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(context, ProductsActivity.class);
+                intent.putExtra("isFrom","HomePage");
+                intent.putExtra("cateID",catID);
+                intent.putExtra("ProductType",productType);
+                context.startActivity(intent);
             }
         });
 

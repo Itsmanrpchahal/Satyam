@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,6 +30,10 @@ import com.mandy.satyam.myCart.response.RemoveCartItem;
 import com.mandy.satyam.myCart.response.UpdateCart;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -74,6 +79,7 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     public  ArrayList<Integer> quantity = new ArrayList<>();
     public  ArrayList<String> product_id = new ArrayList<>();
     String totalquantity;
+    JSONArray jsonArray;
 
 
     @Override
@@ -136,8 +142,10 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
 
     private void sendData() {
         Intent intent = new Intent(this, ADDAddressActivity.class);
+        intent.putExtra("isFrom","Cart");
         intent.putExtra("product_id", product_id);
         intent.putExtra("quantity",quantity);
+        intent.putExtra("product_id_quantity",jsonArray.toString());
         startActivity(intent);
     }
 
@@ -150,15 +158,30 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     @Override
     public void onSuccessGetCart(Response<GetCartProducts> response) {
         progressdialog.dismiss();
+        JSONObject obj = null;
+         jsonArray = new JSONArray();
         if (response.isSuccessful()) {
             if (response.body().getStatus() == 200) {
+                if (response.body().getData().size()==0)
+                {
+                    btnProced.setVisibility(View.GONE);
+                    btnProced2.setVisibility(View.GONE);
+                }
+                jsonArray = new JSONArray();
                 for (int i = 0; i < response.body().getData().size(); i++) {
 
-                    if (response.body().getData().size()==0)
-                    {
-                        btnProced.setVisibility(View.GONE);
-                        btnProced2.setVisibility(View.GONE);
+
+                    obj = new JSONObject();
+                    try {
+                        obj.put("product_id",response.body().getData().get(i).getProductId());
+                        obj.put("quantity",response.body().getData().get(i).getQuantity());
+                        jsonArray.put(obj);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
+                    Log.d("JSONCHECK",jsonArray.toString());
+
                     GetCartProducts.Datum datum = response.body().getData().get(i);
                     getCartProductsArrayList.add(datum);
                     quantity.add(getCartProductsArrayList.get(i).getQuantity());
@@ -185,11 +208,12 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                             controller.setRemoveCartItem(cartID,getStringVal(Constants.USER_ID),getStringVal(Constants.USERTOKEN));
                         }
                     });
+
                 }
             }
 
         } else {
-            Toast.makeText(this, "Failure " + response.message(), Toast.LENGTH_SHORT).show();
+            Util.showToastMessage(this,response.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
     }
 

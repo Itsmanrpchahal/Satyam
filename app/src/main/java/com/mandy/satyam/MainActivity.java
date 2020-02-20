@@ -106,6 +106,7 @@ public class MainActivity extends BaseClass implements Controller.Keys {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Util.checkPermissions(this);
         Fabric.with(MainActivity.this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -116,8 +117,14 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         ImageView imgvw = (ImageView) hView.findViewById(R.id.imageView);
         TextView tv = (TextView) hView.findViewById(R.id.textView);
 
-        tv.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME));
-        Glide.with(this).load(getStringVal(Constants.AVATAR)).placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
+        if (getStringVal(Constants.FIRSTNAME).equals("") || getStringVal(Constants.LASTNAME).equals(""))
+        {
+            tv.setText("Hello Guest User");
+        }else {
+            tv.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME));
+            Glide.with(this).load(getStringVal(Constants.AVATAR)).placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
+        }
+
 
         //checkPermissions();
 //        Toast.makeText(this, ""+getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME), Toast.LENGTH_SHORT).show();
@@ -144,6 +151,8 @@ public class MainActivity extends BaseClass implements Controller.Keys {
 
     }
 
+
+
     private void lisenters() {
 
         toolbarSearch.setOnClickListener(new View.OnClickListener() {
@@ -151,14 +160,18 @@ public class MainActivity extends BaseClass implements Controller.Keys {
             public void onClick(View v) {
                 //done
                toolbarSearch.setVisibility(View.GONE);
-               productCart.setVisibility(View.GONE);
-               cartCount.setVisibility(View.GONE);
-               cartlayout.setVisibility(View.GONE);
+               productCart.setVisibility(View.VISIBLE);
+               cartCount.setVisibility(View.VISIBLE);
+               cartlayout.setVisibility(View.VISIBLE);
+
                 txtToolbar.setVisibility(View.GONE);
                searchProduct.setVisibility(View.VISIBLE);
                 searchProducts.setVisibility(View.VISIBLE);
             }
         });
+
+
+
 
 
         productCart.setOnClickListener(new View.OnClickListener() {
@@ -181,10 +194,17 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         searchProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,ProductsActivity.class);
-                intent.putExtra("isFrom","main");
-                intent.putExtra("search",searchProduct.getText().toString());
-                startActivity(intent);
+
+                int size = searchProduct.getText().length();
+                if (size<3)
+                {
+                    searchProduct.setError("Input length must be 3 character");
+                }else {
+                    Intent intent = new Intent(MainActivity.this,ProductsActivity.class);
+                    intent.putExtra("isFrom","main");
+                    intent.putExtra("search",searchProduct.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -194,6 +214,10 @@ public class MainActivity extends BaseClass implements Controller.Keys {
     protected void onResume() {
         super.onResume();
         onNavigationClick();
+        searchProduct.setVisibility(View.GONE);
+        searchProducts.setVisibility(View.GONE);
+        toolbarSearch.setVisibility(View.VISIBLE);
+        txtToolbar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -202,7 +226,6 @@ public class MainActivity extends BaseClass implements Controller.Keys {
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     // navigation item click
@@ -267,9 +290,7 @@ public class MainActivity extends BaseClass implements Controller.Keys {
 
                             startActivity(intent2);
                         } else {
-                            logutText = "Login";
-                            textLogout.setTitle("Login");
-                            logout();
+                            logout(logutText,textLogout);
 
                         }
                         break;
@@ -344,19 +365,19 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         });
     }
 
-    public void logout() {
+    public void logout(String logutText, MenuItem textLogout) {
         final Dialog dialog = new Dialog(MainActivity.this);
 
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.exit_dialog);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
         TextView textView;
         final Button btnCancel, btnLogout;
 
-        textView = dialog.findViewById(R.id.txtTitle);
-        btnCancel = dialog.findViewById(R.id.btnCancel);
-        btnLogout = dialog.findViewById(R.id.btnLogout);
+        textView = dialog.findViewById(R.id.dialogtext);
+        btnCancel = dialog.findViewById(R.id.cancel_exit);
+        btnLogout = dialog.findViewById(R.id.ok_exit);
 
         //set the title
         textView.setText("Are you sure to logout");
@@ -372,7 +393,7 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         btnLogout.setText("Logout");
 
         if (btnLogout.getText().equals("Logout")) {
-            btnLogout.setBackgroundColor(this.getResources().getColor(R.color.yellow));
+            btnLogout.setBackgroundColor(this.getResources().getColor(R.color.colorAccent));
         } else {
             btnLogout.setBackgroundColor(this.getResources().getColor(R.color.red));
         }
@@ -380,6 +401,7 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                textLogout.setTitle("Login");
                 dialog.dismiss();
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

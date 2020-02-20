@@ -105,6 +105,7 @@ public class ProfileActivity extends BaseClass implements IPickResult, Controlle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
+        Util.checkPermissions(this);
         Fresco.initialize(this);
         dialog = Util.showDialog(this);
         dialog.show();

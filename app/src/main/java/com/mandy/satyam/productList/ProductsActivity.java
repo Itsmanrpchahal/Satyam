@@ -118,6 +118,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             }else {
                 textView.setText("Filter Products");
                 progressDialog.show();
+                filterBt.setVisibility(View.INVISIBLE);
                 maxPrice = intent.getStringExtra("endPrice");
                 minPrice = intent.getStringExtra("startPrice");
                 catID = intent.getStringExtra("catID");
@@ -171,11 +172,18 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 //                searchBt.setVisibility(View.VISIBLE);
 //                filterBt.setVisibility(View.VISIBLE);
 //                seemorebt.setVisibility(View.VISIBLE);
-                searchProducts(searchProduct.getText().toString());
-                images.clear();
-                datumArrayList.clear();
-                filterDatumArraylist.clear();
-                filterImages.clear();
+
+                int size = searchProduct.getText().length();
+                if (size<3)
+                {
+                    searchProduct.setError("Input length must be 3 character");
+                }else {
+                    searchProducts(searchProduct.getText().toString());
+                    images.clear();
+                    datumArrayList.clear();
+                    filterDatumArraylist.clear();
+                    filterImages.clear();
+                }
             }
         });
 
