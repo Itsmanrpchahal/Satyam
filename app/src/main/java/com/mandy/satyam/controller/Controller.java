@@ -93,9 +93,16 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
-    //Keys
-    public Controller(Keys keys1) {
+    public Controller(Keys keys1)
+    {
         keys = keys1;
+        webAPI = new WebAPI();
+    }
+
+    //Keys
+    public Controller(Keys keys1,HomePage homePage1) {
+        keys = keys1;
+        homePage = homePage1;
         webAPI = new WebAPI();
     }
 

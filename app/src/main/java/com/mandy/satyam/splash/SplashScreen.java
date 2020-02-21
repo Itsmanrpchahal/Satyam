@@ -36,7 +36,6 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
         controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
         imageView = findViewById(R.id.imageView);
 
-
     }
 
     @Override

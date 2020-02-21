@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="Are you sure to exit"
                 android:textColor="@color/black"
+                android:textSize="@dimen/textsize_sp20"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="20dp"/>
 

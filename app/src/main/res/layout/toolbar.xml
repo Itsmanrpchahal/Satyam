@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="43.5dp"
-            android:src="@drawable/ic_searching"
+            android:src="@drawable/ic_close"
             android:layout_marginLeft="@dimen/defaultmargin"
             android:background="#00FFFFFF"></ImageButton>
 

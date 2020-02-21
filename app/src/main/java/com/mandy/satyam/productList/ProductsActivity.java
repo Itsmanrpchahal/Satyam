@@ -38,6 +38,7 @@ import com.mandy.satyam.utils.Util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +71,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     ArrayList<Categoriesroducts.Datum> datumArrayList = new ArrayList<Categoriesroducts.Datum>();
     ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
     ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
+    ArrayList<String> productname = new ArrayList<>();
     @BindView(R.id.seemorebt)
     Button seemorebt;
     @BindView(R.id.subcategoryrecycler)
@@ -109,13 +111,12 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
-            }else if (intent.getStringExtra("isFrom").equals("main"))
-            {
+            } else if (intent.getStringExtra("isFrom").equals("main")) {
                 search = intent.getStringExtra("search");
                 textView.setText("Filter Products");
                 progressDialog.show();
                 searchProducts(search);
-            }else {
+            } else {
                 textView.setText("Filter Products");
                 progressDialog.show();
                 filterBt.setVisibility(View.INVISIBLE);
@@ -164,46 +165,76 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             }
         });
 
-        searchProducts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        searchProducts.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //                textView.setVisibility(View.VISIBLE);
 //                searchProduct.setVisibility(View.GONE);
 //                searchBt.setVisibility(View.VISIBLE);
 //                filterBt.setVisibility(View.VISIBLE);
 //                seemorebt.setVisibility(View.VISIBLE);
 
-                int size = searchProduct.getText().length();
-                if (size<3)
-                {
-                    searchProduct.setError("Input length must be 3 character");
-                }else {
-                    searchProducts(searchProduct.getText().toString());
-                    images.clear();
-                    datumArrayList.clear();
-                    filterDatumArraylist.clear();
-                    filterImages.clear();
+        int size = searchProduct.getText().length();
+//        if (size < 3) {
+//            searchProduct.setError("Input length must be 3 character");
+//        } else {
+//                    searchProducts(searchProduct.getText().toString());
+
+//                    images.clear();
+//                    datumArrayList.clear();
+//                    filterDatumArraylist.clear();
+//                    filterImages.clear();
+//        }
+//            }
+//        });
+
+        searchProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchProduct.setText("");
+            }
+        });
+
+        searchProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String intent = searchProduct.getText().toString();
+                String product = "";
+                searchProduct(String.valueOf(product.equalsIgnoreCase(intent)));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+
                 }
             }
         });
 
 
-
-
     }
 
-    private void searchProduct() {
+    private void searchProduct(String productType) {
 
-         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ProductsActivity.this, android.R.layout.simple_list_item_1, productname);
         searchProduct.setAdapter(arrayAdapter);
+
 
         searchProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String message = arrayAdapter.getItem(position);
+                String message = String.valueOf(arrayAdapter.getItem(position).substring(0,7));
                 searchProducts(message);
             }
         });
+
+
+
     }
 
     private void searchProducts(String s) {
@@ -239,7 +270,10 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     }
                     //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
                     datumArrayList.add(homePageResponseResponse.body().getData().get(i));
+                    productname.add(homePageResponseResponse.body().getData().get(i).getName());
                 }
+
+
                 GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
                 recyclerProduct.setLayoutManager(layoutManager);
                 ProductListAdapter adapter = new ProductListAdapter(this, images, datumArrayList);

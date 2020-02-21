@@ -130,38 +130,42 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
     @Override
     public void onSucessHome(Response<HomePageResponse> homePageResponseResponse) {
         progressDialog.dismiss();
-        if (homePageResponseResponse.body().getStatus()==200)
+        if (homePageResponseResponse.isSuccessful())
         {
-            for (int i=0;i<homePageResponseResponse.body().getData().getCategories().size();i++)
+            if (homePageResponseResponse.body().getStatus()==200)
             {
-                HomePageResponse.Data.Category category = homePageResponseResponse.body().getData().getCategories().get(i);
-                categories.add(category);
+                for (int i=0;i<homePageResponseResponse.body().getData().getCategories().size();i++)
+                {
+                    HomePageResponse.Data.Category category = homePageResponseResponse.body().getData().getCategories().get(i);
+                    categories.add(category);
 
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                recyclerViewCategory.setLayoutManager(layoutManager);
-                CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(),categories);
-                recyclerViewCategory.setAdapter(categoryAdapter);
-                categoryAdapter.notifyDataSetChanged();
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    recyclerViewCategory.setLayoutManager(layoutManager);
+                    CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(),categories);
+                    recyclerViewCategory.setAdapter(categoryAdapter);
+                    categoryAdapter.notifyDataSetChanged();
+                }
+
+
+                for (int i=0;i<homePageResponseResponse.body().getData().getBanners().size();i++)
+                {
+                    HomePageResponse.Data.Banner banner = homePageResponseResponse.body().getData().getBanners().get(i);
+                    banners.add(banner);
+                    setOfferImage(banners);
+                }
+
+
+                for (int i=0;i<homePageResponseResponse.body().getData().getSections().size();i++)
+                {
+                    HomePageResponse.Data.Section section = homePageResponseResponse.body().getData().getSections().get(i);
+                    sections.add(section);
+                    setSections(sections);
+                }
+            }else {
+                Util.showToastMessage(getContext(),homePageResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
             }
-
-
-            for (int i=0;i<homePageResponseResponse.body().getData().getBanners().size();i++)
-            {
-                HomePageResponse.Data.Banner banner = homePageResponseResponse.body().getData().getBanners().get(i);
-                banners.add(banner);
-                setOfferImage(banners);
-            }
-
-
-            for (int i=0;i<homePageResponseResponse.body().getData().getSections().size();i++)
-            {
-                HomePageResponse.Data.Section section = homePageResponseResponse.body().getData().getSections().get(i);
-                sections.add(section);
-                setSections(sections);
-            }
-        }else {
-          Util.showToastMessage(getContext(),homePageResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
+
     }
 
     private void setSections(ArrayList<HomePageResponse.Data.Section> sections) {

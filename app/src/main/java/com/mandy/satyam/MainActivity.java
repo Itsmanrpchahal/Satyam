@@ -8,11 +8,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -39,6 +43,7 @@ import com.mandy.satyam.commonActivity.CustmerActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.HomeFragment;
+import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.myCart.MyCartActivity;
 import com.mandy.satyam.myOrderList.MyOrderListActivity;
@@ -57,7 +62,7 @@ import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Response;
 
-public class MainActivity extends BaseClass implements Controller.Keys {
+public class MainActivity extends BaseClass implements Controller.Keys,Controller.HomePage {
 
     public static ProfileApi.Data data;
 
@@ -99,8 +104,7 @@ public class MainActivity extends BaseClass implements Controller.Keys {
     AutoCompleteTextView searchProduct;
     @BindView(R.id.searchProducts)
     ImageButton searchProducts;
-    ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
-    ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
+    ArrayList<String> productName=new ArrayList<>();
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -110,9 +114,9 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         Fabric.with(MainActivity.this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.Keys)this);
+        controller = new Controller((Controller.Keys)this,(Controller.HomePage)this);
         controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
-
+        searchProduct.setText("");
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
         ImageView imgvw = (ImageView) hView.findViewById(R.id.imageView);
         TextView tv = (TextView) hView.findViewById(R.id.textView);
@@ -146,6 +150,11 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         transaction.commit();
         // framelayout.setVisibility(View.VISIBLE);
 
+        if (Util.isOnline(this) != false) {
+            controller.setHomePage();
+        } else {
+            Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+        }
 
         lisenters();
 
@@ -191,7 +200,7 @@ public class MainActivity extends BaseClass implements Controller.Keys {
             }
         });
 
-        searchProducts.setOnClickListener(new View.OnClickListener() {
+        /*searchProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -200,13 +209,74 @@ public class MainActivity extends BaseClass implements Controller.Keys {
                 {
                     searchProduct.setError("Input length must be 3 character");
                 }else {
+
                     Intent intent = new Intent(MainActivity.this,ProductsActivity.class);
                     intent.putExtra("isFrom","main");
                     intent.putExtra("search",searchProduct.getText().toString());
                     startActivity(intent);
                 }
             }
+        });*/
+
+        searchProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchProduct.setText("");
+            }
         });
+
+        searchProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                searchProduct(searchProduct.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+
+                }
+            }
+        });
+    }
+
+    private void searchProduct(String productType) {
+
+        String type = String.valueOf(productType.equalsIgnoreCase(productType));
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, productName);
+        searchProduct.setAdapter(arrayAdapter);
+
+
+        searchProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String message = String.valueOf(arrayAdapter.getItem(position));
+               String product = "";
+                searchProducts(message);
+            }
+        });
+    }
+
+    private void searchProducts(String s) {
+        if (Util.isOnline(MainActivity.this) != false) {
+
+            Intent intent = new Intent(MainActivity.this,ProductsActivity.class);
+            intent.putExtra("isFrom","main");
+            intent.putExtra("search",s);
+            startActivity(intent);
+//            controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s);
+//            controller.setSubCategory(catID);
+        } else {
+            Util.showToastMessage(MainActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+        }
+
     }
 
 
@@ -214,6 +284,7 @@ public class MainActivity extends BaseClass implements Controller.Keys {
     protected void onResume() {
         super.onResume();
         onNavigationClick();
+        searchProduct.setText("");
         searchProduct.setVisibility(View.GONE);
         searchProducts.setVisibility(View.GONE);
         toolbarSearch.setVisibility(View.VISIBLE);
@@ -420,6 +491,27 @@ public class MainActivity extends BaseClass implements Controller.Keys {
         if (keysResponseResponse.isSuccessful()) {
             setStringVal(Constants.CONSUMER_SECRET, keysResponseResponse.body().getData().getConsumerSecret());
             setStringVal(Constants.CONSUMER_KEY, keysResponseResponse.body().getData().getConsumerKey());
+        }
+    }
+
+    @Override
+    public void onSucessHome(Response<HomePageResponse> homePageResponseResponse) {
+        if (homePageResponseResponse.isSuccessful())
+        {
+            if (homePageResponseResponse.body().getStatus()==200)
+            {
+                for (int i=0;i<homePageResponseResponse.body().getData().getSections().size();i++)
+                {
+                    HomePageResponse.Data.Section section = homePageResponseResponse.body().getData().getSections().get(i);
+
+                    productName.add(section.getCategoryTitle());
+
+                    for (int i1=0;i1<section.getCategoryProducts().size();i1++)
+                    {
+                        productName.add(section.getCategoryProducts().get(i1).getProductName());
+                    }
+                }
+            }
         }
     }
 
