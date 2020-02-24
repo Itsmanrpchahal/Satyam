@@ -228,10 +228,23 @@ public class ProductDetailResponse {
         private List<Object> defaultAttributes = null;
         @SerializedName("variations")
         @Expose
-        private List<Object> variations = null;
+        private List<Integer> variations = null;
         @SerializedName("grouped_products")
         @Expose
         private List<Object> groupedProducts = null;
+
+        @SerializedName("custom_variations")
+        @Expose
+        private List<CustomVariation> customVariations = null;
+
+        public List<CustomVariation> getCustomVariations() {
+            return customVariations;
+        }
+
+        public void setCustomVariations(List<CustomVariation> customVariations) {
+            this.customVariations = customVariations;
+        }
+
         @SerializedName("menu_order")
         @Expose
         private Integer menuOrder;
@@ -744,13 +757,6 @@ public class ProductDetailResponse {
             this.defaultAttributes = defaultAttributes;
         }
 
-        public List<Object> getVariations() {
-            return variations;
-        }
-
-        public void setVariations(List<Object> variations) {
-            this.variations = variations;
-        }
 
         public List<Object> getGroupedProducts() {
             return groupedProducts;
@@ -1337,6 +1343,82 @@ public class ProductDetailResponse {
             public void setOptions(List<String> options) {
                 this.options = options;
             }
+        }
+
+        public class CustomVariation {
+
+            @SerializedName("key")
+            @Expose
+            private String key;
+            @SerializedName("title")
+            @Expose
+            private String title;
+            @SerializedName("options")
+            @Expose
+            private List<Option> options = null;
+
+            public String getKey() {
+                return key;
+            }
+
+            public void setKey(String key) {
+                this.key = key;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public List<Option> getOptions() {
+                return options;
+            }
+
+            public void setOptions(List<Option> options) {
+                this.options = options;
+            }
+
+            public class Option {
+
+                @SerializedName("k")
+                @Expose
+                private String k;
+                @SerializedName("v")
+                @Expose
+                private String v;
+                @SerializedName("vp")
+                @Expose
+                private String vp;
+
+                public String getK() {
+                    return k;
+                }
+
+                public void setK(String k) {
+                    this.k = k;
+                }
+
+                public String getV() {
+                    return v;
+                }
+
+                public void setV(String v) {
+                    this.v = v;
+                }
+
+                public String getVp() {
+                    return vp;
+                }
+
+                public void setVp(String vp) {
+                    this.vp = vp;
+                }
+
+            }
+
         }
     }
 }

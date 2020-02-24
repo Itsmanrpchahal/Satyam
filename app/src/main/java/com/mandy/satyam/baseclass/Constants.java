@@ -2,6 +2,7 @@ package com.mandy.satyam.baseclass;
 
 public class Constants {
     public static final String USER_ID ="user_id";
+    public static final String CART_COUNT ="cart_count";
     public static final String LOGIN_STATUS ="status";
     public static final String EMAIL ="email";
     public static final String FIRSTNAME ="firstname";

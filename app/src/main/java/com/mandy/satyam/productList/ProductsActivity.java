@@ -10,8 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +21,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
+import com.mandy.satyam.SearchItemAdapter;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
-import com.mandy.satyam.filterScreen.Adapter.FilterProductAdapter;
 import com.mandy.satyam.filterScreen.FilterActivity;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
+import com.mandy.satyam.mainIF.getProductName;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.productList.adapter.ProductListAdapter;
@@ -36,7 +37,6 @@ import com.mandy.satyam.productList.interface_.GetSubCate_IF;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.utils.Util;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -72,15 +72,20 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
     ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
     ArrayList<String> productname = new ArrayList<>();
+    ArrayList<FilterResponse.Datum> searchProducts = new ArrayList<>();
     @BindView(R.id.seemorebt)
     Button seemorebt;
     @BindView(R.id.subcategoryrecycler)
     RecyclerView subcategoryrecycler;
     @BindView(R.id.searchProduct)
     AutoCompleteTextView searchProduct;
-    @BindView(R.id.searchProducts)
-    ImageButton searchProducts;
+    @BindView(R.id.close)
+    ImageButton close;
     String search;
+    @BindView(R.id.searchitemrecycler)
+    RecyclerView searchitemrecycler;
+    @BindView(R.id.noitemfound)
+    TextView noitemfound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,9 +136,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
             }
-
         }
-
     }
 
 
@@ -159,9 +162,10 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             public void onClick(View v) {
                 textView.setVisibility(View.GONE);
                 searchProduct.setVisibility(View.VISIBLE);
-                searchProducts.setVisibility(View.VISIBLE);
+                close.setVisibility(View.VISIBLE);
                 filterBt.setVisibility(View.GONE);
                 searchBt.setVisibility(View.GONE);
+
             }
         });
 
@@ -188,10 +192,17 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 //            }
 //        });
 
-        searchProducts.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                textView.setVisibility(View.VISIBLE);
+                searchProduct.setVisibility(View.GONE);
+                close.setVisibility(View.GONE);
                 searchProduct.setText("");
+                filterBt.setVisibility(View.VISIBLE);
+                searchBt.setVisibility(View.VISIBLE);
+                noitemfound.setVisibility(View.GONE);
+
             }
         });
 
@@ -203,43 +214,28 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String intent = searchProduct.getText().toString();
-                String product = "";
-                searchProduct(String.valueOf(product.equalsIgnoreCase(intent)));
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-
+                if (s.length() > 2) {
+                    String intent = searchProduct.getText().toString();
+                    String product = "";
+                    searchProducts(intent);
+//                    searchProduct();
+                } else if (s.length() == 0) {
+                    recyclerProduct.setVisibility(View.VISIBLE);
+                    searchitemrecycler.setVisibility(View.GONE);
                 }
             }
         });
-
-
     }
 
-    private void searchProduct(String productType) {
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ProductsActivity.this, android.R.layout.simple_list_item_1, productname);
-        searchProduct.setAdapter(arrayAdapter);
-
-
-        searchProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String message = String.valueOf(arrayAdapter.getItem(position).substring(0,7));
-                searchProducts(message);
-            }
-        });
-
-
-
-    }
 
     private void searchProducts(String s) {
         if (Util.isOnline(ProductsActivity.this) != false) {
-            progressDialog.show();
+//            progressDialog.show();
             controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s);
             controller.setSubCategory(catID);
         } else {
@@ -257,9 +253,10 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
     @Override
     public void onSucessRelated(Response<Categoriesroducts> homePageResponseResponse) {
-        progressDialog.dismiss();
+        progressDialog.show();
         seemorebt.setVisibility(View.VISIBLE);
         if (homePageResponseResponse.isSuccessful()) {
+            progressDialog.dismiss();
             if (homePageResponseResponse.body().getStatus() == 200) {
                 headerList = Integer.parseInt(homePageResponseResponse.headers().get("X-WP-TotalPages"));
                 for (int i = 0; i < homePageResponseResponse.body().getData().size(); i++) {
@@ -270,7 +267,6 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     }
                     //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
                     datumArrayList.add(homePageResponseResponse.body().getData().get(i));
-                    productname.add(homePageResponseResponse.body().getData().get(i).getName());
                 }
 
 
@@ -290,6 +286,8 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 dialog.dismiss();
                 Toast.makeText(this, "" + homePageResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
             }
+        } else {
+            progressDialog.dismiss();
         }
 
 
@@ -333,7 +331,6 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 setSubCategory(subCategories);
             }
         }
-
     }
 
     private void setSubCategory(ArrayList<SubCategory.Datum> subCategorie) {
@@ -361,63 +358,64 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
     @Override
     public void onSuccessGetFilterProducts(Response<FilterResponse> responseResponse) {
-        progressDialog.dismiss();
+        productname.clear();
+        searchProducts.clear();
+        progressDialog.show();
         if (responseResponse.isSuccessful()) {
+            seemorebt.setVisibility(View.GONE);
+            progressDialog.dismiss();
             if (responseResponse.body().getStatus() == 200) {
+
                 headerList = Integer.parseInt(responseResponse.headers().get("X-WP-TotalPages"));
 
-                for (int i = 0; i < responseResponse.body().getData().size(); i++) {
+                if (responseResponse.body().getData().size()==0)
+                {
+                   searchitemrecycler.setVisibility(View.GONE);
+                    recyclerProduct.setVisibility(View.GONE);
+                    noitemfound.setVisibility(View.VISIBLE);
+                    subcategoryrecycler.setVisibility(View.GONE);
+                }else {
+                    searchitemrecycler.setVisibility(View.VISIBLE);
+                    recyclerProduct.setVisibility(View.GONE);
+                    noitemfound.setVisibility(View.GONE);
+                    for (int i = 0; i < responseResponse.body().getData().size(); i++) {
 
-                    if (responseResponse.body().getData().get(i).getImages().size() >= 1) {
-                        FilterResponse.Datum.Image image = responseResponse.body().getData().get(i).getImages().get(0);
-                        filterImages.add(image);
-                    }
-
-                    //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
-                    filterDatumArraylist.add(responseResponse.body().getData().get(i));
-                }
-                GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-                recyclerProduct.setLayoutManager(layoutManager);
-                FilterProductAdapter adapter = new FilterProductAdapter(this, filterImages, filterDatumArraylist);
-                recyclerProduct.setAdapter(adapter);
-                adapter.ProductListAdapter(new product_id_IF() {
-                    @Override
-                    public void getProductID(String id) {
-                        Intent intent = new Intent(ProductsActivity.this, ProductDetailsActivity.class);
-                        intent.putExtra("productID", id);
-                        startActivity(intent);
-                    }
-                });
-
-                seemorebt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        progressDialog.show();
-                        if (pageCount < headerList) {
-                            pageCount = 1 + pageCount;
-                            if (Util.isOnline(ProductsActivity.this) != false) {
-                                progressDialog.show();
-                                controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "");
-                            } else {
-                                Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
-                            }
-                        } else {
-                            seemorebt.setVisibility(View.GONE);
+                        if (responseResponse.body().getData().get(i).getImages().size() >= 1) {
+                            FilterResponse.Datum.Image image = responseResponse.body().getData().get(i).getImages().get(0);
+                            filterImages.add(image);
                         }
-                    }
-                });
 
-                if (pageCount == headerList) {
-                    seemorebt.setVisibility(View.GONE);
-                } else {
-                    seemorebt.setVisibility(View.VISIBLE);
+                        filterDatumArraylist.add(responseResponse.body().getData().get(i));
+                        searchProducts.add(responseResponse.body().getData().get(i));
+                        productname.add(responseResponse.body().getData().get(i).getName());
+
+
+                    }
+                    LinearLayoutManager linearLayout = new LinearLayoutManager(ProductsActivity.this);
+                    searchitemrecycler.setLayoutManager(linearLayout);
+                    SearchItemAdapter adapter = new SearchItemAdapter(this, productname, searchProducts);
+                    searchitemrecycler.setAdapter(adapter);
+                    adapter.SearchItemAdapter(new getProductName() {
+                        @Override
+                        public void getName(String name, String id) {
+//                        Toast.makeText(ProductsActivity.this, ""+name+" "+id, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ProductsActivity.this, ProductDetailsActivity.class);
+                            intent.putExtra("productID", id);
+                            startActivity(intent);
+                        }
+                    });
                 }
+
 
 
             } else {
+
+                progressDialog.dismiss();
                 Util.showToastMessage(this, responseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
             }
         } else {
+
+            progressDialog.dismiss();
             Util.showToastMessage(this, responseResponse.message(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
 
@@ -428,6 +426,25 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     public void onError(String error) {
         progressDialog.dismiss();
         Util.showToastMessage(ProductsActivity.this, error, getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+
+    }
+
+
+    private void searchProduct() {
+
+        Collections.reverse(productname);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ProductsActivity.this, android.R.layout.simple_list_item_1, productname);
+        searchProduct.setAdapter(arrayAdapter);
+
+
+        searchProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String message = String.valueOf(arrayAdapter.getItem(position).substring(0, 7));
+                searchProducts(message);
+            }
+        });
+
 
     }
 }

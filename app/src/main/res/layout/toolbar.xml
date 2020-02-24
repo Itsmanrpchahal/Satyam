@@ -20,15 +20,16 @@
             android:singleLine="true"
             android:visibility="gone"
             android:textColor="@color/white"
+            android:focusable="true"
             android:imeOptions="actionDone"
-            android:layout_toLeftOf="@id/searchProducts"
+            android:layout_toLeftOf="@id/close"
             android:layout_centerVertical="true"
             android:backgroundTint="@color/white"
             android:layout_marginRight="@dimen/margin_dp10"></AutoCompleteTextView>
 
 
         <ImageButton
-            android:id="@+id/searchProducts"
+            android:id="@+id/close"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

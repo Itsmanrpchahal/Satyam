@@ -100,9 +100,10 @@ public class Controller {
     }
 
     //Keys
-    public Controller(Keys keys1,HomePage homePage1) {
+    public Controller(Keys keys1,HomePage homePage1,GetFilterProducts getFilterProducts1) {
         keys = keys1;
         homePage = homePage1;
+        getFilterProducts = getFilterProducts1;
         webAPI = new WebAPI();
     }
 
@@ -194,8 +195,8 @@ public class Controller {
         });
     }
 
-    public void setHomePage() {
-        webAPI.getApi().homepage().enqueue(new Callback<HomePageResponse>() {
+    public void setHomePage(String token) {
+        webAPI.getApi().homepage(token).enqueue(new Callback<HomePageResponse>() {
             @Override
             public void onResponse(Call<HomePageResponse> call, Response<HomePageResponse> response) {
                 if (response != null) {

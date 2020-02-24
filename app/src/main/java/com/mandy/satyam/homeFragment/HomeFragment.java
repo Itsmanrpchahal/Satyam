@@ -77,7 +77,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
 
         controller = new Controller((Controller.HomePage)HomeFragment.this);
         if (Util.isOnline(getContext()) != false) {
-            controller.setHomePage();
+            controller.setHomePage(getStringVal(Constants.USERTOKEN));
         } else {
             Util.showToastMessage(getContext(), "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
         }
@@ -134,6 +134,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         {
             if (homePageResponseResponse.body().getStatus()==200)
             {
+                setStringVal(Constants.CART_COUNT,homePageResponseResponse.body().getCart_total());
                 for (int i=0;i<homePageResponseResponse.body().getData().getCategories().size();i++)
                 {
                     HomePageResponse.Data.Category category = homePageResponseResponse.body().getData().getCategories().get(i);

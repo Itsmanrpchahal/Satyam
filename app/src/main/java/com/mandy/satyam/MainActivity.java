@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -33,6 +34,8 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
@@ -43,14 +46,17 @@ import com.mandy.satyam.commonActivity.CustmerActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.HomeFragment;
+import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.LoginActivity;
+import com.mandy.satyam.mainIF.getProductName;
 import com.mandy.satyam.myCart.MyCartActivity;
 import com.mandy.satyam.myOrderList.MyOrderListActivity;
 import com.mandy.satyam.myProfile.ProfileActivity;
 import com.mandy.satyam.myProfile.ProfileApi;
+import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.productList.ProductsActivity;
-import com.mandy.satyam.searchActivity.SearchActivity;
+import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.termsandcondition.TermsActivity;
 import com.mandy.satyam.utils.Util;
 
@@ -62,15 +68,20 @@ import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Response;
 
-public class MainActivity extends BaseClass implements Controller.Keys,Controller.HomePage {
+public class MainActivity extends BaseClass implements Controller.Keys, Controller.HomePage ,Controller.GetFilterProducts{
 
     public static ProfileApi.Data data;
-
+    Dialog dialog;
     ActionBarDrawerToggle mToggle;
     FragmentManager manager;
     FragmentTransaction transaction;
-
-
+    ArrayList<Categoriesroducts.Datum.Image> images = new ArrayList<>();
+    ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
+    ArrayList<Categoriesroducts.Datum> datumArrayList = new ArrayList<Categoriesroducts.Datum>();
+    ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
+    ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
+    ArrayList<String> productname = new ArrayList<>();
+    ArrayList<FilterResponse.Datum> searchProducts = new ArrayList<>();
     public static final int MULTIPLE_PERMISSIONS = 10;
     String[] permissions = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -102,9 +113,13 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
     Controller controller;
     @BindView(R.id.searchProduct)
     AutoCompleteTextView searchProduct;
-    @BindView(R.id.searchProducts)
-    ImageButton searchProducts;
-    ArrayList<String> productName=new ArrayList<>();
+    @BindView(R.id.close)
+    ImageButton close;
+    ArrayList<String> productName = new ArrayList<>();
+    @BindView(R.id.searchitemrecycler)
+    RecyclerView searchitemrecycler;
+    @BindView(R.id.noitemfound)
+    TextView noitemfound;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -114,17 +129,18 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
         Fabric.with(MainActivity.this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.Keys)this,(Controller.HomePage)this);
+        dialog = Util.showDialog(this);
+        dialog.dismiss();
+        controller = new Controller((Controller.Keys) this, (Controller.HomePage) this,(Controller.GetFilterProducts)this);
         controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
         searchProduct.setText("");
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
         ImageView imgvw = (ImageView) hView.findViewById(R.id.imageView);
         TextView tv = (TextView) hView.findViewById(R.id.textView);
 
-        if (getStringVal(Constants.FIRSTNAME).equals("") || getStringVal(Constants.LASTNAME).equals(""))
-        {
+        if (getStringVal(Constants.FIRSTNAME).equals("") || getStringVal(Constants.LASTNAME).equals("")) {
             tv.setText("Hello Guest User");
-        }else {
+        } else {
             tv.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME));
             Glide.with(this).load(getStringVal(Constants.AVATAR)).placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
         }
@@ -151,7 +167,7 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
         // framelayout.setVisibility(View.VISIBLE);
 
         if (Util.isOnline(this) != false) {
-            controller.setHomePage();
+            controller.setHomePage(getStringVal(Constants.USERTOKEN));
         } else {
             Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
         }
@@ -161,26 +177,100 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
     }
 
 
-
     private void lisenters() {
 
         toolbarSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //done
-               toolbarSearch.setVisibility(View.GONE);
-               productCart.setVisibility(View.VISIBLE);
-               cartCount.setVisibility(View.VISIBLE);
-               cartlayout.setVisibility(View.VISIBLE);
-
+//                if (!getStringVal(Constants.LOGIN_STATUS).equals("login"))
+//                {
+                toolbarSearch.setVisibility(View.GONE);
+                productCart.setVisibility(View.GONE);
+                cartCount.setVisibility(View.GONE);
+                cartlayout.setVisibility(View.GONE);
+                loginmain.setVisibility(View.GONE);
                 txtToolbar.setVisibility(View.GONE);
-               searchProduct.setVisibility(View.VISIBLE);
-                searchProducts.setVisibility(View.VISIBLE);
+                searchProduct.setVisibility(View.VISIBLE);
+                close.setVisibility(View.VISIBLE);
+//                }else {
+//                    toolbarSearch.setVisibility(View.GONE);
+//                    productCart.setVisibility(View.GONE);
+//                    cartCount.setVisibility(View.GONE);
+//                    cartlayout.setVisibility(View.GONE);
+//                    loginmain.setVisibility(View.GONE);
+//                    txtToolbar.setVisibility(View.GONE);
+//                    searchProduct.setVisibility(View.VISIBLE);
+//                    close.setVisibility(View.VISIBLE);
+//                }
+
+
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!getStringVal(Constants.LOGIN_STATUS).equals("login")) {
+                    toolbarSearch.setVisibility(View.VISIBLE);
+                    productCart.setVisibility(View.GONE);
+                    cartCount.setVisibility(View.GONE);
+                    cartlayout.setVisibility(View.GONE);
+                    loginmain.setVisibility(View.VISIBLE);
+                    txtToolbar.setVisibility(View.VISIBLE);
+                    searchProduct.setVisibility(View.GONE);
+                    searchProduct.setText("");
+                    close.setVisibility(View.GONE);
+                    noitemfound.setVisibility(View.GONE);
+                    framelayout.setVisibility(View.VISIBLE);
+                    searchitemrecycler.setVisibility(View.GONE);
+                } else {
+                    toolbarSearch.setVisibility(View.VISIBLE);
+                    productCart.setVisibility(View.VISIBLE);
+                    cartCount.setVisibility(View.VISIBLE);
+                    cartlayout.setVisibility(View.VISIBLE);
+                    loginmain.setVisibility(View.GONE);
+                    txtToolbar.setVisibility(View.VISIBLE);
+                    searchProduct.setVisibility(View.GONE);
+                    searchProduct.setText("");
+                    close.setVisibility(View.GONE);
+                    noitemfound.setVisibility(View.GONE);
+                    framelayout.setVisibility(View.VISIBLE);
+                    searchitemrecycler.setVisibility(View.GONE);
+                }
+
             }
         });
 
 
+        searchProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (count==0)
+            {
+                framelayout.setVisibility(View.VISIBLE);
+                searchitemrecycler.setVisibility(View.GONE);
+            }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 2) {
+                    String intent = searchProduct.getText().toString();
+                    String product = "";
+                    searchProducts(intent);
+//                    searchProduct();
+                } else if (s.length() == 0) {
+                    framelayout.setVisibility(View.VISIBLE);
+                    searchitemrecycler.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
         productCart.setOnClickListener(new View.OnClickListener() {
@@ -218,32 +308,13 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
             }
         });*/
 
-        searchProducts.setOnClickListener(new View.OnClickListener() {
+        /*close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchProduct.setText("");
             }
-        });
+        });*/
 
-        searchProduct.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                searchProduct(searchProduct.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-
-                }
-            }
-        });
     }
 
     private void searchProduct(String productType) {
@@ -258,7 +329,7 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String message = String.valueOf(arrayAdapter.getItem(position));
-               String product = "";
+                String product = "";
                 searchProducts(message);
             }
         });
@@ -267,11 +338,11 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
     private void searchProducts(String s) {
         if (Util.isOnline(MainActivity.this) != false) {
 
-            Intent intent = new Intent(MainActivity.this,ProductsActivity.class);
-            intent.putExtra("isFrom","main");
-            intent.putExtra("search",s);
-            startActivity(intent);
-//            controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s);
+//            Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
+//            intent.putExtra("isFrom", "main");
+//            intent.putExtra("search", s);
+//            startActivity(intent);
+            controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s);
 //            controller.setSubCategory(catID);
         } else {
             Util.showToastMessage(MainActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -284,11 +355,33 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
     protected void onResume() {
         super.onResume();
         onNavigationClick();
-        searchProduct.setText("");
-        searchProduct.setVisibility(View.GONE);
-        searchProducts.setVisibility(View.GONE);
-        toolbarSearch.setVisibility(View.VISIBLE);
-        txtToolbar.setVisibility(View.VISIBLE);
+        if (!getStringVal(Constants.LOGIN_STATUS).equals("login")) {
+            toolbarSearch.setVisibility(View.VISIBLE);
+            productCart.setVisibility(View.GONE);
+            cartCount.setVisibility(View.GONE);
+            cartlayout.setVisibility(View.GONE);
+            loginmain.setVisibility(View.VISIBLE);
+            txtToolbar.setVisibility(View.VISIBLE);
+            searchProduct.setVisibility(View.GONE);
+            searchProduct.setText("");
+            close.setVisibility(View.GONE);
+            noitemfound.setVisibility(View.GONE);
+            framelayout.setVisibility(View.VISIBLE);
+            searchitemrecycler.setVisibility(View.GONE);
+        } else {
+            toolbarSearch.setVisibility(View.VISIBLE);
+            productCart.setVisibility(View.VISIBLE);
+            cartCount.setVisibility(View.VISIBLE);
+            cartlayout.setVisibility(View.VISIBLE);
+            loginmain.setVisibility(View.GONE);
+            txtToolbar.setVisibility(View.VISIBLE);
+            searchProduct.setVisibility(View.GONE);
+            searchProduct.setText("");
+            close.setVisibility(View.GONE);
+            noitemfound.setVisibility(View.GONE);
+            framelayout.setVisibility(View.VISIBLE);
+            searchitemrecycler.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -361,7 +454,7 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
 
                             startActivity(intent2);
                         } else {
-                            logout(logutText,textLogout);
+                            logout(logutText, textLogout);
 
                         }
                         break;
@@ -496,22 +589,83 @@ public class MainActivity extends BaseClass implements Controller.Keys,Controlle
 
     @Override
     public void onSucessHome(Response<HomePageResponse> homePageResponseResponse) {
-        if (homePageResponseResponse.isSuccessful())
-        {
-            if (homePageResponseResponse.body().getStatus()==200)
-            {
-                for (int i=0;i<homePageResponseResponse.body().getData().getSections().size();i++)
-                {
+        if (homePageResponseResponse.isSuccessful()) {
+            if (homePageResponseResponse.body().getStatus() == 200) {
+                for (int i = 0; i < homePageResponseResponse.body().getData().getSections().size(); i++) {
                     HomePageResponse.Data.Section section = homePageResponseResponse.body().getData().getSections().get(i);
+
+
+                        cartCount.setText(homePageResponseResponse.body().getCart_total());
 
                     productName.add(section.getCategoryTitle());
 
-                    for (int i1=0;i1<section.getCategoryProducts().size();i1++)
-                    {
+                    for (int i1 = 0; i1 < section.getCategoryProducts().size(); i1++) {
                         productName.add(section.getCategoryProducts().get(i1).getProductName());
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void onSuccessGetFilterProducts(Response<FilterResponse> responseResponse) {
+        productname.clear();
+        searchProducts.clear();
+        dialog.show();
+        if (responseResponse.isSuccessful()) {
+            dialog.dismiss();
+            if (responseResponse.body().getStatus() == 200) {
+
+//                headerList = Integer.parseInt(responseResponse.headers().get("X-WP-TotalPages"));
+
+                if (responseResponse.body().getData().size()==0)
+                {
+                    searchitemrecycler.setVisibility(View.GONE);
+                    noitemfound.setVisibility(View.VISIBLE);
+                    framelayout.setVisibility(View.GONE);
+                }else {
+                    searchitemrecycler.setVisibility(View.VISIBLE);
+                    noitemfound.setVisibility(View.GONE);
+                    framelayout.setVisibility(View.GONE);
+                    for (int i = 0; i < responseResponse.body().getData().size(); i++) {
+
+                        if (responseResponse.body().getData().get(i).getImages().size() >= 1) {
+                            FilterResponse.Datum.Image image = responseResponse.body().getData().get(i).getImages().get(0);
+                            filterImages.add(image);
+                        }
+
+                        filterDatumArraylist.add(responseResponse.body().getData().get(i));
+                        searchProducts.add(responseResponse.body().getData().get(i));
+                        productname.add(responseResponse.body().getData().get(i).getName());
+
+
+                    }
+                    LinearLayoutManager linearLayout = new LinearLayoutManager(MainActivity.this);
+                    searchitemrecycler.setLayoutManager(linearLayout);
+                    SearchItemAdapter adapter = new SearchItemAdapter(this, productname, searchProducts);
+                    searchitemrecycler.setAdapter(adapter);
+                    adapter.SearchItemAdapter(new getProductName() {
+                        @Override
+                        public void getName(String name, String id) {
+//                        Toast.makeText(ProductsActivity.this, ""+name+" "+id, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, ProductDetailsActivity.class);
+                            intent.putExtra("productID", id);
+                            startActivity(intent);
+                        }
+                    });
+                }
+
+
+
+            } else {
+
+                dialog.dismiss();
+                Util.showToastMessage(this, responseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+            }
+        } else {
+
+            dialog.dismiss();
+            Util.showToastMessage(this, responseResponse.message(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
     }
 

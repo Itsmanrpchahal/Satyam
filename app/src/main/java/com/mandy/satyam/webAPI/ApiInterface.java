@@ -53,7 +53,7 @@ public interface ApiInterface {
 
     @POST("wp-json/os/v1/homepage")
     Call<HomePageResponse> homepage(
-
+        @Query("token") String token
     );
 
     @POST("wp-json/os/v1/woo_keys")

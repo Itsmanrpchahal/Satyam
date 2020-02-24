@@ -13,6 +13,18 @@ public class HomePageResponse {
     @SerializedName("message")
     @Expose
     private String message;
+
+    public String getCart_total() {
+        return cart_total;
+    }
+
+    public void setCart_total(String cart_total) {
+        this.cart_total = cart_total;
+    }
+
+    @SerializedName("cart_total")
+    @Expose
+    private String cart_total;
     @SerializedName("data")
     @Expose
     private Data data;

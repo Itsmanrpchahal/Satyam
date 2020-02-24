@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/recycler"
     tools:context=".productList.ProductsActivity">
 
     <include
@@ -13,13 +14,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/recycler"
         android:layout_below="@id/tooolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/subcategoryrecycler"
@@ -39,6 +40,13 @@
             </androidx.recyclerview.widget.RecyclerView>
 
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchitemrecycler"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+
             <Button
                 android:id="@+id/seemorebt"
                 android:visibility="gone"
@@ -53,7 +61,22 @@
                 android:padding="@dimen/margin_dp5"
                 android:layout_margin="@dimen/margin_dp10"></Button>
 
+
+            <TextView
+                android:id="@+id/noitemfound"
+                android:visibility="gone"
+                android:drawableTop="@drawable/ic_noitemfound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Item Found"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/margin_dp45"
+                android:textSize="@dimen/margin_dp30"
+                android:layout_centerInParent="true"></TextView>
         </RelativeLayout>
+
+
     </ScrollView>
 
 

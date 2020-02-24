@@ -25,6 +25,27 @@
             android:layout_below="@id/tooolbar">
 
         </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchitemrecycler"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_below="@id/tooolbar"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+
+        <TextView
+            android:id="@+id/noitemfound"
+            android:visibility="gone"
+            android:drawableTop="@drawable/ic_noitemfound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Item Found"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/margin_dp45"
+            android:textSize="@dimen/margin_dp30"
+            android:layout_centerInParent="true"></TextView>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
