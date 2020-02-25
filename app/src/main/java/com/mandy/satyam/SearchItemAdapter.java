@@ -47,7 +47,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
     public void onBindViewHolder(@NonNull SearchItemAdapter.ViewHolder holder, int position) {
 
         holder.textView.setText(products.get(position));
-        Glide.with(context).load(search.get(position).getImages().get(0).getSrc()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
+//        Glide.with(context).load(search.get(position).getImages().get(0).getSrc()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

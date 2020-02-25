@@ -1,23 +1,27 @@
 package com.mandy.satyam.productDetails.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
 
     Context context;
-    int pos;
-
+    ArrayList<String> attributes;
+    private int selectedPosition = -1;
     // interface to refresh the list
     private OnItemClick itemClick;
 
@@ -29,59 +33,56 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
         itemClick = listener;
     }
 
-
-    public SizeAdapter(Context context) {
+    public SizeAdapter(Context context, ArrayList<String> attributes) {
         this.context = context;
-
+        this.attributes = attributes;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.custom_size, viewGroup, false);
-
+        View view = layoutInflater.inflate(R.layout.custom_size1, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-       /* viewHolder.textView.setText(arrayList.get(i).getSize());
-        if (pos == i) {
-            viewHolder.textView.setBackgroundResource(R.drawable.custom_size);
-            viewHolder.textView.setTextColor(context.getResources().getColor(R.color.black));
-            if (itemClick != null) {
-                int po = i;
-                if (po != RecyclerView.NO_POSITION) {
-                    itemClick.onItemClick(po, arrayList.get(i).getId());
-                }
-            }
+        if (selectedPosition == i) {
+            viewHolder.itemView.setSelected(true); //using selector drawable
+            viewHolder.layoutMethods.setBackgroundResource(R.drawable.custome_theme_selected_bg);
         } else {
-            viewHolder.textView.setBackgroundResource(R.drawable.custom_size_close);
+            viewHolder.itemView.setSelected(false);
+            viewHolder.layoutMethods.setBackgroundResource(R.drawable.grey_border1);
         }
 
-        viewHolder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pos = i;
-                notifyDataSetChanged();
 
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedPosition >= 0)
+                    notifyItemChanged(selectedPosition);
+                selectedPosition = viewHolder.getAdapterPosition();
+                notifyItemChanged(selectedPosition);
             }
-        });*/
+        });
+        viewHolder.textView.setText(attributes.get(i));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return attributes.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+        RelativeLayout layoutMethods;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textView = itemView.findViewById(R.id.textView);
+            textView = itemView.findViewById(R.id.colortext);
+            layoutMethods = itemView.findViewById(R.id.layout_methods);
         }
     }
 }

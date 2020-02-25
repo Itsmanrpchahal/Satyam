@@ -1,5 +1,6 @@
 package com.mandy.satyam.productDetails;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,7 +28,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.google.android.material.tabs.TabLayout;
 import com.mandy.satyam.R;
-import com.mandy.satyam.addressActivity.AddressActivity;
 import com.mandy.satyam.addressActivity.addAddress.ADDAddressActivity;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
@@ -34,11 +35,10 @@ import com.mandy.satyam.commentActivity.CommentActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.login.LoginActivity;
-import com.mandy.satyam.placeorder.CreateOrder;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
-import com.mandy.satyam.productDetails.adapter.SizeAdapter;
+import com.mandy.satyam.productDetails.adapter.VariationsAdapter;
 import com.mandy.satyam.productDetails.adapter.ViewPagerProductImageAdapter;
 import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
@@ -53,7 +53,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail,Controller.RelatedPrducts ,Controller.AddToCart{
+public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail, Controller.RelatedPrducts, Controller.AddToCart {
 
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
@@ -77,8 +77,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     TextView txtMRP;
     @BindView(R.id.txtPrice)
     TextView txtPrice;
-    @BindView(R.id.txtColor)
-    TextView txtColor;
     @BindView(R.id.recyclerColor)
     RecyclerView recyclerColor;
     @BindView(R.id.txtSize)
@@ -100,6 +98,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
     ArrayList<ProductDetailResponse.Data.Image> array_image = new ArrayList<>();
     ArrayList<String> array_color = new ArrayList<String>();
+    ArrayList<String> array_size = new ArrayList<String>();
     Dialog dialog;
     String token, id, catId, sizeId, colorId;
     @BindView(R.id.filter_bt)
@@ -127,6 +126,14 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     @BindView(R.id.seerelatedTV)
     TextView seerelatedTV;
     String getProductID;
+    @BindView(R.id.searchProduct)
+    AutoCompleteTextView searchProduct;
+    @BindView(R.id.close)
+    ImageButton close;
+    @BindView(R.id.variationname)
+    RecyclerView variationname;
+    ArrayList<ProductDetailResponse.Data.CustomVariation> customVariations = new ArrayList<>();
+    ArrayList<ProductDetailResponse.Data.CustomVariation> TypeVariations = new ArrayList<>();
 
 
     @Override
@@ -134,7 +141,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.ProductDetail)this,(Controller.RelatedPrducts)this,(Controller.AddToCart)this);
+        controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this);
         progressDialog = Util.showDialog(this);
         intent = getIntent();
         if (intent != null) {
@@ -175,12 +182,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         });
 
 
-        SizeAdapter adapter = new SizeAdapter(this);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerSize.setLayoutManager(linearLayoutManager2);
-        recyclerSize.setAdapter(adapter);
-        recyclerSize.addItemDecoration(new SpacesItemDecoration(10));
-
     }
 
     @OnClick({R.id.btnAddCart, R.id.btnBuynow})
@@ -188,16 +189,15 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         switch (view.getId()) {
             case R.id.btnAddCart:
 
-                if (getStringVal(Constants.USER_ID).equals(""))
-                {
+                if (getStringVal(Constants.USER_ID).equals("")) {
                     Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     progressDialog.show();
 
                     if (Util.isOnline(ProductDetailsActivity.this) != false) {
                         progressDialog.show();
-                        controller.setAddToCart(getProductID,"1","",getStringVal(Constants.USERTOKEN));
+                        controller.setAddToCart(getProductID, "1", "", getStringVal(Constants.USERTOKEN));
                     } else {
                         Util.showToastMessage(ProductDetailsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
@@ -206,15 +206,14 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 //               controller.setAddToCart(getStringVal(Constants.CONSUMER_KEY_LOGIN),getStringVal(Constants.CONSUMER_SECRET_LOGIN),getProductID,"1");
                 break;
             case R.id.btnBuynow:
-                if (getStringVal(Constants.USER_ID).equals(""))
-                {
+                if (getStringVal(Constants.USER_ID).equals("")) {
                     Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
-                    intent.putExtra("productID",productID);
-                    intent.putExtra("quantity","1");
-                    intent.putExtra("isFrom","BuyBT");
+                    intent.putExtra("productID", productID);
+                    intent.putExtra("quantity", "1");
+                    intent.putExtra("isFrom", "BuyBT");
                     startActivity(intent);
                 }
                 break;
@@ -247,9 +246,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     editText.setError("Enter the quantity");
                 } else {
                     Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
-                    intent.putExtra("productID",productID);
-                    intent.putExtra("quantity",editText.getText().toString());
-                    intent.putExtra("isFrom","BuyBT");
+                    intent.putExtra("productID", productID);
+                    intent.putExtra("quantity", editText.getText().toString());
+                    intent.putExtra("isFrom", "BuyBT");
                     startActivity(intent);
                     quantityDialog.dismiss();
                 }
@@ -266,11 +265,11 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse) {
         progressDialog.dismiss();
-        if (productDetailResponseResponse.isSuccessful())
-        {
+        if (productDetailResponseResponse.isSuccessful()) {
             if (productDetailResponseResponse.body().getStatus() == 200) {
                 String cat = productDetailResponseResponse.body().getData().getName().substring(0, 1);
                 String small = productDetailResponseResponse.body().getData().getName().toLowerCase().substring(1);
@@ -285,6 +284,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
                 }
+
                 getProductID = productDetailResponseResponse.body().getData().getId().toString();
                 stocktexttv.setText(productDetailResponseResponse.body().getData().getStockStatus());
                 perviewDescription.setText(Html.fromHtml(productDetailResponseResponse.body().getData().getDescription()));
@@ -301,26 +301,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     setOfferImage(array_image);
                 }
 
-
-                for (int i1 = 0; i1 < productDetailResponseResponse.body().getData().getColors().size(); i1++) {
-                    String color = productDetailResponseResponse.body().getData().getColors().get(i1);
-
-                    if (color != null) {
-                        String[] name = color.split(":#");
-                        if (name.length == 2) {
-                            String Fname = name[1];
-                            array_color.add(Fname);
-
-                            setColor(array_color);
-                        } else {
-//                        String Fname = name[0];
-                            array_color.add("00E54640");
-                        }
-
-
-                    }
-
-                }
 
                 for (int i = 0; i < productDetailResponseResponse.body().getData().getRelatedIds().size(); i++) {
 
@@ -340,7 +320,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
                     LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                     recyclerRelated.setLayoutManager(linearLayoutManager3);
-                    SeeRelatedItemAdapter adapter2 = new SeeRelatedItemAdapter(this,relatedIDs);
+                    SeeRelatedItemAdapter adapter2 = new SeeRelatedItemAdapter(this, relatedIDs);
                     recyclerRelated.setAdapter(adapter2);
                     recyclerRelated.addItemDecoration(new SpacesItemDecoration(10));
                     adapter2.ProductListAdapter(new product_id_IF() {
@@ -353,12 +333,26 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                         }
                     });
 
-                    if (productDetailResponseResponse.body().getData().getType().equals("variable"))
-                    {
+                }
 
-                    }else {
-                       
+                if (productDetailResponseResponse.body().getData().getType().equals("variable")) {
+
+                    variationname.setVisibility(View.VISIBLE);
+
+
+                    for (int i = 0; i < productDetailResponseResponse.body().getData().getCustomVariations().size(); i++) {
+
+                        customVariations.add(productDetailResponseResponse.body().getData().getCustomVariations().get(i));
+                        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+                        linearLayout.setOrientation(LinearLayout.VERTICAL);
+                        variationname.setHasFixedSize(true);
+                        variationname.setLayoutManager(linearLayout);
+                        VariationsAdapter variationsAdapter = new VariationsAdapter(this,customVariations);
+                        variationname.setAdapter(variationsAdapter);
                     }
+
+                } else {
+
                 }
             } else {
                 Toast.makeText(this, "" + productDetailResponseResponse.body().getStatus(), Toast.LENGTH_SHORT).show();
@@ -372,9 +366,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     private void setColor(ArrayList<String> array_color) {
         ColorAdapter colorAdapter = new ColorAdapter(this, array_color);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerColor.setLayoutManager(linearLayoutManager);
-        recyclerColor.setAdapter(colorAdapter);
-        recyclerColor.addItemDecoration(new SpacesItemDecoration(5));
+        variationname.setLayoutManager(linearLayoutManager);
+        variationname.setAdapter(colorAdapter);
+//        variationname.addItemDecoration(new SpacesItemDecoration(5));
     }
 
     //set image into view pager
@@ -414,15 +408,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
     @Override
     public void onSucessRelated(Response<Categoriesroducts> homePageResponseResponse) {
-//        if (homePageResponseResponse.body().getStatus()==200)
-//        {
-//            if (Util.isOnline(this) != false) {
-//                progressDialog.show();
-//                controller.setProductDetail(productID, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
-//            } else {
-//                Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
-//            }
-//        }
 
     }
 
@@ -431,14 +416,12 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public void onSuccessAddToCart(Response<AddToCart> response) {
         progressDialog.dismiss();
 
-        if (response.isSuccessful())
-        {
-            if (response.body().getStatus()==200)
-            {
-                Util.showToastMessage(this,response.body().getMessage(),getResources().getDrawable(R.drawable.ic_shopping_cart));
+        if (response.isSuccessful()) {
+            if (response.body().getStatus() == 200) {
+                Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.ic_shopping_cart));
             }
-        }else {
-            Util.showToastMessage(this,response.message(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        } else {
+            Util.showToastMessage(this, response.message(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
     }
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:id="@+id/testing"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/margin_dp10">
+
+    <RelativeLayout
+        android:id="@+id/layout_methods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/variationoptiostv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_dp10"
+        android:layout_margin="@dimen/margin_dp10"
+        android:background="@android:color/white"
+        android:textColor="@color/black"
+        android:textSize="@dimen/margin_dp20">
+    </TextView>
+
+
+</LinearLayout>

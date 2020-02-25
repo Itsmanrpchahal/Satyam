@@ -1383,6 +1383,18 @@ public class ProductDetailResponse {
 
             public class Option {
 
+                @SerializedName("key")
+                @Expose
+                private String key;
+
+                public String getKey() {
+                    return key;
+                }
+
+                public void setKey(String key) {
+                    this.key = key;
+                }
+
                 @SerializedName("k")
                 @Expose
                 private String k;

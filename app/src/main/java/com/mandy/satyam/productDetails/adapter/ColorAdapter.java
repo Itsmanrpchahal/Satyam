@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
     Context context;
     ArrayList<String> attributes;
 
-    int pos;
+    private int selectedPosition = -1;
 
     // interface to refresh the list
     private OnItemClick itemClick;
@@ -53,31 +54,26 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-      /*  viewHolder.textView.setText(arrayList.get(i).getSize());
-
-        if (pos == i) {
-            viewHolder.textView.setBackgroundResource(R.drawable.custom_size);
-            viewHolder.textView.setTextColor(context.getResources().getColor(R.color.black));
-            if (itemClick != null) {
-                int po = i;
-                if (po != RecyclerView.NO_POSITION) {
-                    itemClick.onItemClick(po, arrayList.get(i).getId());
-                }
-            }
+        if (selectedPosition == i) {
+            viewHolder.itemView.setSelected(true); //using selector drawable
+            viewHolder.layoutMethods.setBackgroundResource(R.drawable.custome_theme_selected_bg);
         } else {
-            viewHolder.textView.setBackgroundResource(R.drawable.custom_size_close);
+            viewHolder.itemView.setSelected(false);
+            viewHolder.layoutMethods.setBackgroundResource(R.drawable.grey_border1);
         }
 
-        viewHolder.textView.setOnClickListener(new View.OnClickListener() {
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                pos = i;
-                notifyDataSetChanged();
-
+            public void onClick(View view) {
+                if (selectedPosition >= 0)
+                    notifyItemChanged(selectedPosition);
+                selectedPosition = viewHolder.getAdapterPosition();
+                notifyItemChanged(selectedPosition);
             }
-        });*/
+        });
 
-        viewHolder.textView.setBackgroundColor(Color.parseColor("#"+attributes.get(i)));
+        viewHolder.textView.setBackgroundColor(Color.parseColor(attributes.get(i)));
     }
 
     @Override
@@ -87,11 +83,13 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+        RelativeLayout layoutMethods;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textView = itemView.findViewById(R.id.textView);
+            textView = itemView.findViewById(R.id.colortext);
+            layoutMethods = itemView.findViewById(R.id.layout_methods);
         }
     }
 }
