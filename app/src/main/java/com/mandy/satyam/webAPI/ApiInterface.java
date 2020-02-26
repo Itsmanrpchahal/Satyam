@@ -210,7 +210,8 @@ public interface ApiInterface {
             @Query("category") String category,
             @Query("min_price") String min_price,
             @Query("max_price") String max_price,
-            @Query("search") String search
+            @Query("search") String search,
+            @Query("page") String page
     );
 
     @GET("wp-json/wc/v3/orders/{input}")

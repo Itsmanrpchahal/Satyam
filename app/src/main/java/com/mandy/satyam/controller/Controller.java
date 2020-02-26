@@ -56,6 +56,7 @@ public class Controller {
     public GetFilterProducts getFilterProducts;
     public GetOrderDetails getOrderDetails;
     public GetVariations getVariations;
+    public GetSearchProducts getSearchProducts;
 
 
     //logincheck
@@ -80,10 +81,11 @@ public class Controller {
     }
 
     //related
-    public Controller(RelatedPrducts relatedPrducts1, ProductSubCategories subCategory1, GetFilterProducts getFilterProducts1) {
+    public Controller(RelatedPrducts relatedPrducts1, ProductSubCategories subCategory1, GetFilterProducts getFilterProducts1,GetSearchProducts getSearchProducts1) {
         relatedPrducts = relatedPrducts1;
         subCategory = subCategory1;
         getFilterProducts = getFilterProducts1;
+        getSearchProducts = getSearchProducts1;
         webAPI = new WebAPI();
     }
 
@@ -103,10 +105,10 @@ public class Controller {
     }
 
     //Keys
-    public Controller(Keys keys1,HomePage homePage1,GetFilterProducts getFilterProducts1) {
+    public Controller(Keys keys1,HomePage homePage1,GetSearchProducts getSearchProducts1) {
         keys = keys1;
         homePage = homePage1;
-        getFilterProducts = getFilterProducts1;
+        getSearchProducts = getSearchProducts1;
         webAPI = new WebAPI();
     }
 
@@ -534,13 +536,31 @@ public class Controller {
         });
     }
 
-    public void setGetFilterProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search) {
-        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search).enqueue(new Callback<FilterResponse>() {
+    public void setGetFilterProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search,String page) {
+        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search,page).enqueue(new Callback<FilterResponse>() {
             @Override
             public void onResponse(Call<FilterResponse> call, Response<FilterResponse> response) {
                 if (response.isSuccessful()) {
                     Response<FilterResponse> filterResponseResponse = response;
                     getFilterProducts.onSuccessGetFilterProducts(filterResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FilterResponse> call, Throwable t) {
+                getFilterProducts.onError(t.getMessage());
+            }
+        });
+    }
+
+
+    public void setGetSearchProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search,String page) {
+        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search,page).enqueue(new Callback<FilterResponse>() {
+            @Override
+            public void onResponse(Call<FilterResponse> call, Response<FilterResponse> response) {
+                if (response.isSuccessful()) {
+                    Response<FilterResponse> filterResponseResponse = response;
+                    getSearchProducts.onSuccessGetSearchProducts(filterResponseResponse);
                 }
             }
 
@@ -710,6 +730,13 @@ public class Controller {
 
         void onError(String error);
     }
+
+    public interface GetSearchProducts {
+        void onSuccessGetSearchProducts(Response<FilterResponse> responseResponse);
+
+        void onError(String error);
+    }
+
 
     public interface GetOrderDetails{
         void onSuccessGetOrderDetail(Response<GetOrderDetail> response);

@@ -25,6 +25,8 @@ import com.mandy.satyam.SearchItemAdapter;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.filterScreen.Adapter.FilterAdapter;
+import com.mandy.satyam.filterScreen.Adapter.FilterProductAdapter;
 import com.mandy.satyam.filterScreen.FilterActivity;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
@@ -45,7 +47,7 @@ import butterknife.ButterKnife;
 import retrofit2.Response;
 
 //Manpreet Work
-public class ProductsActivity extends BaseClass implements Controller.RelatedPrducts, Controller.ProductSubCategories, Controller.GetFilterProducts {
+public class ProductsActivity extends BaseClass implements Controller.RelatedPrducts, Controller.ProductSubCategories, Controller.GetFilterProducts ,Controller.GetSearchProducts{
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
     @BindView(R.id.textView)
@@ -68,6 +70,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     int headerList;
     ArrayList<Categoriesroducts.Datum.Image> images = new ArrayList<>();
     ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
+    ArrayList<FilterResponse.Datum.Image> SearchfilterImages = new ArrayList<>();
     ArrayList<Categoriesroducts.Datum> datumArrayList = new ArrayList<Categoriesroducts.Datum>();
     ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
     ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
@@ -93,7 +96,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
         setContentView(R.layout.activity_products);
         ButterKnife.bind(this);
         progressDialog = Util.showDialog(ProductsActivity.this);
-        controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this, (Controller.ProductSubCategories) this, (Controller.GetFilterProducts) this);
+        controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this, (Controller.ProductSubCategories) this, (Controller.GetFilterProducts) this,(Controller.GetSearchProducts)this);
 
 
         listerners();
@@ -116,23 +119,28 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
-            } else if (intent.getStringExtra("isFrom").equals("main")) {
+            }
+            /*else if (intent.getStringExtra("isFrom").equals("main")) {
                 search = intent.getStringExtra("search");
                 textView.setText("Filter Products");
                 searchitemrecycler.setVisibility(View.GONE);
                 progressDialog.show();
-                searchProducts(search);
-            } else {
-                textView.setText("Filter Products");
+                controller.setGetSearchProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "");
+//                searchProducts(search);
+            }*/
+            else if (intent.getStringExtra("isFrom").equals("FilterScreen"))
+            {
+                 textView.setText("Filter Products");
                 searchitemrecycler.setVisibility(View.GONE);
                 progressDialog.show();
                 filterBt.setVisibility(View.INVISIBLE);
+                searchBt.setVisibility(View.GONE);
                 maxPrice = intent.getStringExtra("endPrice");
                 minPrice = intent.getStringExtra("startPrice");
                 catID = intent.getStringExtra("catID");
                 if (Util.isOnline(ProductsActivity.this) != false) {
                     progressDialog.show();
-                    controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "");
+                    controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount));
                     controller.setSubCategory(catID);
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -170,29 +178,6 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
             }
         });
-
-//        searchProducts.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                textView.setVisibility(View.VISIBLE);
-//                searchProduct.setVisibility(View.GONE);
-//                searchBt.setVisibility(View.VISIBLE);
-//                filterBt.setVisibility(View.VISIBLE);
-//                seemorebt.setVisibility(View.VISIBLE);
-
-        int size = searchProduct.getText().length();
-//        if (size < 3) {
-//            searchProduct.setError("Input length must be 3 character");
-//        } else {
-//                    searchProducts(searchProduct.getText().toString());
-
-//                    images.clear();
-//                    datumArrayList.clear();
-//                    filterDatumArraylist.clear();
-//                    filterImages.clear();
-//        }
-//            }
-//        });
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,8 +224,8 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     private void searchProducts(String s) {
         if (Util.isOnline(ProductsActivity.this) != false) {
 //            progressDialog.show();
-            controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s);
-            controller.setSubCategory(catID);
+            controller.setGetSearchProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s,String.valueOf(pageCount));
+//            controller.setSubCategory(catID);
         } else {
             Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
         }
@@ -306,6 +291,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 progressDialog.show();
                 if (pageCount < headerList) {
                     pageCount = 1 + pageCount;
+
                     if (Util.isOnline(ProductsActivity.this) != false) {
                         progressDialog.show();
                         controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount));
@@ -367,6 +353,93 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
     @Override
     public void onSuccessGetFilterProducts(Response<FilterResponse> responseResponse) {
+        progressDialog.show();
+        if (responseResponse.isSuccessful()) {
+            seemorebt.setVisibility(View.GONE);
+            progressDialog.dismiss();
+            if (responseResponse.body().getStatus() == 200) {
+
+                headerList = Integer.parseInt(responseResponse.headers().get("X-WP-TotalPages"));
+
+                if (headerList>0)
+                {
+                    seemorebt.setVisibility(View.VISIBLE);
+                }
+
+                if (responseResponse.body().getData().size()==0)
+                {
+                    searchitemrecycler.setVisibility(View.GONE);
+                    recyclerProduct.setVisibility(View.GONE);
+                    noitemfound.setVisibility(View.VISIBLE);
+                    subcategoryrecycler.setVisibility(View.GONE);
+                }else {
+                    searchitemrecycler.setVisibility(View.GONE);
+                    recyclerProduct.setVisibility(View.VISIBLE);
+                    noitemfound.setVisibility(View.GONE);
+                    for (int i = 0; i < responseResponse.body().getData().size(); i++) {
+
+                        if (responseResponse.body().getData().get(i).getImages().size() >= 1) {
+                            FilterResponse.Datum.Image image = responseResponse.body().getData().get(i).getImages().get(0);
+                            filterImages.add(image);
+                        }
+
+                        filterDatumArraylist.add(responseResponse.body().getData().get(i));
+                    }
+                    GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+                    recyclerProduct.setLayoutManager(layoutManager);
+                    FilterProductAdapter adapter = new FilterProductAdapter(this,  filterImages,filterDatumArraylist);
+                    recyclerProduct.setAdapter(adapter);
+                    adapter.FilterProductAdapter(new product_id_IF() {
+                        @Override
+                        public void getProductID(String id) {
+                            Intent intent = new Intent(ProductsActivity.this, ProductDetailsActivity.class);
+                            intent.putExtra("productID", id);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+
+                seemorebt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        progressDialog.show();
+                        if (pageCount < headerList) {
+                            pageCount = 1 + pageCount;
+
+                            if (Util.isOnline(ProductsActivity.this) != false) {
+                                progressDialog.show();
+                                controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount));
+                            } else {
+                                Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                            }
+                        } else {
+                            seemorebt.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+
+                if (pageCount == headerList) {
+                    seemorebt.setVisibility(View.GONE);
+                } else {
+                    seemorebt.setVisibility(View.VISIBLE);
+                }
+            } else {
+
+                progressDialog.dismiss();
+                Util.showToastMessage(this, responseResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+            }
+        } else {
+
+            progressDialog.dismiss();
+            Util.showToastMessage(this, responseResponse.message(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        }
+
+    }
+
+    @Override
+    public void onSuccessGetSearchProducts(Response<FilterResponse> responseResponse) {
         productname.clear();
         searchProducts.clear();
         progressDialog.show();
@@ -379,7 +452,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                 if (responseResponse.body().getData().size()==0)
                 {
-                   searchitemrecycler.setVisibility(View.GONE);
+                    searchitemrecycler.setVisibility(View.GONE);
                     recyclerProduct.setVisibility(View.GONE);
                     noitemfound.setVisibility(View.VISIBLE);
                     subcategoryrecycler.setVisibility(View.GONE);
@@ -391,18 +464,14 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                         if (responseResponse.body().getData().get(i).getImages().size() >= 1) {
                             FilterResponse.Datum.Image image = responseResponse.body().getData().get(i).getImages().get(0);
-                            filterImages.add(image);
+                            SearchfilterImages.add(image);
                         }
-
-                        filterDatumArraylist.add(responseResponse.body().getData().get(i));
                         searchProducts.add(responseResponse.body().getData().get(i));
                         productname.add(responseResponse.body().getData().get(i).getName());
-
-
                     }
                     LinearLayoutManager linearLayout = new LinearLayoutManager(ProductsActivity.this);
                     searchitemrecycler.setLayoutManager(linearLayout);
-                    SearchItemAdapter adapter = new SearchItemAdapter(this, productname, searchProducts);
+                    SearchItemAdapter adapter = new SearchItemAdapter(this, productname,searchProducts);
                     searchitemrecycler.setAdapter(adapter);
                     adapter.SearchItemAdapter(new getProductName() {
                         @Override
@@ -427,8 +496,6 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             progressDialog.dismiss();
             Util.showToastMessage(this, responseResponse.message(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
-
-
     }
 
     @Override
@@ -438,22 +505,4 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
     }
 
-
-    private void searchProduct() {
-
-        Collections.reverse(productname);
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ProductsActivity.this, android.R.layout.simple_list_item_1, productname);
-        searchProduct.setAdapter(arrayAdapter);
-
-
-        searchProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String message = String.valueOf(arrayAdapter.getItem(position).substring(0, 7));
-                searchProducts(message);
-            }
-        });
-
-
-    }
 }

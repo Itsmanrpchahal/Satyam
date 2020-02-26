@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +29,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
     ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
     product_id_IF product_id_if;
 
-    public void ProductListAdapter(product_id_IF product_id_if) {
+    public void FilterProductAdapter(product_id_IF product_id_if) {
         this.product_id_if = product_id_if;
     }
 

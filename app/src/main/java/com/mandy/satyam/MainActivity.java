@@ -68,7 +68,7 @@ import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Response;
 
-public class MainActivity extends BaseClass implements Controller.Keys, Controller.HomePage ,Controller.GetFilterProducts{
+public class MainActivity extends BaseClass implements Controller.Keys, Controller.HomePage ,Controller.GetSearchProducts{
 
     public static ProfileApi.Data data;
     Dialog dialog;
@@ -131,7 +131,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         ButterKnife.bind(this);
         dialog = Util.showDialog(this);
         dialog.dismiss();
-        controller = new Controller((Controller.Keys) this, (Controller.HomePage) this,(Controller.GetFilterProducts)this);
+        controller = new Controller((Controller.Keys) this, (Controller.HomePage) this,(Controller.GetSearchProducts)this);
         controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
         searchProduct.setText("");
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
@@ -342,7 +342,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
 //            intent.putExtra("isFrom", "main");
 //            intent.putExtra("search", s);
 //            startActivity(intent);
-            controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s);
+            controller.setGetSearchProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s,"1");
 //            controller.setSubCategory(catID);
         } else {
             Util.showToastMessage(MainActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -582,10 +582,9 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     }
 
     @Override
-    public void onSuccessGetFilterProducts(Response<FilterResponse> responseResponse) {
+    public void onSuccessGetSearchProducts(Response<FilterResponse> responseResponse) {
         productname.clear();
         searchProducts.clear();
-        dialog.show();
         if (responseResponse.isSuccessful()) {
             dialog.dismiss();
             if (responseResponse.body().getStatus() == 200) {
@@ -645,6 +644,6 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
 
     @Override
     public void onError(String error) {
-
+        Toast.makeText(this, ""+error, Toast.LENGTH_SHORT).show();
     }
 }
