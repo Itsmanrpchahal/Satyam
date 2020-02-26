@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,23 +39,35 @@ public class GetAllOrdersAdapter extends RecyclerView.Adapter<GetAllOrdersAdapte
         View view = layoutInflater.inflate(R.layout.custom_your_order, parent, false);
 
 
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GetAllOrdersAdapter.ViewHolder holder, int position) {
 
-        Log.d("IMAGE",arrayList.get(position).getLineItems().get(0).getProductImage());
+        Log.d("IMAGE", arrayList.get(position).getLineItems().get(0).getProductImage());
         Glide.with(context).load(arrayList.get(position).getLineItems().get(0).getProductImage().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
         holder.textDispatch.setText(arrayList.get(position).getStatus());
-        holder.textDate.setText(arrayList.get(position).getCurrencySymbol()+arrayList.get(position).getTotal());
+        holder.textDate.setText(arrayList.get(position).getCurrencySymbol() + arrayList.get(position).getTotal());
+
+        holder.orderID.setText(arrayList.get(position).getStatus().toString());
+        holder.orderdate.setText(arrayList.get(position).getDateCreated());
+        holder.orderprice.setText("₹"+arrayList.get(position).getTotal());
+
+        holder.viewbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GetOrderDetail.class);
+                intent.putExtra("orderID", arrayList.get(position).getId().toString());
+                context.startActivity(intent);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, GetOrderDetail.class);
-                intent.putExtra("orderID",arrayList.get(position).getId().toString());
+                intent.putExtra("orderID", arrayList.get(position).getId().toString());
                 context.startActivity(intent);
             }
         });
@@ -66,9 +79,10 @@ public class GetAllOrdersAdapter extends RecyclerView.Adapter<GetAllOrdersAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textDispatch, textDate;
+        TextView textDispatch, textDate, orderID, orderdate,orderprice;
         ImageView imageView;
         AVLoadingIndicatorView avLoadingIndicatorView;
+        Button viewbt;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,6 +91,10 @@ public class GetAllOrdersAdapter extends RecyclerView.Adapter<GetAllOrdersAdapte
             textDate = itemView.findViewById(R.id.txtData);
             imageView = itemView.findViewById(R.id.custom_image);
             avLoadingIndicatorView = itemView.findViewById(R.id.avi);
+            orderID = itemView.findViewById(R.id.orderID);
+            orderdate = itemView.findViewById(R.id.orderDate);
+            orderprice = itemView.findViewById(R.id.orderprice);
+            viewbt = itemView.findViewById(R.id.viewbt);
 
         }
     }

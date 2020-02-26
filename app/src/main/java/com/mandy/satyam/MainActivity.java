@@ -355,33 +355,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     protected void onResume() {
         super.onResume();
         onNavigationClick();
-        if (!getStringVal(Constants.LOGIN_STATUS).equals("login")) {
-            toolbarSearch.setVisibility(View.VISIBLE);
-            productCart.setVisibility(View.GONE);
-            cartCount.setVisibility(View.GONE);
-            cartlayout.setVisibility(View.GONE);
-            loginmain.setVisibility(View.VISIBLE);
-            txtToolbar.setVisibility(View.VISIBLE);
-            searchProduct.setVisibility(View.GONE);
-            searchProduct.setText("");
-            close.setVisibility(View.GONE);
-            noitemfound.setVisibility(View.GONE);
-            framelayout.setVisibility(View.VISIBLE);
-            searchitemrecycler.setVisibility(View.GONE);
-        } else {
-            toolbarSearch.setVisibility(View.VISIBLE);
-            productCart.setVisibility(View.VISIBLE);
-            cartCount.setVisibility(View.VISIBLE);
-            cartlayout.setVisibility(View.VISIBLE);
-            loginmain.setVisibility(View.GONE);
-            txtToolbar.setVisibility(View.VISIBLE);
-            searchProduct.setVisibility(View.GONE);
-            searchProduct.setText("");
-            close.setVisibility(View.GONE);
-            noitemfound.setVisibility(View.GONE);
-            framelayout.setVisibility(View.VISIBLE);
-            searchitemrecycler.setVisibility(View.GONE);
-        }
+
     }
 
     @Override

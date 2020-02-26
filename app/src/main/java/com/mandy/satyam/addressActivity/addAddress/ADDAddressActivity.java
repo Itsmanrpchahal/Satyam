@@ -210,7 +210,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                     } else {
                         if (Util.isOnline(ADDAddressActivity.this) != false) {
                             dialog.show();
-                            controller.setPlaceOrder1_("bacs", "Direct Bank Transfer", "true", edtName.getText().toString(), edtLName.getText().toString(),
+                            controller.setPlaceOrder1_("bacs", "Direct Bank Transfer", true, edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", edtTown.getText().toString(), edtState.getText().toString(), edtPostcode.getText().toString(),
                                     "India", edtemail.getText().toString(), edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", edtTown.getText().toString(), edtState.getText().toString(), edtPostcode.getText().toString(),

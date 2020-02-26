@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -19,7 +21,10 @@ import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.myOrderList.adapter.OrderDetailAdapter;
 import com.mandy.satyam.utils.Util;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,14 +37,6 @@ public class GetOrderDetail extends BaseClass implements Controller.GetOrderDeta
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     RoundedImageView orderImage;
-    @BindView(R.id.orderid)
-    TextView orderid;
-    @BindView(R.id.paymentmethod)
-    TextView paymentmethod;
-    @BindView(R.id.statusbt)
-    Button statusbt;
-    @BindView(R.id.cardview)
-    CardView cardview;
     @BindView(R.id.username)
     TextView username;
     @BindView(R.id.phone)
@@ -60,10 +57,13 @@ public class GetOrderDetail extends BaseClass implements Controller.GetOrderDeta
     TextView SCompanyName;
     @BindView(R.id.SAddress)
     TextView SAddress;
+    @BindView(R.id.orderRecyclers)
+    RecyclerView orderRecyclers;
     Controller controller;
     Dialog dialog;
     Intent intent;
     String orderID;
+    ArrayList<com.mandy.satyam.myOrderList.response.GetOrderDetail.Data.LineItem> lineItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class GetOrderDetail extends BaseClass implements Controller.GetOrderDeta
         setContentView(R.layout.activity_get_order_detail);
         ButterKnife.bind(this);
         intent = getIntent();
-        orderImage = findViewById(R.id.orderImage);
         dialog = Util.showDialog(this);
         dialog.show();
         controller = new Controller(this);
@@ -100,10 +99,14 @@ public class GetOrderDetail extends BaseClass implements Controller.GetOrderDeta
             dialog.dismiss();
             if (response.body().getStatus()==200)
             {
-                Glide.with(this).load(response.body().getData().getLineItems().get(0).getProductImage()).placeholder(R.drawable.ic_satyamplaceholder).into(orderImage);
-                orderid.setText("Order #"+response.body().getData().getId());
-                paymentmethod.setText(response.body().getData().getPaymentMethodTitle());
-                statusbt.setText(response.body().getData().getStatus());
+                if (response.body().getData().getLineItems().get(0).getProductImage()!=null || !response.body().getData().getLineItems().get(0).getProductImage().equals(null) || !response.body().getData().getLineItems().get(0).getProductImage().equals("null"))
+                {
+//                    Glide.with(this).load(response.body().getData().getLineItems().get(0).getProductImage()).placeholder(R.drawable.ic_satyamplaceholder).into(orderImage);
+                }
+
+//                orderid.setText("Order #"+response.body().getData().getId());
+//                paymentmethod.setText(response.body().getData().getPaymentMethodTitle());
+//                statusbt.setText(response.body().getData().getStatus());
                 username.setText(getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME));
                 phone.setText(response.body().getData().getBilling().getPhone());
                 email.setText(getStringVal(Constants.EMAIL));
@@ -113,6 +116,17 @@ public class GetOrderDetail extends BaseClass implements Controller.GetOrderDeta
                 SName.setText(response.body().getData().getShipping().getFirstName()+" "+response.body().getData().getShipping().getLastName());
                 SCompanyName.setText(response.body().getData().getShipping().getAddress1());
                 SAddress.setText(response.body().getData().getShipping().getCity()+","+response.body().getData().getShipping().getCountry());
+
+
+                for (int i=0;i<response.body().getData().getLineItems().size();i++)
+                {
+                    com.mandy.satyam.myOrderList.response.GetOrderDetail.Data.LineItem getAllOrders = response.body().getData().getLineItems().get(i);
+                    lineItems.add(getAllOrders);
+                    OrderDetailAdapter adapter = new OrderDetailAdapter(GetOrderDetail.this,lineItems,response.body().getData().getPaymentMethodTitle(),response.body().getData().getStatus());
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                    orderRecyclers.setLayoutManager(linearLayoutManager);
+                    orderRecyclers.setAdapter(adapter);
+                }
             }else {
                 Util.showToastMessage(this,response.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
             }

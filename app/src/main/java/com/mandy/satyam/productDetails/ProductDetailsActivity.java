@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import com.mandy.satyam.commentActivity.CommentActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.login.LoginActivity;
+import com.mandy.satyam.productDetails.IF.SendItemsToActivityIF;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
@@ -42,10 +44,12 @@ import com.mandy.satyam.productDetails.adapter.VariationsAdapter;
 import com.mandy.satyam.productDetails.adapter.ViewPagerProductImageAdapter;
 import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
+import com.mandy.satyam.productDetails.response.VariationResponse;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.TimerTask;
 
 import butterknife.BindView;
@@ -53,7 +57,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail, Controller.RelatedPrducts, Controller.AddToCart {
+public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail, Controller.RelatedPrducts, Controller.AddToCart,Controller.GetVariations {
 
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
@@ -133,15 +137,17 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     @BindView(R.id.variationname)
     RecyclerView variationname;
     ArrayList<ProductDetailResponse.Data.CustomVariation> customVariations = new ArrayList<>();
-    ArrayList<ProductDetailResponse.Data.CustomVariation> TypeVariations = new ArrayList<>();
-
+    public static ArrayList<String> TypeVariations = new ArrayList<>();
+    public static String getPosItems;
+    VariationsAdapter variationsAdapter;
+    String variation_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this);
+        controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this,(Controller.GetVariations)this);
         progressDialog = Util.showDialog(this);
         intent = getIntent();
         if (intent != null) {
@@ -189,6 +195,21 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         switch (view.getId()) {
             case R.id.btnAddCart:
 
+                /*variationsAdapter.VariationsAdapter(new SendItemsToActivityIF() {
+                    @Override
+                    public void getData(int pos, ArrayList<String> arrayList) {
+
+                        getPosItems = String.valueOf(pos);
+                        TypeVariations.addAll(arrayList);
+                    }
+                });*/
+                HashSet<String> hashSet = new HashSet<String>();
+
+                hashSet.addAll(TypeVariations);
+                TypeVariations.clear();
+                TypeVariations.addAll(hashSet);
+                Log.d("PRODUCTDATA", "" + TypeVariations.toString());
+
                 if (getStringVal(Constants.USER_ID).equals("")) {
                     Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -196,13 +217,24 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     progressDialog.show();
 
                     if (Util.isOnline(ProductDetailsActivity.this) != false) {
-                        progressDialog.show();
-                        controller.setAddToCart(getProductID, "1", "", getStringVal(Constants.USERTOKEN));
+//                        progressDialog.show();
+
+                        if (variation_id.equals("0"))
+                        {
+                            controller.setAddToCart(getProductID, "1", "", getStringVal(Constants.USERTOKEN));
+                        }else {
+                            controller.setGetVariations(productID,TypeVariations.toString());
+                        }
+
                     } else {
                         Util.showToastMessage(ProductDetailsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
 
+//                    Log.d("CHECKDATA")
+
                 }
+
+
 //               controller.setAddToCart(getStringVal(Constants.CONSUMER_KEY_LOGIN),getStringVal(Constants.CONSUMER_SECRET_LOGIN),getProductID,"1");
                 break;
             case R.id.btnBuynow:
@@ -284,7 +316,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
                 }
-
+            variation_id = String.valueOf(productDetailResponseResponse.body().getData().getCustomVariations().size());
                 getProductID = productDetailResponseResponse.body().getData().getId().toString();
                 stocktexttv.setText(productDetailResponseResponse.body().getData().getStockStatus());
                 perviewDescription.setText(Html.fromHtml(productDetailResponseResponse.body().getData().getDescription()));
@@ -347,8 +379,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
                         variationname.setHasFixedSize(true);
                         variationname.setLayoutManager(linearLayout);
-                        VariationsAdapter variationsAdapter = new VariationsAdapter(this,customVariations);
+                        variationsAdapter = new VariationsAdapter(this, customVariations);
                         variationname.setAdapter(variationsAdapter);
+
                     }
 
                 } else {
@@ -423,6 +456,20 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         } else {
             Util.showToastMessage(this, response.message(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
+    }
+
+    @Override
+    public void onSuccessVariations(Response<VariationResponse> variationResponseResponse) {
+        if (variationResponseResponse.isSuccessful())
+        {
+            progressDialog.dismiss();
+            if (variationResponseResponse.body().getStatus()==200)
+            {
+                variation_id = String.valueOf(variationResponseResponse.body().getData().getVariationId());
+                controller.setAddToCart(getProductID, "1", String.valueOf(variationResponseResponse.body().getData().getVariationId()), getStringVal(Constants.USERTOKEN));
+            }
+        }
+
     }
 
     @Override

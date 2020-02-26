@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -103,7 +104,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 removeCartIF.cartID(datum.getCartId());
             }
         });
+
     }
+
+    public int calculateTotal(){
+        int total = 0;
+        for(GetCartProducts.Datum vanzator: arrayList){
+            total+=  vanzator.getQuantity();
+        }
+        return total;
+    }
+
 
     @Override
     public int getItemCount() {

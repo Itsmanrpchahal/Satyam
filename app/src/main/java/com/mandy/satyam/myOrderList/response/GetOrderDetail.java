@@ -7,40 +7,39 @@ import java.util.List;
 
 public class GetOrderDetail {
 
-@SerializedName("status")
-@Expose
-private Integer status;
-@SerializedName("message")
-@Expose
-private String message;
-@SerializedName("data")
-@Expose
-private Data data;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("data")
+    @Expose
+    private Data data;
 
-public Integer getStatus() {
-return status;
-}
+    public Integer getStatus() {
+        return status;
+    }
 
-public void setStatus(Integer status) {
-this.status = status;
-}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-public String getMessage() {
-return message;
-}
+    public String getMessage() {
+        return message;
+    }
 
-public void setMessage(String message) {
-this.message = message;
-}
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-public Data getData() {
-return data;
-}
+    public Data getData() {
+        return data;
+    }
 
-public void setData(Data data) {
-this.data = data;
-}
-
+    public void setData(Data data) {
+        this.data = data;
+    }
     public class Data {
 
         @SerializedName("id")
@@ -145,9 +144,8 @@ this.data = data;
         @SerializedName("cart_hash")
         @Expose
         private String cartHash;
-        @SerializedName("meta_data")
+        @SerializedName("line_items")
         @Expose
-
         private List<LineItem> lineItems = null;
         @SerializedName("tax_lines")
         @Expose
@@ -173,93 +171,6 @@ this.data = data;
         @SerializedName("_links")
         @Expose
         private Links links;
-
-        public class Links {
-
-            @SerializedName("self")
-            @Expose
-            private List<Self> self = null;
-            @SerializedName("collection")
-            @Expose
-            private List<Collection> collection = null;
-            @SerializedName("customer")
-            @Expose
-            private List<Customer> customer = null;
-
-            public List<Self> getSelf() {
-                return self;
-            }
-
-            public void setSelf(List<Self> self) {
-                this.self = self;
-            }
-
-            public List<Collection> getCollection() {
-                return collection;
-            }
-
-            public void setCollection(List<Collection> collection) {
-                this.collection = collection;
-            }
-
-            public List<Customer> getCustomer() {
-                return customer;
-            }
-
-            public void setCustomer(List<Customer> customer) {
-                this.customer = customer;
-            }
-
-
-            public class Self {
-
-                @SerializedName("href")
-                @Expose
-                private String href;
-
-                public String getHref() {
-                    return href;
-                }
-
-                public void setHref(String href) {
-                    this.href = href;
-                }
-
-            }
-
-            public class Collection {
-
-                @SerializedName("href")
-                @Expose
-                private String href;
-
-                public String getHref() {
-                    return href;
-                }
-
-                public void setHref(String href) {
-                    this.href = href;
-                }
-
-            }
-
-            public class Customer {
-
-                @SerializedName("href")
-                @Expose
-                private String href;
-
-                public String getHref() {
-                    return href;
-                }
-
-                public void setHref(String href) {
-                    this.href = href;
-                }
-
-            }
-
-        }
 
         public Integer getId() {
             return id;
@@ -533,7 +444,6 @@ this.data = data;
             this.cartHash = cartHash;
         }
 
-
         public List<LineItem> getLineItems() {
             return lineItems;
         }
@@ -604,6 +514,775 @@ this.data = data;
 
         public void setLinks(Links links) {
             this.links = links;
+        }
+
+
+        public class Billing {
+
+            @SerializedName("first_name")
+            @Expose
+            private String firstName;
+            @SerializedName("last_name")
+            @Expose
+            private String lastName;
+            @SerializedName("company")
+            @Expose
+            private String company;
+            @SerializedName("address_1")
+            @Expose
+            private String address1;
+            @SerializedName("address_2")
+            @Expose
+            private String address2;
+            @SerializedName("city")
+            @Expose
+            private String city;
+            @SerializedName("state")
+            @Expose
+            private String state;
+            @SerializedName("postcode")
+            @Expose
+            private String postcode;
+            @SerializedName("country")
+            @Expose
+            private String country;
+            @SerializedName("email")
+            @Expose
+            private String email;
+            @SerializedName("phone")
+            @Expose
+            private String phone;
+
+            public String getFirstName() {
+                return firstName;
+            }
+
+            public void setFirstName(String firstName) {
+                this.firstName = firstName;
+            }
+
+            public String getLastName() {
+                return lastName;
+            }
+
+            public void setLastName(String lastName) {
+                this.lastName = lastName;
+            }
+
+            public String getCompany() {
+                return company;
+            }
+
+            public void setCompany(String company) {
+                this.company = company;
+            }
+
+            public String getAddress1() {
+                return address1;
+            }
+
+            public void setAddress1(String address1) {
+                this.address1 = address1;
+            }
+
+            public String getAddress2() {
+                return address2;
+            }
+
+            public void setAddress2(String address2) {
+                this.address2 = address2;
+            }
+
+            public String getCity() {
+                return city;
+            }
+
+            public void setCity(String city) {
+                this.city = city;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+
+            public String getPostcode() {
+                return postcode;
+            }
+
+            public void setPostcode(String postcode) {
+                this.postcode = postcode;
+            }
+
+            public String getCountry() {
+                return country;
+            }
+
+            public void setCountry(String country) {
+                this.country = country;
+            }
+
+            public String getEmail() {
+                return email;
+            }
+
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+
+        }
+
+
+        public class Shipping {
+
+            @SerializedName("first_name")
+            @Expose
+            private String firstName;
+            @SerializedName("last_name")
+            @Expose
+            private String lastName;
+            @SerializedName("company")
+            @Expose
+            private String company;
+            @SerializedName("address_1")
+            @Expose
+            private String address1;
+            @SerializedName("address_2")
+            @Expose
+            private String address2;
+            @SerializedName("city")
+            @Expose
+            private String city;
+            @SerializedName("state")
+            @Expose
+            private String state;
+            @SerializedName("postcode")
+            @Expose
+            private String postcode;
+            @SerializedName("country")
+            @Expose
+            private String country;
+
+            public String getFirstName() {
+                return firstName;
+            }
+
+            public void setFirstName(String firstName) {
+                this.firstName = firstName;
+            }
+
+            public String getLastName() {
+                return lastName;
+            }
+
+            public void setLastName(String lastName) {
+                this.lastName = lastName;
+            }
+
+            public String getCompany() {
+                return company;
+            }
+
+            public void setCompany(String company) {
+                this.company = company;
+            }
+
+            public String getAddress1() {
+                return address1;
+            }
+
+            public void setAddress1(String address1) {
+                this.address1 = address1;
+            }
+
+            public String getAddress2() {
+                return address2;
+            }
+
+            public void setAddress2(String address2) {
+                this.address2 = address2;
+            }
+
+            public String getCity() {
+                return city;
+            }
+
+            public void setCity(String city) {
+                this.city = city;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+
+            public String getPostcode() {
+                return postcode;
+            }
+
+            public void setPostcode(String postcode) {
+                this.postcode = postcode;
+            }
+
+            public String getCountry() {
+                return country;
+            }
+
+            public void setCountry(String country) {
+                this.country = country;
+            }
+
+        }
+
+
+        public class MetaDatum {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("key")
+            @Expose
+            private String key;
+            @SerializedName("value")
+            @Expose
+            private Value value;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getKey() {
+                return key;
+            }
+
+            public void setKey(String key) {
+                this.key = key;
+            }
+
+            public Value getValue() {
+                return value;
+            }
+
+            public void setValue(Value value) {
+                this.value = value;
+            }
+
+            public class LineItem {
+
+                @SerializedName("id")
+                @Expose
+                private Integer id;
+                @SerializedName("name")
+                @Expose
+                private String name;
+                @SerializedName("product_id")
+                @Expose
+                private Integer productId;
+                @SerializedName("variation_id")
+                @Expose
+                private Integer variationId;
+                @SerializedName("quantity")
+                @Expose
+                private Integer quantity;
+                @SerializedName("tax_class")
+                @Expose
+                private String taxClass;
+                @SerializedName("subtotal")
+                @Expose
+                private String subtotal;
+                @SerializedName("subtotal_tax")
+                @Expose
+                private String subtotalTax;
+                @SerializedName("total")
+                @Expose
+                private String total;
+                @SerializedName("total_tax")
+                @Expose
+                private String totalTax;
+                @SerializedName("taxes")
+                @Expose
+                private List<Object> taxes = null;
+                @SerializedName("meta_data")
+                @Expose
+                private List<MetaDatum_> metaData = null;
+                @SerializedName("sku")
+                @Expose
+                private String sku;
+                @SerializedName("price")
+                @Expose
+                private Double price;
+                @SerializedName("product_image")
+                @Expose
+                private String productImage;
+
+                public Integer getId() {
+                    return id;
+                }
+
+                public void setId(Integer id) {
+                    this.id = id;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public Integer getProductId() {
+                    return productId;
+                }
+
+                public void setProductId(Integer productId) {
+                    this.productId = productId;
+                }
+
+                public Integer getVariationId() {
+                    return variationId;
+                }
+
+                public void setVariationId(Integer variationId) {
+                    this.variationId = variationId;
+                }
+
+                public Integer getQuantity() {
+                    return quantity;
+                }
+
+                public void setQuantity(Integer quantity) {
+                    this.quantity = quantity;
+                }
+
+                public String getTaxClass() {
+                    return taxClass;
+                }
+
+                public void setTaxClass(String taxClass) {
+                    this.taxClass = taxClass;
+                }
+
+                public String getSubtotal() {
+                    return subtotal;
+                }
+
+                public void setSubtotal(String subtotal) {
+                    this.subtotal = subtotal;
+                }
+
+                public String getSubtotalTax() {
+                    return subtotalTax;
+                }
+
+                public void setSubtotalTax(String subtotalTax) {
+                    this.subtotalTax = subtotalTax;
+                }
+
+                public String getTotal() {
+                    return total;
+                }
+
+                public void setTotal(String total) {
+                    this.total = total;
+                }
+
+                public String getTotalTax() {
+                    return totalTax;
+                }
+
+                public void setTotalTax(String totalTax) {
+                    this.totalTax = totalTax;
+                }
+
+                public List<Object> getTaxes() {
+                    return taxes;
+                }
+
+                public void setTaxes(List<Object> taxes) {
+                    this.taxes = taxes;
+                }
+
+                public List<MetaDatum_> getMetaData() {
+                    return metaData;
+                }
+
+                public void setMetaData(List<MetaDatum_> metaData) {
+                    this.metaData = metaData;
+                }
+
+                public String getSku() {
+                    return sku;
+                }
+
+                public void setSku(String sku) {
+                    this.sku = sku;
+                }
+
+                public Double getPrice() {
+                    return price;
+                }
+
+                public void setPrice(Double price) {
+                    this.price = price;
+                }
+
+                public String getProductImage() {
+                    return productImage;
+                }
+
+                public void setProductImage(String productImage) {
+                    this.productImage = productImage;
+                }
+
+                public class MetaDatum_ {
+
+                    @SerializedName("id")
+                    @Expose
+                    private Integer id;
+                    @SerializedName("key")
+                    @Expose
+                    private String key;
+                    @SerializedName("value")
+                    @Expose
+                    private String value;
+
+                    public Integer getId() {
+                        return id;
+                    }
+
+                    public void setId(Integer id) {
+                        this.id = id;
+                    }
+
+                    public String getKey() {
+                        return key;
+                    }
+
+                    public void setKey(String key) {
+                        this.key = key;
+                    }
+
+                    public String getValue() {
+                        return value;
+                    }
+
+                    public void setValue(String value) {
+                        this.value = value;
+                    }
+
+                }
+            }
+
+            public class Value {
+
+                @SerializedName("number")
+                @Expose
+                private Integer number;
+                @SerializedName("formatted_number")
+                @Expose
+                private String formattedNumber;
+                @SerializedName("prefix")
+                @Expose
+                private String prefix;
+                @SerializedName("suffix")
+                @Expose
+                private String suffix;
+                @SerializedName("document_type")
+                @Expose
+                private String documentType;
+                @SerializedName("order_id")
+                @Expose
+                private Integer orderId;
+                @SerializedName("padding")
+                @Expose
+                private String padding;
+
+                public Integer getNumber() {
+                    return number;
+                }
+
+                public void setNumber(Integer number) {
+                    this.number = number;
+                }
+
+                public String getFormattedNumber() {
+                    return formattedNumber;
+                }
+
+                public void setFormattedNumber(String formattedNumber) {
+                    this.formattedNumber = formattedNumber;
+                }
+
+                public String getPrefix() {
+                    return prefix;
+                }
+
+                public void setPrefix(String prefix) {
+                    this.prefix = prefix;
+                }
+
+                public String getSuffix() {
+                    return suffix;
+                }
+
+                public void setSuffix(String suffix) {
+                    this.suffix = suffix;
+                }
+
+                public String getDocumentType() {
+                    return documentType;
+                }
+
+                public void setDocumentType(String documentType) {
+                    this.documentType = documentType;
+                }
+
+                public Integer getOrderId() {
+                    return orderId;
+                }
+
+                public void setOrderId(Integer orderId) {
+                    this.orderId = orderId;
+                }
+
+                public String getPadding() {
+                    return padding;
+                }
+
+                public void setPadding(String padding) {
+                    this.padding = padding;
+                }
+
+            }
+
+        }
+
+
+        public class LineItem {
+
+            @SerializedName("id")
+            @Expose
+            private Integer id;
+            @SerializedName("name")
+            @Expose
+            private String name;
+            @SerializedName("product_id")
+            @Expose
+            private Integer productId;
+            @SerializedName("variation_id")
+            @Expose
+            private Integer variationId;
+            @SerializedName("quantity")
+            @Expose
+            private Integer quantity;
+            @SerializedName("tax_class")
+            @Expose
+            private String taxClass;
+            @SerializedName("subtotal")
+            @Expose
+            private String subtotal;
+            @SerializedName("subtotal_tax")
+            @Expose
+            private String subtotalTax;
+            @SerializedName("total")
+            @Expose
+            private String total;
+            @SerializedName("total_tax")
+            @Expose
+            private String totalTax;
+            @SerializedName("taxes")
+            @Expose
+            private List<Object> taxes = null;
+            @SerializedName("meta_data")
+            @Expose
+            private List<MetaDatum_> metaData = null;
+            @SerializedName("sku")
+            @Expose
+            private String sku;
+            @SerializedName("price")
+            @Expose
+            private Double price;
+            @SerializedName("product_image")
+            @Expose
+            private String productImage;
+
+            public Integer getId() {
+                return id;
+            }
+
+            public void setId(Integer id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public Integer getProductId() {
+                return productId;
+            }
+
+            public void setProductId(Integer productId) {
+                this.productId = productId;
+            }
+
+            public Integer getVariationId() {
+                return variationId;
+            }
+
+            public void setVariationId(Integer variationId) {
+                this.variationId = variationId;
+            }
+
+            public Integer getQuantity() {
+                return quantity;
+            }
+
+            public void setQuantity(Integer quantity) {
+                this.quantity = quantity;
+            }
+
+            public String getTaxClass() {
+                return taxClass;
+            }
+
+            public void setTaxClass(String taxClass) {
+                this.taxClass = taxClass;
+            }
+
+            public String getSubtotal() {
+                return subtotal;
+            }
+
+            public void setSubtotal(String subtotal) {
+                this.subtotal = subtotal;
+            }
+
+            public String getSubtotalTax() {
+                return subtotalTax;
+            }
+
+            public void setSubtotalTax(String subtotalTax) {
+                this.subtotalTax = subtotalTax;
+            }
+
+            public String getTotal() {
+                return total;
+            }
+
+            public void setTotal(String total) {
+                this.total = total;
+            }
+
+            public String getTotalTax() {
+                return totalTax;
+            }
+
+            public void setTotalTax(String totalTax) {
+                this.totalTax = totalTax;
+            }
+
+            public List<Object> getTaxes() {
+                return taxes;
+            }
+
+            public void setTaxes(List<Object> taxes) {
+                this.taxes = taxes;
+            }
+
+            public List<MetaDatum_> getMetaData() {
+                return metaData;
+            }
+
+            public void setMetaData(List<MetaDatum_> metaData) {
+                this.metaData = metaData;
+            }
+
+            public String getSku() {
+                return sku;
+            }
+
+            public void setSku(String sku) {
+                this.sku = sku;
+            }
+
+            public Double getPrice() {
+                return price;
+            }
+
+            public void setPrice(Double price) {
+                this.price = price;
+            }
+
+            public String getProductImage() {
+                return productImage;
+            }
+
+            public void setProductImage(String productImage) {
+                this.productImage = productImage;
+            }
+
+            public class MetaDatum_ {
+
+                @SerializedName("id")
+                @Expose
+                private Integer id;
+                @SerializedName("key")
+                @Expose
+                private String key;
+                @SerializedName("value")
+                @Expose
+                private String value;
+
+                public Integer getId() {
+                    return id;
+                }
+
+                public void setId(Integer id) {
+                    this.id = id;
+                }
+
+                public String getKey() {
+                    return key;
+                }
+
+                public void setKey(String key) {
+                    this.key = key;
+                }
+
+                public String getValue() {
+                    return value;
+                }
+
+                public void setValue(String value) {
+                    this.value = value;
+                }
+
+            }
+
         }
 
         public class Store {
@@ -734,397 +1413,121 @@ this.data = data;
                 }
 
             }
-        }
-
-        public class LineItem {
-
-            @SerializedName("id")
-            @Expose
-            private Integer id;
-            @SerializedName("name")
-            @Expose
-            private String name;
-            @SerializedName("product_id")
-            @Expose
-            private Integer productId;
-            @SerializedName("variation_id")
-            @Expose
-            private Integer variationId;
-            @SerializedName("quantity")
-            @Expose
-            private Integer quantity;
-            @SerializedName("tax_class")
-            @Expose
-            private String taxClass;
-            @SerializedName("subtotal")
-            @Expose
-            private String subtotal;
-            @SerializedName("subtotal_tax")
-            @Expose
-            private String subtotalTax;
-            @SerializedName("total")
-            @Expose
-            private String total;
-            @SerializedName("total_tax")
-            @Expose
-            private String totalTax;
-            @SerializedName("taxes")
-            @Expose
-            private List<Object> taxes = null;
-
-            @SerializedName("sku")
-            @Expose
-            private String sku;
-            @SerializedName("product_image")
-            @Expose
-            private String productImage;
-
-            @SerializedName("price")
-            @Expose
-            private String price;
-
-            public Integer getId() {
-                return id;
-            }
-
-            public void setId(Integer id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public Integer getProductId() {
-                return productId;
-            }
-
-            public void setProductId(Integer productId) {
-                this.productId = productId;
-            }
-
-            public Integer getVariationId() {
-                return variationId;
-            }
-
-            public void setVariationId(Integer variationId) {
-                this.variationId = variationId;
-            }
-
-            public Integer getQuantity() {
-                return quantity;
-            }
-
-            public void setQuantity(Integer quantity) {
-                this.quantity = quantity;
-            }
-
-            public String getTaxClass() {
-                return taxClass;
-            }
-
-            public void setTaxClass(String taxClass) {
-                this.taxClass = taxClass;
-            }
-
-            public String getSubtotal() {
-                return subtotal;
-            }
-
-            public void setSubtotal(String subtotal) {
-                this.subtotal = subtotal;
-            }
-
-            public String getSubtotalTax() {
-                return subtotalTax;
-            }
-
-            public void setSubtotalTax(String subtotalTax) {
-                this.subtotalTax = subtotalTax;
-            }
-
-            public String getTotal() {
-                return total;
-            }
-
-            public void setTotal(String total) {
-                this.total = total;
-            }
-
-            public String getTotalTax() {
-                return totalTax;
-            }
-
-            public void setTotalTax(String totalTax) {
-                this.totalTax = totalTax;
-            }
-
-            public List<Object> getTaxes() {
-                return taxes;
-            }
-
-            public void setTaxes(List<Object> taxes) {
-                this.taxes = taxes;
-            }
-
-
-            public String getSku() {
-                return sku;
-            }
-
-            public void setSku(String sku) {
-                this.sku = sku;
-            }
-
-            public String getPrice() {
-                return price;
-            }
-
-            public void setPrice(String price) {
-                this.price = price;
-            }
-            public String getProductImage() {
-                return productImage;
-            }
-
-            public void setProductImage(String productImage) {
-                this.productImage = productImage;
-            }
 
         }
 
-        public class Billing {
+        public class Links {
 
-            @SerializedName("first_name")
+            @SerializedName("self")
             @Expose
-            private String firstName;
-            @SerializedName("last_name")
+            private List<Self> self = null;
+            @SerializedName("collection")
             @Expose
-            private String lastName;
-            @SerializedName("company")
+            private List<Collection> collection = null;
+            @SerializedName("customer")
             @Expose
-            private String company;
-            @SerializedName("address_1")
+            private List<Customer> customer = null;
+            @SerializedName("up")
             @Expose
-            private String address1;
-            @SerializedName("address_2")
-            @Expose
-            private String address2;
-            @SerializedName("city")
-            @Expose
-            private String city;
-            @SerializedName("state")
-            @Expose
-            private String state;
-            @SerializedName("postcode")
-            @Expose
-            private String postcode;
-            @SerializedName("country")
-            @Expose
-            private String country;
-            @SerializedName("email")
-            @Expose
-            private String email;
-            @SerializedName("phone")
-            @Expose
-            private String phone;
+            private List<Up> up = null;
 
-            public String getFirstName() {
-                return firstName;
+            public List<Self> getSelf() {
+                return self;
             }
 
-            public void setFirstName(String firstName) {
-                this.firstName = firstName;
+            public void setSelf(List<Self> self) {
+                this.self = self;
             }
 
-            public String getLastName() {
-                return lastName;
+            public List<Collection> getCollection() {
+                return collection;
             }
 
-            public void setLastName(String lastName) {
-                this.lastName = lastName;
+            public void setCollection(List<Collection> collection) {
+                this.collection = collection;
             }
 
-            public String getCompany() {
-                return company;
+            public List<Customer> getCustomer() {
+                return customer;
             }
 
-            public void setCompany(String company) {
-                this.company = company;
+            public void setCustomer(List<Customer> customer) {
+                this.customer = customer;
             }
 
-            public String getAddress1() {
-                return address1;
+            public List<Up> getUp() {
+                return up;
             }
 
-            public void setAddress1(String address1) {
-                this.address1 = address1;
+            public void setUp(List<Up> up) {
+                this.up = up;
             }
 
-            public String getAddress2() {
-                return address2;
+            public class Self {
+
+                @SerializedName("href")
+                @Expose
+                private String href;
+
+                public String getHref() {
+                    return href;
+                }
+
+                public void setHref(String href) {
+                    this.href = href;
+                }
+
             }
 
-            public void setAddress2(String address2) {
-                this.address2 = address2;
+            public class Collection {
+
+                @SerializedName("href")
+                @Expose
+                private String href;
+
+                public String getHref() {
+                    return href;
+                }
+
+                public void setHref(String href) {
+                    this.href = href;
+                }
+
             }
 
-            public String getCity() {
-                return city;
+            public class Customer {
+
+                @SerializedName("href")
+                @Expose
+                private String href;
+
+                public String getHref() {
+                    return href;
+                }
+
+                public void setHref(String href) {
+                    this.href = href;
+                }
+
             }
 
-            public void setCity(String city) {
-                this.city = city;
+            public class Up {
+
+                @SerializedName("href")
+                @Expose
+                private String href;
+
+                public String getHref() {
+                    return href;
+                }
+
+                public void setHref(String href) {
+                    this.href = href;
+                }
+
             }
-
-            public String getState() {
-                return state;
-            }
-
-            public void setState(String state) {
-                this.state = state;
-            }
-
-            public String getPostcode() {
-                return postcode;
-            }
-
-            public void setPostcode(String postcode) {
-                this.postcode = postcode;
-            }
-
-            public String getCountry() {
-                return country;
-            }
-
-            public void setCountry(String country) {
-                this.country = country;
-            }
-
-            public String getEmail() {
-                return email;
-            }
-
-            public void setEmail(String email) {
-                this.email = email;
-            }
-
-            public String getPhone() {
-                return phone;
-            }
-
-            public void setPhone(String phone) {
-                this.phone = phone;
-            }
-
-        }
-
-        public class Shipping {
-
-            @SerializedName("first_name")
-            @Expose
-            private String firstName;
-            @SerializedName("last_name")
-            @Expose
-            private String lastName;
-            @SerializedName("company")
-            @Expose
-            private String company;
-            @SerializedName("address_1")
-            @Expose
-            private String address1;
-            @SerializedName("address_2")
-            @Expose
-            private String address2;
-            @SerializedName("city")
-            @Expose
-            private String city;
-            @SerializedName("state")
-            @Expose
-            private String state;
-            @SerializedName("postcode")
-            @Expose
-            private String postcode;
-            @SerializedName("country")
-            @Expose
-            private String country;
-
-            public String getFirstName() {
-                return firstName;
-            }
-
-            public void setFirstName(String firstName) {
-                this.firstName = firstName;
-            }
-
-            public String getLastName() {
-                return lastName;
-            }
-
-            public void setLastName(String lastName) {
-                this.lastName = lastName;
-            }
-
-            public String getCompany() {
-                return company;
-            }
-
-            public void setCompany(String company) {
-                this.company = company;
-            }
-
-            public String getAddress1() {
-                return address1;
-            }
-
-            public void setAddress1(String address1) {
-                this.address1 = address1;
-            }
-
-            public String getAddress2() {
-                return address2;
-            }
-
-            public void setAddress2(String address2) {
-                this.address2 = address2;
-            }
-
-            public String getCity() {
-                return city;
-            }
-
-            public void setCity(String city) {
-                this.city = city;
-            }
-
-            public String getState() {
-                return state;
-            }
-
-            public void setState(String state) {
-                this.state = state;
-            }
-
-            public String getPostcode() {
-                return postcode;
-            }
-
-            public void setPostcode(String postcode) {
-                this.postcode = postcode;
-            }
-
-            public String getCountry() {
-                return country;
-            }
-
-            public void setCountry(String country) {
-                this.country = country;
-            }
-
         }
     }
+
+
 }

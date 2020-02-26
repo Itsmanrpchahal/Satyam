@@ -13,6 +13,62 @@ private Integer status;
 @SerializedName("message")
 @Expose
 private String message;
+@SerializedName("total_quantity")
+@Expose
+private String total_quantity;
+@SerializedName("subtotal")
+@Expose
+private String subtotal;
+@SerializedName("tax")
+@Expose
+private String tax;
+@SerializedName("shipping")
+@Expose
+private String shipping;
+
+    public String getTotal_quantity() {
+        return total_quantity;
+    }
+
+    public void setTotal_quantity(String total_quantity) {
+        this.total_quantity = total_quantity;
+    }
+
+    public String getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(String subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public String getTax() {
+        return tax;
+    }
+
+    public void setTax(String tax) {
+        this.tax = tax;
+    }
+
+    public String getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(String shipping) {
+        this.shipping = shipping;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    @SerializedName("total")
+@Expose
+private String total;
 @SerializedName("data")
 @Expose
 private List<Datum> data = null;
@@ -58,6 +114,18 @@ this.data = data;
         @SerializedName("quantity")
         @Expose
         private int quantity;
+
+        public int getVariation_id() {
+            return variation_id;
+        }
+
+        public void setVariation_id(int variation_id) {
+            this.variation_id = variation_id;
+        }
+
+        @SerializedName("variation_id")
+        @Expose
+        private int variation_id;
         @SerializedName("product_image")
         @Expose
         private String productImage;

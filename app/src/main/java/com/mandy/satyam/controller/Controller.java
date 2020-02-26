@@ -19,6 +19,7 @@ import com.mandy.satyam.placeorder.CreateOrder;
 import com.mandy.satyam.placeorder.CreateOrderPojo;
 import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
+import com.mandy.satyam.productDetails.response.VariationResponse;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.webAPI.WebAPI;
 
@@ -54,6 +55,7 @@ public class Controller {
     public GetAllOrders getAllOrders;
     public GetFilterProducts getFilterProducts;
     public GetOrderDetails getOrderDetails;
+    public GetVariations getVariations;
 
 
     //logincheck
@@ -86,10 +88,11 @@ public class Controller {
     }
 
     //productDetail
-    public Controller(ProductDetail productDetail1, RelatedPrducts relatedPrducts1, AddToCart addToCart1) {
+    public Controller(ProductDetail productDetail1, RelatedPrducts relatedPrducts1, AddToCart addToCart1,GetVariations getVariations1) {
         productDetail = productDetail1;
         relatedPrducts = relatedPrducts1;
         addToCart = addToCart1;
+        getVariations = getVariations1;
         webAPI = new WebAPI();
     }
 
@@ -158,6 +161,7 @@ public class Controller {
         getOrderDetails = getOrderDetails1;
         webAPI = new WebAPI();
     }
+
 
     //ToDo: Rest API's
     public void setLoginCheck(String email_phone, String type) {
@@ -436,7 +440,7 @@ public class Controller {
         });
     }
 
-    public void setPlaceOrder1_(String payment_method, String payment_method_title, String set_paid, String first_name, String last_name, String address_1,
+    public void setPlaceOrder1_(String payment_method, String payment_method_title, boolean set_paid, String first_name, String last_name, String address_1,
                               String address_2, String city, String state, String postcode, String country, String email, String phone, String Sfirst_name, String Slast_name,
                               String Saddress_1, String Saddress_2, String Scity, String Sstate, String Spostcode, String Scountry, String productID_quantity
             , String consumer_key, String consumer_secret, String customer_id, String amr_slug) {
@@ -561,6 +565,25 @@ public class Controller {
             @Override
             public void onFailure(Call<GetOrderDetail> call, Throwable t) {
                 getOrderDetails.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setGetVariations(String prodctID,String arrayList)
+    {
+        webAPI.getApi().variations(prodctID,arrayList).enqueue(new Callback<VariationResponse>() {
+            @Override
+            public void onResponse(Call<VariationResponse> call, Response<VariationResponse> response) {
+                if (response!=null)
+                {
+                    Response<VariationResponse> variationResponseResponse = response;
+                    getVariations.onSuccessVariations(variationResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VariationResponse> call, Throwable t) {
+                getVariations.onError(t.getMessage());
             }
         });
     }
@@ -693,4 +716,8 @@ public class Controller {
         void onError(String error);
     }
 
+    public interface GetVariations{
+        void onSuccessVariations(Response<VariationResponse> variationResponseResponse);
+        void onError(String error);
+    }
 }

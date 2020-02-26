@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
+import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productDetails.response.VauleResponse;
 
@@ -31,7 +32,7 @@ public class VariationOptionAdapter extends RecyclerView.Adapter<VariationOption
     Context context;
     ArrayList<ProductDetailResponse.Data.CustomVariation.Option> optionArrayList = new ArrayList<>();
     ArrayList<ProductDetailResponse.Data.CustomVariation> customVariationArrayList = new ArrayList<>();
-    private int selectedPosition = -1;
+    private int selectedPosition = 0;
     GetOptionPos getOptionPos;
     private int positionn;
     ArrayList<String> selectedItem = new ArrayList<>();
@@ -39,7 +40,7 @@ public class VariationOptionAdapter extends RecyclerView.Adapter<VariationOption
     private int singleSelection = -1;
     JSONArray jsonArray;
 
-    public VariationOptionAdapter(GetOptionPos getOptionPos) {
+    public void VariationOptionAdapter(GetOptionPos getOptionPos) {
         this.getOptionPos = getOptionPos;
     }
 
@@ -67,12 +68,12 @@ public class VariationOptionAdapter extends RecyclerView.Adapter<VariationOption
     @Override
     public void onBindViewHolder(@NonNull VariationOptionAdapter.ViwHolder holder, int position) {
         jsonArray = new JSONArray();
-
         if (selectedPosition == position) {
             holder.itemView.setSelected(false);
             holder.linearLayout.setBackgroundColor(Color.GRAY);
 
-            String key = "'"+customVariationArrayList.get(positionn).getOptions().get(selectedPosition).getKey()+"'"+" => "+"'"+customVariationArrayList.get(positionn).getOptions().get(selectedPosition).getK()+"'";
+
+            String key = "'"+customVariationArrayList.get(positionn).getOptions().get(selectedPosition).getKey()+"'"+" => "+"'"+customVariationArrayList.get(positionn).getOptions().get(selectedPosition).getVp()+"'";
             selectedItem.add(key);
             JSONArray jsonArray1 = new JSONArray();
             jsonArray1.put(customVariationArrayList.get(positionn).getOptions().get(selectedPosition).getKey());
@@ -84,13 +85,15 @@ public class VariationOptionAdapter extends RecyclerView.Adapter<VariationOption
             holder.itemView.setSelected(true); //using selector drawable
             holder.linearLayout.setBackgroundColor(Color.WHITE);
         }
-
         selectedItem1.addAll(selectedItem);
         HashSet<String> hashSet = new HashSet<String>();
-
         hashSet.addAll(selectedItem1);
         selectedItem1.clear();
         selectedItem1.addAll(hashSet);
+        getOptionPos.getPos(selectedItem1.size(),selectedItem);
+
+        ProductDetailsActivity.getPosItems = String.valueOf(optionArrayList.size());
+        ProductDetailsActivity.TypeVariations.addAll(selectedItem1);
         Log.d("CHECKITEMS1",""+selectedItem1);
         if (optionArrayList.get(position).getV().startsWith("#")) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(70, 70);
@@ -121,6 +124,8 @@ public class VariationOptionAdapter extends RecyclerView.Adapter<VariationOption
                     selectedPosition = pos;
                     notifyDataSetChanged();
                 }
+
+
             }
         });
     }

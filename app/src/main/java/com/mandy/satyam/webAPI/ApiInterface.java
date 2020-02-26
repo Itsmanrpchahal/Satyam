@@ -20,6 +20,7 @@ import com.mandy.satyam.placeorder.CreateOrder;
 import com.mandy.satyam.placeorder.CreateOrderPojo;
 import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
+import com.mandy.satyam.productDetails.response.VariationResponse;
 import com.mandy.satyam.productList.response.SubCategory;
 
 import java.io.Serializable;
@@ -157,7 +158,7 @@ public interface ApiInterface {
     Call<CreateOrder> createOrder(
             @Query("payment_method") String payment_method,
             @Query("payment_method_title") String payment_method_title,
-            @Query("set_paid") String set_paid,
+            @Query("set_paid") boolean set_paid,
             @Query("billing[first_name]") String first_name,
             @Query("billing[last_name]") String last_name,
             @Query("billing[address_1]") String address_1,
@@ -218,5 +219,11 @@ public interface ApiInterface {
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret,
             @Query("amr_slug") String amr_slug
+    );
+
+    @POST("wp-json/os/v1/get_variation")
+    Call<VariationResponse> variations(
+            @Query("product_id") String product_id,
+           @Query("variations") String variations
     );
 }

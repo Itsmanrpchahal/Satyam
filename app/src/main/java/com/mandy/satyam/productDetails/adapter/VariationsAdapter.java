@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mandy.satyam.R;
+import com.mandy.satyam.productDetails.IF.SendItemsToActivityIF;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 
 import java.util.ArrayList;
@@ -22,6 +23,13 @@ public class VariationsAdapter extends RecyclerView.Adapter<VariationsAdapter.Vi
     private int selectedPosition = -1;
     ArrayList<ProductDetailResponse.Data.CustomVariation.Option> optionArrayList = new ArrayList<>();
     ArrayList<ProductDetailResponse.Data.CustomVariation> customVariation = new ArrayList<>();
+    ArrayList<String> selectedItems = new ArrayList<>();
+    String selectedItemSize ;
+    SendItemsToActivityIF sendItemsToActivityIF;
+
+    public void VariationsAdapter(SendItemsToActivityIF sendItemsToActivityIF) {
+        this.sendItemsToActivityIF = sendItemsToActivityIF;
+    }
 
     public VariationsAdapter(Context context1, ArrayList<ProductDetailResponse.Data.CustomVariation> customVariations) {
         context = context1;
@@ -50,6 +58,20 @@ public class VariationsAdapter extends RecyclerView.Adapter<VariationsAdapter.Vi
             optionArrayList.add(option);
             VariationOptionAdapter adapter = new VariationOptionAdapter(context, optionArrayList,customVariation,position);
             holder.varitionotoinRecycler.setAdapter(adapter);
+            adapter.VariationOptionAdapter(new GetOptionPos() {
+                @Override
+                public void getPos(int pos, ArrayList<String> arrayList) {
+                    selectedItemSize = String.valueOf(pos);
+                    selectedItems.addAll(arrayList);
+                    adapter.VariationOptionAdapter(new GetOptionPos() {
+                        @Override
+                        public void getPos(int pos, ArrayList<String> arrayList) {
+                            selectedItemSize = String.valueOf(pos);
+                            selectedItems.addAll(selectedItems);
+                        }
+                    });
+                }
+            });
         }
     }
 

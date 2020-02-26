@@ -1,74 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:background="@color/white">
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/custom_image"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        app:riv_corner_radius="2dp" />
-
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi"
-        style="@style/AVLoadingIndicatorView"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_centerVertical="true"
-        android:visibility="invisible"
-        app:indicatorColor="@color/yellow"
-        app:indicatorName="BallSpinFadeLoaderIndicator" />
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/margin_dp5"
+        app:cardElevation="@dimen/margin_dp5"
+        android:layout_margin="@dimen/margin_dp10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_dp5"
+                android:weightSum="3"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:textColor="@color/gray"
+                        android:layout_margin="@dimen/margin_dp5"></TextView>
+
+                    <TextView
+                        android:id="@+id/orderID"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:layout_margin="@dimen/margin_dp5"></TextView>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order Date"
+                        android:layout_gravity="center"
+                        android:textColor="@color/gray"
+                        android:layout_margin="@dimen/margin_dp5"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/orderDate"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_margin="@dimen/margin_dp5"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Order Price"
+                        android:layout_gravity="end"
+                        android:textColor="@color/gray"
+                        android:layout_margin="@dimen/margin_dp5"></TextView>
+
+                    <TextView
+                        android:id="@+id/orderprice"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_gravity="end"
+                        android:textColor="@color/black"
+                        android:layout_margin="@dimen/margin_dp5"></TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/viewbt"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_dp40"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/margin_dp10"
+                android:background="@color/colorAccent"
+                android:text="View"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:layout_marginRight="@dimen/margin_dp10"></Button>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/gray" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/image"
-        android:layout_toRightOf="@id/custom_image">
-
-
-        <TextView
-            android:id="@+id/txtData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Arriving  Today"
-            android:textColor="@color/green"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/txtDispatch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtData"
-            android:text="Dispatched"
-            android:textColor="@color/green"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/ic_arrow" />
-
-    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/custom_image"
-        android:layout_marginTop="16dp"
-        android:background="@color/gray" />
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/custom_image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="2dp" />
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avi"
+            style="@style/AVLoadingIndicatorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"
+            app:indicatorColor="@color/yellow"
+            app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@+id/image"
+            android:layout_toRightOf="@id/custom_image">
+
+
+            <TextView
+                android:id="@+id/txtData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Arriving  Today"
+                android:textColor="@color/green"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtDispatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtData"
+                android:text="Dispatched"
+                android:textColor="@color/green"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_arrow" />
+    </RelativeLayout>
+</LinearLayout>

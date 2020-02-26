@@ -72,12 +72,19 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     ImageButton filterBt;
     @BindView(R.id.back)
     ImageButton back;
+    @BindView(R.id.totalprice)
+    TextView totalprice;
+    @BindView(R.id.tax)
+    TextView tax;
+    @BindView(R.id.price_recycler)
+    RecyclerView price_recycler;
     String user_id;
     ArrayList<GetCartProducts.Datum> getCartProductsArrayList = new ArrayList<>();
     Controller controller;
     Dialog progressdialog;
     public  ArrayList<Integer> quantity = new ArrayList<>();
     public  ArrayList<String> product_id = new ArrayList<>();
+    String totalp;
     String totalquantity;
     JSONArray jsonArray;
 
@@ -175,6 +182,8 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                     try {
                         obj.put("product_id",response.body().getData().get(i).getProductId());
                         obj.put("quantity",response.body().getData().get(i).getQuantity());
+                        obj.put("variation_id",response.body().getData().get(i).getVariation_id());
+
                         jsonArray.put(obj);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -186,6 +195,8 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                     getCartProductsArrayList.add(datum);
                     quantity.add(getCartProductsArrayList.get(i).getQuantity());
                     product_id.add(getCartProductsArrayList.get(i).getProductId());
+
+
 
                     // set data into cart
                     CartAdapter adapter3 = new CartAdapter(this, getCartProductsArrayList);
@@ -209,7 +220,16 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                         }
                     });
 
+
+                    txtItems.setText(response.body().getTotal_quantity());
+                    tax.setText(response.body().getTax());
+                    totalprice.setText("₹"+response.body().getTotal());
+
+                    //set Price Items
+
+
                 }
+
             }
 
         } else {

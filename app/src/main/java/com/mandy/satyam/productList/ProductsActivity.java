@@ -119,10 +119,12 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             } else if (intent.getStringExtra("isFrom").equals("main")) {
                 search = intent.getStringExtra("search");
                 textView.setText("Filter Products");
+                searchitemrecycler.setVisibility(View.GONE);
                 progressDialog.show();
                 searchProducts(search);
             } else {
                 textView.setText("Filter Products");
+                searchitemrecycler.setVisibility(View.GONE);
                 progressDialog.show();
                 filterBt.setVisibility(View.INVISIBLE);
                 maxPrice = intent.getStringExtra("endPrice");
@@ -226,6 +228,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 //                    searchProduct();
                 } else if (s.length() == 0) {
                     recyclerProduct.setVisibility(View.VISIBLE);
+                    subcategoryrecycler.setVisibility(View.VISIBLE);
                     searchitemrecycler.setVisibility(View.GONE);
                 }
             }
@@ -254,7 +257,6 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     @Override
     public void onSucessRelated(Response<Categoriesroducts> homePageResponseResponse) {
         progressDialog.show();
-        seemorebt.setVisibility(View.VISIBLE);
         if (homePageResponseResponse.isSuccessful()) {
             progressDialog.dismiss();
             if (homePageResponseResponse.body().getStatus() == 200) {
@@ -267,6 +269,13 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     }
                     //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
                     datumArrayList.add(homePageResponseResponse.body().getData().get(i));
+                }
+
+                if (datumArrayList.size()!=0)
+                {
+                    seemorebt.setVisibility(View.VISIBLE);
+                }else {
+                    noitemfound.setVisibility(View.VISIBLE);
                 }
 
 
