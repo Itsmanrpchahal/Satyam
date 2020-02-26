@@ -371,6 +371,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     searchitemrecycler.setVisibility(View.GONE);
                     recyclerProduct.setVisibility(View.GONE);
                     noitemfound.setVisibility(View.VISIBLE);
+                    seemorebt.setVisibility(View.GONE);
                     subcategoryrecycler.setVisibility(View.GONE);
                 }else {
                     searchitemrecycler.setVisibility(View.GONE);
