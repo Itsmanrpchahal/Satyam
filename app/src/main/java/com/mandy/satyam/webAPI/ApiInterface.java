@@ -21,6 +21,7 @@ import com.mandy.satyam.placeorder.CreateOrderPojo;
 import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productDetails.response.VariationResponse;
+import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 import com.mandy.satyam.productList.response.SubCategory;
 
 import java.io.Serializable;
@@ -226,5 +227,10 @@ public interface ApiInterface {
     Call<VariationResponse> variations(
             @Query("product_id") String product_id,
            @Query("variations") String variations
+    );
+
+    @POST("wp-json/os/v1/get_search")
+    Call<GetSearchProductsResponse> getSeacchProduct(
+            @Query("search") String search
     );
 }

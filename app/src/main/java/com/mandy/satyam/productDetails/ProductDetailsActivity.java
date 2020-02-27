@@ -57,7 +57,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail, Controller.RelatedPrducts, Controller.AddToCart,Controller.GetVariations {
+public class ProductDetailsActivity extends BaseClass implements Controller.ProductDetail, Controller.RelatedPrducts, Controller.AddToCart, Controller.GetVariations {
 
     @BindView(R.id.tooolbar)
     Toolbar toolbar;
@@ -147,7 +147,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
-        controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this,(Controller.GetVariations)this);
+        controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this, (Controller.GetVariations) this);
         progressDialog = Util.showDialog(this);
         intent = getIntent();
         if (intent != null) {
@@ -211,27 +211,33 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 Log.d("PRODUCTDATA", "" + TypeVariations.toString());
 
                 if (getStringVal(Constants.USER_ID).equals("")) {
-                    Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
-                    startActivity(intent);
+
+                    if (getStringVal(Constants.USER_ID).equals("")) {
+                        Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
+                        intent.putExtra("productID",productID);
+                        intent.putExtra("isFrom","ProductDetail");
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
+                        intent.putExtra("productID", productID);
+                        intent.putExtra("quantity", "1");
+                        startActivity(intent);
+                    }
+
+
                 } else {
                     progressDialog.show();
 
                     if (Util.isOnline(ProductDetailsActivity.this) != false) {
-//                        progressDialog.show();
-
-                        if (variation_id.equals("0"))
-                        {
+                        if (variation_id.equals("0")) {
                             controller.setAddToCart(getProductID, "1", "", getStringVal(Constants.USERTOKEN));
-                        }else {
-                            controller.setGetVariations(productID,TypeVariations.toString());
+                        } else {
+                            controller.setGetVariations(productID, TypeVariations.toString());
                         }
 
                     } else {
                         Util.showToastMessage(ProductDetailsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
-
-//                    Log.d("CHECKDATA")
-
                 }
 
 
@@ -240,7 +246,10 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             case R.id.btnBuynow:
                 if (getStringVal(Constants.USER_ID).equals("")) {
                     Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
+                    intent.putExtra("productID",productID);
+                    intent.putExtra("isFrom","ProductDetail");
                     startActivity(intent);
+                    finish();
                 } else {
                     Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
                     intent.putExtra("productID", productID);
@@ -316,7 +325,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
                 }
-            variation_id = String.valueOf(productDetailResponseResponse.body().getData().getCustomVariations().size());
+                variation_id = String.valueOf(productDetailResponseResponse.body().getData().getCustomVariations().size());
                 getProductID = productDetailResponseResponse.body().getData().getId().toString();
                 stocktexttv.setText(productDetailResponseResponse.body().getData().getStockStatus());
                 perviewDescription.setText(Html.fromHtml(productDetailResponseResponse.body().getData().getDescription()));
@@ -460,11 +469,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
     @Override
     public void onSuccessVariations(Response<VariationResponse> variationResponseResponse) {
-        if (variationResponseResponse.isSuccessful())
-        {
+        if (variationResponseResponse.isSuccessful()) {
             progressDialog.dismiss();
-            if (variationResponseResponse.body().getStatus()==200)
-            {
+            if (variationResponseResponse.body().getStatus() == 200) {
                 variation_id = String.valueOf(variationResponseResponse.body().getData().getVariationId());
                 controller.setAddToCart(getProductID, "1", String.valueOf(variationResponseResponse.body().getData().getVariationId()), getStringVal(Constants.USERTOKEN));
             }

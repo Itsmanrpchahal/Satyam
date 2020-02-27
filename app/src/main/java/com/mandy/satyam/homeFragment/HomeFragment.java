@@ -3,6 +3,7 @@ package com.mandy.satyam.homeFragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.mandy.satyam.productList.interface_.GetSubCate_IF;
 import com.mandy.satyam.productList.response.GetProductList;
 import com.mandy.satyam.utils.Util;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -58,6 +60,8 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
     Controller controller;
     RecyclerView home_products_recyler,recyclerViewCategory;
     Dialog progressDialog;
+    private Handler handler;
+    int page = 0;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -113,9 +117,21 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager, true);
 
+        Runnable runnable = new Runnable() {
+            public void run() {
+                if (adapter.getCount() == page) {
+                    page = 0;
+                } else {
+                    page++;
+                }
+                viewPager.setCurrentItem(page, true);
+                handler.postDelayed(this, 3000);
+            }
+        };
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
+
+//        Timer timer = new Timer();
+//        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
 
     }
 

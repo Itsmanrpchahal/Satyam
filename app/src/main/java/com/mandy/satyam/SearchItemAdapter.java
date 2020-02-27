@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.mainIF.getProductName;
 import com.mandy.satyam.productList.ProductsActivity;
+import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 
 import java.util.ArrayList;
 
@@ -23,16 +24,23 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
     Context context;
     ArrayList<String> products = new ArrayList<>();
     getProductName getProductName;
-    ArrayList<FilterResponse.Datum> search = new ArrayList<>();
+    ArrayList<GetSearchProductsResponse.Datum> search = new ArrayList<>();
+//    ArrayList<FilterResponse.Datum> search = new ArrayList<>();
 
     public void SearchItemAdapter(com.mandy.satyam.mainIF.getProductName getProductName) {
         this.getProductName = getProductName;
     }
 
-    public SearchItemAdapter(Context context1, ArrayList<String> productname, ArrayList<FilterResponse.Datum> searchProducts) {
-        context = context1;
-        products = productname;
-        search = searchProducts;
+//    public SearchItemAdapter(Context context1, ArrayList<String> productname, ArrayList<FilterResponse.Datum> searchProducts) {
+//        context = context1;
+//        products = productname;
+//        search = searchProducts;
+//    }
+
+
+    public SearchItemAdapter(Context context, ArrayList<GetSearchProductsResponse.Datum> search) {
+        this.context = context;
+        this.search = search;
     }
 
     @NonNull
@@ -47,22 +55,19 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull SearchItemAdapter.ViewHolder holder, int position) {
 
-        if (products.get(position).contains("$amp;"))
-        {
 
-        }
-        holder.textView.setText(products.get(position));
+        holder.textView.setText(search.get(position).getName());
 
-        if (search.get(position).getImages().size()>0)
-        {
-            Glide.with(context).load(search.get(position).getImages().get(0).getSrc()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
-        }
+//        if (search.get(position).getImages().size()>0)
+//        {
+            Glide.with(context).load(search.get(position).getImage()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
+//        }
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getProductName.getName(products.get(position), String.valueOf(search.get(position).getId()));
+                getProductName.getName(String.valueOf(search.get(position)), String.valueOf(search.get(position).getId()));
 //                Toast.makeText(context, ""+products.get(position)+"  "+search.get(position).getId(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -70,7 +75,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return products.size();
+        return search.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

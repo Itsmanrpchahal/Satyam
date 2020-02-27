@@ -42,7 +42,9 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SubCategoryAdapter.ViewHolder holder, int position) {
-        holder.textView.setText(categories.get(position).getCategoryName());
+
+
+        holder.textView.setText(categories.get(position).getCategoryName().replace("&amp;","&"));
 
         if (selectedPosition == position) {
             holder.itemView.setSelected(true); //using selector drawable

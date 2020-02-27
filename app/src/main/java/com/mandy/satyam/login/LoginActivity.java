@@ -56,6 +56,8 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
     Dialog dialog;
     Controller controller;
     String phone, countrycode;
+    String productID,isFrom;
+    Intent intent;
 
 
     @Override
@@ -65,6 +67,12 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
         ButterKnife.bind(this);
         controller = new Controller(this);
         dialog = Util.showDialog(LoginActivity.this);
+        intent = getIntent();
+        if (intent!=null)
+        {
+            productID = intent.getStringExtra("productID");
+            isFrom = intent.getStringExtra("isFrom");
+        }
 
         listeners();
 
@@ -81,9 +89,22 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
         loginwith_email_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, EmailLogin.class);
-                startActivity(intent);
-                finish();
+                if (intent.getStringExtra("isFrom")!=null)
+                {
+                    if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                    {
+                        Intent intent = new Intent(LoginActivity.this, EmailLogin.class);
+                        intent.putExtra("productID",productID);
+                        intent.putExtra("isFrom","ProductDetail");
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+                else {
+                    Intent intent = new Intent(LoginActivity.this, EmailLogin.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -154,10 +175,26 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
         dialog.dismiss();
         if (loginCheckResponse.body().getStatus() == 200) {
 //            setStringVal(Constants.LOGIN_STATUS,"login");
-            Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
-            intent.putExtra("OTP", loginCheckResponse.body().getData().getOtp().toString());
-            intent.putExtra("phonenumber",countrycode+""+phone);
-            startActivity(intent);
+            if (intent.getStringExtra("isFrom")!=null)
+            {
+                if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                {
+                    Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
+                    intent.putExtra("productID",productID);
+                    intent.putExtra("isFrom","ProductDetail");
+                    intent.putExtra("OTP", loginCheckResponse.body().getData().getOtp().toString());
+                    intent.putExtra("phonenumber",countrycode+""+phone);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+            else {
+                Intent intent = new Intent(LoginActivity.this, OTP_verify.class);
+                intent.putExtra("OTP", loginCheckResponse.body().getData().getOtp().toString());
+                intent.putExtra("phonenumber",countrycode+""+phone);
+                startActivity(intent);
+            }
+
         } else {
             Util.showToastMessage(LoginActivity.this, loginCheckResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }

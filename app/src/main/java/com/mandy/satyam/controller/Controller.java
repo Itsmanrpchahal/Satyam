@@ -20,6 +20,7 @@ import com.mandy.satyam.placeorder.CreateOrderPojo;
 import com.mandy.satyam.productDetails.response.AddToCart;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productDetails.response.VariationResponse;
+import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.webAPI.WebAPI;
 
@@ -57,6 +58,7 @@ public class Controller {
     public GetOrderDetails getOrderDetails;
     public GetVariations getVariations;
     public GetSearchProducts getSearchProducts;
+    public GetSerchProducts getSerchProducts;
 
 
     //logincheck
@@ -81,11 +83,11 @@ public class Controller {
     }
 
     //related
-    public Controller(RelatedPrducts relatedPrducts1, ProductSubCategories subCategory1, GetFilterProducts getFilterProducts1,GetSearchProducts getSearchProducts1) {
+    public Controller(RelatedPrducts relatedPrducts1, ProductSubCategories subCategory1, GetFilterProducts getFilterProducts1,GetSerchProducts getSerchProducts1) {
         relatedPrducts = relatedPrducts1;
         subCategory = subCategory1;
         getFilterProducts = getFilterProducts1;
-        getSearchProducts = getSearchProducts1;
+        getSerchProducts = getSerchProducts1;
         webAPI = new WebAPI();
     }
 
@@ -105,10 +107,10 @@ public class Controller {
     }
 
     //Keys
-    public Controller(Keys keys1,HomePage homePage1,GetSearchProducts getSearchProducts1) {
+    public Controller(Keys keys1,HomePage homePage1,GetSerchProducts getSerchProducts1) {
         keys = keys1;
         homePage = homePage1;
-        getSearchProducts = getSearchProducts1;
+        getSerchProducts = getSerchProducts1;
         webAPI = new WebAPI();
     }
 
@@ -608,6 +610,24 @@ public class Controller {
         });
     }
 
+    public void setGetSerchProducts(String search)
+    {
+        webAPI.getApi().getSeacchProduct(search).enqueue(new Callback<GetSearchProductsResponse>() {
+            @Override
+            public void onResponse(Call<GetSearchProductsResponse> call, Response<GetSearchProductsResponse> response) {
+                if (response!=null)
+                {
+                    Response<GetSearchProductsResponse> getSearchProductsResponseResponse = response;
+                    getSerchProducts.onSuccessSearch(getSearchProductsResponseResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetSearchProductsResponse> call, Throwable t) {
+                getSerchProducts.onError(t.getMessage());
+            }
+        });
+    }
 
     public interface LoginCheck {
         void onSuccessLoginCheck(Response<com.mandy.satyam.login.model.LoginCheck> loginCheckResponse);
@@ -745,6 +765,11 @@ public class Controller {
 
     public interface GetVariations{
         void onSuccessVariations(Response<VariationResponse> variationResponseResponse);
+        void onError(String error);
+    }
+
+    public interface GetSerchProducts{
+        void onSuccessSearch(Response<GetSearchProductsResponse> searchProductsResponseResponse);
         void onError(String error);
     }
 }

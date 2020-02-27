@@ -24,6 +24,8 @@ import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.opt.OTP_verify;
+import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.utils.Util;
 
 import butterknife.BindView;
@@ -59,14 +61,23 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
     @BindView(R.id.login_bt)
     Button loginBt;
     String pass;
+    Intent intent;
+    String productID,isFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_login);
         ButterKnife.bind(this);
+        intent = getIntent();
         controller = new Controller((Controller.LoginCheck)this,(Controller.Login)this,(Controller.ClearCart)this);
         dialog = Util.showDialog(EmailLogin.this);
+
+        if (intent!=null)
+        {
+            productID = intent.getStringExtra("productID");
+            isFrom = intent.getStringExtra("isFrom");
+        }
         lisenters();
     }
 
@@ -181,9 +192,22 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
     public void onSuccessClearCart(Response<ClearCart> response) {
         if (response.body().getStatus()==200)
         {
-            Intent intent = new Intent(EmailLogin.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            if (intent.getStringExtra("isFrom")!=null)
+            {
+                if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                {
+                    Intent intent = new Intent(EmailLogin.this, ProductDetailsActivity.class);
+                    intent.putExtra("productID", productID);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+            else {
+                Intent intent = new Intent(EmailLogin.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
     }
 

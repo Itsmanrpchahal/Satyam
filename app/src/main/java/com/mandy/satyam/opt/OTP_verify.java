@@ -23,6 +23,8 @@ import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.productDetails.ProductDetailsActivity;
+import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.utils.Util;
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
@@ -47,7 +49,6 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
     TextView userNumber;
     @BindView(R.id.editnumber)
     TextView editnumber;
-
     @BindView(R.id.resendotp_tv)
     TextView resendotpTv;
     @BindView(R.id.verify_otp_button)
@@ -59,6 +60,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
     SmsVerifyCatcher smsVerifyCatcher;
     Controller controller;
     Dialog dialog;
+    String productID,isFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +70,24 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
         dialog = Util.showDialog(OTP_verify.this);
         intent = getIntent();
         if (intent != null) {
-            phonenumber = intent.getStringExtra("phonenumber");
-            otp = intent.getStringExtra("OTP");
-            userNumber.setText("+" + phonenumber);
+
+            if (intent.getStringExtra("isFrom")!=null)
+            {
+                if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                {
+                    productID = intent.getStringExtra("productID");
+                    isFrom = intent.getStringExtra("isFrom");
+                    phonenumber = intent.getStringExtra("phonenumber");
+                    otp = intent.getStringExtra("OTP");
+                    userNumber.setText("+" + phonenumber);
+                }
+            }
+            else {
+                phonenumber = intent.getStringExtra("phonenumber");
+                otp = intent.getStringExtra("OTP");
+                userNumber.setText("+" + phonenumber);
+            }
+
         }
         controller = new Controller((Controller.LoginCheck) this, (Controller.Login) OTP_verify.this,(Controller.ClearCart)this);
         lisenters();
@@ -196,9 +213,23 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
     public void onSuccessClearCart(Response<ClearCart> response) {
         if (response.body().getStatus()==200)
         {
-            Intent intent = new Intent(OTP_verify.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+
+            if (intent.getStringExtra("isFrom")!=null)
+            {
+                if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                {
+                    Intent intent = new Intent(OTP_verify.this, ProductDetailsActivity.class);
+                    intent.putExtra("productID", productID);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+            else {
+                Intent intent = new Intent(OTP_verify.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
 //            controller.setLogin(phonenumber, "phone", otp);
         }
     }

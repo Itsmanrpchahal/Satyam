@@ -44,7 +44,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
 
-        viewHolder.textView.setText(categories.get(i).getCategoryName());
+        String cat = categories.get(i).getCategoryName().substring(0,1);
+        String small = categories.get(i).getCategoryName().toLowerCase().substring(1);
+        viewHolder.textView.setText(cat+small);
 
       /*  if (selectedPosition == i) {
             viewHolder.itemView.setSelected(true); //using selector drawable

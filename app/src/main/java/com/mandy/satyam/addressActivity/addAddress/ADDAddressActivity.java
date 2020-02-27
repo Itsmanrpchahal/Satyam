@@ -231,7 +231,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             public void onClick(View v) {
 
                 if (Util.isOnline(ADDAddressActivity.this) != false) {
-                    dialog.show();
+
                     if (btnAedit.getText().toString().equals("Change Address")) {
                         btnAedit.setText("Save");
                         edtName.setEnabled(true);
@@ -244,6 +244,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtFlat.setEnabled(true);
                         edtNear.setEnabled(true);
                     } else {
+                        dialog.show();
                         if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) &&
                                 TextUtils.isEmpty(edtTown.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
                                 TextUtils.isEmpty(edtNear.getText().toString())) {
@@ -291,35 +292,6 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
 
         finish();
 
-        /*name = edtName.getText().toString();
-        mobile = edtMobile.getText().toString();
-        postcode = edtPostcode.getText().toString();
-        town = edtTown.getText().toString();
-        state = edtState.getText().toString();
-        flat = edtFlat.getText().toString();
-        near = edtNear.getText().toString();
-
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(mobile) || TextUtils.isEmpty(postcode) || TextUtils.isEmpty(town) || TextUtils.isEmpty(state) || TextUtils.isEmpty(flat)
-                || TextUtils.isEmpty(near)) {
-            getTextError(edtName, 20);
-            getTextError(edtMobile, 10);
-            getTextError(edtPostcode, 6);
-            getTextError(edtTown, 20);
-            getTextError(edtState, 20);
-            getTextError(edtFlat, 30);
-            getTextError(edtNear, 50);
-        } else if (mobile.length() != 10) {
-            edtMobile.setError("Enter 10 digit mobile number");
-            edtMobile.requestFocus();
-        } else {
-            if (CheckInternet.isInternetAvailable(this)) {
-                dialog.show();
-                controller.setAddAddress("Bearer " + sharedToken.getShared(), name, mobile, postcode, town, state, flat, near);
-            } else {
-                startActivity(new Intent(this, NoInternetActivity.class));
-            }
-        }
-*/
     }
 
     //check validation for edit text
@@ -341,6 +313,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         dialog.dismiss();
         if (response != null) {
             if (response.body().getStatus() == 200) {
+
                 edtName.setText(response.body().getData().getBilling().getFirstName());
                 edtLName.setText(response.body().getData().getLastName());
                 edtMobile.setText(response.body().getData().getBilling().getPhone());
@@ -351,7 +324,6 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                 edtNear.setText(response.body().getData().getBilling().getAddress2());
                 edtemail.setText(response.body().getData().getEmail());
             }
-
         }
     }
 
@@ -359,6 +331,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
     public void onSuccessUpdateAddress(Response<UpdateAddress> response) {
         dialog.dismiss();
         if (response.isSuccessful()) {
+            btnAedit.setText("Change Address");
             Util.showToastMessage(this, "Address Updated", getResources().getDrawable(R.drawable.app_icon));
         }
     }
