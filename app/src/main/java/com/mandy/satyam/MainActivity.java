@@ -123,7 +123,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     TextView noitemfound;
     ImageView imgvw;
     TextView tv;
-
+    public static String count;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -535,8 +535,9 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
                 for (int i = 0; i < homePageResponseResponse.body().getData().getSections().size(); i++) {
                     HomePageResponse.Data.Section section = homePageResponseResponse.body().getData().getSections().get(i);
 
-
+                    count = homePageResponseResponse.body().getCart_total();
                     cartCount.setText(homePageResponseResponse.body().getCart_total());
+                    setStringVal(Constants.CART_COUNT,homePageResponseResponse.body().getCart_total());
 
                     productName.add(section.getCategoryTitle());
 

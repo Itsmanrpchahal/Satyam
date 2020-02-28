@@ -75,6 +75,7 @@ public interface ApiInterface {
     @GET("wp-json/wc/v3/products/{input}")
     Call<ProductDetailResponse> productDetail(
             @Path("input") String id,
+            @Query("token") String token,
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret
 

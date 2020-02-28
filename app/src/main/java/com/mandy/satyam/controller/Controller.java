@@ -254,8 +254,8 @@ public class Controller {
         });
     }
 
-    public void setProductDetail(String id, String cosumerKey, String consumerSecret) {
-        webAPI.getApi().productDetail(id, cosumerKey, consumerSecret).enqueue(new Callback<ProductDetailResponse>() {
+    public void setProductDetail(String id,String token, String cosumerKey, String consumerSecret) {
+        webAPI.getApi().productDetail(id,token, cosumerKey, consumerSecret).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
                 if (response != null) {

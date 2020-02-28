@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -36,6 +37,7 @@ import com.mandy.satyam.commentActivity.CommentActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.login.LoginActivity;
+import com.mandy.satyam.myCart.MyCartActivity;
 import com.mandy.satyam.productDetails.IF.SendItemsToActivityIF;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
@@ -141,20 +143,30 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public static String getPosItems;
     VariationsAdapter variationsAdapter;
     String variation_id;
+    TextView cart_count;
+    RelativeLayout cartlayout;
+    int count;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
+        cartlayout = findViewById(R.id.cartlayout);
+        cartlayout.setVisibility(View.VISIBLE);
+        cart_count = findViewById(R.id.cart_count);
+        cart_count.setText(getStringVal(Constants.CART_COUNT));
+        count = Integer.parseInt(cart_count.getText().toString());
         controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this, (Controller.GetVariations) this);
         progressDialog = Util.showDialog(this);
         intent = getIntent();
+
         if (intent != null) {
             productID = intent.getStringExtra("productID");
             if (Util.isOnline(this) != false) {
                 progressDialog.show();
-                controller.setProductDetail(productID, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
+                controller.setProductDetail(productID,getStringVal(Constants.USERTOKEN), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
             } else {
                 Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
             }
@@ -187,8 +199,26 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             }
         });
 
+        cartlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailsActivity.this,MyCartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        cart_count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailsActivity.this,MyCartActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
+
+
 
     @OnClick({R.id.btnAddCart, R.id.btnBuynow})
     public void onViewClicked(View view) {
@@ -226,18 +256,26 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
 
                 } else {
-                    progressDialog.show();
 
-                    if (Util.isOnline(ProductDetailsActivity.this) != false) {
-                        if (variation_id.equals("0")) {
-                            controller.setAddToCart(getProductID, "1", "", getStringVal(Constants.USERTOKEN));
+                    if (btnAddCart.getText().toString().equals("Go to cart"))
+                    {
+                        Intent intent = new Intent(ProductDetailsActivity.this, MyCartActivity.class);
+                        startActivity(intent);
+                    }else {
+                        progressDialog.show();
+
+                        if (Util.isOnline(ProductDetailsActivity.this) != false) {
+                            if (variation_id.equals("0")) {
+                                controller.setAddToCart(getProductID, "1", "", getStringVal(Constants.USERTOKEN));
+                            } else {
+                                controller.setGetVariations(productID, TypeVariations.toString());
+                            }
+
                         } else {
-                            controller.setGetVariations(productID, TypeVariations.toString());
+                            Util.showToastMessage(ProductDetailsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                         }
-
-                    } else {
-                        Util.showToastMessage(ProductDetailsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
+
                 }
 
 
@@ -267,45 +305,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         return true;
     }
 
-
-    private void Adddialog() {
-        final EditText editText;
-        Button btnAdd, btnCancel;
-
-        final Dialog quantityDialog = new Dialog(this);
-        quantityDialog.setCancelable(false);
-        quantityDialog.setCanceledOnTouchOutside(false);
-        quantityDialog.setContentView(R.layout.custom_quantity);
-        editText = quantityDialog.findViewById(R.id.edtQuantity);
-        btnAdd = quantityDialog.findViewById(R.id.btnAdd);
-        btnCancel = quantityDialog.findViewById(R.id.btnCancel);
-
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(editText.getText().toString())) {
-                    editText.setError("Enter the quantity");
-                } else {
-                    Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
-                    intent.putExtra("productID", productID);
-                    intent.putExtra("quantity", editText.getText().toString());
-                    intent.putExtra("isFrom", "BuyBT");
-                    startActivity(intent);
-                    quantityDialog.dismiss();
-                }
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quantityDialog.cancel();
-            }
-        });
-        quantityDialog.show();
-
-    }
-
     @SuppressLint("WrongConstant")
     @Override
     public void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse) {
@@ -316,7 +315,16 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 String small = productDetailResponseResponse.body().getData().getName().toLowerCase().substring(1);
                 txtproductName.setText(cat + small);
 
+                if (productDetailResponseResponse.body().getData().isIs_cart()==true)
+                {
+                    btnAddCart.setText("Go to cart");
+                }
 
+                if (productDetailResponseResponse.body().getData().getStockStatus().equals("outofstock"))
+                {
+                    btnAddCart.setEnabled(false);
+                    btnBuynow.setEnabled(false);
+                }
                 if (productDetailResponseResponse.body().getData().getSalePrice().equals("")) {
                     txtMRP.setVisibility(View.GONE);
                     txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
@@ -460,6 +468,10 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
         if (response.isSuccessful()) {
             if (response.body().getStatus() == 200) {
+                int newCount = 1+count;
+                cart_count.setText(String.valueOf(newCount));
+                btnAddCart.setText("Go to cart");
+                setStringVal(Constants.CART_COUNT, String.valueOf(newCount));
                 Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.ic_shopping_cart));
             }
         } else {

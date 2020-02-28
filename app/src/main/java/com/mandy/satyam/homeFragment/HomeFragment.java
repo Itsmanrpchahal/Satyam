@@ -2,12 +2,15 @@ package com.mandy.satyam.homeFragment;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.mandy.satyam.R;
+import com.mandy.satyam.allCategory.AllCategory;
 import com.mandy.satyam.baseclass.BaseFrag;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
@@ -54,13 +58,14 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
     Context context;
     Dialog dialog;
     Unbinder unbinder;
-    ArrayList<HomePageResponse.Data.Category> categories = new ArrayList<>();
+    public static ArrayList<HomePageResponse.Data.Category> categories = new ArrayList<>();
     ArrayList<HomePageResponse.Data.Banner> banners = new ArrayList<>();
     ArrayList<HomePageResponse.Data.Section> sections = new ArrayList<>();
     Controller controller;
     RecyclerView home_products_recyler,recyclerViewCategory;
     Dialog progressDialog;
     private Handler handler;
+    TextView allcategoryBT;
     int page = 0;
 
     public HomeFragment() {
@@ -88,7 +93,19 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
 
         unbinder = ButterKnife.bind(this, view);
 
+        listeners();
+
         return view;
+    }
+
+    private void listeners() {
+        allcategoryBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AllCategory.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void init() {
@@ -97,7 +114,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         array_image.add(String.valueOf(R.drawable.best_s));
         array_image.add(String.valueOf(R.drawable.bestseller));
         array_image.add(String.valueOf(R.drawable.ic_satyamplaceholder));
-
+        allcategoryBT = view.findViewById(R.id.allcategoryBT);
         viewPager = (ViewPager) view.findViewById(R.id.recyclerOffer);
         recyclerViewCategory = view.findViewById(R.id.recyclerCategory);
         home_products_recyler = view.findViewById(R.id.home_products_recyler);
@@ -150,6 +167,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         {
             if (homePageResponseResponse.body().getStatus()==200)
             {
+                allcategoryBT.setVisibility(View.VISIBLE);
                 setStringVal(Constants.CART_COUNT,homePageResponseResponse.body().getCart_total());
                 for (int i=0;i<homePageResponseResponse.body().getData().getCategories().size();i++)
                 {

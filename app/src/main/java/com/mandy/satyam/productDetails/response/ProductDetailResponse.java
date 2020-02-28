@@ -55,6 +55,18 @@ public class ProductDetailResponse {
         @SerializedName("permalink")
         @Expose
         private String permalink;
+
+        public boolean isIs_cart() {
+            return is_cart;
+        }
+
+        public void setIs_cart(boolean is_cart) {
+            this.is_cart = is_cart;
+        }
+
+        @SerializedName("is_cart")
+        @Expose
+        private boolean is_cart;
         @SerializedName("date_created")
         @Expose
         private String dateCreated;

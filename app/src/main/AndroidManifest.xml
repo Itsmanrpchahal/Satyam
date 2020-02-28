@@ -17,7 +17,8 @@
         android:icon="@drawable/styam"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".myOrderList.GetOrderDetail"></activity>
+        <activity android:name=".allCategory.AllCategory"></activity>
+        <activity android:name=".myOrderList.GetOrderDetail" />
         <activity android:name=".filterScreen.FilterActivity" />
         <activity
             android:name=".opt.OTP_verify"

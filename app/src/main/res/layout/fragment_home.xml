@@ -20,14 +20,37 @@
             android:background="@color/recycler"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerCategory"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/recycler">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/allcategoryBT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Category"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/margin_dp5"
+                    android:layout_marginRight="@dimen/margin_dp5"
+                    android:background="@drawable/custom_category1"></TextView>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/recycler">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

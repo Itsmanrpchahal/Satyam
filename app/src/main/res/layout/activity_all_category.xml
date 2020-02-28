@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.mandy.satyam.allCategory.AllCategory">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/backAllCategotyBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:src="@drawable/ic_back"></ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All Category"
+                android:layout_toRightOf="@id/backAllCategotyBT"
+                android:layout_marginLeft="@dimen/margin_dp10"
+                android:textSize="@dimen/textsize_sp18"
+                android:textColor="@color/white"></TextView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cartlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_dp10"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <ImageButton
+                android:id="@+id/product_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="#00FFFFFF"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_cart"
+                android:visibility="visible"></ImageButton>
+
+            <TextView
+                android:id="@+id/cart_count"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/circle_backgroundwhite"
+                android:text=""
+                android:textSize="8sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="17dp"
+                android:textColor="@color/white"></TextView>
+
+            <ImageView
+                android:id="@+id/toolbarSearch"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="45dp"
+                android:src="@drawable/ic_searching" />
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchitemrecycler"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/toolbar"
+        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allcategory"
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

@@ -109,6 +109,18 @@ public class HomePageResponse {
             @Expose
             private String categoryName;
 
+            public String getCategory_image() {
+                return category_image;
+            }
+
+            public void setCategory_image(String category_image) {
+                this.category_image = category_image;
+            }
+
+            @SerializedName("category_image")
+            @Expose
+            private String category_image;
+
             public Integer getCategoryId() {
                 return categoryId;
             }

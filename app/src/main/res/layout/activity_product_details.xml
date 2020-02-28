@@ -315,6 +315,7 @@
                 android:background="@color/colorBtnRed"
                 android:textColor="@color/white"
                 android:text="Add to Cart"
+                android:textAllCaps="false"
                 android:textSize="16sp" />
 
 
@@ -325,6 +326,7 @@
                 android:layout_marginTop="@dimen/margin_dp16"
                 android:layout_marginLeft="@dimen/margin_dp16"
                 android:layout_marginRight="@dimen/margin_dp16"
+                android:textAllCaps="false"
                 android:background="@android:color/holo_green_light"
                 android:text="Buy Now"
                 android:textColor="@color/white"
