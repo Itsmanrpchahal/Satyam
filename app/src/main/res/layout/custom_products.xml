@@ -11,7 +11,7 @@
         android:id="@+id/custom_productImage"
         android:layout_width="match_parent"
         android:layout_height="185dp"
-        android:padding="@dimen/margin_dp8"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_satyamplaceholder"/>
 
 

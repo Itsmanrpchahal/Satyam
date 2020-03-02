@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -116,7 +117,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 textView.setText(cat + small);
                 if (Util.isOnline(ProductsActivity.this) != false) {
                     progressDialog.show();
-                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount));
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30);
                     controller.setSubCategory(catID);
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -269,10 +270,10 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 headerList = Integer.parseInt(homePageResponseResponse.headers().get("X-WP-TotalPages"));
                 for (int i = 0; i < homePageResponseResponse.body().getData().size(); i++) {
 
-                    if (homePageResponseResponse.body().getData().get(i).getImages().size() >= 1) {
+                   /* if (homePageResponseResponse.body().getData().get(i).getImages().size() >= 1) {
                         Categoriesroducts.Datum.Image image = homePageResponseResponse.body().getData().get(i).getImages().get(0);
                         images.add(image);
-                    }
+                    }*/
                     //Categoriesroducts.Datum productname = homePageResponseResponse.body().getData().get(i).getName();
                     datumArrayList.add(homePageResponseResponse.body().getData().get(i));
                 }
@@ -287,7 +288,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                 GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
                 recyclerProduct.setLayoutManager(layoutManager);
-                ProductListAdapter adapter = new ProductListAdapter(this, images, datumArrayList);
+                ProductListAdapter adapter = new ProductListAdapter(this,  datumArrayList);
                 recyclerProduct.setAdapter(adapter);
                 adapter.ProductListAdapter(new product_id_IF() {
                     @Override
@@ -315,7 +316,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                     if (Util.isOnline(ProductsActivity.this) != false) {
                         progressDialog.show();
-                        controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount));
+                        controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30);
                     } else {
                         Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
@@ -363,7 +364,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     progressDialog.show();
                     images.clear();
                     datumArrayList.clear();
-                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), id, String.valueOf(pageCount));
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), id, String.valueOf(pageCount),30);
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }

@@ -81,6 +81,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
         Util.checkPermissions(getContext() );
         progressDialog = Util.showDialog(getContext());
         progressDialog.show();
+        categories.clear();
         init();
         Log.d("CONSUMER",getStringVal(Constants.CONSUMER_SECRET)+"  "+getStringVal(Constants.CONSUMER_KEY));
 

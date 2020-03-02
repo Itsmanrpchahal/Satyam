@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/trailImage"
+        android:src="@drawable/ic_satyamplaceholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:scaleType="fitXY"
         />
 
 </RelativeLayout>

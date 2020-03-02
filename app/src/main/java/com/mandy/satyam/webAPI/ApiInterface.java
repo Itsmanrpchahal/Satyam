@@ -69,7 +69,8 @@ public interface ApiInterface {
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret,
             @Query("category") String category,
-            @Query("page") String page
+            @Query("page") String page,
+            @Query("per_page") int per_page
     );
 
     @GET("wp-json/wc/v3/products/{input}")

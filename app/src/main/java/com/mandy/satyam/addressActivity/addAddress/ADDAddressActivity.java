@@ -109,8 +109,6 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         filterBt.setVisibility(View.GONE);
         searchBt.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         textView.setText("Add Address");
         listners();
     }
@@ -121,6 +119,17 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
 
 
     private void listners() {
+        edtName.setEnabled(false);
+        edtLName.setEnabled(false);
+        edtemail.setEnabled(false);
+        edtMobile.setEnabled(false);
+        edtPostcode.setEnabled(false);
+        edtTown.setEnabled(false);
+        edtState.setEnabled(false);
+        edtFlat.setEnabled(false);
+        edtNear.setEnabled(false);
+
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,33 +144,43 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                     if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
                             TextUtils.isEmpty(edtemail.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
                             TextUtils.isEmpty(edtNear.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtTown.getText().toString())) {
-                        edtName.setError("");
-                        edtLName.setError("");
-                        edtMobile.setError("");
-                        edtemail.setError("");
-                        edtPostcode.setError("");
-                        edtFlat.setError("");
-                        edtNear.setError("");
-                        edtState.setError("");
-                        edtTown.setError("");
+                        edtName.setError("Enter Field");
+                        edtLName.setError("Enter Field");
+                        edtMobile.setError("Enter Field");
+                        edtemail.setError("Enter Field");
+                        edtPostcode.setError("Enter Field");
+                        edtFlat.setError("Enter Field");
+                        edtNear.setError("Enter Field");
+                        edtState.setError("Enter Field");
+                        edtTown.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtName.getText().toString())) {
-                        edtName.setError("");
+                        edtName.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
-                        edtLName.setError("");
+                        edtLName.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
-                        edtMobile.setError("");
+                        edtMobile.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
-                        edtemail.setError("");
+                        edtemail.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
-                        edtPostcode.setError("");
+                        edtPostcode.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
-                        edtFlat.setError("");
+                        edtFlat.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
-                        edtNear.setError("");
+                        edtNear.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtState.getText().toString())) {
-                        edtState.setError("");
+                        edtState.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtTown.getText().toString())) {
-                        edtTown.setError("");
+                        edtTown.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else {
                         if (Util.isOnline(ADDAddressActivity.this) != false) {
                             dialog.show();
@@ -180,33 +199,43 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                     if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
                             TextUtils.isEmpty(edtemail.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
                             TextUtils.isEmpty(edtNear.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtTown.getText().toString())) {
-                        edtName.setError("");
-                        edtLName.setError("");
-                        edtMobile.setError("");
-                        edtemail.setError("");
-                        edtPostcode.setError("");
-                        edtFlat.setError("");
-                        edtNear.setError("");
-                        edtState.setError("");
-                        edtTown.setError("");
+                        edtName.setError("Enter Field");
+                        edtLName.setError("Enter Field");
+                        edtMobile.setError("Enter Field");
+                        edtemail.setError("Enter Field");
+                        edtPostcode.setError("Enter Field");
+                        edtFlat.setError("Enter Field");
+                        edtNear.setError("Enter Field");
+                        edtState.setError("Enter Field");
+                        edtTown.setError("Enter Field");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtName.getText().toString())) {
                         edtName.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
                         edtLName.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
                         edtMobile.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
                         edtemail.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
                         edtPostcode.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
                         edtFlat.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
                         edtNear.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtState.getText().toString())) {
                         edtState.setError("");
+                        btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtTown.getText().toString())) {
                         edtTown.setError("");
+                        btnAdd.setEnabled(false);
                     } else {
                         if (Util.isOnline(ADDAddressActivity.this) != false) {
                             dialog.show();
@@ -244,7 +273,16 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtFlat.setEnabled(true);
                         edtNear.setEnabled(true);
                     } else {
-                        dialog.show();
+                        edtName.setEnabled(false);
+                        edtLName.setEnabled(false);
+                        edtemail.setEnabled(false);
+                        edtMobile.setEnabled(false);
+                        edtPostcode.setEnabled(false);
+                        edtTown.setEnabled(false);
+                        edtState.setEnabled(false);
+                        edtFlat.setEnabled(false);
+                        edtNear.setEnabled(false);
+
                         if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) &&
                                 TextUtils.isEmpty(edtTown.getText().toString()) && TextUtils.isEmpty(edtState.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
                                 TextUtils.isEmpty(edtNear.getText().toString())) {
@@ -348,7 +386,6 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             } else {
                 Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
             }
-
         }
     }
 

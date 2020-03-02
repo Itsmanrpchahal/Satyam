@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -49,9 +51,11 @@ import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productDetails.response.VariationResponse;
 import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
@@ -76,7 +80,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     @BindView(R.id.linear)
     LinearLayout linear;
     @BindView(R.id.indicator)
-    TabLayout indicator;
+    CirclePageIndicator indicator;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.txtMRP)
@@ -101,12 +105,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     RecyclerView recyclerRelated;
     Intent intent;
     public static NestedScrollView nestedScrollView;
-
     ArrayList<ProductDetailResponse.Data.Image> array_image = new ArrayList<>();
-    ArrayList<String> array_color = new ArrayList<String>();
-    ArrayList<String> array_size = new ArrayList<String>();
-    Dialog dialog;
-    String token, id, catId, sizeId, colorId;
     @BindView(R.id.filter_bt)
     ImageButton filterBt;
     @BindView(R.id.nestedScoll)
@@ -146,6 +145,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     TextView cart_count;
     RelativeLayout cartlayout;
     int count;
+    ImageView no_image;
+    private static int currentPage;
+    private static int NUM_PAGES;
 
 
     @Override
@@ -156,6 +158,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         cartlayout = findViewById(R.id.cartlayout);
         cartlayout.setVisibility(View.VISIBLE);
         cart_count = findViewById(R.id.cart_count);
+        no_image = findViewById(R.id.no_image);
         cart_count.setText(getStringVal(Constants.CART_COUNT));
         count = Integer.parseInt(cart_count.getText().toString());
         controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this, (Controller.GetVariations) this);
@@ -179,18 +182,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         filterBt.setVisibility(View.INVISIBLE);
         searchBt.setVisibility(View.INVISIBLE);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         textView.setText("Product Details");
 
-        linear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailsActivity.this, CommentActivity.class);
-                intent.putExtra("pId", id);
-                startActivity(intent);
-            }
-        });
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,11 +208,12 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 startActivity(intent);
             }
         });
-
-
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @OnClick({R.id.btnAddCart, R.id.btnBuynow})
     public void onViewClicked(View view) {
@@ -344,12 +339,17 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 ratingbar.setRating(productDetailResponseResponse.body().getData().getRatingCount());
                 txtratingNumber.setText("(" + productDetailResponseResponse.body().getData().getAverageRating() + ")");
 
+                if (productDetailResponseResponse.body().getData().getImages().size()==0)
+                {
+                    no_image.setVisibility(View.VISIBLE);
+                    viewPager.setVisibility(View.GONE);
+                }
                 for (int i = 0; i < productDetailResponseResponse.body().getData().getImages().size(); i++) {
                     ProductDetailResponse.Data.Image image = productDetailResponseResponse.body().getData().getImages().get(i);
                     array_image.add(image);
-                    setOfferImage(array_image);
-                }
 
+                }
+                setOfferImage(array_image);
 
                 for (int i = 0; i < productDetailResponseResponse.body().getData().getRelatedIds().size(); i++) {
 
@@ -425,15 +425,54 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     private void setOfferImage(ArrayList<ProductDetailResponse.Data.Image> banner) {
         final PagerAdapter adapter;
 
-        TabLayout tabLayout;
+        CirclePageIndicator tabLayout;
         tabLayout = findViewById(R.id.indicator);
 
         adapter = new ViewPagerProductImageAdapter(ProductDetailsActivity.this, banner);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager, true);
+        tabLayout.setViewPager(viewPager);
+        NUM_PAGES =banner.size();
+        final float density = getResources().getDisplayMetrics().density;
+        //Set circle indicator radius
+        indicator.setRadius(5 * density);
+//        indicator.setVisibility(View.GONE);
 
-      /*  Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);*/
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+        // Pager listener over indicator
+        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
     }
 
     // timer for change image

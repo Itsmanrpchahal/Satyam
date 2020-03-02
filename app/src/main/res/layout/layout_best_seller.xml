@@ -12,8 +12,7 @@
         android:layout_height="150dp"
         android:padding="@dimen/margin_dp8"
         android:src="@drawable/bestseller"
-        android:scaleType="fitXY"
-        />
+        android:scaleType="centerInside" />
 
 
     <TextView

@@ -310,6 +310,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         onNavigationClick();
         if (!getStringVal(Constants.LOGIN_STATUS).equals("login")) {
             toolbarSearch.setVisibility(View.VISIBLE);
+            close.setVisibility(View.GONE);
             productCart.setVisibility(View.GONE);
             cartCount.setVisibility(View.GONE);
             cartlayout.setVisibility(View.GONE);
@@ -318,7 +319,10 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
            noitemfound.setVisibility(View.GONE);
             framelayout.setVisibility(View.VISIBLE);
             searchitemrecycler.setVisibility(View.GONE);
+            searchProduct.setVisibility(View.GONE);
+
         } else {
+            close.setVisibility(View.GONE);
             toolbarSearch.setVisibility(View.VISIBLE);
             productCart.setVisibility(View.VISIBLE);
             cartCount.setVisibility(View.VISIBLE);
@@ -328,6 +332,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
             noitemfound.setVisibility(View.GONE);
             framelayout.setVisibility(View.VISIBLE);
             searchitemrecycler.setVisibility(View.GONE);
+            searchProduct.setVisibility(View.GONE);
         }
 
 
@@ -503,7 +508,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
             btnLogout.setBackgroundColor(this.getResources().getColor(R.color.red));
         }
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textLogout.setTitle("Login");

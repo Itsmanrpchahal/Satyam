@@ -36,6 +36,7 @@ public class AllCategory extends AppCompatActivity {
         product_cart = findViewById(R.id.product_cart);
         searchitemrecycler = findViewById(R.id.searchitemrecycler);
 
+
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         allcategory.setLayoutManager(layoutManager);
         AllCategoryAdapter adapter = new AllCategoryAdapter(this, HomeFragment.categories);

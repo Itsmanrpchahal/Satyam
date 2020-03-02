@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
 
-    <com.jsibbold.zoomage.ZoomageView
+  <!--  <com.jsibbold.zoomage.ZoomageView
         android:id="@+id/trailImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,13 +18,14 @@
         app:zoomage_translatable="true"
         app:zoomage_minScale="0.6"
         app:zoomage_maxScale="8"
-        />
+        />-->
 
-   <!-- <ImageView
+    <ImageView
         android:layout_centerVertical="true"
         android:id="@+id/trailImage"
+        android:src="@drawable/ic_satyamplaceholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />-->
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

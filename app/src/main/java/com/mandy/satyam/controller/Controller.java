@@ -237,8 +237,8 @@ public class Controller {
         });
     }
 
-    public void setRelatedPrducts(String cosumerKey, String consumerSecret, String category, String page) {
-        webAPI.getApi().homeResponse(cosumerKey, consumerSecret, category, page).enqueue(new Callback<Categoriesroducts>() {
+    public void setRelatedPrducts(String cosumerKey, String consumerSecret, String category, String page,int per_page) {
+        webAPI.getApi().homeResponse(cosumerKey, consumerSecret, category, page,per_page).enqueue(new Callback<Categoriesroducts>() {
             @Override
             public void onResponse(Call<Categoriesroducts> call, Response<Categoriesroducts> response) {
                 if (response != null) {

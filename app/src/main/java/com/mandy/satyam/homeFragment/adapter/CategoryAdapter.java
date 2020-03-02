@@ -58,6 +58,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             viewHolder.textView.setTextColor(context.getResources().getColor(R.color.colorAccent));
         }*/
 
+
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

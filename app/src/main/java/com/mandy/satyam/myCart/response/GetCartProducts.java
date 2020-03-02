@@ -115,6 +115,18 @@ this.data = data;
         @Expose
         private int quantity;
 
+        public int getProduct_pending_qty() {
+            return product_pending_qty;
+        }
+
+        public void setProduct_pending_qty(int product_pending_qty) {
+            this.product_pending_qty = product_pending_qty;
+        }
+
+        @SerializedName("product_pending_qty")
+        @Expose
+        private int product_pending_qty;
+
         public int getVariation_id() {
             return variation_id;
         }

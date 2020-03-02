@@ -2,6 +2,7 @@ package com.mandy.satyam.productList.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         this.product_id_if = product_id_if;
     }
 
-    public ProductListAdapter(Context context, ArrayList<Categoriesroducts.Datum.Image> images, ArrayList<Categoriesroducts.Datum> datumArrayList1) {
+    public ProductListAdapter(Context context, ArrayList<Categoriesroducts.Datum> datumArrayList1) {
         this.context = context;
-        this.imageArrayList = images;
         this.datumArrayList = datumArrayList1;
     }
 
@@ -52,7 +52,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
-        Glide.with(context).load(imageArrayList.get(i).getSrc().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(viewHolder.imageView);
+        if (datumArrayList.get(i).getImages().size()>=1)
+        {
+            Glide.with(context).load(datumArrayList.get(i).getImages().get(0).getSrc()).placeholder(R.drawable.ic_satyamplaceholder).into(viewHolder.imageView);
+        }else {
+            Glide.with(context).load("").placeholder(R.drawable.ic_satyamplaceholder).into(viewHolder.imageView);
+        }
         String cat = datumArrayList.get(i).getName().substring(0, 1);
         String small = datumArrayList.get(i).getName().toLowerCase().substring(1);
         viewHolder.txtProductName.setText(cat + small);
@@ -70,7 +75,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public int getItemCount() {
-        return imageArrayList.size();
+        return datumArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
