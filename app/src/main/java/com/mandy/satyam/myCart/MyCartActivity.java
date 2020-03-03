@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
@@ -28,6 +29,7 @@ import com.mandy.satyam.myCart.adapter.CartAdapter;
 import com.mandy.satyam.myCart.response.GetCartProducts;
 import com.mandy.satyam.myCart.response.RemoveCartItem;
 import com.mandy.satyam.myCart.response.UpdateCart;
+import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.utils.Util;
 
 import org.json.JSONArray;
@@ -89,6 +91,8 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     int position;
     JSONArray jsonArray;
     CartAdapter adapter3;
+    Intent intent;
+    String string,productID;
     float R_Quantity, R_Price, removeQuantity, removePrice, totalAmount, newP, newQ;
 
 
@@ -99,7 +103,12 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
         ButterKnife.bind(this);
         controller = new Controller((Controller.GetCartProducts) this, (Controller.UpdateCart) this, (Controller.RemoveCartItem) this);
 
-
+        intent = getIntent();
+        if (intent!=null)
+        {
+            string = intent.getStringExtra("isFrom");
+            productID = intent.getStringExtra("productID");
+        }
         manager = getSupportFragmentManager();
         searchBt.setVisibility(View.GONE);
         filterBt.setVisibility(View.GONE);
@@ -125,11 +134,26 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
 
     }
 
+    @Override
+    public void onBackPressed() {
+//        if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+//        {
+//            Intent intent = new Intent(MyCartActivity.this, ProductDetailsActivity.class);
+//            intent.putExtra("productID",productID);
+//            startActivity(intent);
+//            finish();
+//        }else {
+            super.onBackPressed();
+//        }
+
+    }
+
     private void listeners() {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MyCartActivity.this, MainActivity.class);
+//                Intent intent = new Intent(MyCartActivity.this, ProductDetailsActivity.class);
+//                intent.putExtra("productID",productID);
 //                startActivity(intent);
 //                finish();
                 onBackPressed();

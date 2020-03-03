@@ -39,6 +39,7 @@ public class ViewPagerProductImageAdapter extends PagerAdapter {
     public ViewPagerProductImageAdapter(Context context, ArrayList<ProductDetailResponse.Data.Image> array_image1) {
         this.context = context;
         this.array_image = array_image1;
+        notifyDataSetChanged();
 
     }
 

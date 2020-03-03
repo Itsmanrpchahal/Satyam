@@ -149,6 +149,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     ImageView no_image;
     private static int currentPage;
     private static int NUM_PAGES;
+     PagerAdapter adapter;
 
 
     @Override
@@ -187,6 +188,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailsActivity.this,MyCartActivity.class);
+                intent.putExtra("isFrom","ProductDetail");
                 startActivity(intent);
             }
         });
@@ -195,6 +197,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProductDetailsActivity.this,MyCartActivity.class);
+                intent.putExtra("isFrom","ProductDetail");
                 startActivity(intent);
             }
         });
@@ -203,7 +206,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     @Override
     protected void onResume() {
         super.onResume();
-        array_image.clear();
         if (intent != null) {
             productID = intent.getStringExtra("productID");
             if (Util.isOnline(this) != false) {
@@ -212,9 +214,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             } else {
                 Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
             }
-
             progressDialog.show();
-
         }
     }
 
@@ -258,6 +258,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     if (btnAddCart.getText().toString().equals("Go to cart"))
                     {
                         Intent intent = new Intent(ProductDetailsActivity.this, MyCartActivity.class);
+                        intent.putExtra("isFrom","ProductDetail");
+                        intent.putExtra("productID",productID);
                         startActivity(intent);
                     }else {
                         progressDialog.show();
@@ -307,6 +309,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     @Override
     public void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse) {
         progressDialog.dismiss();
+        array_image.clear();
         if (productDetailResponseResponse.isSuccessful()) {
             if (productDetailResponseResponse.body().getStatus() == 200) {
                 String cat = productDetailResponseResponse.body().getData().getName().substring(0, 1);
@@ -430,7 +433,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
     //set image into view pager
     private void setOfferImage(ArrayList<ProductDetailResponse.Data.Image> banner) {
-        final PagerAdapter adapter;
+
 
         CirclePageIndicator tabLayout;
         tabLayout = findViewById(R.id.indicator);
