@@ -124,6 +124,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     ImageView imgvw;
     TextView tv;
     public static String count;
+    Intent intent;
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,9 +165,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
 
-        transaction = manager.beginTransaction();
-        transaction.replace(R.id.framelayout, new HomeFragment());
-        transaction.commit();
+
         // framelayout.setVisibility(View.VISIBLE);
 
         if (Util.isOnline(this) != false) {
@@ -178,7 +177,6 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         lisenters();
 
     }
-
 
     private void lisenters() {
 
@@ -308,6 +306,15 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     protected void onResume() {
         super.onResume();
         onNavigationClick();
+        if (getStringVal(Constants.CART_COUNT)!=null)
+        {
+            cartCount.setText(getStringVal(Constants.CART_COUNT));
+        }
+
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.framelayout, new HomeFragment());
+        transaction.commit();
+
         if (!getStringVal(Constants.LOGIN_STATUS).equals("login")) {
             toolbarSearch.setVisibility(View.VISIBLE);
             close.setVisibility(View.GONE);
@@ -446,6 +453,8 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         }*/
         dialog();
     }
+
+
 
     private void dialog() {
         exit_dialog = new Dialog(MainActivity.this);

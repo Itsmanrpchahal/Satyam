@@ -31,6 +31,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.google.android.material.tabs.TabLayout;
+import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.addAddress.ADDAddressActivity;
 import com.mandy.satyam.baseclass.BaseClass;
@@ -165,18 +166,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         progressDialog = Util.showDialog(this);
         intent = getIntent();
 
-        if (intent != null) {
-            productID = intent.getStringExtra("productID");
-            if (Util.isOnline(this) != false) {
-                progressDialog.show();
-                controller.setProductDetail(productID,getStringVal(Constants.USERTOKEN), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
-            } else {
-                Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
-            }
 
-            progressDialog.show();
-
-        }
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScoll);
 
         filterBt.setVisibility(View.INVISIBLE);
@@ -213,6 +203,19 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     @Override
     protected void onResume() {
         super.onResume();
+        array_image.clear();
+        if (intent != null) {
+            productID = intent.getStringExtra("productID");
+            if (Util.isOnline(this) != false) {
+                progressDialog.show();
+                controller.setProductDetail(productID,getStringVal(Constants.USERTOKEN), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
+            } else {
+                Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+            }
+
+            progressDialog.show();
+
+        }
     }
 
     @OnClick({R.id.btnAddCart, R.id.btnBuynow})
@@ -313,7 +316,11 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 if (productDetailResponseResponse.body().getData().isIs_cart()==true)
                 {
                     btnAddCart.setText("Go to cart");
+                }else {
+                    btnAddCart.setText("Add to Cart");
                 }
+
+                cart_count.setText(productDetailResponseResponse.body().getData().getCart_total());
 
                 if (productDetailResponseResponse.body().getData().getStockStatus().equals("outofstock"))
                 {
@@ -500,6 +507,13 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+//        Intent intent = new Intent(ProductDetailsActivity.this, MainActivity.class);
+//        intent.putExtra("backPressed","backPressed");
+//        startActivity(intent);
+    }
 
     @Override
     public void onSuccessAddToCart(Response<AddToCart> response) {

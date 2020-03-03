@@ -85,6 +85,18 @@ public class ProductDetailResponse {
         @SerializedName("status")
         @Expose
         private String status;
+
+        public String getCart_total() {
+            return cart_total;
+        }
+
+        public void setCart_total(String cart_total) {
+            this.cart_total = cart_total;
+        }
+
+        @SerializedName("cart_total")
+        @Expose
+        private String cart_total;
         @SerializedName("featured")
         @Expose
         private Boolean featured;

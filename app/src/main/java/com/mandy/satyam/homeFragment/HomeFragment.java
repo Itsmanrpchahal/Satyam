@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,10 +31,14 @@ import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.adapter.SectionAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
+import com.mandy.satyam.productDetails.ProductDetailsActivity;
+import com.mandy.satyam.productDetails.adapter.ViewPagerProductImageAdapter;
+import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.productList.interface_.GetSubCate_IF;
 import com.mandy.satyam.productList.response.GetProductList;
 import com.mandy.satyam.utils.Util;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -66,6 +71,8 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
     Dialog progressDialog;
     private Handler handler;
     TextView allcategoryBT;
+    private static int currentPage;
+    private static int NUM_PAGES;
     int page = 0;
 
     public HomeFragment() {
@@ -128,29 +135,54 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
     private void setOfferImage(ArrayList<HomePageResponse.Data.Banner> banner) {
         final PagerAdapter adapter;
 
-        TabLayout tabLayout;
+        CirclePageIndicator tabLayout;
         tabLayout = view.findViewById(R.id.indicator);
 
-        adapter = new ViewPagerAdapter(context, banner);
+        adapter = new ViewPagerAdapter(getContext(), banner);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager, true);
+        tabLayout.setViewPager(viewPager);
+        NUM_PAGES =banner.size();
+//        final float density = getResources().getDisplayMetrics().density;
+        //Set circle indicator radius
+//        tabLayout.setRadius(5 * density);
+//        indicator.setVisibility(View.GONE);
 
-        Runnable runnable = new Runnable() {
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
             public void run() {
-                if (adapter.getCount() == page) {
-                    page = 0;
-                } else {
-                    page++;
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
                 }
-                viewPager.setCurrentItem(page, true);
-                handler.postDelayed(this, 3000);
+                viewPager.setCurrentItem(currentPage++, true);
             }
         };
+//        Timer swipeTimer = new Timer();
+//        swipeTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                handler.post(Update);
+//            }
+//        }, 3000, 3000);
 
+        // Pager listener over indicator
+        tabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-//        Timer timer = new Timer();
-//        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
 
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
     }
 
 

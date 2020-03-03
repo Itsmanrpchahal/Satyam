@@ -129,9 +129,10 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyCartActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(MyCartActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+                onBackPressed();
             }
         });
 
@@ -240,6 +241,7 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                     txtItems.setText(String.valueOf(response.body().getTotal_quantity()));
                     tax.setText("₹" + response.body().getTax());
                     totalprice.setText("₹" + response.body().getTotal());
+                    setStringVal(Constants.CART_COUNT,response.body().getTotal_quantity());
 
                     //set Price Items
 
@@ -257,9 +259,11 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     @Override
     public void onSuccessUpdateCart(Response<UpdateCart> response) {
         progressdialog.dismiss();
+        recreate();
         if (response.isSuccessful()) {
+
             if (response.body().getStatus() == 200) {
-                txtItems.setText(String.valueOf(response.body().getData().getTotal()));
+                txtItems.setText(String.valueOf(response.body().getData().getTotalQuantity()));
                 tax.setText("₹" + response.body().getData().getTax());
                 totalprice.setText("₹" + response.body().getData().getTotal());
                 Util.showToastMessage(this, "" + response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
@@ -272,17 +276,16 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     @Override
     public void onSuccessRemoveCartItem(Response<RemoveCartItem> response) {
         progressdialog.dismiss();
+        recreate();
         if (response.isSuccessful()) {
             if (response.body().getStatus() == 200) {
 
-
-                recreate();
-                getCartProductsArrayList.remove(position);
-                adapter3.notifyDataSetChanged();
-                newP = R_Price - totalAmount;
-                newQ = R_Quantity - removeQuantity;
-                txtItems.setText(String.valueOf(newQ));
-                totalprice.setText("₹" + String.valueOf(newP));
+//                getCartProductsArrayList.remove(position);
+//                adapter3.notifyDataSetChanged();
+//                newP = R_Price - totalAmount;
+//                newQ = R_Quantity - removeQuantity;
+//                txtItems.setText(String.valueOf(newQ));
+//                totalprice.setText("₹" + String.valueOf(newP));
                 Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
 
 

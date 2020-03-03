@@ -75,13 +75,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         count1 = 0;
                         count1 = 1+arrayList.get(i).getQuantity();
                         arrayList.get(i).setQuantity(count1);
-                        if (arrayList.get(i).getProduct_pending_qty()>1)
-                        {
+//                        if (arrayList.get(i).getProduct_pending_qty()>count1)
+//                        {
                             addCartQuantity.onSuccess(String.valueOf(datum.getQuantity()),datum.getCartId());
                             viewHolder.count_tv.setText(String.valueOf(datum.getQuantity()));
-                        }else {
-                            Util.showToastMessage(context,"Out of Stock",context.getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
-                        }
+//                        }else {
+//                            Util.showToastMessage(context,"Out of Stock",context.getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+//                        }
 
 
             }

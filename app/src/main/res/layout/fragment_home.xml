@@ -58,21 +58,24 @@
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/recyclerOffer"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="220dp">
 
                 </androidx.viewpager.widget.ViewPager>
 
-                <com.google.android.material.tabs.TabLayout
+                <com.viewpagerindicator.CirclePageIndicator
                     android:id="@+id/indicator"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_below="@id/recyclerOffer"
-                    android:layout_marginTop="-20dp"
-                    android:background="@android:color/transparent"
-                    app:tabBackground="@drawable/indicator_selector"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginBottom="10dp"
+                    app:fillColor="@color/colorAccent"
+                    app:pageColor="#fff"
                     app:tabGravity="center"
                     app:tabIndicatorHeight="0dp" />
+
             </RelativeLayout>
 
             <LinearLayout
