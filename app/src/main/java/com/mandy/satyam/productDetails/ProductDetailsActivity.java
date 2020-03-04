@@ -334,7 +334,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     txtMRP.setVisibility(View.GONE);
                     txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
                 } else {
-                    txtMRP.setText("₹ " + productDetailResponseResponse.body().getData().getSalePrice());
+                    txtMRP.setText("₹ " + productDetailResponseResponse.body().getData().getRegularPrice());
                     txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
                 }

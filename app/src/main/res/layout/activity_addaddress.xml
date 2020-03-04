@@ -37,10 +37,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:enabled="false"
                 android:hint="Firstname"
                 android:inputType="text"
                 android:paddingTop="16dp"
-                android:enabled="false"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -54,8 +54,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lastname"
                 android:layout_marginTop="20dp"
+                android:text="Lastname"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -65,10 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:enabled="false"
                 android:hint="Lastname"
                 android:inputType="text"
                 android:paddingTop="16dp"
-                android:enabled="false"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -93,9 +93,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:enabled="false"
                 android:hint="Mobile number"
                 android:inputType="number"
-                android:enabled="false"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
@@ -121,9 +121,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:enabled="false"
                 android:hint="Email"
                 android:inputType="number"
-                android:enabled="false"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
@@ -168,25 +168,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Town/City"
+                android:text="State"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-
-            <EditText
-                android:id="@+id/edtTown"
+            <TextView
+                android:id="@+id/stateTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:hint="Town/City"
-                android:inputType="text"
+                android:enabled="false"
+                android:hint="State"
+                android:visibility="gone"
+                android:inputType="number"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:enabled="false"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerState"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_dp45"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
 
             <View
                 android:layout_width="match_parent"
@@ -198,21 +206,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="State"
+                android:text="Town/City"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edtState"
+            <TextView
+                android:id="@+id/cityTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:hint="State"
-                android:inputType="text"
-                android:paddingTop="16dp"
                 android:enabled="false"
+                android:hint="City"
+                android:visibility="gone"
+                android:inputType="number"
+                android:paddingTop="16dp"
                 android:paddingBottom="16dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerCity"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_dp45"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -237,13 +254,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:enabled="false"
                 android:hint="Flat,House no,Building,Company"
                 android:inputType="text"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:enabled="false"
                 android:textSize="16sp" />
 
             <View
@@ -266,13 +283,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:enabled="false"
                 android:hint="Landmark e.g. near apollo hospital"
                 android:inputType="text"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:enabled="false"
                 android:textSize="16sp" />
 
             <View
@@ -292,15 +309,15 @@
                 android:textSize="16sp" />
 
             <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
-            android:background="@color/colorBtnRed"
-            android:text="Place Order"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+                android:id="@+id/btnAdd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:background="@color/colorBtnRed"
+                android:text="Place Order"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

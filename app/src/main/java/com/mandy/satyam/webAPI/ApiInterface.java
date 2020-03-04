@@ -2,6 +2,8 @@ package com.mandy.satyam.webAPI;
 
 import com.mandy.satyam.KeysResponse;
 import com.mandy.satyam.addressActivity.response.GetAddress;
+import com.mandy.satyam.addressActivity.response.GetCities;
+import com.mandy.satyam.addressActivity.response.GetZones;
 import com.mandy.satyam.addressActivity.response.UpdateAddress;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
@@ -234,5 +236,16 @@ public interface ApiInterface {
     @POST("wp-json/os/v1/get_search")
     Call<GetSearchProductsResponse> getSeacchProduct(
             @Query("search") String search
+    );
+
+    @POST("wp-json/os/v1/get_zones")
+    Call<GetZones> getZones(
+
+    );
+
+
+    @POST("wp-json/os/v1/get_cities")
+    Call<GetCities> getCities(
+      @Query("state_id") String state_id
     );
 }

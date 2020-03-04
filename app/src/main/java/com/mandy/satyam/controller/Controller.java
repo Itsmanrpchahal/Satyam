@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import com.mandy.satyam.KeysResponse;
 import com.mandy.satyam.addressActivity.response.GetAddress;
+import com.mandy.satyam.addressActivity.response.GetCities;
+import com.mandy.satyam.addressActivity.response.GetZones;
 import com.mandy.satyam.addressActivity.response.UpdateAddress;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
@@ -59,6 +61,8 @@ public class Controller {
     public GetVariations getVariations;
     public GetSearchProducts getSearchProducts;
     public GetSerchProducts getSerchProducts;
+    public GetZone getZone;
+    public GetCities getCities;
 
 
     //logincheck
@@ -146,11 +150,13 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
-    public Controller(GetAddress getAddress1, UpdateAddress updateAddress1, PlaceOrder placeOrder1,PlaceOrder1 placeOrder1__) {
+    public Controller(GetAddress getAddress1, UpdateAddress updateAddress1, PlaceOrder placeOrder1,PlaceOrder1 placeOrder1__,GetZone getZone1,GetCities getCities1) {
         getAddress = getAddress1;
         updateAddress = updateAddress1;
         placeOrder = placeOrder1;
         placeOrder1_ = placeOrder1__;
+        getZone = getZone1;
+        getCities = getCities1;
         webAPI = new WebAPI();
     }
 
@@ -629,6 +635,44 @@ public class Controller {
         });
     }
 
+    public void setGetZone()
+    {
+        webAPI.getApi().getZones().enqueue(new Callback<GetZones>() {
+            @Override
+            public void onResponse(Call<GetZones> call, Response<GetZones> response) {
+                if (response!=null)
+                {
+                    Response<GetZones> getZonesResponse = response;
+                    getZone.onSuccessZones(getZonesResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetZones> call, Throwable t) {
+            getZone.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void setGetCities(String state_id)
+    {
+        webAPI.getApi().getCities(state_id).enqueue(new Callback<com.mandy.satyam.addressActivity.response.GetCities>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.addressActivity.response.GetCities> call, Response<com.mandy.satyam.addressActivity.response.GetCities> response) {
+                if (response!=null)
+                {
+                    Response<com.mandy.satyam.addressActivity.response.GetCities> getCitiesResponse = response;
+                    getCities.onSuccessCities(getCitiesResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.addressActivity.response.GetCities> call, Throwable t) {
+                    getCities.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface LoginCheck {
         void onSuccessLoginCheck(Response<com.mandy.satyam.login.model.LoginCheck> loginCheckResponse);
 
@@ -770,6 +814,16 @@ public class Controller {
 
     public interface GetSerchProducts{
         void onSuccessSearch(Response<GetSearchProductsResponse> searchProductsResponseResponse);
+        void onError(String error);
+    }
+
+    public interface GetZone{
+        void onSuccessZones(Response<GetZones> getZonesResponse);
+        void onError(String error);
+    }
+
+    public interface GetCities{
+        void onSuccessCities(Response<com.mandy.satyam.addressActivity.response.GetCities> getCitiesResponse);
         void onError(String error);
     }
 }

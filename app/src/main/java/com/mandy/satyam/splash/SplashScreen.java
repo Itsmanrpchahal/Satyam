@@ -1,8 +1,14 @@
 package com.mandy.satyam.splash;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -24,6 +30,8 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
     ImageView imageView;
     TextView textView;
     Controller controller;
+    private NetworkChangeReceiver receiver;
+    private boolean isConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +41,55 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
         controller = new Controller(this);
-        controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
         imageView = findViewById(R.id.imageView);
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkChangeReceiver();
+        registerReceiver(receiver, filter);
 
+
+    }
+
+    public class NetworkChangeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+
+            Log.v("STATUS", "Receieved notification about network status");
+            isNetworkAvailable(context);
+
+        }
+
+
+        private boolean isNetworkAvailable(Context context) {
+            ConnectivityManager connectivity = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity != null) {
+                NetworkInfo[] info = connectivity.getAllNetworkInfo();
+                if (info != null) {
+                    for (int i = 0; i < info.length; i++) {
+                        if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                            if(!isConnected){
+                                Log.v("STATUS", "Now you are connected to Internet!");
+//                                networkStatus.setText("Now you are connected to Internet!");
+                                isConnected = true;
+                                controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
+                                //do your processing here ---
+                                //if you need to post any data to the server or get status
+                                //update from the server
+                            }else {
+                                Util.showToastMessage(SplashScreen.this,"You are not connected to Internet!",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+                Util.showToastMessage(SplashScreen.this,"You are not connected to Internet!",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+            Log.v("STATUS", "You are not connected to Internet!");
+//            networkStatus.setText("You are not connected to Internet!");
+            isConnected = false;
+            return false;
+        }
     }
 
     @Override
