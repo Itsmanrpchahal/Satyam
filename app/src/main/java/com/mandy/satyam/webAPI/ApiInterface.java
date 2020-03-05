@@ -138,12 +138,14 @@ public interface ApiInterface {
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret,
             @Query("billing[first_name]") String first_name,
+            @Query("billing[last_name]") String last_name,
             @Query("billing[address_1]") String address1,
             @Query("billing[address_2]") String address2,
             @Query("billing[city]") String city,
             @Query("billing[postcode]") String postcode,
             @Query("billing[state]") String state,
-            @Query("billing[phone]") String phone
+            @Query("billing[phone]") String phone,
+            @Query("billing[email]") String email
     );
 
     @Multipart

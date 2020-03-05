@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
+import com.mandy.satyam.addressActivity.AddressActivity;
 import com.mandy.satyam.addressActivity.response.GetAddress;
 import com.mandy.satyam.addressActivity.response.GetCities;
 import com.mandy.satyam.addressActivity.response.GetZones;
@@ -79,6 +82,14 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
     Dialog dialog;
     @BindView(R.id.btnAedit)
     Button btnAedit;
+    @BindView(R.id.radio_group)
+    RadioGroup radio_Group;
+    @BindView(R.id.home_radio)
+    RadioButton home_radio;
+    @BindView(R.id.office_radio)
+    RadioButton office_radio;
+    @BindView(R.id.shop_radio)
+    RadioButton shop_radio;
     @BindView(R.id.edtLName)
     EditText edtLName;
     Intent intent;
@@ -90,7 +101,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
     ArrayList<String> getCities = new ArrayList<>();
     ArrayList<GetZones.Datum> getZoneData = new ArrayList<>();
     String product_id_quantity;
-    String state,city;
+    String state,city,addressType="home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +148,31 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
 //        spinnerCity.setEnabled(false);
         edtFlat.setEnabled(false);
         edtNear.setEnabled(false);
-        cityTV.setVisibility(View.GONE);
-        spinnerCity.setVisibility(View.VISIBLE);
-        stateTV.setVisibility(View.GONE);
-        spinnerState.setVisibility(View.VISIBLE);
+        cityTV.setVisibility(View.VISIBLE);
+        spinnerCity.setVisibility(View.GONE);
+        stateTV.setVisibility(View.VISIBLE);
+        spinnerState.setVisibility(View.GONE);
+
+
+        radio_Group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId)
+                {
+                    case R.id.home_radio:
+                    addressType = "home";
+                    break;
+
+                    case R.id.office_radio:
+                        addressType = "office";
+                        break;
+
+                    case R.id.shop_radio:
+                        addressType = "shop";
+                        break;
+                }
+            }
+        });
 
 
         spinnerState.setOnItemSelectedListener(this);
@@ -148,6 +180,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 city = parent.getSelectedItem().toString();
+                cityTV.setText(city);
             }
 
             @Override
@@ -173,42 +206,50 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                             TextUtils.isEmpty(edtemail.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
                             TextUtils.isEmpty(edtNear.getText().toString())) {
                         edtName.setError("Enter Field");
+                        edtName.setFocusable(true);
                         edtLName.setError("Enter Field");
+                        edtLName.setFocusable(true);
                         edtMobile.setError("Enter Field");
+                        edtMobile.setFocusable(true);
                         edtemail.setError("Enter Field");
+                        edtemail.setFocusable(true);
                         edtPostcode.setError("Enter Field");
+                        edtPostcode.setFocusable(true);
                         edtFlat.setError("Enter Field");
+                        edtFlat.setFocusable(true);
                         edtNear.setError("Enter Field");
+                        edtNear.setFocusable(true);
 //                        edtTown.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtName.getText().toString())) {
-                        edtName.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
-                        edtLName.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
-                        edtMobile.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
-                        edtemail.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
-                        edtPostcode.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
-                        edtFlat.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
-                        edtNear.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     }  else {
                         if (Util.isOnline(ADDAddressActivity.this) != false) {
                             dialog.show();
                             controller.setPlaceOrder("bacs", "Direct Bank Transfer", "true", edtName.getText().toString(), edtLName.getText().toString(),
-                                    edtFlat.getText().toString(), "",city, state, edtPostcode.getText().toString(),
+                                    edtFlat.getText().toString(), "",cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", edtemail.getText().toString(), edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
-                                    edtFlat.getText().toString(), "",city, state, edtPostcode.getText().toString(),
+                                    edtFlat.getText().toString(), "",cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", product_id, quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                     getStringVal(Constants.USER_ID), "create_order");
                         } else {
@@ -227,36 +268,37 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtPostcode.setError("Enter Field");
                         edtFlat.setError("Enter Field");
                         edtNear.setError("Enter Field");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
 //                        edtTown.setError("Enter Field");
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtName.getText().toString())) {
-                        edtName.setError("");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
-                        edtLName.setError("");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
-                        edtMobile.setError("");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
-                        edtemail.setError("");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
-                        edtPostcode.setError("");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
-                        edtFlat.setError("");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
-                        edtNear.setError("");
+                        Util.showToastMessage(ADDAddressActivity.this,"Add Complete Address to place order",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         btnAdd.setEnabled(false);
                     }  else {
                         if (Util.isOnline(ADDAddressActivity.this) != false) {
                             dialog.show();
                             controller.setPlaceOrder1_("bacs", "Direct Bank Transfer", true, edtName.getText().toString(), edtLName.getText().toString(),
-                                    edtFlat.getText().toString(), "", city, state, edtPostcode.getText().toString(),
+                                    edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", edtemail.getText().toString(), edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
-                                    edtFlat.getText().toString(), "", city, state, edtPostcode.getText().toString(),
+                                    edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", product_id_quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                     getStringVal(Constants.USER_ID), "create_order");
                         } else {
@@ -289,7 +331,124 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         spinnerState.setVisibility(View.VISIBLE);
                         edtFlat.setEnabled(true);
                         edtNear.setEnabled(true);
-                    } else {
+                        btnAdd.setEnabled(false);
+                    }else if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
+                            TextUtils.isEmpty(edtemail.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) && TextUtils.isEmpty(edtNear.getText().toString()) &&
+                           TextUtils.isEmpty(edtPostcode.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+                        edtName.setError("Enter Firstname");
+                        edtLName.setError("Enter Lastname");
+                        edtMobile.setError("Enter Mobile number");
+                        edtPostcode.setError("Enter Postcode");
+                        edtemail.setError("Enter Email");
+//                            edtTown.setError("Enter city");
+                        edtFlat.setError("Enter Address");
+                        edtNear.setError("Enter Landmark");
+                        edtName.setFocusable(true);
+                    }else if (TextUtils.isEmpty(edtName.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+                        edtName.setFocusable(true);
+                        edtName.setError("Enter Firstname");
+                    }else if (TextUtils.isEmpty(edtLName.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+                        edtName.setError("Enter Lastname");
+                        edtName.setFocusable(true);
+
+                    }else if (TextUtils.isEmpty(edtMobile.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+
+                        edtMobile.setFocusable(true);
+                        edtMobile.setError("Enter Mobile number");
+
+                    }else if (TextUtils.isEmpty(edtemail.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+                        edtemail.setFocusable(true);
+                        edtemail.setError("Enter email");
+                    }else if (TextUtils.isEmpty(edtFlat.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+                        edtFlat.setFocusable(true);
+                        edtFlat.setError("Enter Address");
+                    }else if ( TextUtils.isEmpty(edtNear.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+                        edtNear.setFocusable(true);
+                        edtNear.setError("Enter Landmark");
+                    }else if (TextUtils.isEmpty(edtPostcode.getText().toString()))
+                    {
+                        btnAedit.setText("Save");
+                        edtName.setEnabled(true);
+                        edtLName.setEnabled(true);
+                        edtemail.setEnabled(true);
+                        edtMobile.setEnabled(true);
+                        edtPostcode.setEnabled(true);
+                        edtFlat.setEnabled(true);
+                        edtNear.setEnabled(true);
+                        btnAdd.setEnabled(false);
+                        edtPostcode.setFocusable(true);
+                        edtPostcode.setError("Enter Postcode");
+                    }else {
                         edtName.setEnabled(false);
                         edtLName.setEnabled(false);
                         edtemail.setEnabled(false);
@@ -303,8 +462,9 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
 
                         edtFlat.setEnabled(false);
                         edtNear.setEnabled(false);
+                        btnAdd.setEnabled(true);
 
-                        if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) &&
+                        /*if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) && TextUtils.isEmpty(edtPostcode.getText().toString()) &&
                                  TextUtils.isEmpty(edtFlat.getText().toString()) &&
                                 TextUtils.isEmpty(edtNear.getText().toString())) {
 
@@ -312,9 +472,9 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                             edtLName.setError("Enter Lastname");
                             edtMobile.setError("Enter Mobile number");
                             edtPostcode.setError("Enter Postcode");
-//                            edtTown.setError("Enter city");
                             edtFlat.setError("Enter Address");
                             edtNear.setError("Enter Landmark");
+                            edtName.setFocusable(true);
                         } else if (TextUtils.isEmpty(edtName.getText().toString())) {
                             edtName.setError("Enter Name");
                         } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
@@ -327,12 +487,12 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                             edtFlat.setError("Enter Address");
                         } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
                             edtNear.setError("Enter Landmark");
-                        } else {
+                        } else {*/
                             dialog.show();
                             controller.setUpdateAddress(getStringVal(Constants.USER_ID), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
-                                    edtName.getText().toString() + " " + edtLName.getText().toString(), edtFlat.getText().toString(), edtNear.getText().toString(), "",
-                                    edtPostcode.getText().toString(), "", edtMobile.getText().toString());
-                        }
+                                    edtName.getText().toString() ,edtLName.getText().toString(), edtFlat.getText().toString(), edtNear.getText().toString(), cityTV.getText().toString(),
+                                    edtPostcode.getText().toString(), stateTV.getText().toString(), edtMobile.getText().toString(),edtemail.getText().toString());
+//                        }
                     }
                 } else {
                     Util.showToastMessage(ADDAddressActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -369,15 +529,16 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             if (response.body().getStatus() == 200) {
 
                 edtName.setText(response.body().getData().getBilling().getFirstName());
-                edtLName.setText(response.body().getData().getLastName());
+                edtLName.setText(response.body().getData().getBilling().getLastName());
                 edtMobile.setText(response.body().getData().getBilling().getPhone());
                 edtPostcode.setText(response.body().getData().getBilling().getPostcode());
-                stateTV.setText(response.body().getData().getShipping().getState());
-                cityTV.setText(response.body().getData().getShipping().getCity());
+                stateTV.setText(response.body().getData().getBilling().getState());
+                cityTV.setText(response.body().getData().getBilling().getCity());
+
 //                edtTown.setText(response.body().getData().getBilling().getCity());
                 edtFlat.setText(response.body().getData().getBilling().getAddress1());
                 edtNear.setText(response.body().getData().getBilling().getAddress2());
-                edtemail.setText(response.body().getData().getEmail());
+                edtemail.setText(response.body().getData().getBilling().getEmail());
             }
         }
     }
@@ -480,7 +641,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         dialog.show();
-        state = parent.getSelectedItem().toString();
+        stateTV.setText(parent.getSelectedItem().toString());
        controller.setGetCities(String.valueOf(getZoneData.get(position).getId()));
     }
 

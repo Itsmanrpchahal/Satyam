@@ -125,6 +125,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     TextView tv;
     public static String count;
     Intent intent;
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,11 +140,12 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         controller.setKeys("SBWoiw9UE9qx4NVLSHC9");
         searchProduct.setText("");
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
-         imgvw = (ImageView) hView.findViewById(R.id.imageView);
-         tv = (TextView) hView.findViewById(R.id.textView);
+        imgvw = (ImageView) hView.findViewById(R.id.imageView);
+        tv = (TextView) hView.findViewById(R.id.textView);
 
         if (getStringVal(Constants.FIRSTNAME).equals("") || getStringVal(Constants.LASTNAME).equals("")) {
             tv.setText("Hello Guest User");
+            Glide.with(this).load("").placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
         } else {
             tv.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME));
             Glide.with(this).load(getStringVal(Constants.AVATAR)).placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
@@ -281,6 +283,14 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
             }
         });
 
+        cartlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myCartIntent = new Intent(MainActivity.this, MyCartActivity.class);
+                startActivity(myCartIntent);
+            }
+        });
+
         loginmain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -306,8 +316,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     protected void onResume() {
         super.onResume();
         onNavigationClick();
-        if (getStringVal(Constants.CART_COUNT)!=null)
-        {
+        if (getStringVal(Constants.CART_COUNT) != null) {
             cartCount.setText(getStringVal(Constants.CART_COUNT));
         }
 
@@ -323,7 +332,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
             cartlayout.setVisibility(View.GONE);
             loginmain.setVisibility(View.VISIBLE);
             txtToolbar.setVisibility(View.VISIBLE);
-           noitemfound.setVisibility(View.GONE);
+            noitemfound.setVisibility(View.GONE);
             framelayout.setVisibility(View.VISIBLE);
             searchitemrecycler.setVisibility(View.GONE);
             searchProduct.setVisibility(View.GONE);
@@ -455,7 +464,6 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     }
 
 
-
     private void dialog() {
         exit_dialog = new Dialog(MainActivity.this);
         Window window = exit_dialog.getWindow();
@@ -517,7 +525,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
             btnLogout.setBackgroundColor(this.getResources().getColor(R.color.red));
         }
 
-         btnLogout.setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 textLogout.setTitle("Login");
@@ -551,7 +559,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
 
                     count = homePageResponseResponse.body().getCart_total();
                     cartCount.setText(homePageResponseResponse.body().getCart_total());
-                    setStringVal(Constants.CART_COUNT,homePageResponseResponse.body().getCart_total());
+                    setStringVal(Constants.CART_COUNT, homePageResponseResponse.body().getCart_total());
 
                     productName.add(section.getCategoryTitle());
 

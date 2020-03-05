@@ -176,6 +176,10 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         textView.setText("Product Details");
 
 
+        if (!getStringVal(Constants.LOGIN_STATUS).equals("login"))
+        {
+            cartlayout.setVisibility(View.GONE);
+        }
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

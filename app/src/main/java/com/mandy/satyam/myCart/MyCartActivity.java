@@ -2,10 +2,14 @@ package com.mandy.satyam.myCart;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -93,6 +97,8 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     CartAdapter adapter3;
     Intent intent;
     String string,productID;
+    static boolean outofStock;
+    Dialog stockdialog;
     float R_Quantity, R_Price, removeQuantity, removePrice, totalAmount, newP, newQ;
 
 
@@ -128,6 +134,10 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
             }
         });
 
+        if (outofStock==true)
+        {
+            dialog();
+        }
 
         listeners();
 
@@ -292,9 +302,34 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                 totalprice.setText("₹" + response.body().getData().getTotal());
                 Util.showToastMessage(this, "" + response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
             } else {
-                Util.showToastMessage(this, "" + response.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+                outofStock = true;
+//                dialog();
+//                Util.showToastMessage(this, "" + response.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
             }
         }
+    }
+
+    private void dialog() {
+        stockdialog = new Dialog(MyCartActivity.this);
+        Window window = stockdialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        stockdialog.setContentView(R.layout.outofstock);
+        stockdialog.setCancelable(false);
+        stockdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        stockdialog.show();
+
+        Button OK;
+        OK = stockdialog.findViewById(R.id.ok_);
+
+        OK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               stockdialog.dismiss();
+               outofStock = false;
+            }
+        });
+
+
     }
 
     @Override
