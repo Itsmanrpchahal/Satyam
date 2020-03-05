@@ -128,6 +128,7 @@ public interface ApiInterface {
     @GET("wp-json/wc/v3/customers/{input}")
     Call<GetAddress> getAddress(
             @Path("input") String id,
+            @Query("amr_slug") String amr_slug,
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret
     );
@@ -135,6 +136,7 @@ public interface ApiInterface {
     @PUT("wp-json/wc/v3/customers/{input}")
     Call<UpdateAddress> updateAddress(
             @Path("input") String id,
+            @Query("amr_slug") String amr_slug,
             @Query("consumer_key") String consumer_key,
             @Query("consumer_secret") String consumer_secret,
             @Query("billing[first_name]") String first_name,
@@ -145,7 +147,8 @@ public interface ApiInterface {
             @Query("billing[postcode]") String postcode,
             @Query("billing[state]") String state,
             @Query("billing[phone]") String phone,
-            @Query("billing[email]") String email
+            @Query("billing[email]") String email,
+            @Query("address_type") String address_type
     );
 
     @Multipart

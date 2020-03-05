@@ -142,14 +142,14 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public static ArrayList<String> TypeVariations = new ArrayList<>();
     public static String getPosItems;
     VariationsAdapter variationsAdapter;
-    String variation_id;
+    String variation_id,is_address_update;
     TextView cart_count;
     RelativeLayout cartlayout;
     int count;
     ImageView no_image;
     private static int currentPage;
     private static int NUM_PAGES;
-     PagerAdapter adapter;
+    PagerAdapter adapter;
 
 
     @Override
@@ -176,8 +176,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         textView.setText("Product Details");
 
 
-        if (!getStringVal(Constants.LOGIN_STATUS).equals("login"))
-        {
+        if (!getStringVal(Constants.LOGIN_STATUS).equals("login")) {
             cartlayout.setVisibility(View.GONE);
         }
 
@@ -191,8 +190,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         cartlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailsActivity.this,MyCartActivity.class);
-                intent.putExtra("isFrom","ProductDetail");
+                Intent intent = new Intent(ProductDetailsActivity.this, MyCartActivity.class);
+                intent.putExtra("isFrom", "ProductDetail");
                 startActivity(intent);
             }
         });
@@ -200,8 +199,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         cart_count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductDetailsActivity.this,MyCartActivity.class);
-                intent.putExtra("isFrom","ProductDetail");
+                Intent intent = new Intent(ProductDetailsActivity.this, MyCartActivity.class);
+                intent.putExtra("isFrom", "ProductDetail");
                 startActivity(intent);
             }
         });
@@ -214,7 +213,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             productID = intent.getStringExtra("productID");
             if (Util.isOnline(this) != false) {
                 progressDialog.show();
-                controller.setProductDetail(productID,getStringVal(Constants.USERTOKEN), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
+                controller.setProductDetail(productID, getStringVal(Constants.USERTOKEN), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
             } else {
                 Util.showToastMessage(this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
             }
@@ -246,8 +245,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
                     if (getStringVal(Constants.USER_ID).equals("")) {
                         Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
-                        intent.putExtra("productID",productID);
-                        intent.putExtra("isFrom","ProductDetail");
+                        intent.putExtra("productID", productID);
+                        intent.putExtra("isFrom", "ProductDetail");
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(ProductDetailsActivity.this, ADDAddressActivity.class);
@@ -259,13 +258,12 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
                 } else {
 
-                    if (btnAddCart.getText().toString().equals("Go to cart"))
-                    {
+                    if (btnAddCart.getText().toString().equals("Go to cart")) {
                         Intent intent = new Intent(ProductDetailsActivity.this, MyCartActivity.class);
-                        intent.putExtra("isFrom","ProductDetail");
-                        intent.putExtra("productID",productID);
+                        intent.putExtra("isFrom", "ProductDetail");
+                        intent.putExtra("productID", productID);
                         startActivity(intent);
-                    }else {
+                    } else {
                         progressDialog.show();
 
                         if (Util.isOnline(ProductDetailsActivity.this) != false) {
@@ -288,8 +286,9 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             case R.id.btnBuynow:
                 if (getStringVal(Constants.USER_ID).equals("")) {
                     Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
-                    intent.putExtra("productID",productID);
-                    intent.putExtra("isFrom","ProductDetail");
+                    intent.putExtra("productID", productID);
+                    intent.putExtra("isFrom", "ProductDetail");
+                    intent.putExtra("is_address_update",is_address_update);
                     startActivity(intent);
                     finish();
                 } else {
@@ -297,6 +296,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     intent.putExtra("productID", productID);
                     intent.putExtra("quantity", "1");
                     intent.putExtra("isFrom", "BuyBT");
+                    intent.putExtra("is_address_update",is_address_update);
                     startActivity(intent);
                 }
                 break;
@@ -320,17 +320,15 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 String small = productDetailResponseResponse.body().getData().getName().toLowerCase().substring(1);
                 txtproductName.setText(cat + small);
 
-                if (productDetailResponseResponse.body().getData().isIs_cart()==true)
-                {
+                if (productDetailResponseResponse.body().getData().isIs_cart() == true) {
                     btnAddCart.setText("Go to cart");
-                }else {
+                } else {
                     btnAddCart.setText("Add to Cart");
                 }
-
+                is_address_update = productDetailResponseResponse.body().getData().getIs_address_update();
                 cart_count.setText(productDetailResponseResponse.body().getData().getCart_total());
 
-                if (productDetailResponseResponse.body().getData().getStockStatus().equals("outofstock"))
-                {
+                if (productDetailResponseResponse.body().getData().getStockStatus().equals("outofstock")) {
                     btnAddCart.setEnabled(false);
                     btnBuynow.setEnabled(false);
                 }
@@ -353,8 +351,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 ratingbar.setRating(productDetailResponseResponse.body().getData().getRatingCount());
                 txtratingNumber.setText("(" + productDetailResponseResponse.body().getData().getAverageRating() + ")");
 
-                if (productDetailResponseResponse.body().getData().getImages().size()==0)
-                {
+                if (productDetailResponseResponse.body().getData().getImages().size() == 0) {
                     no_image.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
                 }
@@ -445,7 +442,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         adapter = new ViewPagerProductImageAdapter(ProductDetailsActivity.this, banner);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
-        NUM_PAGES =banner.size();
+        NUM_PAGES = banner.size();
         final float density = getResources().getDisplayMetrics().density;
         //Set circle indicator radius
         indicator.setRadius(5 * density);
@@ -528,7 +525,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
         if (response.isSuccessful()) {
             if (response.body().getStatus() == 200) {
-                int newCount = 1+count;
+                int newCount = 1 + count;
                 cart_count.setText(String.valueOf(newCount));
                 btnAddCart.setText("Go to cart");
                 setStringVal(Constants.CART_COUNT, String.valueOf(newCount));

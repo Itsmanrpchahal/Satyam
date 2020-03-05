@@ -28,7 +28,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/textsize_sp20"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="20dp"/>
+                android:layout_margin="20dp"/>
 
 
             <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:orientation="horizontal"
-                android:layout_margin="20dp">
+                android:layout_margin="@dimen/defaultmargin">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

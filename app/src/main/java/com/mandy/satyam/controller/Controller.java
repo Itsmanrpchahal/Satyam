@@ -415,8 +415,8 @@ public class Controller {
         });
     }
 
-    public void setGetAddress(String userID, String consumerkey, String consumerSecret) {
-        webAPI.getApi().getAddress(userID, consumerkey, consumerSecret).enqueue(new Callback<com.mandy.satyam.addressActivity.response.GetAddress>() {
+    public void setGetAddress(String userID, String amr_slug,String consumerkey, String consumerSecret) {
+        webAPI.getApi().getAddress(userID, amr_slug,consumerkey, consumerSecret).enqueue(new Callback<com.mandy.satyam.addressActivity.response.GetAddress>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.addressActivity.response.GetAddress> call, Response<com.mandy.satyam.addressActivity.response.GetAddress> response) {
                 if (response != null) {
@@ -432,9 +432,9 @@ public class Controller {
         });
     }
 
-    public void setUpdateAddress(String input, String consumer_key, String consumer_screat, String first_name,String lastname, String address_1,
-                                 String address_2, String city, String postcode, String state, String phone,String email) {
-        webAPI.getApi().updateAddress(input, consumer_key, consumer_screat, first_name, lastname,address_1, address_2, city, postcode, state, phone,email).enqueue(new Callback<com.mandy.satyam.addressActivity.response.UpdateAddress>() {
+    public void setUpdateAddress(String input,String amr_slug, String consumer_key, String consumer_screat, String first_name,String lastname, String address_1,
+                                 String address_2, String city, String postcode, String state, String phone,String email,String address_type) {
+        webAPI.getApi().updateAddress(input,amr_slug, consumer_key, consumer_screat, first_name, lastname,address_1, address_2, city, postcode, state, phone,email,address_type).enqueue(new Callback<com.mandy.satyam.addressActivity.response.UpdateAddress>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.addressActivity.response.UpdateAddress> call, Response<com.mandy.satyam.addressActivity.response.UpdateAddress> response) {
                 if (response != null) {

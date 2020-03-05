@@ -56,7 +56,7 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
     Dialog dialog;
     Controller controller;
     String phone, countrycode;
-    String productID,isFrom;
+    String productID,isFrom,is_address_update;
     Intent intent;
 
 
@@ -72,6 +72,7 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
         {
             productID = intent.getStringExtra("productID");
             isFrom = intent.getStringExtra("isFrom");
+            is_address_update = intent.getStringExtra("is_address_update");
         }
 
         listeners();
@@ -95,6 +96,7 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
                     {
                         Intent intent = new Intent(LoginActivity.this, EmailLogin.class);
                         intent.putExtra("productID",productID);
+                        intent.putExtra("is_address_update",is_address_update);
                         intent.putExtra("isFrom","ProductDetail");
                         startActivity(intent);
                         finish();

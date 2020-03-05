@@ -20,12 +20,17 @@ import com.mandy.satyam.myOrderList.GetOrderDetail;
 import com.mandy.satyam.myOrderList.response.GetAllOrders;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class GetAllOrdersAdapter extends RecyclerView.Adapter<GetAllOrdersAdapter.ViewHolder> {
 
     Context context;
     ArrayList<GetAllOrders.Datum> arrayList = new ArrayList<>();
+    Calendar cl;
 
     public GetAllOrdersAdapter(Context context, ArrayList<GetAllOrders.Datum> arrayList) {
         this.context = context;
@@ -38,7 +43,7 @@ public class GetAllOrdersAdapter extends RecyclerView.Adapter<GetAllOrdersAdapte
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.custom_your_order, parent, false);
 
-
+cl =  Calendar.getInstance();
         return new ViewHolder(view);
     }
 
@@ -48,10 +53,15 @@ public class GetAllOrdersAdapter extends RecyclerView.Adapter<GetAllOrdersAdapte
         Log.d("IMAGE", arrayList.get(position).getLineItems().get(0).getProductImage());
         Glide.with(context).load(arrayList.get(position).getLineItems().get(0).getProductImage().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
         holder.textDispatch.setText(arrayList.get(position).getStatus());
+
+
         holder.textDate.setText(arrayList.get(position).getCurrencySymbol() + arrayList.get(position).getTotal());
 
         holder.orderID.setText(arrayList.get(position).getStatus().toString());
-        holder.orderdate.setText(arrayList.get(position).getDateCreated());
+
+        cl.setTimeInMillis(Long.parseLong(arrayList.get(position).getDate_created_miliseconds()));
+
+        holder.orderdate.setText(cl.get(Calendar.DAY_OF_MONTH)+"/"+cl.get(Calendar.MONTH)+"/"+cl.get(Calendar.YEAR));
         holder.orderprice.setText("₹"+arrayList.get(position).getTotal());
 
         holder.viewbt.setOnClickListener(new View.OnClickListener() {

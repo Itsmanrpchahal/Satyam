@@ -76,6 +76,18 @@ public class GetAllOrders {
         @SerializedName("date_modified")
         @Expose
         private String dateModified;
+
+        public String getDate_created_miliseconds() {
+            return date_created_miliseconds;
+        }
+
+        public void setDate_created_miliseconds(String date_created_miliseconds) {
+            this.date_created_miliseconds = date_created_miliseconds;
+        }
+
+        @SerializedName("date_created_miliseconds")
+        @Expose
+        private String date_created_miliseconds;
         @SerializedName("date_modified_gmt")
         @Expose
         private String dateModifiedGmt;

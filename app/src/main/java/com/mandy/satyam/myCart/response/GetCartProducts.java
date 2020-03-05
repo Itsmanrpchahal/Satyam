@@ -22,6 +22,18 @@ private String subtotal;
 @SerializedName("tax")
 @Expose
 private String tax;
+
+    public String getIs_address_update() {
+        return is_address_update;
+    }
+
+    public void setIs_address_update(String is_address_update) {
+        this.is_address_update = is_address_update;
+    }
+
+    @SerializedName("is_address_update")
+@Expose
+private String is_address_update;
 @SerializedName("shipping")
 @Expose
 private String shipping;

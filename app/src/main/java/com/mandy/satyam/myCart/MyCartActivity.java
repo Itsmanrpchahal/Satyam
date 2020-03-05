@@ -99,6 +99,7 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
     String string,productID;
     static boolean outofStock;
     Dialog stockdialog;
+    String is_address_update;
     float R_Quantity, R_Price, removeQuantity, removePrice, totalAmount, newP, newQ;
 
 
@@ -191,6 +192,7 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
         intent.putExtra("isFrom", "Cart");
         intent.putExtra("product_id", product_id);
         intent.putExtra("quantity", quantity);
+        intent.putExtra("is_address_update",is_address_update);
         intent.putExtra("product_id_quantity", jsonArray.toString());
         startActivity(intent);
     }
@@ -276,7 +278,7 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                     tax.setText("₹" + response.body().getTax());
                     totalprice.setText("₹" + response.body().getTotal());
                     setStringVal(Constants.CART_COUNT,response.body().getTotal_quantity());
-
+                    is_address_update = response.body().getIs_address_update();
                     //set Price Items
 
 
