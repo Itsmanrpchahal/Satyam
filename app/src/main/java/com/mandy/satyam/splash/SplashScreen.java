@@ -23,6 +23,7 @@ import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.utils.Util;
 
+import dots.animation.textview.TextAndAnimationView;
 import retrofit2.Response;
 
 public class SplashScreen extends BaseClass implements Controller.Keys {
@@ -45,8 +46,6 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkChangeReceiver();
         registerReceiver(receiver, filter);
-
-
     }
 
     public class NetworkChangeReceiver extends BroadcastReceiver {

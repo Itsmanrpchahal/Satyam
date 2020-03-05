@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/defaultmargin"
             android:src="@drawable/applogo" />
-
-
     </LinearLayout>
+
+
 
 </RelativeLayout>

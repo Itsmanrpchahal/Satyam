@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Firstname"
+                android:text="First name"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:enabled="false"
-                android:hint="Firstname"
+                android:hint="First name"
                 android:inputType="text"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Lastname"
+                android:text="Last name"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:enabled="false"
-                android:hint="Lastname"
+                android:hint="Last name"
                 android:inputType="text"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
@@ -88,13 +88,55 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:text="+91"></TextView>
+
+                <EditText
+                    android:id="@+id/edtMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:enabled="false"
+                    android:maxLength="10"
+                    android:hint="Mobile number"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Alternate no."
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <EditText
-                android:id="@+id/edtMobile"
+                android:id="@+id/edtAlternateno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:enabled="false"
-                android:hint="Mobile number"
+                android:hint="Alternate number"
                 android:inputType="number"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
@@ -338,7 +380,21 @@
                         android:textColor="@color/black"
                         android:buttonTint="@color/colorAccent"></RadioButton>
                 </RadioGroup>
+
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtAddressTypetext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="Street/Society/Mohalla"
+                android:inputType="number"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnAedit"
