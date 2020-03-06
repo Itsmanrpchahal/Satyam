@@ -247,6 +247,41 @@ this.data = data;
             @SerializedName("country")
             @Expose
             private String country;
+
+            public String getWard_number() {
+                return ward_number;
+            }
+
+            public void setWard_number(String ward_number) {
+                this.ward_number = ward_number;
+            }
+
+            @SerializedName("ward_number")
+            @Expose
+            private String ward_number;
+            @SerializedName("address_type_text")
+            @Expose
+            private String address_type_text;
+
+            public String getAddress_type_text() {
+                return address_type_text;
+            }
+
+            public void setAddress_type_text(String address_type_text) {
+                this.address_type_text = address_type_text;
+            }
+
+            public String getAlternate_phone() {
+                return alternate_phone;
+            }
+
+            public void setAlternate_phone(String alternate_phone) {
+                this.alternate_phone = alternate_phone;
+            }
+
+            @SerializedName("alternate_phone")
+            @Expose
+            private String alternate_phone;
             @SerializedName("state")
             @Expose
             private String state;

@@ -123,7 +123,6 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
 
         progressdialog = Util.showDialog(this);
         progressdialog.show();
-        controller.setGetCartProducts(getStringVal(Constants.USERTOKEN));
 
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -143,6 +142,12 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
         listeners();
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        controller.setGetCartProducts(getStringVal(Constants.USERTOKEN));
     }
 
     @Override
@@ -208,6 +213,7 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
         progressdialog.dismiss();
         JSONObject obj = null;
         jsonArray = new JSONArray();
+        getCartProductsArrayList.clear();
         if (response.isSuccessful()) {
             if (response.body().getStatus() == 200) {
                 if (response.body().getData().size() == 0) {
@@ -330,8 +336,6 @@ public class MyCartActivity extends BaseClass implements Controller.GetCartProdu
                outofStock = false;
             }
         });
-
-
     }
 
     @Override

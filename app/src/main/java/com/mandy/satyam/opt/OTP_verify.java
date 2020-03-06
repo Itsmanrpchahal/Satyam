@@ -180,6 +180,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
         {
             if (loginCheckResponse.body().getStatus() == 200) {
                 dialog.dismiss();
+                otp = String.valueOf(loginCheckResponse.body().getData().getOtp());
                 Util.showToastMessage(OTP_verify.this, "OTP sent", getResources().getDrawable(R.drawable.ic_present_to_all_black_24dp));
             }
         }else {

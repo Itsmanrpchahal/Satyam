@@ -433,8 +433,8 @@ public class Controller {
     }
 
     public void setUpdateAddress(String input,String amr_slug, String consumer_key, String consumer_screat, String first_name,String lastname, String address_1,
-                                 String address_2, String city, String postcode, String state, String phone,String email,String address_type) {
-        webAPI.getApi().updateAddress(input,amr_slug, consumer_key, consumer_screat, first_name, lastname,address_1, address_2, city, postcode, state, phone,email,address_type).enqueue(new Callback<com.mandy.satyam.addressActivity.response.UpdateAddress>() {
+                                 String address_2, String city, String postcode, String state, String phone,String email,String address_type,String address_type_text,String alternate_phone,String ward_number,String country) {
+        webAPI.getApi().updateAddress(input,amr_slug, consumer_key, consumer_screat, first_name, lastname,address_1, address_2, city, postcode, state, phone,email,address_type,address_type_text,alternate_phone,ward_number,country).enqueue(new Callback<com.mandy.satyam.addressActivity.response.UpdateAddress>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.addressActivity.response.UpdateAddress> call, Response<com.mandy.satyam.addressActivity.response.UpdateAddress> response) {
                 if (response != null) {

@@ -148,7 +148,11 @@ public interface ApiInterface {
             @Query("billing[state]") String state,
             @Query("billing[phone]") String phone,
             @Query("billing[email]") String email,
-            @Query("address_type") String address_type
+            @Query("address_type") String address_type,
+            @Query("address_type_text") String address_type_text,
+            @Query("alternate_phone") String alternate_phone,
+            @Query("ward_number") String ward_number,
+            @Query("billing[country]") String country
     );
 
     @Multipart
