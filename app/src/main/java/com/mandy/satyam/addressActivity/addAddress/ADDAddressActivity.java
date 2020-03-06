@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -108,9 +109,9 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
     ArrayList<String> getZonesID = new ArrayList<>();
     ArrayList<String> getCities = new ArrayList<>();
     ArrayList<GetZones.Datum> getZoneData = new ArrayList<>();
-    String product_id_quantity,ward;
+    String product_id_quantity, ward;
     String state, city, addressType = "home", is_address_update;
-    String[] wards = new String[]{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27"};
+    String[] wards = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +176,6 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         edtLName.setEnabled(false);
         edtMobile.setEnabled(false);
         edtPostcode.setEnabled(false);
-
         edtAlternateno.setEnabled(false);
         edtAddressTypetext.setEnabled(false);
 //        spinnerCity.setEnabled(false);
@@ -255,7 +255,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                 if (intent.getStringExtra("isFrom").equals("BuyBT")) {
                     if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
                             TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
-                            TextUtils.isEmpty(edtNear.getText().toString()) ) {
+                            TextUtils.isEmpty(edtNear.getText().toString())) {
                         edtName.setError("Enter Field");
                         edtName.setFocusable(true);
                         edtLName.setError("Enter Field");
@@ -365,6 +365,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         office_radio.setVisibility(View.VISIBLE);
                         shop_radio.setVisibility(View.VISIBLE);
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtemail.setEnabled(true);
@@ -386,6 +387,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                             TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtAddressTypetext.getText().toString())) {
 
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -410,6 +412,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                     } else if (TextUtils.isEmpty(edtName.getText().toString())) {
                         home_radio.setClickable(true);
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -423,9 +426,9 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         btnAdd.setEnabled(false);
                         edtName.setFocusable(true);
                         edtName.setError("Enter Firstname");
-                    } else  if (TextUtils.isEmpty(edtemail.getText().toString()))
-                    {
+                    } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -439,8 +442,9 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         btnAdd.setEnabled(false);
                         edtemail.setError("Enter email");
                         edtLName.setFocusable(true);
-                    }else if (TextUtils.isEmpty(edtLName.getText().toString())) {
+                    } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -455,8 +459,13 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtLName.setError("Enter Lastname");
                         edtLName.setFocusable(true);
 
-                    } else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
+                    } else if (!TextUtils.isEmpty(edtemail.getText().toString()) && !Patterns.EMAIL_ADDRESS.matcher(edtemail.getText().toString()).matches())
+                    {
+                        edtemail.setError("Invalid Email");
+                        edtemail.setFocusable(true);
+                    }else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -474,6 +483,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
 
                     } else if (TextUtils.isEmpty(edtFlat.getText().toString())) {
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -489,6 +499,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtFlat.setError("Enter Address");
                     } else if (TextUtils.isEmpty(edtNear.getText().toString())) {
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -503,6 +514,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtNear.setError("Enter Landmark");
                     } else if (TextUtils.isEmpty(edtPostcode.getText().toString())) {
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -516,9 +528,9 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         btnAdd.setEnabled(false);
                         edtPostcode.setFocusable(true);
                         edtPostcode.setError("Enter Postcode");
-                    }else if (TextUtils.isEmpty(edtAddressTypetext.getText().toString()))
-                    {
+                    } else if (TextUtils.isEmpty(edtAddressTypetext.getText().toString())) {
                         btnAedit.setText("Save");
+                        btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
                         edtLName.setEnabled(true);
                         edtMobile.setEnabled(true);
@@ -532,19 +544,18 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         btnAdd.setEnabled(false);
                         edtAddressTypetext.setFocusable(true);
                         edtAddressTypetext.setError("Enter address type");
-                    }else if (edtMobile.getText().toString().length()<10)
-                    {
+                    } else if (edtMobile.getText().toString().length() < 10) {
                         edtMobile.setError("Invalid No.");
                         edtMobile.setFocusable(true);
-                    }else if (edtAlternateno.getText().toString().length()<10 && !edtAlternateno.getText().toString().equals(""))
-                    {
+                    } else if (edtAlternateno.getText().toString().length() < 10 && !edtAlternateno.getText().toString().equals("")) {
                         edtAlternateno.setFocusable(true);
                         edtAlternateno.setError("Invalid No.");
-                    }else {
-
+                    } else {
+                        btnAdd.setVisibility(View.VISIBLE);
                         edtName.setEnabled(false);
                         edtLName.setEnabled(false);
                         edtMobile.setEnabled(false);
+                        edtemail.setEnabled(false);
                         edtPostcode.setEnabled(false);
                         edtAlternateno.setEnabled(false);
                         edtAddressTypetext.setEnabled(false);
@@ -565,7 +576,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         controller.setUpdateAddress(getStringVal(Constants.USER_ID), "update_address", getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                 edtName.getText().toString(), edtLName.getText().toString(), edtFlat.getText().toString(), edtNear.getText().toString(), cityTV.getText().toString(),
                                 edtPostcode.getText().toString(), stateTV.getText().toString(), edtMobile.getText().toString(), edtemail.getText().toString(), addressType, edtAddressTypetext.getText().toString()
-                                ,edtAlternateno.getText().toString(),wardTV.getText().toString(),"IN");
+                                , edtAlternateno.getText().toString(), ward, "IN");
 
                     }
                 } else {
@@ -603,11 +614,10 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                 wardTV.setText(response.body().getData().getBilling().getWard_number());
                 edtAlternateno.setText(response.body().getData().getBilling().getAlternate_phone());
                 edtAddressTypetext.setText(response.body().getData().getBilling().getAddress_type_text());
-                if (response.body().getData().getBilling().getWard_number().equals("") || response.body().getData().getBilling().getWard_number()==null || response.body().getData().getBilling().getWard_number().equals("null"))
-                {
+                if (response.body().getData().getBilling().getWard_number().equals("") || response.body().getData().getBilling().getWard_number() == null || response.body().getData().getBilling().getWard_number().equals("null")) {
 
-                }else {
-                    if (Integer.parseInt(response.body().getData().getBilling().getWard_number())>1) {
+                } else {
+                    if (Integer.parseInt(response.body().getData().getBilling().getWard_number()) > 1) {
                         spinnerward.setSelection(Integer.parseInt(response.body().getData().getBilling().getWard_number()) - 1);
                     }
                 }
@@ -641,19 +651,20 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         if (response.isSuccessful()) {
             btnAedit.setText("Change Address");
 
-                if (addressType.equalsIgnoreCase("Home")) {
-                    home_radio.setChecked(true);
-                    office_radio.setVisibility(View.GONE);
-                    shop_radio.setVisibility(View.GONE);
-                } else if (addressType.equalsIgnoreCase("Office")) {
-                    home_radio.setVisibility(View.GONE);
-                    office_radio.setChecked(true);
-                    shop_radio.setVisibility(View.GONE);
-                } else if (addressType.equalsIgnoreCase("Shop")) {
-                    home_radio.setVisibility(View.GONE);
-                    office_radio.setVisibility(View.GONE);
-                    shop_radio.setChecked(true);
-                }
+            wardTV.setText(ward);
+            if (addressType.equalsIgnoreCase("Home")) {
+                home_radio.setChecked(true);
+                office_radio.setVisibility(View.GONE);
+                shop_radio.setVisibility(View.GONE);
+            } else if (addressType.equalsIgnoreCase("Office")) {
+                home_radio.setVisibility(View.GONE);
+                office_radio.setChecked(true);
+                shop_radio.setVisibility(View.GONE);
+            } else if (addressType.equalsIgnoreCase("Shop")) {
+                home_radio.setVisibility(View.GONE);
+                office_radio.setVisibility(View.GONE);
+                shop_radio.setChecked(true);
+            }
 
             Util.showToastMessage(this, "Address Updated", getResources().getDrawable(R.drawable.app_icon));
         }
