@@ -292,9 +292,16 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                     } else {
                         if (Util.isOnline(ADDAddressActivity.this) != false) {
                             dialog.show();
+                            String email;
+                            if (edtemail.getText().toString().equals(""))
+                            {
+                                email = "dummy@gmail.com";
+                            }else {
+                                email = edtemail.getText().toString();
+                            }
                             controller.setPlaceOrder("bacs", "Direct Bank Transfer", "true", edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
-                                    "India", edtemail.getText().toString(),"91 "+ edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
+                                    "India", email,"91 "+ edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", product_id, quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                     getStringVal(Constants.USER_ID), "create_order");
@@ -337,9 +344,16 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                     } else {
                         if (Util.isOnline(ADDAddressActivity.this) != false) {
                             dialog.show();
+                            String email;
+                            if (edtemail.getText().toString().equals(""))
+                            {
+                                email = "dummy@gmail.com";
+                            }else {
+                                email = edtemail.getText().toString();
+                            }
                             controller.setPlaceOrder1_("bacs", "Direct Bank Transfer", true, edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
-                                    "India", edtemail.getText().toString(),"91 "+ edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
+                                    "India",email,"91 "+ edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", product_id_quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                     getStringVal(Constants.USER_ID), "create_order");
@@ -382,7 +396,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtFlat.setEnabled(false);
                         edtNear.setEnabled(false);
 //                        btnAdd.setEnabled(false);
-                    } else if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtemail.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
+                    } else if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
                             TextUtils.isEmpty(edtFlat.getText().toString()) && TextUtils.isEmpty(edtNear.getText().toString()) &&
                             TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtAddressTypetext.getText().toString())) {
 
@@ -426,7 +440,8 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         btnAdd.setEnabled(false);
                         edtName.setFocusable(true);
                         edtName.setError("Enter Firstname");
-                    } else if (TextUtils.isEmpty(edtemail.getText().toString())) {
+                    }
+                    /*else if (TextUtils.isEmpty(edtemail.getText().toString())) {
                         btnAedit.setText("Save");
                         btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
@@ -442,7 +457,8 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         btnAdd.setEnabled(false);
                         edtemail.setError("Enter email");
                         edtLName.setFocusable(true);
-                    } else if (TextUtils.isEmpty(edtLName.getText().toString())) {
+                    }*/
+                    else if (TextUtils.isEmpty(edtLName.getText().toString())) {
                         btnAedit.setText("Save");
                         btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
@@ -459,11 +475,13 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         edtLName.setError("Enter Lastname");
                         edtLName.setFocusable(true);
 
-                    } else if (!TextUtils.isEmpty(edtemail.getText().toString()) && !Patterns.EMAIL_ADDRESS.matcher(edtemail.getText().toString()).matches())
+                    }
+                    /*else if ( !Patterns.EMAIL_ADDRESS.matcher(edtemail.getText().toString()).matches())
                     {
                         edtemail.setError("Invalid Email");
                         edtemail.setFocusable(true);
-                    }else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
+                    }*/
+                    else if (TextUtils.isEmpty(edtMobile.getText().toString())) {
                         btnAedit.setText("Save");
                         btnAdd.setVisibility(View.GONE);
                         edtName.setEnabled(true);
@@ -573,9 +591,16 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         btnAdd.setVisibility(View.VISIBLE);
 
                         dialog.show();
+                        String email ;
+                        if (edtemail.getText().toString().equals(""))
+                        {
+                            email = "dummy@gmail.com";
+                        }else {
+                            email = edtemail.getText().toString();
+                        }
                         controller.setUpdateAddress(getStringVal(Constants.USER_ID), "update_address", getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                 edtName.getText().toString(), edtLName.getText().toString(), edtFlat.getText().toString(), edtNear.getText().toString(), cityTV.getText().toString(),
-                                edtPostcode.getText().toString(), stateTV.getText().toString(),"91 "+ edtMobile.getText().toString(), edtemail.getText().toString(), addressType, edtAddressTypetext.getText().toString()
+                                edtPostcode.getText().toString(), stateTV.getText().toString(),"91 "+ edtMobile.getText().toString(), email, addressType, edtAddressTypetext.getText().toString()
                                 ,"91 "+ edtAlternateno.getText().toString(), ward, "IN");
 
                     }
@@ -669,7 +694,13 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                 }
                 edtFlat.setText(response.body().getData().getBilling().getAddress1());
                 edtNear.setText(response.body().getData().getBilling().getAddress2());
-                edtemail.setText(response.body().getData().getBilling().getEmail());
+                if (response.body().getData().getBilling().getEmail().equals("dummy@gmail.com"))
+                {
+                    edtemail.setText("");
+                }else {
+                    edtemail.setText(response.body().getData().getBilling().getEmail());
+                }
+
             }
         }
     }
@@ -696,6 +727,8 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             }
 
             Util.showToastMessage(this, "Address Updated", getResources().getDrawable(R.drawable.app_icon));
+        }else {
+            Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
         }
     }
 
@@ -711,6 +744,8 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             } else {
                 Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
             }
+        }else {
+            Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
         }
     }
 
@@ -727,6 +762,8 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
             } else {
                 Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
             }
+        }else {
+            Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
         }
     }
 
@@ -773,6 +810,8 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         .simple_spinner_dropdown_item);
                 spinnerCity.setAdapter(spinnerArrayAdapter);
             }
+        }else {
+            Util.showToastMessage(this, getCitiesResponse.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
         }
     }
 
