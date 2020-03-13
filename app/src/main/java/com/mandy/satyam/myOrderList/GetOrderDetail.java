@@ -108,7 +108,21 @@ public class GetOrderDetail extends BaseClass implements Controller.GetOrderDeta
 //                paymentmethod.setText(response.body().getData().getPaymentMethodTitle());
 //                statusbt.setText(response.body().getData().getStatus());
                 username.setText(getStringVal(Constants.FIRSTNAME)+" "+getStringVal(Constants.LASTNAME));
-                phone.setText(response.body().getData().getBilling().getPhone());
+                if (response.body().getData().getBilling().getPhone()!=null)
+                {
+                    if(response.body().getData().getBilling().getPhone().contains(" "))
+                    {
+                        String[] mobile =response.body().getData().getBilling().getPhone().split(" ");
+                        if(mobile.length==1)
+                        {
+                            String mob =mobile[0];
+//                            edtAlternateno.setText(mob);
+                        }else {
+                            String num =mobile[1];
+                            phone.setText(num);
+                        }
+                    }
+                }
                 email.setText(getStringVal(Constants.EMAIL));
                 BName.setText(response.body().getData().getBilling().getFirstName()+" "+response.body().getData().getBilling().getLastName());
                 BCompanyName.setText(response.body().getData().getBilling().getAddress1());

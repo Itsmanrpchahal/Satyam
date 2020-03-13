@@ -85,6 +85,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
             else {
                 phonenumber = intent.getStringExtra("phonenumber");
                 otp = intent.getStringExtra("OTP");
+
                 userNumber.setText("+" + phonenumber);
             }
 

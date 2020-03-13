@@ -294,7 +294,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                             dialog.show();
                             controller.setPlaceOrder("bacs", "Direct Bank Transfer", "true", edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
-                                    "India", edtemail.getText().toString(), edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
+                                    "India", edtemail.getText().toString(),"91 "+ edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", product_id, quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                     getStringVal(Constants.USER_ID), "create_order");
@@ -339,7 +339,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                             dialog.show();
                             controller.setPlaceOrder1_("bacs", "Direct Bank Transfer", true, edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
-                                    "India", edtemail.getText().toString(), edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
+                                    "India", edtemail.getText().toString(),"91 "+ edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India", product_id_quantity, getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                     getStringVal(Constants.USER_ID), "create_order");
@@ -575,8 +575,8 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                         dialog.show();
                         controller.setUpdateAddress(getStringVal(Constants.USER_ID), "update_address", getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET),
                                 edtName.getText().toString(), edtLName.getText().toString(), edtFlat.getText().toString(), edtNear.getText().toString(), cityTV.getText().toString(),
-                                edtPostcode.getText().toString(), stateTV.getText().toString(), edtMobile.getText().toString(), edtemail.getText().toString(), addressType, edtAddressTypetext.getText().toString()
-                                , edtAlternateno.getText().toString(), ward, "IN");
+                                edtPostcode.getText().toString(), stateTV.getText().toString(),"91 "+ edtMobile.getText().toString(), edtemail.getText().toString(), addressType, edtAddressTypetext.getText().toString()
+                                ,"91 "+ edtAlternateno.getText().toString(), ward, "IN");
 
                     }
                 } else {
@@ -607,12 +607,41 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
 
                 edtName.setText(response.body().getData().getBilling().getFirstName());
                 edtLName.setText(response.body().getData().getBilling().getLastName());
-                edtMobile.setText(response.body().getData().getBilling().getPhone());
+                if (response.body().getData().getBilling().getPhone()!=null)
+                {
+                    if(response.body().getData().getBilling().getPhone().contains(" "))
+                    {
+                        String[] mobile =response.body().getData().getBilling().getPhone().split(" ");
+                        if(mobile.length==1)
+                        {
+                            String mob =mobile[0];
+                            edtMobile.setText(mob);
+                        }else {
+                            String num =mobile[1];
+                            edtMobile.setText(num);
+                        }
+                    }
+                }
+
                 edtPostcode.setText(response.body().getData().getBilling().getPostcode());
                 stateTV.setText(response.body().getData().getBilling().getState());
                 cityTV.setText(response.body().getData().getBilling().getCity());
                 wardTV.setText(response.body().getData().getBilling().getWard_number());
-                edtAlternateno.setText(response.body().getData().getBilling().getAlternate_phone());
+                if (response.body().getData().getBilling().getAlternate_phone()!=null)
+                {
+                    if(response.body().getData().getBilling().getAlternate_phone().contains(" "))
+                    {
+                        String[] mobile =response.body().getData().getBilling().getAlternate_phone().split(" ");
+                        if(mobile.length==1)
+                        {
+                            String mob =mobile[0];
+//                            edtAlternateno.setText(mob);
+                        }else {
+                            String num =mobile[1];
+                            edtAlternateno.setText(num);
+                        }
+                    }
+                }
                 edtAddressTypetext.setText(response.body().getData().getBilling().getAddress_type_text());
                 if (response.body().getData().getBilling().getWard_number().equals("") || response.body().getData().getBilling().getWard_number() == null || response.body().getData().getBilling().getWard_number().equals("null")) {
 

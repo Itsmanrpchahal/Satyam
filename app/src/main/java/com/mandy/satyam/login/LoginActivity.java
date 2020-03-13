@@ -130,6 +130,9 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
                             } else {
                                 Util.showToastMessage(LoginActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                             }
+                        }else if (phone.length()<7)
+                        {
+                            Util.showToastMessage(LoginActivity.this,"Invalid Phone Number",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         }else {
                             Util.showToastMessage(LoginActivity.this,"Invalid Phone Number",getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
                         }

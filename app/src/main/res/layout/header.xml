@@ -8,14 +8,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="30dp">
+        android:layout_marginTop="@dimen/margin_dp30"
+        android:layout_marginBottom="30dp"
+        android:layout_centerVertical="true">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerVertical="true"
             android:layout_margin="16dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_satyamplaceholder"
@@ -25,8 +26,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="45dp"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/imageView"
             android:padding="16dp"
             android:text="Hello Guest User!"

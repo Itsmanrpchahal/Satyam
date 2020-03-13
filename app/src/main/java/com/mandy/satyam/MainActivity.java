@@ -145,10 +145,10 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
 
         if (getStringVal(Constants.FIRSTNAME).equals("") || getStringVal(Constants.LASTNAME).equals("")) {
             tv.setText("Hello Guest User");
-            Glide.with(this).load("").placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
+            Glide.with(this).load("").placeholder(R.drawable.account).into(imgvw);
         } else {
             tv.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME));
-            Glide.with(this).load(getStringVal(Constants.AVATAR)).placeholder(R.drawable.ic_satyamplaceholder).into(imgvw);
+            Glide.with(this).load(getStringVal(Constants.AVATAR)).placeholder(R.drawable.account).into(imgvw);
         }
 
 
