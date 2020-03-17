@@ -1,6 +1,8 @@
 package com.mandy.satyam.filterScreen.Adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
         this.product_id_if = product_id_if;
     }
 
-    public FilterProductAdapter(Context context, ArrayList<FilterResponse.Datum.Image> images,ArrayList<FilterResponse.Datum> filterDatumArraylist) {
+    public FilterProductAdapter(Context context, ArrayList<FilterResponse.Datum.Image> images, ArrayList<FilterResponse.Datum> filterDatumArraylist) {
         this.context = context;
         this.filterImages = images;
         this.arrayList = filterDatumArraylist;
@@ -50,13 +52,22 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
     @Override
     public void onBindViewHolder(@NonNull FilterProductAdapter.ViewHolder holder, int position) {
 
-        Glide.with(context).load(filterImages.get(position).getSrc().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
-        String cat = arrayList.get(position).getName().substring(0, 1);
-        String small = arrayList.get(position).getName().toLowerCase().substring(1);
-        holder.txtProductName.setText(cat + small);
-        holder.txtPrice.setText("₹" + arrayList.get(position).getPrice());
-        holder.ratingBar.setRating(Float.parseFloat(arrayList.get(position).getAverageRating()));
-        holder.txtRatingUser.setText("(" + arrayList.get(position).getAverageRating() + ")");
+        try {
+            holder.custom_actaulPrice.setPaintFlags(holder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.custom_actaulPrice.setText("₹" + arrayList.get(position).getRegularPrice());
+            Glide.with(context).load(arrayList.get(position).getImages().get(0).getSrc().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
+            String cat = arrayList.get(position).getName().substring(0, 1);
+            String small = arrayList.get(position).getName().toLowerCase().substring(1);
+            holder.txtProductName.setText(cat + small);
+            holder.txtPrice.setText("₹" + arrayList.get(position).getPrice());
+            holder.ratingBar.setRating(Float.parseFloat(arrayList.get(position).getAverageRating()));
+            holder.txtRatingUser.setText("(" + arrayList.get(position).getAverageRating() + ")");
+        }catch (Exception e){
+
+        }
+
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +83,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView txtProductName, txtRatingUser, txtPrice;
+        TextView txtProductName, txtRatingUser, txtPrice,custom_actaulPrice;
         RatingBar ratingBar;
         AVLoadingIndicatorView avLoadingIndicatorView;
 
@@ -84,6 +95,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
             txtPrice = itemView.findViewById(R.id.custom_productPrice);
             avLoadingIndicatorView = itemView.findViewById(R.id.avi);
             ratingBar = itemView.findViewById(R.id.custom_productRating);
+            custom_actaulPrice = itemView.findViewById(R.id.custom_actaulPrice);
         }
     }
 }

@@ -109,6 +109,70 @@
         android:layout_below="@id/pass_layout"
         ></TextView>
 
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_bt"
+        android:layout_width="@dimen/margin_dp20"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/loginwithnumber_tv"></com.facebook.login.widget.LoginButton>
+
+        <com.google.android.gms.common.SignInButton
+            android:layout_width="@dimen/margin_dp20"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/google_bt"
+            ></com.google.android.gms.common.SignInButton>
+
+
+    <TextView
+        android:id="@+id/ortv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Or"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/margin_dp30"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/loginwithnumber_tv"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/ortv"
+        android:layout_marginLeft="@dimen/margin_dp16"
+        android:layout_marginRight="@dimen/margin_dp16"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/margin_dp30">
+
+        <Button
+            android:id="@+id/login_facebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Facebook"
+            android:paddingLeft="@dimen/margin_dp16"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:onClick="onClick"
+            android:background="@drawable/fbbc"
+            android:textColor="@color/white"
+            android:textAllCaps="false"></Button>
+
+
+        <Button
+            android:id="@+id/login_gmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_dp16"
+            android:drawableLeft="@drawable/ic_google"
+            android:onClick="onClick"
+            android:background="@drawable/googlebc"
+            android:textColor="@color/white"
+            android:text="Google"
+            android:layout_marginTop="@dimen/margin_dp16"
+            android:textAllCaps="false"></Button>
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/password_layout"
         android:layout_width="wrap_content"

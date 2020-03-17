@@ -55,7 +55,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     Dialog dialog;
     ArrayList<SubCategory.Datum> subcate = new ArrayList<>();
     Intent intent;
-    String catID, startPrice, endPrice;
+    String catID, startPrice="0.0", endPrice="0.0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,15 +111,20 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
 
-                if (Util.isOnline(FilterActivity.this) != false) {
-                    Intent intent = new Intent(FilterActivity.this, ProductsActivity.class);
-                    intent.putExtra("isFrom", "FilterScreen");
-                    intent.putExtra("startPrice", startPrice);
-                    intent.putExtra("catID", catID);
-                    intent.putExtra("endPrice", endPrice);
-                    startActivity(intent);
-                } else {
-                    Util.showToastMessage(FilterActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                if (endPrice.equals("0.0"))
+                {
+                    Util.showToastMessage(FilterActivity.this,"Select Price to continue",getResources().getDrawable(R.drawable.app_icon));
+                }else {
+                    if (Util.isOnline(FilterActivity.this) != false) {
+                        Intent intent = new Intent(FilterActivity.this, ProductsActivity.class);
+                        intent.putExtra("isFrom", "FilterScreen");
+                        intent.putExtra("startPrice", startPrice);
+                        intent.putExtra("catID", catID);
+                        intent.putExtra("endPrice", endPrice);
+                        startActivity(intent);
+                    } else {
+                        Util.showToastMessage(FilterActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
+                    }
                 }
             }
         });

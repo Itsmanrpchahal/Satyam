@@ -342,7 +342,15 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 }
                 variation_id = String.valueOf(productDetailResponseResponse.body().getData().getCustomVariations().size());
                 getProductID = productDetailResponseResponse.body().getData().getId().toString();
-                stocktexttv.setText(productDetailResponseResponse.body().getData().getStockStatus());
+                if (productDetailResponseResponse.body().getData().getStockStatus().equals("outofstock"))
+                {
+                    stocktexttv.setText("Out Of Stock");
+                    stocktexttv.setBackgroundColor(getResources().getColor(R.color.red));
+                }else if (productDetailResponseResponse.body().getData().getStockStatus().equals("instock"))
+                {
+                    stocktexttv.setText("In Stock");
+                }
+
                 perviewDescription.setText(Html.fromHtml(productDetailResponseResponse.body().getData().getDescription()));
                 if (perviewDescription.getText().toString().equals("")) {
                     descTv.setVisibility(View.GONE);

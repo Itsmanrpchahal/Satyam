@@ -544,8 +544,8 @@ public class Controller {
         });
     }
 
-    public void setGetFilterProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search,String page) {
-        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search,page).enqueue(new Callback<FilterResponse>() {
+    public void setGetFilterProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search,String page,int perPage) {
+        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search,page,perPage).enqueue(new Callback<FilterResponse>() {
             @Override
             public void onResponse(Call<FilterResponse> call, Response<FilterResponse> response) {
                 if (response.isSuccessful()) {
@@ -562,22 +562,6 @@ public class Controller {
     }
 
 
-    public void setGetSearchProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search,String page) {
-        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search,page).enqueue(new Callback<FilterResponse>() {
-            @Override
-            public void onResponse(Call<FilterResponse> call, Response<FilterResponse> response) {
-                if (response.isSuccessful()) {
-                    Response<FilterResponse> filterResponseResponse = response;
-                    getSearchProducts.onSuccessGetSearchProducts(filterResponseResponse);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<FilterResponse> call, Throwable t) {
-                getFilterProducts.onError(t.getMessage());
-            }
-        });
-    }
     public void setGetOrderDetails(String id,String consumerkey,String consumerSecret,String amr_slug)
     {
         webAPI.getApi().getOrderDetail(id, consumerkey, consumerSecret,amr_slug).enqueue(new Callback<GetOrderDetail>() {

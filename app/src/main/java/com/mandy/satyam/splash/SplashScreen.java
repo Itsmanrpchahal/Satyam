@@ -22,6 +22,7 @@ import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.utils.Util;
+import com.mandy.satyam.welcomeScreens.WelcomeScreens;
 
 import dots.animation.textview.TextAndAnimationView;
 import retrofit2.Response;
@@ -102,20 +103,36 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
                     @Override
                     public void run() {
 
-                        if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
+                        if (getWelComeString( Constants.WELCOMESTATUS).equals("1"))
                         {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("token", "login");
-                            startActivity(intent);
-                            finish();
+                            if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
+                            {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("token", "login");
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra("token", "logout");
+                                startActivity(intent);
+                                finish();
+                            }
                         }else {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.putExtra("token", "logout");
-                            startActivity(intent);
-                            finish();
+                            if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
+                            {
+                                Intent intent = new Intent(getApplicationContext(), WelcomeScreens.class);
+                                intent.putExtra("token", "login");
+                                startActivity(intent);
+                                finish();
+                            }else {
+                                Intent intent = new Intent(getApplicationContext(), WelcomeScreens.class);
+                                intent.putExtra("token", "logout");
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                     }
-                }, 3000);
+                }, 0000);
             }else {
                 Util.showToastMessage(this,keysResponseResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
             }

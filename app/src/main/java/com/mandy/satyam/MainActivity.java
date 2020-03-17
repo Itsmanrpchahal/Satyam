@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -445,7 +446,17 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
                         break;
                     case R.id.customer:
                         drawerNavigation.closeDrawers();
-                        startActivity(new Intent(getApplicationContext(), CustmerActivity.class));
+                        try {
+                            PackageManager pm=getPackageManager();
+                            String toNumber = "919816255767";
+                            Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + "" + toNumber+ "?body=" + "Hello Testing"));
+                            sendIntent.setPackage("com.whatsapp");
+                            startActivity(sendIntent);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this,"it may be you dont have whats app",Toast.LENGTH_LONG).show();
+                        }
                         break;
                 }
                 return false;

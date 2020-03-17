@@ -11,14 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 public class BaseClass extends AppCompatActivity {
     public AlertDialog alertDialog;
     public Context context;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences,welCOmeSharePref;
+    SharedPreferences.Editor editor,editor1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences=getSharedPreferences("UserToken", Context.MODE_PRIVATE);
+        welCOmeSharePref = getSharedPreferences("welcomePref",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        editor1 = welCOmeSharePref.edit();
     }
 
 
@@ -31,7 +33,12 @@ public class BaseClass extends AppCompatActivity {
     public void setStringVal(String key,String val){
         editor.putString(key,val);
         editor.apply();
+    }
 
+    public void setWelComeString(String key,String val)
+    {
+        editor1.putString(key,val);
+        editor1.apply();
     }
 
     public void clearStringVal(String key)
@@ -42,6 +49,11 @@ public class BaseClass extends AppCompatActivity {
 
     public String getStringVal(String key){
         return sharedPreferences.getString(key,"");
+    }
+
+    public String getWelComeString(String key)
+    {
+        return welCOmeSharePref.getString(key,"");
     }
 
 }

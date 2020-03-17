@@ -19,13 +19,14 @@
         android:icon="@drawable/styam"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".allCategory.AllCategory"></activity>
+        <activity android:name=".welcomeScreens.WelcomeScreens"></activity>
+        <activity android:name=".allCategory.AllCategory" />
         <activity android:name=".myOrderList.GetOrderDetail" />
         <activity android:name=".filterScreen.FilterActivity" />
         <activity
             android:name=".opt.OTP_verify"
             android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".login.EmailLogin" />
+        <activity android:name=".login.EmailLogin"  />
         <activity android:name=".signup.CreatePasswordScreen" />
         <activity android:name=".filterScreen.FilterScreen" />
         <activity android:name=".productList.ProductsActivity" />
@@ -113,6 +114,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/picker_provider_paths" />
         </provider>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
     </application>
 
 </manifest>

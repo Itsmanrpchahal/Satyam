@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainActivity_layout"
+    android:fitsSystemWindows="true"
+    android:background="#B9B6B6"
+    tools:context="com.mandy.satyam.welcomeScreens.WelcomeScreens">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/main_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+
+    <LinearLayout
+        android:id="@+id/layoutDots"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/margin_dp16"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:background="@color/colorTrans"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:text="Skip"
+        android:layout_marginTop="@dimen/margin_dp15"
+        android:gravity="center"
+        android:drawablePadding="-30dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+        android:id="@+id/mainActivity_skip"/>
+
+    <RelativeLayout
+        android:id="@+id/buttonBC"
+        android:layout_width="@dimen/margin_dp45"
+        android:layout_height="@dimen/margin_dp45"
+        android:background="@drawable/roundbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/margin_dp60">
+
+        <ImageButton
+            android:id="@+id/welcomeNextRound"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/margin_dp32"
+            android:layout_height="@dimen/margin_dp32"
+            android:background="@drawable/ic_chevron_right_white64dp"
+            android:layout_gravity="center_vertical"
+            ></ImageButton>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

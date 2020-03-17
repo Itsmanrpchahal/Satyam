@@ -2,6 +2,7 @@ package com.mandy.satyam.productList.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         String small = datumArrayList.get(i).getName().toLowerCase().substring(1);
         viewHolder.txtProductName.setText(cat + small);
         viewHolder.txtPrice.setText("₹" + datumArrayList.get(i).getPrice());
+        viewHolder.custom_actaulPrice.setPaintFlags(viewHolder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        viewHolder.custom_actaulPrice.setText("₹" + datumArrayList.get(i).getRegularPrice());
         viewHolder.ratingBar.setRating(Float.parseFloat(datumArrayList.get(i).getAverageRating()));
         viewHolder.txtRatingUser.setText("(" + datumArrayList.get(i).getAverageRating() + ")");
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +83,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView txtProductName, txtRatingUser, txtPrice;
+        TextView txtProductName, txtRatingUser, txtPrice,custom_actaulPrice;
         RatingBar ratingBar;
         AVLoadingIndicatorView avLoadingIndicatorView;
 
@@ -92,6 +95,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             txtPrice = itemView.findViewById(R.id.custom_productPrice);
             avLoadingIndicatorView = itemView.findViewById(R.id.avi);
             ratingBar = itemView.findViewById(R.id.custom_productRating);
+            custom_actaulPrice = itemView.findViewById(R.id.custom_actaulPrice);
         }
     }
 }

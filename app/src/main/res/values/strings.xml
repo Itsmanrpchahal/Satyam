@@ -2,6 +2,8 @@
 
     <string name="app_name">Satyam</string>
     <string name="welcome">Welcome</string>
+    <string name="facebook_app_id">837238269949836</string>
+    <string name="fb_login_protocol_scheme">fb837238269949836</string>
     <string name="privacy_policy"><u>Privacy Policy</u></string>
     <string name="term_amp_condition"><u>Term &amp; Condition</u></string>
     <string name="login"> Login</string>
@@ -28,4 +30,5 @@
     <string name="noInternet">No Internet Connection</string>
     <string name="rs">\u20B9</string>
     <string name="quantity">Enter your product quantity</string>
+    <string name="skdetwo" />
 </resources>

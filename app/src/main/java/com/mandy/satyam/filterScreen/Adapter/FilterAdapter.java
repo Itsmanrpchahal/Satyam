@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder> {
     Context context;
-    int checkedPosition = -1;
+    int checkedPosition = 0;
     ArrayList<SubCategory.Datum> arrayList = new ArrayList<>();
     FilterCateidIF filterCateidIF;
 

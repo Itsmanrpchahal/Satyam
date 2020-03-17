@@ -69,6 +69,14 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/custom_actaulPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/custom_productRating_number"
+            android:layout_toRightOf="@id/custom_productPrice"
+            android:layout_marginLeft="@dimen/margin_dp10"></TextView>
+
+        <TextView
             android:id="@+id/custom_productDilvery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

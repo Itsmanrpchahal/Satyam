@@ -12,9 +12,10 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="120dp"
             android:scaleType="centerCrop"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/new_arrivals"/>
 
         <com.wang.avi.AVLoadingIndicatorView

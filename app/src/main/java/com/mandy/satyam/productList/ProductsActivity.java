@@ -41,6 +41,9 @@ import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.utils.Util;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -130,12 +133,13 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 progressDialog.show();
                 filterBt.setVisibility(View.INVISIBLE);
                 searchBt.setVisibility(View.GONE);
+                subcategoryrecycler.setVisibility(View.GONE);
                 maxPrice = intent.getStringExtra("endPrice");
                 minPrice = intent.getStringExtra("startPrice");
                 catID = intent.getStringExtra("catID");
                 if (Util.isOnline(ProductsActivity.this) != false) {
                     progressDialog.show();
-                    controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount));
+                    controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount),30);
                     controller.setSubCategory(catID);
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -170,7 +174,6 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 close.setVisibility(View.VISIBLE);
                 filterBt.setVisibility(View.GONE);
                 searchBt.setVisibility(View.GONE);
-
             }
         });
 
@@ -281,7 +284,9 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 if (datumArrayList.size()!=0)
                 {
                     seemorebt.setVisibility(View.VISIBLE);
+                    noitemfound.setVisibility(View.GONE);
                 }else {
+                    seemorebt.setVisibility(View.GONE);
                     noitemfound.setVisibility(View.VISIBLE);
                 }
 
@@ -410,6 +415,8 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                         if (responseResponse.body().getData().get(i).getImages().size() >= 1) {
                             FilterResponse.Datum.Image image = responseResponse.body().getData().get(i).getImages().get(0);
                             filterImages.add(image);
+                        }else {
+
                         }
                         filterDatumArraylist.add(responseResponse.body().getData().get(i));
                     }
@@ -437,7 +444,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                             if (Util.isOnline(ProductsActivity.this) != false) {
                                 progressDialog.show();
-                                controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount));
+                                controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount),30);
                             } else {
                                 Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                             }
@@ -450,7 +457,10 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                 if (pageCount == headerList) {
                     seemorebt.setVisibility(View.GONE);
-                } else {
+                }else if (headerList==0)
+                {
+                    seemorebt.setVisibility(View.GONE);
+                }else {
                     seemorebt.setVisibility(View.VISIBLE);
                 }
             } else {
@@ -482,6 +492,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     searchitemrecycler.setVisibility(View.GONE);
                     recyclerProduct.setVisibility(View.GONE);
                     noitemfound.setVisibility(View.VISIBLE);
+                    seemorebt.setVisibility(View.GONE);
                     subcategoryrecycler.setVisibility(View.GONE);
                 }else {
                     if (!searchProduct.getText().toString().equals(""))
