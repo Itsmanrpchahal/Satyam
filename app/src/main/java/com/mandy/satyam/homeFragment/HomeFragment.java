@@ -3,12 +3,17 @@ package com.mandy.satyam.homeFragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +25,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
 import com.mandy.satyam.allCategory.AllCategory;
 import com.mandy.satyam.baseclass.BaseFrag;
@@ -31,6 +37,8 @@ import com.mandy.satyam.homeFragment.adapter.CategoryAdapter;
 import com.mandy.satyam.homeFragment.adapter.SectionAdapter;
 import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
+import com.mandy.satyam.myProfile.ProfileActivity;
+import com.mandy.satyam.myProfile.UpdateProfile;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.productDetails.adapter.ViewPagerProductImageAdapter;
 import com.mandy.satyam.productDetails.response.ProductDetailResponse;
@@ -54,10 +62,7 @@ import retrofit2.Response;
 public class HomeFragment extends BaseFrag implements Controller.HomePage {
 
     View view;
-    ArrayList<GetProductList.Datum> arrayNewArrivals = new ArrayList<>();
-    ArrayList<GetProductList.Datum> arrayDiscounted = new ArrayList<>();
     ArrayList<String> array_image;
-
     ViewPager viewPager;
     FragmentManager manager;
     Context context;
@@ -74,7 +79,7 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
     private static int currentPage;
     private static int NUM_PAGES;
     int page = 0;
-
+Dialog updateDialog;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -101,9 +106,38 @@ public class HomeFragment extends BaseFrag implements Controller.HomePage {
 
         unbinder = ButterKnife.bind(this, view);
 
+        if (getStringVal(Constants.LOGIN_STATUS).equals("login"))
+        {
+            if (getStringVal(Constants.MOBILE).equals(""))
+            {
+               dialog();
+            }
+        }
+
         listeners();
 
         return view;
+    }
+
+    private void dialog() {
+        updateDialog = new Dialog(getContext());
+        Window window = updateDialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        updateDialog.setContentView(R.layout.updateprofile);
+        updateDialog.setCancelable(false);
+        updateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        updateDialog.show();
+
+        Button OK;
+        OK = updateDialog.findViewById(R.id.ok_exit);
+
+        OK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), UpdateProfile.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void listeners() {

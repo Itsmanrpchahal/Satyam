@@ -28,9 +28,38 @@
                 android:layout_height="wrap_content"
                 android:background="@color/recycler"></androidx.recyclerview.widget.RecyclerView>
 
+
+            <RelativeLayout
+                android:id="@+id/bannerlaout"
+                android:layout_width="match_parent"
+                android:layout_below="@id/subcategoryrecycler"
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/bannerrecyler"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp">
+
+                </androidx.viewpager.widget.ViewPager>
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/bannerrecyler"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginBottom="10dp"
+                    app:fillColor="@color/colorAccent"
+                    app:pageColor="#fff"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp" />
+
+            </RelativeLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerProduct"
-                android:layout_below="@id/subcategoryrecycler"
+                android:layout_below="@id/bannerlaout"
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -16,6 +16,34 @@ public class Categoriesroducts {
     @Expose
     private List<Datum> data = null;
 
+    @SerializedName("catgory_banners")
+    @Expose
+    private List<CatgoryBanner> catgoryBanners = null;
+
+    public List<CatgoryBanner> getCatgoryBanners() {
+        return catgoryBanners;
+    }
+
+    public void setCatgoryBanners(List<CatgoryBanner> catgoryBanners) {
+        this.catgoryBanners = catgoryBanners;
+    }
+
+    public class CatgoryBanner {
+
+        @SerializedName("banner")
+        @Expose
+        private String banner;
+
+        public String getBanner() {
+            return banner;
+        }
+
+        public void setBanner(String banner) {
+            this.banner = banner;
+        }
+
+    }
+
     public Integer getStatus() {
         return status;
     }

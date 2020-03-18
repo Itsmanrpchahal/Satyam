@@ -11,6 +11,7 @@ import com.mandy.satyam.addressActivity.response.UpdateAddress;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.homeFragment.response.HomePageResponse;
+import com.mandy.satyam.login.model.SocialLoginResponse;
 import com.mandy.satyam.myCart.response.RemoveCartItem;
 import com.mandy.satyam.myCart.response.UpdateCart;
 import com.mandy.satyam.myOrderList.response.GetAllOrders;
@@ -63,6 +64,7 @@ public class Controller {
     public GetSerchProducts getSerchProducts;
     public GetZone getZone;
     public GetCities getCities;
+    public SocailLogin socailLogin;
 
 
     //logincheck
@@ -71,12 +73,18 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
+    public Controller(UpdateProfile updateProfile1)
+    {
+        updateProfile = updateProfile1;
+        webAPI = new WebAPI();
+    }
 
     //logincheck login
-    public Controller(LoginCheck loginCheck1, Login login1, ClearCart clearCart1) {
+    public Controller(LoginCheck loginCheck1, Login login1, ClearCart clearCart1,SocailLogin socailLogin1) {
         loginCheck = loginCheck1;
         clearCart = clearCart1;
         webAPI = new WebAPI();
+        socailLogin = socailLogin1;
         login = login1;
     }
 
@@ -209,6 +217,26 @@ public class Controller {
         });
     }
 
+
+    public void setSocailLogin(String token,String type,String email,String image,String first_name,String last_name)
+    {
+        webAPI.getApi().socialLogin(token, type, email, image, first_name, last_name).enqueue(new Callback<SocialLoginResponse>() {
+            @Override
+            public void onResponse(Call<SocialLoginResponse> call, Response<SocialLoginResponse> response) {
+                if(response!=null)
+                {
+                    Response<SocialLoginResponse> socailLoginResponse = response;
+                    socailLogin.onSuccessSocailLogin(socailLoginResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SocialLoginResponse> call, Throwable t) {
+                    socailLogin.onError(t.getMessage());
+            }
+        });
+    }
+
     public void setHomePage(String token) {
         webAPI.getApi().homepage(token).enqueue(new Callback<HomePageResponse>() {
             @Override
@@ -243,8 +271,8 @@ public class Controller {
         });
     }
 
-    public void setRelatedPrducts(String cosumerKey, String consumerSecret, String category, String page,int per_page) {
-        webAPI.getApi().homeResponse(cosumerKey, consumerSecret, category, page,per_page).enqueue(new Callback<Categoriesroducts>() {
+    public void setRelatedPrducts(String cosumerKey, String consumerSecret, String category, String page,int per_page,String amr_slug) {
+        webAPI.getApi().homeResponse(cosumerKey, consumerSecret, category, page,per_page,amr_slug).enqueue(new Callback<Categoriesroducts>() {
             @Override
             public void onResponse(Call<Categoriesroducts> call, Response<Categoriesroducts> response) {
                 if (response != null) {
@@ -808,6 +836,11 @@ public class Controller {
 
     public interface GetCities{
         void onSuccessCities(Response<com.mandy.satyam.addressActivity.response.GetCities> getCitiesResponse);
+        void onError(String error);
+    }
+
+    public interface SocailLogin{
+        void onSuccessSocailLogin(Response<SocialLoginResponse> socialLoginResponse);
         void onError(String error);
     }
 }

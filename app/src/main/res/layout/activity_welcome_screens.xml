@@ -40,7 +40,6 @@
         android:drawablePadding="-30dp"
         android:textColor="@color/white"
         android:textSize="12sp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
         android:id="@+id/mainActivity_skip"/>
 
     <RelativeLayout

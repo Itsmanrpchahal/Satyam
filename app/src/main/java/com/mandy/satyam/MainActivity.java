@@ -135,6 +135,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         Fabric.with(MainActivity.this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         dialog = Util.showDialog(this);
         dialog.dismiss();
         controller = new Controller((Controller.Keys) this, (Controller.HomePage) this, (Controller.GetSerchProducts) this);
@@ -143,6 +144,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         View hView = DrawerNavigation.inflateHeaderView(R.layout.header);
         imgvw = (ImageView) hView.findViewById(R.id.imageView);
         tv = (TextView) hView.findViewById(R.id.textView);
+
 
         if (getStringVal(Constants.FIRSTNAME).equals("") || getStringVal(Constants.LASTNAME).equals("")) {
             tv.setText("Hello Guest User");
@@ -447,15 +449,14 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
                     case R.id.customer:
                         drawerNavigation.closeDrawers();
                         try {
-                            PackageManager pm=getPackageManager();
+                            PackageManager pm = getPackageManager();
                             String toNumber = "919816255767";
-                            Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + "" + toNumber+ "?body=" + "Hello Testing"));
+                            Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + "" + toNumber + "?body=" + "Hello Testing"));
                             sendIntent.setPackage("com.whatsapp");
                             startActivity(sendIntent);
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this,"it may be you dont have whats app",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "it may be you dont have whats app", Toast.LENGTH_LONG).show();
                         }
                         break;
                 }

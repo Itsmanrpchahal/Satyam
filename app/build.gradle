@@ -5,7 +5,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.mandy.innfedia"
+        applicationId "com.mandy.satyam"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1

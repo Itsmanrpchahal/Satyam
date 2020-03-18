@@ -23,6 +23,7 @@ import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.login.model.SocialLoginResponse;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.utils.Util;
@@ -36,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Response;
 
-public class OTP_verify extends BaseClass implements Controller.LoginCheck, Controller.Login ,Controller.ClearCart{
+public class OTP_verify extends BaseClass implements Controller.LoginCheck, Controller.Login ,Controller.ClearCart,Controller.SocailLogin{
 
 
     @BindView(R.id.loginclose)
@@ -90,7 +91,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
             }
 
         }
-        controller = new Controller((Controller.LoginCheck) this, (Controller.Login) OTP_verify.this,(Controller.ClearCart)this);
+        controller = new Controller((Controller.LoginCheck) this, (Controller.Login) OTP_verify.this,(Controller.ClearCart)this,(Controller.SocailLogin)this);
         lisenters();
     }
 
@@ -207,7 +208,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
                 controller.setClearCart();
             }
         }else {
-            Util.showToastMessage(this,loginResponse.message(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+            Util.showToastMessage(this,loginResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
     }
 
@@ -234,6 +235,11 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
 
 //            controller.setLogin(phonenumber, "phone", otp);
         }
+    }
+
+    @Override
+    public void onSuccessSocailLogin(Response<SocialLoginResponse> socialLoginResponse) {
+
     }
 
     @Override

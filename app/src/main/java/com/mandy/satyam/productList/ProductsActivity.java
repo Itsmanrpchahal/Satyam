@@ -3,6 +3,7 @@ package com.mandy.satyam.productList;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.mandy.satyam.R;
 import com.mandy.satyam.SearchItemAdapter;
@@ -30,16 +34,19 @@ import com.mandy.satyam.filterScreen.Adapter.FilterAdapter;
 import com.mandy.satyam.filterScreen.Adapter.FilterProductAdapter;
 import com.mandy.satyam.filterScreen.FilterActivity;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
+import com.mandy.satyam.homeFragment.adapter.ViewPagerAdapter;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.mainIF.getProductName;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.ProductDetailsActivity;
+import com.mandy.satyam.productList.adapter.BannerAdapter;
 import com.mandy.satyam.productList.adapter.ProductListAdapter;
 import com.mandy.satyam.productList.adapter.SubCategoryAdapter;
 import com.mandy.satyam.productList.interface_.GetSubCate_IF;
 import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 import com.mandy.satyam.productList.response.SubCategory;
 import com.mandy.satyam.utils.Util;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,7 +82,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     int headerList;
     ArrayList<Categoriesroducts.Datum.Image> images = new ArrayList<>();
     ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
-    ArrayList<FilterResponse.Datum.Image> SearchfilterImages = new ArrayList<>();
+    ArrayList<Categoriesroducts.CatgoryBanner> catgoryBanners = new ArrayList<>();
     ArrayList<Categoriesroducts.Datum> datumArrayList = new ArrayList<Categoriesroducts.Datum>();
     ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
     ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
@@ -95,12 +102,18 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     RecyclerView searchitemrecycler;
     @BindView(R.id.noitemfound)
     TextView noitemfound;
+    ViewPager viewPager;
+    RelativeLayout bannerlaout;
+    private static int currentPage;
+    private static int NUM_PAGES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
         ButterKnife.bind(this);
+        viewPager = (ViewPager) findViewById(R.id.bannerrecyler);
+        bannerlaout = findViewById(R.id.bannerlaout);
         progressDialog = Util.showDialog(ProductsActivity.this);
         controller = new Controller((Controller.RelatedPrducts) ProductsActivity.this, (Controller.ProductSubCategories) this, (Controller.GetFilterProducts) this,(Controller.GetSerchProducts)this);
 
@@ -120,7 +133,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 textView.setText(cat + small);
                 if (Util.isOnline(ProductsActivity.this) != false) {
                     progressDialog.show();
-                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30);
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30,"get_products");
                     controller.setSubCategory(catID);
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -281,6 +294,17 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     datumArrayList.add(homePageResponseResponse.body().getData().get(i));
                 }
 
+                for (int i=0;i<homePageResponseResponse.body().getCatgoryBanners().size();i++)
+                {
+                    catgoryBanners.add(homePageResponseResponse.body().getCatgoryBanners().get(i));
+                    setBanners(catgoryBanners);
+                }
+                if (catgoryBanners.size()==0)
+                {
+                    bannerlaout.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.GONE);
+                }
+
                 if (datumArrayList.size()!=0)
                 {
                     seemorebt.setVisibility(View.VISIBLE);
@@ -321,7 +345,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                     if (Util.isOnline(ProductsActivity.this) != false) {
                         progressDialog.show();
-                        controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30);
+                        controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30,"get_products");
                     } else {
                         Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
@@ -339,6 +363,48 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
         }
 
 
+    }
+
+    private void setBanners(ArrayList<Categoriesroducts.CatgoryBanner> catgoryBanners) {
+        final PagerAdapter adapter;
+
+        CirclePageIndicator tabLayout;
+        tabLayout = findViewById(R.id.indicator);
+
+        adapter = new BannerAdapter( catgoryBanners,ProductsActivity.this);
+        viewPager.setAdapter(adapter);
+        tabLayout.setViewPager(viewPager);
+        NUM_PAGES =catgoryBanners.size();
+
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        // Pager listener over indicator
+        tabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
     }
 
 
@@ -369,7 +435,8 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     progressDialog.show();
                     images.clear();
                     datumArrayList.clear();
-                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), id, String.valueOf(pageCount),30);
+                    catgoryBanners.clear();
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), id, String.valueOf(pageCount),30,"get_products");
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }

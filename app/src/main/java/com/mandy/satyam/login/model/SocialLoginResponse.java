@@ -3,41 +3,41 @@ package com.mandy.satyam.login.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Login {
+public class SocialLoginResponse {
 
-    @SerializedName("status")
-    @Expose
-    private Integer status;
-    @SerializedName("message")
-    @Expose
-    private String message;
-    @SerializedName("data")
-    @Expose
-    private Data data;
+@SerializedName("status")
+@Expose
+private Integer status;
+@SerializedName("message")
+@Expose
+private String message;
+@SerializedName("data")
+@Expose
+private Data data;
 
-    public Integer getStatus() {
-        return status;
-    }
+public Integer getStatus() {
+return status;
+}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+public void setStatus(Integer status) {
+this.status = status;
+}
 
-    public String getMessage() {
-        return message;
-    }
+public String getMessage() {
+return message;
+}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+public void setMessage(String message) {
+this.message = message;
+}
 
-    public Data getData() {
-        return data;
-    }
+public Data getData() {
+return data;
+}
 
-    public void setData(Data data) {
-        this.data = data;
-    }
+public void setData(Data data) {
+this.data = data;
+}
 
     public class Data {
 
@@ -50,24 +50,15 @@ public class Login {
         @SerializedName("firstname")
         @Expose
         private String firstname;
+        @SerializedName("phone")
+        @Expose
+        private Object phone;
         @SerializedName("lastname")
         @Expose
         private String lastname;
         @SerializedName("avatar")
         @Expose
-        private String avatar;
-
-        public String getPhone() {
-            return phone;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
-
-        @SerializedName("phone")
-        @Expose
-        private String phone;
+        private Object avatar;
         @SerializedName("token")
         @Expose
         private String token;
@@ -102,6 +93,14 @@ public class Login {
             this.firstname = firstname;
         }
 
+        public Object getPhone() {
+            return phone;
+        }
+
+        public void setPhone(Object phone) {
+            this.phone = phone;
+        }
+
         public String getLastname() {
             return lastname;
         }
@@ -110,11 +109,11 @@ public class Login {
             this.lastname = lastname;
         }
 
-        public String getAvatar() {
+        public Object getAvatar() {
             return avatar;
         }
 
-        public void setAvatar(String avatar) {
+        public void setAvatar(Object avatar) {
             this.avatar = avatar;
         }
 

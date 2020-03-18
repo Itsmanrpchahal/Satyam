@@ -32,9 +32,9 @@ public class SliderAdapter extends PagerAdapter {
 
 
     public int[] logo_ = {
-            R.drawable.app_icon,
-            R.drawable.app_icon,
-            R.drawable.app_icon
+            R.drawable.screen1,
+            R.drawable.second2,
+            R.drawable.screen3
     };
 
     public int[] slide_descs = {
@@ -77,7 +77,7 @@ public class SliderAdapter extends PagerAdapter {
         slide_image.setImageResource(slide_images[position]);
         textView.setText(slide_descs[position]);
         textView1.setText(slide_text[position]);
-//        logo.setImageResource(logo_[position]);
+        logo.setImageResource(logo_[position]);
 
 
         container.addView(view);

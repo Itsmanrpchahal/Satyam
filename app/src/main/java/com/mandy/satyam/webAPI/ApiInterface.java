@@ -11,6 +11,7 @@ import com.mandy.satyam.homeFragment.response.HomePageResponse;
 import com.mandy.satyam.login.model.ClearCart;
 import com.mandy.satyam.login.model.Login;
 import com.mandy.satyam.login.model.LoginCheck;
+import com.mandy.satyam.login.model.SocialLoginResponse;
 import com.mandy.satyam.myCart.response.GetCartProducts;
 import com.mandy.satyam.myCart.response.RemoveCartItem;
 import com.mandy.satyam.myCart.response.UpdateCart;
@@ -55,6 +56,17 @@ public interface ApiInterface {
             @Query("password") String password
     );
 
+
+    @POST("wp-json/os/v1/social_login")
+    Call<SocialLoginResponse> socialLogin(
+            @Query("token") String token,
+            @Query("type") String type,
+            @Query("email") String email,
+            @Query("image") String image,
+            @Query("first_name") String first_name,
+            @Query("last_name") String last_name
+    );
+
     @POST("wp-json/os/v1/homepage")
     Call<HomePageResponse> homepage(
         @Query("token") String token
@@ -72,7 +84,8 @@ public interface ApiInterface {
             @Query("consumer_secret") String consumer_secret,
             @Query("category") String category,
             @Query("page") String page,
-            @Query("per_page") int per_page
+            @Query("per_page") int per_page,
+            @Query("amr_slug") String amr_slug
     );
 
     @GET("wp-json/wc/v3/products/{input}")
