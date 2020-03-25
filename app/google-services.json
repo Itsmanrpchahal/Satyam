@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "794694107400",
+    "firebase_url": "https://satyam-1584504915275.firebaseio.com",
+    "project_id": "satyam-1584504915275",
+    "storage_bucket": "satyam-1584504915275.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794694107400:android:0dc01632f858fee2daecbd",
+        "android_client_info": {
+          "package_name": "com.mandy.satyam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794694107400-94so10m9tbvrjis8q0pmgdk662lgn3si.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mandy.satyam",
+            "certificate_hash": "f0c45ab08921ab910c45848534546770b55e5658"
+          }
+        },
+        {
+          "client_id": "794694107400-5uagilsc6ijm65b9ure9tchrg39pdi1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbhvSwuhMp6KUtop-rkcPQMFfiFq8Yr_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794694107400-5uagilsc6ijm65b9ure9tchrg39pdi1p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

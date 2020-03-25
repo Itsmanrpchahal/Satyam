@@ -14,14 +14,32 @@
         android:layout_marginLeft="@dimen/margin_dp10"
         android:src="@drawable/ic_satyamplaceholder"></ImageView>
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_dp10"
-        android:text=""
-        android:layout_marginLeft="@dimen/margin_dp10"
-        android:textColor="@color/black"
-        android:id="@+id/searchitemname">
-    </TextView>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_dp10"
+            android:text=""
+            android:layout_marginLeft="@dimen/margin_dp10"
+            android:textColor="@color/black"
+            android:id="@+id/searchitemname">
+        </TextView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_dp10"
+            android:text=""
+            android:layout_marginLeft="@dimen/margin_dp10"
+            android:textColor="@color/com_facebook_blue"
+            android:id="@+id/searchitemcategory">
+        </TextView>
+
+    </LinearLayout>
 
 </LinearLayout>

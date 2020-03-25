@@ -67,6 +67,7 @@ public class LoginActivity extends BaseClass implements Controller.LoginCheck {
         ButterKnife.bind(this);
         controller = new Controller(this);
         dialog = Util.showDialog(LoginActivity.this);
+
         intent = getIntent();
         if (intent!=null)
         {

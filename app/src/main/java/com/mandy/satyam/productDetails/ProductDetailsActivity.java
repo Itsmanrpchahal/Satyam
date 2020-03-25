@@ -4,16 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,18 +29,22 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
-import com.google.android.material.tabs.TabLayout;
-import com.mandy.satyam.MainActivity;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.mandy.satyam.R;
 import com.mandy.satyam.addressActivity.addAddress.ADDAddressActivity;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
-import com.mandy.satyam.commentActivity.CommentActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.homeFragment.response.Categoriesroducts;
 import com.mandy.satyam.login.LoginActivity;
 import com.mandy.satyam.myCart.MyCartActivity;
-import com.mandy.satyam.productDetails.IF.SendItemsToActivityIF;
 import com.mandy.satyam.productDetails.IF.product_id_IF;
 import com.mandy.satyam.productDetails.adapter.ColorAdapter;
 import com.mandy.satyam.productDetails.adapter.SeeRelatedItemAdapter;
@@ -70,10 +73,10 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     Toolbar toolbar;
     @BindView(R.id.textView)
     TextView textView;
+    @BindView(R.id.sharebt)
+    ImageButton sharebt;
     @BindView(R.id.txtproductName)
     TextView txtproductName;
-    @BindView(R.id.txtSubProductName)
-    TextView txtSubProductName;
     @BindView(R.id.ratingbar)
     RatingBar ratingbar;
     @BindView(R.id.txtratingNumber)
@@ -109,6 +112,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     ArrayList<ProductDetailResponse.Data.Image> array_image = new ArrayList<>();
     @BindView(R.id.filter_bt)
     ImageButton filterBt;
+    @BindView(R.id.whatsappshare)
+    ImageButton whatsappshare;
     @BindView(R.id.nestedScoll)
     NestedScrollView nestedScoll;
     @BindView(R.id.search_bt)
@@ -142,7 +147,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public static ArrayList<String> TypeVariations = new ArrayList<>();
     public static String getPosItems;
     VariationsAdapter variationsAdapter;
-    String variation_id,is_address_update;
+    String variation_id, is_address_update;
     TextView cart_count;
     RelativeLayout cartlayout;
     int count;
@@ -150,6 +155,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     private static int currentPage;
     private static int NUM_PAGES;
     PagerAdapter adapter;
+    ImageView productimage;
 
 
     @Override
@@ -158,11 +164,14 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         setContentView(R.layout.activity_product_details);
         ButterKnife.bind(this);
         cartlayout = findViewById(R.id.cartlayout);
+        productimage = findViewById(R.id.productimage1);
         cartlayout.setVisibility(View.VISIBLE);
         cart_count = findViewById(R.id.cart_count);
         no_image = findViewById(R.id.no_image);
         cart_count.setText(getStringVal(Constants.CART_COUNT));
-        count = Integer.parseInt(cart_count.getText().toString());
+        if (!cart_count.getText().toString().equals(null)) {
+            count = Integer.parseInt(cart_count.getText().toString());
+        }
         controller = new Controller((Controller.ProductDetail) this, (Controller.RelatedPrducts) this, (Controller.AddToCart) this, (Controller.GetVariations) this);
         progressDialog = Util.showDialog(this);
         intent = getIntent();
@@ -172,6 +181,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
         filterBt.setVisibility(View.INVISIBLE);
         searchBt.setVisibility(View.INVISIBLE);
+        sharebt.setVisibility(View.VISIBLE);
         setSupportActionBar(toolbar);
         textView.setText("Product Details");
 
@@ -204,11 +214,122 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 startActivity(intent);
             }
         });
+
+        sharebt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deeplinking();
+            }
+        });
+
+
+        whatsappshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink().
+                        setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
+                        .setDomainUriPrefix("satyam.page.link")
+                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                        .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+                        .buildDynamicLink();
+
+                Uri dynamicLinkUri = dynamicLink.getUri();
+                Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink().setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+                        .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
+                        .buildShortDynamicLink()
+                        .addOnCompleteListener(ProductDetailsActivity.this, new OnCompleteListener<ShortDynamicLink>() {
+                            @Override
+                            public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+
+                                if (array_image.size() > 0) {
+                                    Uri uri = task.getResult().getShortLink();
+                                    Util.shareContent1(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+
+
+//                                    Intent intent = new Intent(Intent.ACTION_SEND);
+//                                    intent.setType("text/plain");
+//                                    intent.putExtra(Intent.EXTRA_TEXT,"Hi! Check out this Product"+"\n"+"\n"+uri.toString());
+//                                    startActivity(Intent.createChooser(intent,"Share Product"));
+                                } else {
+                                    Uri uri = task.getResult().getShortLink();
+                                    Intent intent = new Intent(Intent.ACTION_SEND);
+                                    intent.setType("text/plain");
+                                    intent.setPackage("com.whatsapp");
+                                    intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+                                    startActivity(Intent.createChooser(intent, "Share Product"));
+                                }
+
+                            }
+                        });
+            }
+        });
+    }
+
+    public void deeplinking()
+    {
+        DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink().
+                setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
+                .setDomainUriPrefix("satyam.page.link")
+                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+                .buildDynamicLink();
+
+        Uri dynamicLinkUri = dynamicLink.getUri();
+        Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink().setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+                .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
+                .buildShortDynamicLink()
+                .addOnCompleteListener(ProductDetailsActivity.this, new OnCompleteListener<ShortDynamicLink>() {
+                    @Override
+                    public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+
+                        if (array_image.size() > 0) {
+                            Uri uri = task.getResult().getShortLink();
+                            Util.shareContent(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+
+
+//                                    Intent intent = new Intent(Intent.ACTION_SEND);
+//                                    intent.setType("text/plain");
+//                                    intent.putExtra(Intent.EXTRA_TEXT,"Hi! Check out this Product"+"\n"+"\n"+uri.toString());
+//                                    startActivity(Intent.createChooser(intent,"Share Product"));
+                        } else {
+                            Uri uri = task.getResult().getShortLink();
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            intent.setType("text/plain");
+                            intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+                            startActivity(Intent.createChooser(intent, "Share Product"));
+                        }
+
+                    }
+                });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+            @Override
+            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                Uri uri = null;
+                if (pendingDynamicLinkData != null) {
+                    uri = pendingDynamicLinkData.getLink();
+                    String path = uri.getPath();
+                    Log.d("deeplink", path);
+                    String[] product_id = path.split("/");
+                    if (product_id.length == 1) {
+                        productID = product_id[1];
+                        progressDialog.show();
+                        controller.setProductDetail(productID, getStringVal(Constants.USERTOKEN), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
+                    } else {
+                        productID = product_id[2];
+                        progressDialog.show();
+                        controller.setProductDetail(productID, getStringVal(Constants.USERTOKEN), getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
+                    }
+                    Log.d("deeplink1", productID);
+                }
+            }
+        });
+
         if (intent != null) {
             productID = intent.getStringExtra("productID");
             if (Util.isOnline(this) != false) {
@@ -288,7 +409,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     Intent intent = new Intent(ProductDetailsActivity.this, LoginActivity.class);
                     intent.putExtra("productID", productID);
                     intent.putExtra("isFrom", "ProductDetail");
-                    intent.putExtra("is_address_update",is_address_update);
+                    intent.putExtra("is_address_update", is_address_update);
                     startActivity(intent);
                     finish();
                 } else {
@@ -296,7 +417,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     intent.putExtra("productID", productID);
                     intent.putExtra("quantity", "1");
                     intent.putExtra("isFrom", "BuyBT");
-                    intent.putExtra("is_address_update",is_address_update);
+                    intent.putExtra("is_address_update", is_address_update);
                     startActivity(intent);
                 }
                 break;
@@ -314,6 +435,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     public void onSuccessProductDetail(Response<ProductDetailResponse> productDetailResponseResponse) {
         progressDialog.dismiss();
         array_image.clear();
+        customVariations.clear();
         if (productDetailResponseResponse.isSuccessful()) {
             if (productDetailResponseResponse.body().getStatus() == 200) {
                 String cat = productDetailResponseResponse.body().getData().getName().substring(0, 1);
@@ -342,12 +464,10 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 }
                 variation_id = String.valueOf(productDetailResponseResponse.body().getData().getCustomVariations().size());
                 getProductID = productDetailResponseResponse.body().getData().getId().toString();
-                if (productDetailResponseResponse.body().getData().getStockStatus().equals("outofstock"))
-                {
+                if (productDetailResponseResponse.body().getData().getStockStatus().equals("outofstock")) {
                     stocktexttv.setText("Out Of Stock");
                     stocktexttv.setBackgroundColor(getResources().getColor(R.color.red));
-                }else if (productDetailResponseResponse.body().getData().getStockStatus().equals("instock"))
-                {
+                } else if (productDetailResponseResponse.body().getData().getStockStatus().equals("instock")) {
                     stocktexttv.setText("In Stock");
                 }
 
@@ -363,10 +483,10 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     no_image.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
                 }
+
                 for (int i = 0; i < productDetailResponseResponse.body().getData().getImages().size(); i++) {
                     ProductDetailResponse.Data.Image image = productDetailResponseResponse.body().getData().getImages().get(i);
                     array_image.add(image);
-
                 }
                 setOfferImage(array_image);
 
@@ -382,7 +502,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 }
 
 
-                if (productDetailResponseResponse.body().getData().getAttributes().size() == 0) {
+                if (productDetailResponseResponse.body().getData().getAttributes().size() == 0 || productDetailResponseResponse.body().getData().getRelatedIds().size()>0) {
                     colorlayout.setVisibility(View.GONE);
                     recyclerColor.setVisibility(View.GONE);
 
@@ -400,7 +520,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                             finish();
                         }
                     });
-
                 }
 
                 if (productDetailResponseResponse.body().getData().getType().equals("variable")) {
@@ -411,14 +530,12 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     for (int i = 0; i < productDetailResponseResponse.body().getData().getCustomVariations().size(); i++) {
 
                         customVariations.add(productDetailResponseResponse.body().getData().getCustomVariations().get(i));
-                        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
-                        linearLayout.setOrientation(LinearLayout.VERTICAL);
-                        variationname.setHasFixedSize(true);
-                        variationname.setLayoutManager(linearLayout);
-                        variationsAdapter = new VariationsAdapter(this, customVariations);
-                        variationname.setAdapter(variationsAdapter);
-
                     }
+                    LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+                    linearLayout.setOrientation(LinearLayout.VERTICAL);
+                    variationname.setLayoutManager(linearLayout);
+                    variationsAdapter = new VariationsAdapter(this, customVariations);
+                    variationname.setAdapter(variationsAdapter);
 
                 } else {
 
@@ -451,6 +568,12 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
         NUM_PAGES = banner.size();
+        if (banner.size() >= 1) {
+            Glide.with(this).load(banner.get(0).getSrc()).placeholder(R.drawable.ic_satyamplaceholder).into(productimage);
+        } else {
+            Glide.with(this).load(R.drawable.ic_satyamplaceholder).placeholder(R.drawable.ic_satyamplaceholder).into(productimage);
+        }
+
         final float density = getResources().getDisplayMetrics().density;
         //Set circle indicator radius
         indicator.setRadius(5 * density);

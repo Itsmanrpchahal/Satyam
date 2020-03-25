@@ -17,9 +17,9 @@ public class SliderAdapter extends PagerAdapter {
 
 
     public int[] slide_images = {
-            R.drawable.bestseller,
-            R.drawable.capsicum_s,
-            R.drawable.carote_v
+            R.color.white,
+            R.color.white,
+            R.color.white
     };
     Context context;
     LayoutInflater layoutInflater;
@@ -32,23 +32,23 @@ public class SliderAdapter extends PagerAdapter {
 
 
     public int[] logo_ = {
-            R.drawable.screen1,
-            R.drawable.second2,
-            R.drawable.screen3
+            R.drawable.s1,
+            R.drawable.s2,
+            R.drawable.s3
     };
 
     public int[] slide_descs = {
-            R.string.skdetwo,
-            R.string.skdetwo,
-            R.string.skdetwo
+            R.string.slide1,
+            R.string.slide2,
+            R.string.slide3
 
     };
 
     public int[] slide_text = {
 
-            R.string.skdetwo,
-            R.string.skdetwo,
-            R.string.skdetwo
+            R.string.slide11,
+            R.string.slide22,
+            R.string.slide33
     };
 
 

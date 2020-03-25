@@ -1,134 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:contentInsetLeft="0dp"
+    android:background="@color/toolbar"
     android:contentInsetStart="0dp"
-    app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp"
-    android:contentInsetRight="0dp"
+    android:contentInsetLeft="0dp"
     android:contentInsetEnd="0dp"
-    app:contentInsetRight="0dp"
+    android:contentInsetRight="0dp"
     app:contentInsetEnd="0dp"
-    android:background="@color/toolbar">
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetStart="0dp">
 
-
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <AutoCompleteTextView
-        android:id="@+id/searchProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/back"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:visibility="gone"
-        android:focusable="true"
-        android:textColor="@color/white"
-        android:imeOptions="actionDone"
-        android:layout_toLeftOf="@id/close"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/margin_dp10"
-        android:backgroundTint="@color/white"
-        android:layout_marginRight="@dimen/margin_dp10"></AutoCompleteTextView>
-
-
-    <ImageButton
-        android:id="@+id/close"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/ic_close"
-        android:layout_marginLeft="@dimen/defaultmargin"
-        android:background="#00FFFFFF"></ImageButton>
-
-
-    <ImageButton
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_back"
-        android:layout_marginLeft="@dimen/defaultmargin"
-        android:background="#00FFFFFF"></ImageButton>
-
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:singleLine="true"
-        android:layout_centerVertical="true"
-        android:text="Title"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-
-    <ImageButton
-        android:id="@+id/search_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_searching"
-        android:background="#00FFFFFF"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/filter_bt"
-        android:layout_marginRight="16sp"></ImageButton>
-
-    <ImageButton
-        android:id="@+id/filter_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/ic_filter"
-        android:background="#00FFFFFF"></ImageButton>
 
     <RelativeLayout
-        android:id="@+id/cartlayout"
-        android:visibility="gone"
-        android:layout_width="@dimen/margin_dp30"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_dp20"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/searchProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_dp10"
+            android:layout_marginRight="@dimen/margin_dp10"
+            android:layout_toLeftOf="@id/close"
+            android:layout_toRightOf="@id/back"
+            android:backgroundTint="@color/white"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:visibility="gone"></AutoCompleteTextView>
+
 
         <ImageButton
-            android:id="@+id/product_cart"
+            android:id="@+id/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:layout_marginRight="16dp"
             android:background="#00FFFFFF"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_cart"
-            android:visibility="visible"></ImageButton>
+            android:src="@drawable/ic_close"
+            android:visibility="gone"></ImageButton>
+
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/defaultmargin"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_back"></ImageButton>
+
 
         <TextView
-            android:id="@+id/cart_count"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/circle_backgroundwhite"
-            android:text=""
-            android:textSize="8sp"
-            android:textAlignment="center"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:gravity="center"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="17dp"
-            android:textColor="@color/white"></TextView>
-    </RelativeLayout>
+            android:singleLine="true"
+            android:text="Title"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/search_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16sp"
+            android:layout_toLeftOf="@id/filter_bt"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_searching"></ImageButton>
+
+        <ImageButton
+            android:id="@+id/filter_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_filter"></ImageButton>
+
+        <RelativeLayout
+            android:id="@+id/cartlayout"
+            android:layout_width="@dimen/margin_dp30"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_dp20"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/product_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="#00FFFFFF"
+                android:src="@drawable/ic_cart"
+                android:visibility="visible"></ImageButton>
+
+            <TextView
+                android:id="@+id/cart_count"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="17dp"
+                android:background="@drawable/circle_backgroundwhite"
+                android:gravity="center"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="8sp"></TextView>
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 
 </androidx.appcompat.widget.Toolbar>

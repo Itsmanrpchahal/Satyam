@@ -57,6 +57,10 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
 
         holder.textView.setText(search.get(position).getName());
+        if (!search.get(position).getCategory().equals(""))
+        {
+            holder.searchitemcategory.setText("in "+search.get(position).getCategory());
+        }
 
 //        if (search.get(position).getImages().size()>0)
 //        {
@@ -80,13 +84,14 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        TextView textView,searchitemcategory;
         ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.searchitemname);
             imageView = itemView.findViewById(R.id.productimage);
+            searchitemcategory = itemView.findViewById(R.id.searchitemcategory);
         }
     }
 }

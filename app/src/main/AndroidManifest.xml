@@ -18,19 +18,27 @@
     <application
         android:icon="@drawable/styam"
         android:label="@string/app_name"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".myProfile.UpdateProfile"></activity>
-        <activity android:name=".welcomeScreens.WelcomeScreens" />
-        <activity android:name=".allCategory.AllCategory" />
-        <activity android:name=".myOrderList.GetOrderDetail" />
-        <activity android:name=".filterScreen.FilterActivity" />
+        <activity android:name=".myProfile.UpdateProfile"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".welcomeScreens.WelcomeScreens"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".allCategory.AllCategory"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".myOrderList.GetOrderDetail"
+            android:screenOrientation="portrait" />
+        <activity android:name=".filterScreen.FilterActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".opt.OTP_verify"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".login.EmailLogin"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -45,10 +53,22 @@
         <activity android:name=".productList.ProductsActivity" />
         <activity
             android:name=".productDetails.ProductDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+            <!--<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="satyam.page.link"
+                    android:scheme="https" />
+            </intent-filter>-->
+        </activity>
         <activity
             android:name=".home2.SubCategoryActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".addressActivity.addAddress.ADDAddressActivity"
             android:screenOrientation="portrait" />
@@ -86,24 +106,36 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="satyam.page.link"
+                    android:scheme="https"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".commonActivity.CustmerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".signup.OtpActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".payment.PaymentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".signup.SignupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="stateUnchanged|adjustPan"/>
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />

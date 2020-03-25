@@ -53,7 +53,7 @@ public class VariationsAdapter extends RecyclerView.Adapter<VariationsAdapter.Vi
         holder.varitionotoinRecycler.setLayoutManager(linearLayoutManager4);
         optionArrayList.clear();
 
-        if (customVariation.size()!=0)
+        if (customVariation.size()>=1)
         {
             for (int i = 0; i < customVariation.get(position).getOptions().size(); i++) {
                 ProductDetailResponse.Data.CustomVariation.Option option = customVariation.get(position).getOptions().get(i);

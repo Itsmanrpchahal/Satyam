@@ -14,6 +14,25 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_satyamplaceholder"/>
 
+    <LinearLayout
+        android:layout_width="@dimen/margin_dp45"
+        android:layout_height="@dimen/margin_dp45"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/margin_dp16"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/circle_background">
+
+        <TextView
+            android:id="@+id/discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="12sp"></TextView>
+    </LinearLayout>
+
 
     <RelativeLayout
         android:id="@+id/relative"
@@ -76,8 +95,11 @@
             android:layout_toRightOf="@id/custom_productPrice"
             android:layout_marginLeft="@dimen/margin_dp10"></TextView>
 
+
+
+
         <TextView
-            android:id="@+id/custom_productDilvery"
+            android:id="@+id/savetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/custom_productPrice"

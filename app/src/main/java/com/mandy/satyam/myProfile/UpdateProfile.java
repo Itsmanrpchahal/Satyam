@@ -1,5 +1,6 @@
 package com.mandy.satyam.myProfile;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,7 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.AccessToken;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
@@ -45,15 +53,18 @@ import butterknife.ButterKnife;
 import okhttp3.MultipartBody;
 import retrofit2.Response;
 
-public class UpdateProfile extends BaseClass implements IPickResult, Controller.UpdateProfile {
+public class UpdateProfile extends BaseClass implements IPickResult, Controller.UpdateProfile1 {
 
     Dialog dialog;
     Controller controller;
-    Button updatelogout,profile_update;
+    TextView profile_username;
+    Button updatelogout, profile_update;
     RoundedImageView profile_userimage;
-    EditText profile_usernameet,profile_lastname,profile_email,profile_phnno,password,confirmpassword;
+    EditText profile_usernameet, profile_lastname, profile_email, profile_phnno;
     Bitmap bitmap;
     MultipartBody.Part part;
+    String token;
+    GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +93,43 @@ public class UpdateProfile extends BaseClass implements IPickResult, Controller.
         updatelogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setStringVal(Constants.LOGIN_STATUS,"logout");
-                Intent intent = new Intent(UpdateProfile.this, MainActivity.class);
-                startActivity(intent);
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    LoginManager.getInstance().logOut();
+                    Intent intent = new Intent(UpdateProfile.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("token", "2");
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                    finish();
+                    clearStringVal(Constants.LOGIN_STATUS);
+                } else {
+                    if (getStringVal(Constants.LOGIN_STATUS).equals("login")) {
+//                    textLogout.setTitle("Login");
+                        dialog.dismiss();
+                        Intent intent = new Intent(UpdateProfile.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("token", "2");
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        finish();
+                        clearStringVal(Constants.LOGIN_STATUS);
+                    } else {
+                        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(@NonNull Status status) {
+                                LoginManager.getInstance().logOut();
+                                dialog.dismiss();
+                                Intent intent = new Intent(UpdateProfile.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("token", "2");
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
+                                finish();
+                                clearStringVal(Constants.LOGIN_STATUS);
+                            }
+                        });
+                    }
+                }
             }
         });
 
@@ -92,9 +137,8 @@ public class UpdateProfile extends BaseClass implements IPickResult, Controller.
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(profile_usernameet.getText().toString()) && TextUtils.isEmpty(profile_lastname.getText().toString()) &&
-                        TextUtils.isEmpty(profile_email.getText().toString()) && TextUtils.isEmpty(profile_phnno.getText().toString()) &&
-                TextUtils.isEmpty(password.getText().toString()) && TextUtils.isEmpty(confirmpassword.getText().toString()))
-                {
+                        TextUtils.isEmpty(profile_email.getText().toString()) && TextUtils.isEmpty(profile_phnno.getText().toString())
+                ) {
                     profile_usernameet.setFocusable(true);
                     profile_usernameet.setError("Enter First name");
 
@@ -107,66 +151,42 @@ public class UpdateProfile extends BaseClass implements IPickResult, Controller.
                     profile_phnno.setFocusable(true);
                     profile_phnno.setError("Enter Phone No.");
 
-                    password.setFocusable(true);
-                    password.setError("Enter Password");
-
-                    confirmpassword.setFocusable(true);
-                    confirmpassword.setError("Enter Confirm Password");
-                }else if (TextUtils.isEmpty(profile_usernameet.getText().toString()) )
-                {
+                } else if (TextUtils.isEmpty(profile_usernameet.getText().toString())) {
                     profile_usernameet.setFocusable(true);
                     profile_usernameet.setError("Enter First name");
-                }else if (TextUtils.isEmpty(profile_lastname.getText().toString()))
-                {
+                } else if (TextUtils.isEmpty(profile_lastname.getText().toString())) {
                     profile_lastname.setFocusable(true);
                     profile_lastname.setError("Enter Last name");
-                }else if (TextUtils.isEmpty(profile_email.getText().toString()))
-                {
+                } else if (TextUtils.isEmpty(profile_email.getText().toString())) {
                     profile_email.setFocusable(true);
                     profile_email.setError("Enter Email");
-                }else if (TextUtils.isEmpty(profile_phnno.getText().toString()))
-                {
+                } else if (TextUtils.isEmpty(profile_phnno.getText().toString())) {
                     profile_phnno.setFocusable(true);
                     profile_phnno.setError("Enter Phone No.");
-                }else if (profile_phnno.getText().toString().length()<10)
-                {
+                } else if (profile_phnno.getText().toString().length() < 10) {
                     profile_phnno.setFocusable(true);
                     profile_phnno.setError("Invalid number");
-                }else if (TextUtils.isEmpty(password.getText().toString()))
-                {
-                    password.setFocusable(true);
-                    password.setError("Enter Password");
-                }else if (TextUtils.isEmpty(confirmpassword.getText().toString()))
-                {
-                    confirmpassword.setFocusable(true);
-                    confirmpassword.setError("Enter Confirm Password");
-                }else if (!password.getText().toString().matches(confirmpassword.getText().toString()))
-                {
-                    confirmpassword.setFocusable(true);
-                    confirmpassword.setError("Password not matched");
-                }else {
+                } else {
                     String firstname = profile_usernameet.getText().toString();
                     String lastname = profile_lastname.getText().toString();
                     String email = profile_email.getText().toString();
                     String phone = profile_phnno.getText().toString();
-                    String pass = password.getText().toString();
-                    String c_pass = confirmpassword.getText().toString();
                     dialog.show();
-                    controller.setUpdateProfile(getStringVal(Constants.USERTOKEN),firstname,lastname,email,c_pass,part);
+                    controller.setUpdateProfile1(getStringVal(Constants.USERTOKEN), firstname, lastname, email, "91" + phone, part);
                 }
             }
         });
     }
 
     private void init() {
+        token = getStringVal(Constants.USERTOKEN);
+        profile_username = findViewById(R.id.profile_username);
         updatelogout = findViewById(R.id.updatelogout);
         profile_userimage = findViewById(R.id.profile_userimage);
         profile_usernameet = findViewById(R.id.profile_usernameet);
         profile_lastname = findViewById(R.id.profile_lastname);
         profile_email = findViewById(R.id.profile_email);
         profile_phnno = findViewById(R.id.profile_phnno);
-        password = findViewById(R.id.password);
-        confirmpassword = findViewById(R.id.confirmpassword);
         profile_update = findViewById(R.id.profile_update);
         profile_email.setEnabled(false);
 
@@ -175,34 +195,40 @@ public class UpdateProfile extends BaseClass implements IPickResult, Controller.
         profile_usernameet.setText(getStringVal(Constants.FIRSTNAME));
         profile_lastname.setText(getStringVal(Constants.LASTNAME));
         profile_email.setText(getStringVal(Constants.EMAIL));
+        profile_username.setText(getStringVal(Constants.FIRSTNAME) + " " + getStringVal(Constants.LASTNAME));
     }
 
     @Override
-    public void onSuccessUpdateProfile(Response<com.mandy.satyam.myProfile.response.UpdateProfile> response) {
-        if (response.isSuccessful())
-        {
+    public void onSuccessUpdateProfile1(Response<com.mandy.satyam.myProfile.response.UpdateProfile> response) {
+        if (response.isSuccessful()) {
             dialog.dismiss();
-            if (response.body().getStatus()==200)
-            {
-                setStringVal(Constants.EMAIL,response.body().getData().getEmail());
-                setStringVal(Constants.LOGIN_STATUS,"login");
-                setStringVal(Constants.FIRSTNAME,response.body().getData().getFirstName());
-                setStringVal(Constants.LASTNAME,response.body().getData().getLastName());
-                setStringVal(Constants.AVATAR,response.body().getData().getImage());
-                setStringVal(Constants.MOBILE,response.body().getData().getPhone());
-                Intent intent = new Intent(UpdateProfile.this,MainActivity.class);
+            if (response.body().getStatus() == 200) {
+                setStringVal(Constants.EMAIL, response.body().getData().getEmail());
+                setStringVal(Constants.LOGIN_STATUS, "login");
+                setStringVal(Constants.FIRSTNAME, response.body().getData().getFirstName());
+                setStringVal(Constants.LASTNAME, response.body().getData().getLastName());
+                setStringVal(Constants.AVATAR, response.body().getData().getImage());
+                setStringVal(Constants.USERTOKEN, token);
+                if (response.body().getData().getPhone() != null) {
+                    String num = response.body().getData().getPhone().substring(2);
+                    setStringVal(Constants.MOBILE, num);
+                }
+
+                Intent intent = new Intent(UpdateProfile.this, MainActivity.class);
                 startActivity(intent);
                 finish();
-            }else {
-                Util.showToastMessage(this,response.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+            } else {
+                Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
             }
+        } else {
+            Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }
     }
 
     @Override
     public void onError(String error) {
         dialog.dismiss();
-        Util.showToastMessage(this,error,getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+        Util.showToastMessage(this, error, getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
     }
 
     @Override
@@ -215,7 +241,7 @@ public class UpdateProfile extends BaseClass implements IPickResult, Controller.
             profile_userimage.setImageBitmap(r.getBitmap());
             bitmap = r.getBitmap();
             try {
-                part = Util.sendImageFileToserver(r.getBitmap(), "profile", this);
+                part = Util.sendImageFileToserver(r.getBitmap(), "image", this);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -229,7 +255,7 @@ public class UpdateProfile extends BaseClass implements IPickResult, Controller.
     //Get Image from Url
     public class getImagefromURL extends AsyncTask<String, Void, Bitmap> {
 
-        ImageView imageView;
+        RoundedImageView imageView;
 
         public getImagefromURL(RoundedImageView imageView) {
             this.imageView = imageView;
@@ -259,5 +285,17 @@ public class UpdateProfile extends BaseClass implements IPickResult, Controller.
             super.onPostExecute(bitmap);
             imageView.setImageBitmap(bitmap);
         }
+    }
+
+    @Override
+    public void onStart() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        googleApiClient.connect();
+        super.onStart();
     }
 }

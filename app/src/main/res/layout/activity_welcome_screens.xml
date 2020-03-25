@@ -33,12 +33,11 @@
         android:textAllCaps="false"
         android:background="@color/colorTrans"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
         android:text="Skip"
         android:layout_marginTop="@dimen/margin_dp15"
         android:gravity="center"
         android:drawablePadding="-30dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="12sp"
         android:id="@+id/mainActivity_skip"/>
 

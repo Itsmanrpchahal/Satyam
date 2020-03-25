@@ -202,6 +202,7 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
                 setStringVal(Constants.AVATAR,loginResponse.body().getData().getAvatar());
                 setStringVal(Constants.FIRSTNAME,loginResponse.body().getData().getFirstname());
                 setStringVal(Constants.LASTNAME,loginResponse.body().getData().getLastname());
+                setStringVal(Constants.MOBILE,loginResponse.body().getData().getPhone());
                 setStringVal(Constants.USER_ID, String.valueOf(loginResponse.body().getData().getUserId()));
                 setStringVal(Constants.USERTOKEN,loginResponse.body().getData().getToken());
                 setStringVal(Constants.LOGIN_STATUS, "login");

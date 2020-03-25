@@ -2,10 +2,12 @@ package com.mandy.satyam.homeFragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +42,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     @Override
     public HomeProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.layout_best_seller, parent, false);
+        View view = layoutInflater.inflate(R.layout.custom_products, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,6 +52,38 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         String small = categoryProducts.get(position).getProductName().toLowerCase().substring(1);
         Glide.with(context).load(categoryProducts.get(position).getProductImage().toString()).placeholder(R.drawable.ic_satyamplaceholder).into(holder.imageView);
         holder.textView.setText(cat+small);
+        holder.ratingBar.setVisibility(View.GONE);
+        holder.custom_productRating_number.setVisibility(View.GONE);
+
+        if (categoryProducts.get(position).getProductRegularPrice()==null || categoryProducts.get(position).getProductPrice()==null || categoryProducts.get(position).getProductRegularPrice().equals("") || categoryProducts.get(position).getProductRegularPrice().equals(""))
+        {
+            holder.discount.setText("-0%");
+        }else {
+            Float discount = Float.valueOf(categoryProducts.get(position).getProductRegularPrice()) -  Float.valueOf(categoryProducts.get(position).getProductPrice());
+            Float getDiscount = discount/Float.valueOf(categoryProducts.get(position).getProductRegularPrice());
+
+            if (String.valueOf(discount).length()>=5)
+            {
+                holder.savetext.setText("You save ₹"+String.valueOf(discount).substring(0,5)+"/-");
+            }else {
+                holder.savetext.setText("You save ₹"+String.valueOf(discount)+"/-");
+            }
+            Float getFinalDiscount = getDiscount*100;
+            if (String.valueOf(getFinalDiscount).length()>2)
+            {
+                holder.discount.setText("-"+String.valueOf(getFinalDiscount).substring(0,2)+"%");
+            }else {
+                holder.discount.setText("-"+String.valueOf(getFinalDiscount) +"%");
+            }
+        }
+
+        if (!categoryProducts.get(position).getProductPrice().equals(""))
+        {
+            holder.txtPrice.setText("₹" + categoryProducts.get(position).getProductPrice());
+        }
+
+        holder.custom_actaulPrice.setPaintFlags(holder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.custom_actaulPrice.setText("₹" + categoryProducts.get(position).getProductRegularPrice());
 
 //        Collections.reverse(categoryProducts);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +106,21 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView textView,discount,custom_productRating_number,txtPrice,custom_actaulPrice,savetext;
         ImageView imageView;
+        RatingBar ratingBar;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.dashText);
-            imageView = itemView.findViewById(R.id.dashImage);
+            textView = itemView.findViewById(R.id.custom_productName);
+            discount = itemView.findViewById(R.id.discount);
+            ratingBar = itemView.findViewById(R.id.custom_productRating);
+            custom_productRating_number = itemView.findViewById(R.id.custom_productRating_number);
+            imageView = itemView.findViewById(R.id.custom_productImage);
+            txtPrice = itemView.findViewById(R.id.custom_productPrice);
+            custom_actaulPrice = itemView.findViewById(R.id.custom_actaulPrice);
+            savetext = itemView.findViewById(R.id.savetext);
         }
     }
 }

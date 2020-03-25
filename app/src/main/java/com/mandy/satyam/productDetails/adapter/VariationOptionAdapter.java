@@ -98,11 +98,12 @@ public class VariationOptionAdapter extends RecyclerView.Adapter<VariationOption
         if (optionArrayList.get(position).getV().startsWith("#")) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(70, 70);
             holder.variationoptiostv.setLayoutParams(layoutParams);
+            holder.variationoptiostv.setText("");
             holder.variationoptiostv.setBackgroundColor(Color.parseColor(optionArrayList.get(position).getV()));
             layoutParams.setMargins(10, 10, 10, 10);
 
         } else {
-            if (positionn != 0)
+//            if (positionn != 0)
                 holder.variationoptiostv.setText(optionArrayList.get(position).getV());
         }
 

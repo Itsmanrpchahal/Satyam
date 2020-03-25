@@ -1,5 +1,6 @@
 package com.mandy.satyam.productList.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -50,6 +51,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
@@ -62,11 +64,40 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         String cat = datumArrayList.get(i).getName().substring(0, 1);
         String small = datumArrayList.get(i).getName().toLowerCase().substring(1);
         viewHolder.txtProductName.setText(cat + small);
-        viewHolder.txtPrice.setText("₹" + datumArrayList.get(i).getPrice());
+        if (!datumArrayList.get(i).getPrice().equals(""))
+        {
+            viewHolder.txtPrice.setText("₹" + datumArrayList.get(i).getPrice());
+        }
+
         viewHolder.custom_actaulPrice.setPaintFlags(viewHolder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.custom_actaulPrice.setText("₹" + datumArrayList.get(i).getRegularPrice());
         viewHolder.ratingBar.setRating(Float.parseFloat(datumArrayList.get(i).getAverageRating()));
         viewHolder.txtRatingUser.setText("(" + datumArrayList.get(i).getAverageRating() + ")");
+
+        if (datumArrayList.get(i).getRegularPrice()==null || datumArrayList.get(i).getPrice()==null || datumArrayList.get(i).getRegularPrice().equals("") || datumArrayList.get(i).getPrice().equals(""))
+        {
+            viewHolder.discount.setText("-0%");
+        }else {
+            Float discount = Float.valueOf(datumArrayList.get(i).getRegularPrice()) -  Float.valueOf(datumArrayList.get(i).getPrice());
+            Float getDiscount = discount/Float.valueOf(datumArrayList.get(i).getRegularPrice());
+            if (String.valueOf(discount).length()>=5)
+            {
+                viewHolder.savetext.setText("You save ₹"+String.valueOf(discount).substring(0,5)+"/-");
+            }else {
+                viewHolder.savetext.setText("You save ₹"+String.valueOf(discount)+"/-");
+            }
+
+            Float getFinalDiscount = getDiscount*100;
+            if (String.valueOf(getFinalDiscount).length()>2)
+            {
+                viewHolder.discount.setText("-"+String.valueOf(getFinalDiscount).substring(0,2)+"%");
+            }else {
+                viewHolder.discount.setText("-"+String.valueOf(getFinalDiscount) +"%");
+            }
+        }
+
+
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,13 +114,15 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView txtProductName, txtRatingUser, txtPrice,custom_actaulPrice;
+        TextView txtProductName, txtRatingUser, txtPrice,custom_actaulPrice,discount,savetext;
         RatingBar ratingBar;
         AVLoadingIndicatorView avLoadingIndicatorView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.custom_productImage);
+            savetext = itemView.findViewById(R.id.savetext);
+            discount = itemView.findViewById(R.id.discount);
             txtProductName = itemView.findViewById(R.id.custom_productName);
             txtRatingUser = itemView.findViewById(R.id.custom_productRating_number);
             txtPrice = itemView.findViewById(R.id.custom_productPrice);

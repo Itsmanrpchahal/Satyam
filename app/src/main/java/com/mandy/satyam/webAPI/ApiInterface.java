@@ -179,6 +179,17 @@ public interface ApiInterface {
             @Part MultipartBody.Part userImage
             );
 
+    @Multipart
+    @POST("wp-json/os/v1/update_user")
+    Call<UpdateProfile> updateProfile1(
+            @Query("token") String token,
+            @Query("first_name") String first_name,
+            @Query("last_name") String last_name,
+            @Query("email") String email,
+            @Query("phone") String phone,
+            @Part MultipartBody.Part userImage
+    );
+
 
 
     @POST("wp-json/os/v1/create_order")

@@ -52,6 +52,18 @@ this.data = data;
         @SerializedName("type")
         @Expose
         private String type;
+        @SerializedName("category")
+        @Expose
+        private String category;
+
+        public String getCategory() {
+            return category;
+        }
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
         @SerializedName("image")
         @Expose
         private String image;

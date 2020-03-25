@@ -30,7 +30,10 @@
     <string name="noInternet">No Internet Connection</string>
     <string name="rs">\u20B9</string>
     <string name="quantity">Enter your product quantity</string>
-    <string name="slide1" >List your Products</string>>
-    <string name="slide2">Sell </string>
-    <string name="slide3" />
+    <string name="slide1" >Browse marketplace</string>>
+    <string name="slide11" >Now you can order product from your phone</string>>
+    <string name="slide2">Confirm &amp; pay</string>
+    <string name="slide22">Never worry about change,pay the exact amount while placing the order</string>
+    <string name="slide3">Take you order</string>
+    <string name="slide33">Avoid standing in queues,we will notify you when you order is ready</string>
 </resources>

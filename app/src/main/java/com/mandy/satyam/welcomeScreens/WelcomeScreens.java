@@ -54,7 +54,7 @@ public class WelcomeScreens extends BaseClass {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screens);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -120,7 +120,7 @@ public class WelcomeScreens extends BaseClass {
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(50);
-            dots[i].setTextColor(getResources().getColor(R.color.white));
+            dots[i].setTextColor(getResources().getColor(R.color.gray));
             dotsLayout.addView(dots[i]);
         }
 

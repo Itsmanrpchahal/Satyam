@@ -87,7 +87,7 @@
         android:id="@+id/loginwith_email_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Email-ID"
+        android:text="Use another way to login"
         android:background="#00FFFFFF"
         android:layout_alignParentRight="true"
         android:layout_marginRight="16dp"

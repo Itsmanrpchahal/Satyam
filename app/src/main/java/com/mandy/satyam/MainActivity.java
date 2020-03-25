@@ -40,6 +40,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.material.navigation.NavigationView;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
@@ -126,6 +134,9 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     TextView tv;
     public static String count;
     Intent intent;
+    GoogleApiClient googleApiClient;
+    boolean loggedOut;
+    GoogleSignInAccount account;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -450,7 +461,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
                         drawerNavigation.closeDrawers();
                         try {
                             PackageManager pm = getPackageManager();
-                            String toNumber = "919816255767";
+                            String toNumber = "918889938888";
                             Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + "" + toNumber + "?body=" + "Hello Testing"));
                             sendIntent.setPackage("com.whatsapp");
                             startActivity(sendIntent);
@@ -464,6 +475,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
             }
         });
     }
+
 
     @Override
     public void onBackPressed() {
@@ -540,17 +552,63 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textLogout.setTitle("Login");
-                dialog.dismiss();
-                Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("token", "2");
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-                finish();
-                clearStringVal(Constants.LOGIN_STATUS);
+
+                if (AccessToken.getCurrentAccessToken()!=null)
+                {
+                    LoginManager.getInstance().logOut();
+                    textLogout.setTitle("Login");
+                    dialog.dismiss();
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("token", "2");
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                    finish();
+                    clearStringVal(Constants.LOGIN_STATUS);
+                }else if (textLogout.equals("Logout"))
+
+                {
+                    textLogout.setTitle("Login");
+                    dialog.dismiss();
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("token", "2");
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                    finish();
+                    clearStringVal(Constants.LOGIN_STATUS);
+                }else {
+                    Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(@NonNull Status status) {
+                            LoginManager.getInstance().logOut();
+                            textLogout.setTitle("Login");
+                            dialog.dismiss();
+                            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("token", "2");
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
+                            finish();
+                            clearStringVal(Constants.LOGIN_STATUS);
+                        }
+                    });
+                }
+
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        googleApiClient.connect();
+        super.onStart();
     }
 
 

@@ -126,7 +126,7 @@ public class Util {
         File file = new File(filesDir, image + ".png");
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitMap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+        bitMap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
         byte[] bitmapdata = bos.toByteArray();
 
         FileOutputStream fos = new FileOutputStream(file);
@@ -152,7 +152,7 @@ public class Util {
     }
 
     //share image
-    public static void shareContent(Context context, View imageView){
+    public static void shareContent(Context context, View imageView,String extratext){
 
         Bitmap bitmap =getBitmapFromView(imageView);
         try {
@@ -164,10 +164,33 @@ public class Util {
             file.setReadable(true, false);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(Intent.EXTRA_TEXT, "SHARE QR");
+            intent.putExtra(Intent.EXTRA_TEXT, extratext);
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
             intent.setType("image/png");
-            context.startActivity(Intent.createChooser(intent, "Share image via"));
+            context.startActivity(Intent.createChooser(intent, "Share Product"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void shareContent1(Context context, View imageView,String extratext){
+
+        Bitmap bitmap =getBitmapFromView(imageView);
+        try {
+            File file = new File(context.getExternalCacheDir(),"logicchip.png");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            file.setReadable(true, false);
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Intent.EXTRA_TEXT, extratext);
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+            intent.setType("image/png");
+            intent.setPackage("com.whatsapp");
+            context.startActivity(Intent.createChooser(intent, "Share Product"));
         } catch (Exception e) {
             e.printStackTrace();
         }

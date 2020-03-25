@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +16,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.mandy.satyam.KeysResponse;
 import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
+import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.utils.Util;
 import com.mandy.satyam.welcomeScreens.WelcomeScreens;
 
@@ -34,6 +39,7 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
     Controller controller;
     private NetworkChangeReceiver receiver;
     private boolean isConnected = false;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,39 +104,11 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
             {
                 setStringVal(Constants.CONSUMER_KEY,keysResponseResponse.body().getData().getConsumerKey());
                 setStringVal(Constants.CONSUMER_SECRET,keysResponseResponse.body().getData().getConsumerSecret());
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-                        if (getWelComeString( Constants.WELCOMESTATUS).equals("1"))
-                        {
-                            if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
-                            {
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.putExtra("token", "login");
-                                startActivity(intent);
-                                finish();
-                            }else {
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.putExtra("token", "logout");
-                                startActivity(intent);
-                                finish();
-                            }
-                        }else {
-                            if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
-                            {
-                                Intent intent = new Intent(getApplicationContext(), WelcomeScreens.class);
-                                intent.putExtra("token", "login");
-                                startActivity(intent);
-                                finish();
-                            }else {
-                                Intent intent = new Intent(getApplicationContext(), WelcomeScreens.class);
-                                intent.putExtra("token", "logout");
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
+                        FirebaseDeeplinking();
                     }
                 }, 0000);
             }else {
@@ -142,5 +120,75 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
     public void onError(String error) {
         Util.showToastMessage(this,error,getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
 
+    }
+
+    public void FirebaseDeeplinking()
+    {
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+            @Override
+            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                Uri uri = null;
+                if (pendingDynamicLinkData !=null)
+                {
+                    uri =pendingDynamicLinkData.getLink();
+                    String path =uri.getPath();
+                    Log.d("deeplink",path);
+                    String[] product_id =path.split("/");
+                    if(product_id.length==1)
+                    {
+                        id =product_id[1];
+                        if (!id.equals(""))
+                        {
+                            Intent intent= new Intent(SplashScreen.this, ProductDetailsActivity.class);
+                            intent.putExtra("productID",id);
+                            startActivity(intent);
+                            finish();
+                        }
+
+                    }else {
+                        id =product_id[2];
+                        if (!id.equals(""))
+                        {
+                            Intent intent= new Intent(SplashScreen.this, ProductDetailsActivity.class);
+                            intent.putExtra("productID",id);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                    Log.d("deeplink1",id);
+                }else {
+                    if (getWelComeString( Constants.WELCOMESTATUS).equals("1"))
+                    {
+                        if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
+                        {
+
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("token", "login");
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("token", "logout");
+                            startActivity(intent);
+                            finish();
+                        }
+                    }else {
+                        if (!Constants.LOGIN_STATUS.equalsIgnoreCase(""))
+                        {
+                            Intent intent = new Intent(getApplicationContext(), WelcomeScreens.class);
+                            intent.putExtra("token", "login");
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(getApplicationContext(), WelcomeScreens.class);
+                            intent.putExtra("token", "logout");
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }
+            }
+        });
     }
 }

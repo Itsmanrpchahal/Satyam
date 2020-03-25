@@ -49,6 +49,7 @@ public class Controller {
     public AddToCart addToCart;
     public GetCartProducts getCartProducts;
     public UpdateCart updateCart;
+    public UpdateProfile1 updateProfile1;
     public RemoveCartItem removeCartItem;
     public GetProfile getProfile;
     public GetAddress getAddress;
@@ -73,9 +74,9 @@ public class Controller {
         webAPI = new WebAPI();
     }
 
-    public Controller(UpdateProfile updateProfile1)
+    public Controller(UpdateProfile1 updateProfile2)
     {
-        updateProfile = updateProfile1;
+        updateProfile1 = updateProfile2;
         webAPI = new WebAPI();
     }
 
@@ -443,6 +444,24 @@ public class Controller {
         });
     }
 
+    public void setUpdateProfile1(String token, String first_name, String last_name, String email, String phone, MultipartBody.Part profile)
+    {
+        webAPI.getApi().updateProfile1(token,first_name,last_name,email,phone,profile).enqueue(new Callback<com.mandy.satyam.myProfile.response.UpdateProfile>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.myProfile.response.UpdateProfile> call, Response<com.mandy.satyam.myProfile.response.UpdateProfile> response) {
+                if (response != null) {
+                    Response<com.mandy.satyam.myProfile.response.UpdateProfile> updateProfileResponse = response;
+                    updateProfile1.onSuccessUpdateProfile1(updateProfileResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.myProfile.response.UpdateProfile> call, Throwable t) {
+                updateProfile1.onError(t.getMessage());
+            }
+        });
+    }
+
     public void setGetAddress(String userID, String amr_slug,String consumerkey, String consumerSecret) {
         webAPI.getApi().getAddress(userID, amr_slug,consumerkey, consumerSecret).enqueue(new Callback<com.mandy.satyam.addressActivity.response.GetAddress>() {
             @Override
@@ -779,6 +798,12 @@ public class Controller {
 
     public interface UpdateProfile {
         void onSuccessUpdateProfile(Response<com.mandy.satyam.myProfile.response.UpdateProfile> response);
+
+        void onError(String error);
+    }
+
+    public interface UpdateProfile1 {
+        void onSuccessUpdateProfile1(Response<com.mandy.satyam.myProfile.response.UpdateProfile> response);
 
         void onError(String error);
     }

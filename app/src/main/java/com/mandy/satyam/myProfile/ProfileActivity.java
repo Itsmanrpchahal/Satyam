@@ -50,8 +50,6 @@ public class ProfileActivity extends BaseClass implements IPickResult, Controlle
     Toolbar toolbar;
     @BindView(R.id.textView)
     TextView textView;
-    protected static final int CAMERA_REQUEST = 0;
-    protected static final int GALLERY_PICTURE = 1;
     MultipartBody.Part part;
     File filesDir;
     @BindView(R.id.back)
@@ -216,7 +214,12 @@ public class ProfileActivity extends BaseClass implements IPickResult, Controlle
                 profileUsername.setText(response.body().getData().getFirstName() + " " + response.body().getData().getLastName());
                 profileLastname.setText(response.body().getData().getLastName());
                 profileUsernameet.setText(response.body().getData().getFirstName());
-                profileEmail.setText(response.body().getData().getEmail());
+                if (response.body().getData().getEmail().startsWith(response.body().getData().getPhone()))
+                {
+                    profileEmail.setText("");
+                }else {
+                    profileEmail.setText(response.body().getData().getEmail());
+                }
                 profilePhnno.setText(response.body().getData().getPhone());
                 Glide.with(this).load(response.body().getData().getImage()).placeholder(R.drawable.ic_satyamplaceholder).into(profileUserimage);
                 new getImagefromURL(profileUserimage).execute(response.body().getData().getImage());

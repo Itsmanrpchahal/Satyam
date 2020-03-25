@@ -226,6 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/defaultmargin"
+                    android:visibility="gone"
                     android:text="Password"></TextView>
 
                 <EditText
@@ -233,6 +234,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="**********"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="@dimen/normaltext"
                     android:inputType="textPassword"
@@ -243,6 +245,7 @@
                     android:id="@+id/profile_view4"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:visibility="gone"
                     android:layout_below="@id/password"
                     android:layout_marginTop="5dp"></View>
 
@@ -250,6 +253,7 @@
                 <TextView
                     android:id="@+id/cpasswordtv"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/defaultmargin"
                     android:text="Confirm Password"></TextView>
@@ -258,6 +262,7 @@
                     android:id="@+id/confirmpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:hint="**********"
                     android:textColor="@color/black"
                     android:textSize="@dimen/normaltext"

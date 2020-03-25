@@ -54,4 +54,9 @@ public class BannerAdapter extends PagerAdapter {
 
         return itemview;
     }
+
+    @Override
+    public void destroyItem(View container, int position, Object object) {
+        ((ViewPager) container).removeView((View) object);
+    }
 }
