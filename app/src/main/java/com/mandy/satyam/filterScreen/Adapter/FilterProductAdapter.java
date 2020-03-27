@@ -62,6 +62,36 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
             holder.txtPrice.setText("₹" + arrayList.get(position).getPrice());
             holder.ratingBar.setRating(Float.parseFloat(arrayList.get(position).getAverageRating()));
             holder.txtRatingUser.setText("(" + arrayList.get(position).getAverageRating() + ")");
+
+            if (arrayList.get(position).getRegularPrice()==null || arrayList.get(position).getPrice()==null || arrayList.get(position).getRegularPrice().equals("") || arrayList.get(position).getPrice().equals(""))
+            {
+                holder.discount.setText("-0%");
+            }else {
+                Float discount = Float.valueOf(arrayList.get(position).getRegularPrice()) -  Float.valueOf(arrayList.get(position).getPrice());
+                Float getDiscount = discount/Float.valueOf(arrayList.get(position).getRegularPrice());
+
+
+                if (String.valueOf(discount).length()>=4)
+                {
+                    holder.savetext.setText("You save ₹"+String.valueOf(discount).substring(0,4));
+                }else if (String.valueOf(discount).length()==1)
+                {
+                    holder.savetext.setText("You save ₹"+discount.toString().substring(0,1));
+                }else if (String.valueOf(discount).length()<=2)
+                {
+                    holder.savetext.setText("You save ₹"+discount.toString().substring(0,2)+".00");
+                }else {
+                    holder.savetext.setText("You save ₹"+discount.toString().substring(0,2));
+                }
+
+                Float getFinalDiscount = getDiscount*100;
+                if (String.valueOf(getFinalDiscount).length()>2)
+                {
+                    holder.discount.setText("-"+String.valueOf(getFinalDiscount).substring(0,2)+"%");
+                }else {
+                    holder.discount.setText("-"+String.valueOf(getFinalDiscount) +"%");
+                }
+            }
         }catch (Exception e){
 
         }
@@ -83,7 +113,7 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView txtProductName, txtRatingUser, txtPrice,custom_actaulPrice;
+        TextView txtProductName, txtRatingUser, txtPrice,custom_actaulPrice,savetext,discount;
         RatingBar ratingBar;
         AVLoadingIndicatorView avLoadingIndicatorView;
 
@@ -96,6 +126,8 @@ public class FilterProductAdapter extends RecyclerView.Adapter<FilterProductAdap
             avLoadingIndicatorView = itemView.findViewById(R.id.avi);
             ratingBar = itemView.findViewById(R.id.custom_productRating);
             custom_actaulPrice = itemView.findViewById(R.id.custom_actaulPrice);
+            savetext = itemView.findViewById(R.id.savetext);
+            discount = itemView.findViewById(R.id.discount);
         }
     }
 }

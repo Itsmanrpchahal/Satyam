@@ -55,35 +55,43 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         holder.ratingBar.setVisibility(View.GONE);
         holder.custom_productRating_number.setVisibility(View.GONE);
 
-        if (categoryProducts.get(position).getProductRegularPrice()==null || categoryProducts.get(position).getProductPrice()==null || categoryProducts.get(position).getProductRegularPrice().equals("") || categoryProducts.get(position).getProductRegularPrice().equals(""))
+        if (categoryProducts.get(position).getProductRegularPrice()==null || categoryProducts.get(position).getProductPrice()==null || categoryProducts.get(position).getProductRegularPrice().equals("") || categoryProducts.get(position).getProductPrice().equals("") || categoryProducts.get(position).getProductRegularPrice().equals("null") || categoryProducts.get(position).getProductPrice().equals("null"))
         {
             holder.discount.setText("-0%");
+            holder.custom_actaulPrice.setPaintFlags(holder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.custom_actaulPrice.setText("₹" + categoryProducts.get(position).getProductPrice());
+            holder.savetext.setText("You save ₹0.0");
         }else {
-            Float discount = Float.valueOf(categoryProducts.get(position).getProductRegularPrice()) -  Float.valueOf(categoryProducts.get(position).getProductPrice());
-            Float getDiscount = discount/Float.valueOf(categoryProducts.get(position).getProductRegularPrice());
 
-            if (String.valueOf(discount).length()>=5)
-            {
-                holder.savetext.setText("You save ₹"+String.valueOf(discount).substring(0,5)+"/-");
-            }else {
-                holder.savetext.setText("You save ₹"+String.valueOf(discount)+"/-");
-            }
-            Float getFinalDiscount = getDiscount*100;
-            if (String.valueOf(getFinalDiscount).length()>2)
-            {
-                holder.discount.setText("-"+String.valueOf(getFinalDiscount).substring(0,2)+"%");
-            }else {
-                holder.discount.setText("-"+String.valueOf(getFinalDiscount) +"%");
-            }
+            holder.custom_actaulPrice.setPaintFlags(holder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.custom_actaulPrice.setText("₹" + categoryProducts.get(position).getProductRegularPrice());
+                Float discount = Float.valueOf(categoryProducts.get(position).getProductRegularPrice()) -  Float.valueOf(categoryProducts.get(position).getProductPrice());
+                Float getDiscount = discount/Float.valueOf(categoryProducts.get(position).getProductRegularPrice());
+
+                if (String.valueOf(discount).length()>=3)
+                {
+                    holder.savetext.setText("You save ₹"+String.valueOf(discount).substring(0,3));
+                }else if (String.valueOf(discount).length()==1)
+                {
+                    holder.savetext.setText("You save ₹"+discount.toString().substring(0,1));
+                }else if (String.valueOf(discount).length()<=2)
+                {
+                    holder.savetext.setText("You save ₹"+discount.toString().substring(0,2)+".00");
+                }
+                Float getFinalDiscount = getDiscount*100;
+                if (String.valueOf(getFinalDiscount).length()>2)
+                {
+                    holder.discount.setText("-"+String.valueOf(getFinalDiscount).substring(0,2)+"%");
+                }else {
+                    holder.discount.setText("-"+String.valueOf(getFinalDiscount) +"%");
+                }
+
         }
 
         if (!categoryProducts.get(position).getProductPrice().equals(""))
         {
             holder.txtPrice.setText("₹" + categoryProducts.get(position).getProductPrice());
         }
-
-        holder.custom_actaulPrice.setPaintFlags(holder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.custom_actaulPrice.setText("₹" + categoryProducts.get(position).getProductRegularPrice());
 
 //        Collections.reverse(categoryProducts);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

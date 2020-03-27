@@ -37,12 +37,32 @@
                 android:orientation="vertical">
 
 
+
                 <RelativeLayout
                     android:id="@+id/layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/dis"
+                        android:layout_width="@dimen/margin_dp45"
+                        android:layout_height="@dimen/margin_dp45"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="@dimen/margin_dp15"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/circle_background">
+
+                        <TextView
+                            android:id="@+id/discounttv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="12sp"></TextView>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/txtproductName"
@@ -54,14 +74,13 @@
                         android:textStyle="bold"
                         android:text=""/>
 
-
                     <ImageButton
                         android:id="@+id/sharebt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/margin_dp40"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/margin_dp5"
                         android:src="@drawable/ic_share_black_24dp"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="@dimen/margin_dp8"
                         android:background="@color/colorTrans"
                         android:visibility="visible"></ImageButton>
 
@@ -74,6 +93,7 @@
                     android:background="@color/colorTrans"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/sharebt"></ImageButton>
+
                 </RelativeLayout>
 
 
@@ -111,6 +131,7 @@
                         app:tabIndicatorHeight="0dp" />
 
                 </RelativeLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -155,6 +176,17 @@
                             android:text=""
                             android:textColor="@color/red"
                             android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/yousave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/defaultmargin"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/green"
+                            android:textSize="16sp"></TextView>
                     </LinearLayout>
                 </LinearLayout>
 

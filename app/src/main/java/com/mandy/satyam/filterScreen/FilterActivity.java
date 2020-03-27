@@ -86,6 +86,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
         filter_close.setOnClickListener(this);
 
+        rangeseekbar.setProgress(0,100);
         rangeseekbar.setOnRangeChangedListener(new OnRangeChangedListener() {
             @Override
             public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {

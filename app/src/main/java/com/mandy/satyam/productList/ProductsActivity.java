@@ -141,6 +141,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             }
             else if (intent.getStringExtra("isFrom").equals("FilterScreen"))
             {
+                viewPager.setVisibility(View.GONE);
                  textView.setText("Filter Products");
                 searchitemrecycler.setVisibility(View.GONE);
                 progressDialog.show();

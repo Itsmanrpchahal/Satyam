@@ -87,7 +87,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     FragmentTransaction transaction;
     ArrayList<Categoriesroducts.Datum.Image> images = new ArrayList<>();
     ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
-    ArrayList<Categoriesroducts.Datum> datumArrayList = new ArrayList<Categoriesroducts.Datum>();
+    ArrayList<Categoriesroducts.Datum> arraylist = new ArrayList<Categoriesroducts.Datum>();
     ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
     ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
     ArrayList<String> productname = new ArrayList<>();

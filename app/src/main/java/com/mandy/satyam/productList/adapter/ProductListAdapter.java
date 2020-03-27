@@ -64,10 +64,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         String cat = datumArrayList.get(i).getName().substring(0, 1);
         String small = datumArrayList.get(i).getName().toLowerCase().substring(1);
         viewHolder.txtProductName.setText(cat + small);
-        if (!datumArrayList.get(i).getPrice().equals(""))
+        if (datumArrayList.get(i).getPrice()!=null)
         {
-            viewHolder.txtPrice.setText("₹" + datumArrayList.get(i).getPrice());
+            if (!datumArrayList.get(i).getPrice().equals(""))
+            {
+                viewHolder.txtPrice.setText("₹" + datumArrayList.get(i).getPrice());
+            }
         }
+
 
         viewHolder.custom_actaulPrice.setPaintFlags(viewHolder.custom_actaulPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.custom_actaulPrice.setText("₹" + datumArrayList.get(i).getRegularPrice());
@@ -80,11 +84,19 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         }else {
             Float discount = Float.valueOf(datumArrayList.get(i).getRegularPrice()) -  Float.valueOf(datumArrayList.get(i).getPrice());
             Float getDiscount = discount/Float.valueOf(datumArrayList.get(i).getRegularPrice());
-            if (String.valueOf(discount).length()>=5)
+
+
+            if (String.valueOf(discount).length()>=4)
             {
-                viewHolder.savetext.setText("You save ₹"+String.valueOf(discount).substring(0,5)+"/-");
+                viewHolder.savetext.setText("You save ₹"+String.valueOf(discount).substring(0,4));
+            }else if (String.valueOf(discount).length()==1)
+            {
+                viewHolder.savetext.setText("You save ₹"+discount.toString().substring(0,1));
+            }else if (String.valueOf(discount).length()<=2)
+            {
+                viewHolder.savetext.setText("You save ₹"+discount.toString().substring(0,2)+".00");
             }else {
-                viewHolder.savetext.setText("You save ₹"+String.valueOf(discount)+"/-");
+                viewHolder.savetext.setText("You save ₹"+discount.toString().substring(0,2));
             }
 
             Float getFinalDiscount = getDiscount*100;

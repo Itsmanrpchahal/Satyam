@@ -91,6 +91,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     TextView txtMRP;
     @BindView(R.id.txtPrice)
     TextView txtPrice;
+    @BindView(R.id.discounttv)
+    TextView discounttv;
     @BindView(R.id.recyclerColor)
     RecyclerView recyclerColor;
     @BindView(R.id.txtSize)
@@ -129,6 +131,8 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
     LinearLayout pricelayout;
     @BindView(R.id.desc_tv)
     TextView descTv;
+    @BindView(R.id.yousave)
+    TextView yousave;
     @BindView(R.id.colorlayout)
     LinearLayout colorlayout;
     @BindView(R.id.stocktexttv)
@@ -442,6 +446,36 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 String small = productDetailResponseResponse.body().getData().getName().toLowerCase().substring(1);
                 txtproductName.setText(cat + small);
 
+                if (productDetailResponseResponse.body().getData().getRegularPrice()==null || productDetailResponseResponse.body().getData().getPrice()==null || productDetailResponseResponse.body().getData().equals("") || productDetailResponseResponse.body().getData().equals(""))
+                {
+                    discounttv.setText("-0%");
+                }else {
+                    Float discount = Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice()) -  Float.valueOf(productDetailResponseResponse.body().getData().getSalePrice());
+                    Float getDiscount = discount/Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice());
+
+
+                    if (String.valueOf(discount).length()>=4)
+                    {
+                        yousave.setText("You save ₹"+String.valueOf(discount).substring(0,4));
+                    }else if (String.valueOf(discount).length()==1)
+                    {
+                        yousave.setText("You save ₹"+discount.toString().substring(0,1));
+                    }else if (String.valueOf(discount).length()<=2)
+                    {
+                        yousave.setText("You save ₹"+discount.toString().substring(0,2)+".00");
+                    }else {
+                        yousave.setText("You save ₹"+discount.toString().substring(0,2)+".00");
+                    }
+
+                    Float getFinalDiscount = getDiscount*100;
+                    if (String.valueOf(getFinalDiscount).length()>2)
+                    {
+                        discounttv.setText("-"+String.valueOf(getFinalDiscount).substring(0,2)+"%");
+                    }else {
+                        discounttv.setText("-"+String.valueOf(getFinalDiscount) +"%");
+                    }
+                }
+
                 if (productDetailResponseResponse.body().getData().isIs_cart() == true) {
                     btnAddCart.setText("Go to cart");
                 } else {
@@ -454,13 +488,12 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     btnAddCart.setEnabled(false);
                     btnBuynow.setEnabled(false);
                 }
-                if (productDetailResponseResponse.body().getData().getSalePrice().equals("")) {
-                    txtMRP.setVisibility(View.GONE);
-                    txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
+                if (productDetailResponseResponse.body().getData().getPrice().equals("")) {
+                    txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getSalePrice());
                 } else {
                     txtMRP.setText("₹ " + productDetailResponseResponse.body().getData().getRegularPrice());
                     txtMRP.setPaintFlags(txtMRP.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getPrice());
+                    txtPrice.setText("₹ " + productDetailResponseResponse.body().getData().getSalePrice());
                 }
                 variation_id = String.valueOf(productDetailResponseResponse.body().getData().getCustomVariations().size());
                 getProductID = productDetailResponseResponse.body().getData().getId().toString();
