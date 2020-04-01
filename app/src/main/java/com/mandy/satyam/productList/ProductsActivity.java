@@ -133,7 +133,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 textView.setText(cat + small);
                 if (Util.isOnline(ProductsActivity.this) != false) {
                     progressDialog.show();
-                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30,"get_products");
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30,"get_products","instock");
                     controller.setSubCategory(catID);
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -153,7 +153,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                 catID = intent.getStringExtra("catID");
                 if (Util.isOnline(ProductsActivity.this) != false) {
                     progressDialog.show();
-                    controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount),30);
+                    controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount),30,"instock");
                     controller.setSubCategory(catID);
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
@@ -262,7 +262,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
     private void searchProducts(String s) {
         if (Util.isOnline(ProductsActivity.this) != false) {
 //            progressDialog.show();
-            controller.setGetSerchProducts(s);
+            controller.setGetSerchProducts(s,"instock");
 //            controller.setGetSearchProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), "", "", "", s,String.valueOf(pageCount));
 //            controller.setSubCategory(catID);
         } else {
@@ -346,7 +346,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                     if (Util.isOnline(ProductsActivity.this) != false) {
                         progressDialog.show();
-                        controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30,"get_products");
+                        controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, String.valueOf(pageCount),30,"get_products","instock");
                     } else {
                         Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                     }
@@ -437,7 +437,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
                     images.clear();
                     datumArrayList.clear();
                     catgoryBanners.clear();
-                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), id, String.valueOf(pageCount),30,"get_products");
+                    controller.setRelatedPrducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), id, String.valueOf(pageCount),30,"get_products","instock");
                 } else {
                     Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                 }
@@ -512,7 +512,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
 
                             if (Util.isOnline(ProductsActivity.this) != false) {
                                 progressDialog.show();
-                                controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount),30);
+                                controller.setGetFilterProducts(getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET), catID, minPrice, maxPrice, "",String.valueOf(pageCount),30,"instock");
                             } else {
                                 Util.showToastMessage(ProductsActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
                             }

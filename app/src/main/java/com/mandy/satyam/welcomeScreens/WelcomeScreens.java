@@ -177,7 +177,7 @@ public class WelcomeScreens extends BaseClass {
                     currentPage++;
 
                     if (currentPage == 2) {
-                        setWelComeString(Constants.WELCOMESTATUS, "1");
+                        setWelComeString(Constants.WELCOMESTATUS, "2");
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                     }
@@ -192,7 +192,7 @@ public class WelcomeScreens extends BaseClass {
                             welcomeNextRound.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    setWelComeString(Constants.WELCOMESTATUS, "1");
+                                    setWelComeString(Constants.WELCOMESTATUS, "2");
                                     Intent intent = new Intent(WelcomeScreens.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();

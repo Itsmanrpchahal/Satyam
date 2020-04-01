@@ -31,6 +31,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.dynamiclinks.DynamicLink;
@@ -232,54 +233,97 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             public void onClick(View view) {
                 DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink().
                         setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
-                        .setDomainUriPrefix("satyam.page.link")
+                        .setDomainUriPrefix("https://satyam.page.link")
                         .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
-                        .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+                        .setIosParameters(new DynamicLink.IosParameters.Builder("satyam.page.link").build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+                        .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().build())
                         .buildDynamicLink();
 
                 Uri dynamicLinkUri = dynamicLink.getUri();
-                Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink().setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+
+                if (array_image.size() > 0) {
+                    Uri uri = dynamicLinkUri;
+                    Util.shareContent1(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString(),String.valueOf(array_image.get(0).getSrc()));
+
+                } else {
+                    Uri uri = dynamicLinkUri;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.setPackage("com.whatsapp");
+                    intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+                    startActivity(Intent.createChooser(intent, "Share Product"));
+                }
+
+               /* Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder()
+                                .setDescription("Hi! Check out this Product").build())
                         .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
+
                         .buildShortDynamicLink()
                         .addOnCompleteListener(ProductDetailsActivity.this, new OnCompleteListener<ShortDynamicLink>() {
                             @Override
                             public void onComplete(@NonNull Task<ShortDynamicLink> task) {
 
-                                if (array_image.size() > 0) {
-                                    Uri uri = task.getResult().getShortLink();
-                                    Util.shareContent1(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+                                if (task.isSuccessful()) {
+                                    if (array_image.size() > 0) {
+                                        Uri uri = task.getResult().getShortLink();
+                                        Util.shareContent1(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
 
-
-//                                    Intent intent = new Intent(Intent.ACTION_SEND);
-//                                    intent.setType("text/plain");
-//                                    intent.putExtra(Intent.EXTRA_TEXT,"Hi! Check out this Product"+"\n"+"\n"+uri.toString());
-//                                    startActivity(Intent.createChooser(intent,"Share Product"));
-                                } else {
-                                    Uri uri = task.getResult().getShortLink();
-                                    Intent intent = new Intent(Intent.ACTION_SEND);
-                                    intent.setType("text/plain");
-                                    intent.setPackage("com.whatsapp");
-                                    intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
-                                    startActivity(Intent.createChooser(intent, "Share Product"));
+                                    } else {
+                                        Uri uri = task.getResult().getShortLink();
+                                        Intent intent = new Intent(Intent.ACTION_SEND);
+                                        intent.setType("text/plain");
+                                        intent.setPackage("com.whatsapp");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+                                        startActivity(Intent.createChooser(intent, "Share Product"));
+                                    }
+                                }else {
+                                    Toast.makeText(ProductDetailsActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
                                 }
-
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(ProductDetailsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+                            }
+                        });*/
             }
         });
     }
 
-    public void deeplinking()
-    {
-        DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink().
+    public void deeplinking() {
+
+        DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
+                .setDomainUriPrefix("https://satyam.page.link")
+                // Open links with this app on Android
+                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                // Open links with com.example.ios on iOS
+                .buildDynamicLink();
+
+        Uri dynamicLinkUri = dynamicLink.getUri();
+
+       /* DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink().
                 setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
                 .setDomainUriPrefix("satyam.page.link")
                 .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
                 .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
                 .buildDynamicLink();
 
-        Uri dynamicLinkUri = dynamicLink.getUri();
-        Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink().setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
+        Uri dynamicLinkUri = dynamicLink.getUri();*/
+
+        if (array_image.size() > 0) {
+            Uri uri = dynamicLinkUri;
+            Util.shareContent(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString(),String.valueOf(array_image.get(0).getSrc()));
+
+        } else {
+            Uri uri = dynamicLinkUri;
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
+            startActivity(Intent.createChooser(intent, "Share Product"));
+        }
+      /*  Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink().setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
                 .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
                 .buildShortDynamicLink()
                 .addOnCompleteListener(ProductDetailsActivity.this, new OnCompleteListener<ShortDynamicLink>() {
@@ -304,7 +348,13 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                         }
 
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });*/
+
     }
 
     @Override
@@ -446,33 +496,28 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 String small = productDetailResponseResponse.body().getData().getName().toLowerCase().substring(1);
                 txtproductName.setText(cat + small);
 
-                if (productDetailResponseResponse.body().getData().getRegularPrice()==null || productDetailResponseResponse.body().getData().getPrice()==null || productDetailResponseResponse.body().getData().equals("") || productDetailResponseResponse.body().getData().equals(""))
-                {
+                if (productDetailResponseResponse.body().getData().getRegularPrice() == null || productDetailResponseResponse.body().getData().getPrice() == null || productDetailResponseResponse.body().getData().equals("") || productDetailResponseResponse.body().getData().equals("")) {
                     discounttv.setText("-0%");
-                }else {
-                    Float discount = Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice()) -  Float.valueOf(productDetailResponseResponse.body().getData().getSalePrice());
-                    Float getDiscount = discount/Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice());
+                } else {
+                    Float discount = Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice()) - Float.valueOf(productDetailResponseResponse.body().getData().getSalePrice());
+                    Float getDiscount = discount / Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice());
 
 
-                    if (String.valueOf(discount).length()>=4)
-                    {
-                        yousave.setText("You save ₹"+String.valueOf(discount).substring(0,4));
-                    }else if (String.valueOf(discount).length()==1)
-                    {
-                        yousave.setText("You save ₹"+discount.toString().substring(0,1));
-                    }else if (String.valueOf(discount).length()<=2)
-                    {
-                        yousave.setText("You save ₹"+discount.toString().substring(0,2)+".00");
-                    }else {
-                        yousave.setText("You save ₹"+discount.toString().substring(0,2)+".00");
+                    if (String.valueOf(discount).length() >= 4) {
+                        yousave.setText("You save ₹" + String.valueOf(discount).substring(0, 4));
+                    } else if (String.valueOf(discount).length() == 1) {
+                        yousave.setText("You save ₹" + discount.toString().substring(0, 1));
+                    } else if (String.valueOf(discount).length() <= 2) {
+                        yousave.setText("You save ₹" + discount.toString().substring(0, 2) + ".00");
+                    } else {
+                        yousave.setText("You save ₹" + discount.toString().substring(0, 2) + ".00");
                     }
 
-                    Float getFinalDiscount = getDiscount*100;
-                    if (String.valueOf(getFinalDiscount).length()>2)
-                    {
-                        discounttv.setText("-"+String.valueOf(getFinalDiscount).substring(0,2)+"%");
-                    }else {
-                        discounttv.setText("-"+String.valueOf(getFinalDiscount) +"%");
+                    Float getFinalDiscount = getDiscount * 100;
+                    if (String.valueOf(getFinalDiscount).length() > 2) {
+                        discounttv.setText("-" + String.valueOf(getFinalDiscount).substring(0, 2) + "%");
+                    } else {
+                        discounttv.setText("-" + String.valueOf(getFinalDiscount) + "%");
                     }
                 }
 
@@ -535,7 +580,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 }
 
 
-                if (productDetailResponseResponse.body().getData().getAttributes().size() == 0 || productDetailResponseResponse.body().getData().getRelatedIds().size()>0) {
+                if (productDetailResponseResponse.body().getData().getAttributes().size() == 0 || productDetailResponseResponse.body().getData().getRelatedIds().size() > 0) {
                     colorlayout.setVisibility(View.GONE);
                     recyclerColor.setVisibility(View.GONE);
 

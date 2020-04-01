@@ -76,8 +76,8 @@
 
                     <ImageButton
                         android:id="@+id/sharebt"
-                        android:layout_width="@dimen/margin_dp40"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/margin_dp50"
+                        android:layout_height="@dimen/margin_dp50"
                         android:layout_marginTop="@dimen/margin_dp5"
                         android:src="@drawable/ic_share_black_24dp"
                         android:layout_alignParentRight="true"
@@ -87,9 +87,10 @@
 
                 <ImageButton
                     android:id="@+id/whatsappshare"
-                    android:layout_width="@dimen/margin_dp40"
-                    android:layout_height="@dimen/margin_dp40"
+                    android:layout_width="@dimen/margin_dp50"
+                    android:layout_height="@dimen/margin_dp50"
                     android:src="@drawable/whatsapp"
+                    android:visibility="visible"
                     android:background="@color/colorTrans"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/sharebt"></ImageButton>

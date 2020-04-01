@@ -152,11 +152,11 @@ public class Util {
     }
 
     //share image
-    public static void shareContent(Context context, View imageView,String extratext){
+    public static void shareContent(Context context, View imageView, String extratext, String s){
 
         Bitmap bitmap =getBitmapFromView(imageView);
         try {
-            File file = new File(context.getExternalCacheDir(),"logicchip.png");
+            File file = new File(context.getCacheDir(),"image.png");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
             fOut.flush();
@@ -170,11 +170,19 @@ public class Util {
             context.startActivity(Intent.createChooser(intent, "Share Product"));
         } catch (Exception e) {
             e.printStackTrace();
+            Uri  uri = Uri.parse(s);
+            Toast.makeText(context, "OLD", Toast.LENGTH_SHORT).show();
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Intent.EXTRA_TEXT, extratext);
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.setType("image/png");
+            context.startActivity(Intent.createChooser(intent, "Share Product"));
         }
 
     }
 
-    public static void shareContent1(Context context, View imageView,String extratext){
+    public static void shareContent1(Context context, View imageView,String extratext,String s){
 
         Bitmap bitmap =getBitmapFromView(imageView);
         try {
@@ -193,6 +201,14 @@ public class Util {
             context.startActivity(Intent.createChooser(intent, "Share Product"));
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(context, "Catch", Toast.LENGTH_SHORT).show();
+            Uri  uri = Uri.parse(s);
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Intent.EXTRA_TEXT, extratext);
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.setType("image/png");
+            context.startActivity(Intent.createChooser(intent, "Share Product"));
         }
 
     }

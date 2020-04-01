@@ -318,7 +318,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
 
     private void searchProducts(String s) {
         if (Util.isOnline(MainActivity.this) != false) {
-            controller.setGetSerchProducts(s);
+            controller.setGetSerchProducts(s,"instock");
         } else {
             Util.showToastMessage(MainActivity.this, "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
         }

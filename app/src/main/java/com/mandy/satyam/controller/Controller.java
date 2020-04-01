@@ -272,8 +272,8 @@ public class Controller {
         });
     }
 
-    public void setRelatedPrducts(String cosumerKey, String consumerSecret, String category, String page,int per_page,String amr_slug) {
-        webAPI.getApi().homeResponse(cosumerKey, consumerSecret, category, page,per_page,amr_slug).enqueue(new Callback<Categoriesroducts>() {
+    public void setRelatedPrducts(String cosumerKey, String consumerSecret, String category, String page,int per_page,String amr_slug,String stock_status) {
+        webAPI.getApi().homeResponse(cosumerKey, consumerSecret, category, page,per_page,amr_slug,stock_status).enqueue(new Callback<Categoriesroducts>() {
             @Override
             public void onResponse(Call<Categoriesroducts> call, Response<Categoriesroducts> response) {
                 if (response != null) {
@@ -591,8 +591,8 @@ public class Controller {
         });
     }
 
-    public void setGetFilterProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search,String page,int perPage) {
-        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search,page,perPage).enqueue(new Callback<FilterResponse>() {
+    public void setGetFilterProducts(String consumer_key, String consumer_secret, String category, String min_price, String max_price, String search,String page,int perPage,String stock_status) {
+        webAPI.getApi().filterProducts(consumer_key, consumer_secret, category, min_price, max_price, search,page,perPage,stock_status).enqueue(new Callback<FilterResponse>() {
             @Override
             public void onResponse(Call<FilterResponse> call, Response<FilterResponse> response) {
                 if (response.isSuccessful()) {
@@ -647,9 +647,9 @@ public class Controller {
         });
     }
 
-    public void setGetSerchProducts(String search)
+    public void setGetSerchProducts(String search,String stock_status)
     {
-        webAPI.getApi().getSeacchProduct(search).enqueue(new Callback<GetSearchProductsResponse>() {
+        webAPI.getApi().getSeacchProduct(search,stock_status).enqueue(new Callback<GetSearchProductsResponse>() {
             @Override
             public void onResponse(Call<GetSearchProductsResponse> call, Response<GetSearchProductsResponse> response) {
                 if (response!=null)

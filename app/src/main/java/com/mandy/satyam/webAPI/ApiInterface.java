@@ -85,7 +85,8 @@ public interface ApiInterface {
             @Query("category") String category,
             @Query("page") String page,
             @Query("per_page") int per_page,
-            @Query("amr_slug") String amr_slug
+            @Query("amr_slug") String amr_slug,
+            @Query("stock_status") String stock_status
     );
 
     @GET("wp-json/wc/v3/products/{input}")
@@ -250,7 +251,8 @@ public interface ApiInterface {
             @Query("max_price") String max_price,
             @Query("search") String search,
             @Query("page") String page,
-            @Query("per_page") int per_page
+            @Query("per_page") int per_page,
+            @Query("stock_status") String stock_status
     );
 
     @GET("wp-json/wc/v3/orders/{input}")
@@ -269,7 +271,8 @@ public interface ApiInterface {
 
     @POST("wp-json/os/v1/get_search")
     Call<GetSearchProductsResponse> getSeacchProduct(
-            @Query("search") String search
+            @Query("search") String search,
+            @Query("stock_status") String stock_status
     );
 
     @POST("wp-json/os/v1/get_zones")
