@@ -221,11 +221,6 @@ public class SplashScreen extends BaseClass implements Controller.Keys {
                         }
                     }
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    
-                }
             });
         } catch (Exception e)
         {

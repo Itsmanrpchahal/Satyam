@@ -443,6 +443,8 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
                     controller.setSocailLogin(token,"gmail",email,image,Fname, Lname);
                 }
             }
+        }else  {
+//            Toast.makeText(this, "HERE", Toast.LENGTH_SHORT).show();
         }
     }
 

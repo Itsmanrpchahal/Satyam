@@ -171,7 +171,6 @@ public class Util {
         } catch (Exception e) {
             e.printStackTrace();
             Uri  uri = Uri.parse(s);
-            Toast.makeText(context, "OLD", Toast.LENGTH_SHORT).show();
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Intent.EXTRA_TEXT, extratext);
@@ -201,7 +200,6 @@ public class Util {
             context.startActivity(Intent.createChooser(intent, "Share Product"));
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, "Catch", Toast.LENGTH_SHORT).show();
             Uri  uri = Uri.parse(s);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

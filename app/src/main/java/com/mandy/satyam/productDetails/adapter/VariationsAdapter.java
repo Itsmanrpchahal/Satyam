@@ -55,25 +55,31 @@ public class VariationsAdapter extends RecyclerView.Adapter<VariationsAdapter.Vi
 
         if (customVariation.size()>=1)
         {
-            for (int i = 0; i < customVariation.get(position).getOptions().size(); i++) {
-                ProductDetailResponse.Data.CustomVariation.Option option = customVariation.get(position).getOptions().get(i);
-                optionArrayList.add(option);
-                VariationOptionAdapter adapter = new VariationOptionAdapter(context, optionArrayList,customVariation,position);
-                holder.varitionotoinRecycler.setAdapter(adapter);
-                adapter.VariationOptionAdapter(new GetOptionPos() {
-                    @Override
-                    public void getPos(int pos, ArrayList<String> arrayList) {
-                        selectedItemSize = String.valueOf(pos);
-                        selectedItems.addAll(arrayList);
-                        adapter.VariationOptionAdapter(new GetOptionPos() {
-                            @Override
-                            public void getPos(int pos, ArrayList<String> arrayList) {
-                                selectedItemSize = String.valueOf(pos);
-                                selectedItems.addAll(selectedItems);
-                            }
-                        });
-                    }
-                });
+            try{
+                for (int i = 0; i < customVariation.get(position).getOptions().size(); i++) {
+                    ProductDetailResponse.Data.CustomVariation.Option option = customVariation.get(position).getOptions().get(i);
+                    optionArrayList.add(option);
+                    VariationOptionAdapter adapter = new VariationOptionAdapter(context, optionArrayList,customVariation,position);
+                    holder.varitionotoinRecycler.setAdapter(adapter);
+                    adapter.VariationOptionAdapter(new GetOptionPos() {
+                        @Override
+                        public void getPos(int pos, ArrayList<String> arrayList) {
+                            selectedItemSize = String.valueOf(pos);
+                            selectedItems.addAll(arrayList);
+                            adapter.VariationOptionAdapter(new GetOptionPos() {
+                                @Override
+                                public void getPos(int pos, ArrayList<String> arrayList) {
+                                    selectedItemSize = String.valueOf(pos);
+                                    selectedItems.addAll(selectedItems);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+
             }
         }
 

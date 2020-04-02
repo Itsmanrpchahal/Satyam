@@ -63,7 +63,46 @@ public class SubCategory {
         this.maxPrice = maxPrice;
     }
 
+    @SerializedName("brand_categories")
+    @Expose
+    private List<BrandCategory> brandCategories = null;
+
+    public List<BrandCategory> getBrandCategories() {
+        return brandCategories;
+    }
+
+    public void setBrandCategories(List<BrandCategory> brandCategories) {
+        this.brandCategories = brandCategories;
+    }
+
     public class Datum {
+
+        @SerializedName("category_id")
+        @Expose
+        private Integer categoryId;
+        @SerializedName("category_name")
+        @Expose
+        private String categoryName;
+
+        public Integer getCategoryId() {
+            return categoryId;
+        }
+
+        public void setCategoryId(Integer categoryId) {
+            this.categoryId = categoryId;
+        }
+
+        public String getCategoryName() {
+            return categoryName;
+        }
+
+        public void setCategoryName(String categoryName) {
+            this.categoryName = categoryName;
+        }
+
+    }
+
+    public class BrandCategory {
 
         @SerializedName("category_id")
         @Expose
