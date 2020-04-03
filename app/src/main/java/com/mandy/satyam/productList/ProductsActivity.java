@@ -334,6 +334,7 @@ public class ProductsActivity extends BaseClass implements Controller.RelatedPrd
             }
         } else {
             progressDialog.dismiss();
+            seemorebt.setVisibility(View.GONE);
         }
 
 

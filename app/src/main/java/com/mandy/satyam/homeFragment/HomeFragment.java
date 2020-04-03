@@ -101,6 +101,7 @@ Dialog updateDialog;
         controller = new Controller((Controller.HomePage)HomeFragment.this);
         if (Util.isOnline(getContext()) != false) {
             controller.setHomePage(getStringVal(Constants.USERTOKEN));
+            Log.d("USERTOKEN",getStringVal(Constants.USERTOKEN));
         } else {
             Util.showToastMessage(getContext(), "No Internet connection", getResources().getDrawable(R.drawable.ic_nointernet));
         }
@@ -175,30 +176,14 @@ Dialog updateDialog;
 
         adapter = new ViewPagerAdapter(getContext(), banner);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(1);
         tabLayout.setViewPager(viewPager);
         NUM_PAGES =banner.size();
-//        final float density = getResources().getDisplayMetrics().density;
+        final float density = getResources().getDisplayMetrics().density;
         //Set circle indicator radius
 //        tabLayout.setRadius(5 * density);
 //        indicator.setVisibility(View.GONE);
 
-        // Auto start of viewpager
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (currentPage == NUM_PAGES) {
-                    currentPage = 0;
-                }
-                viewPager.setCurrentItem(currentPage++, true);
-            }
-        };
-//        Timer swipeTimer = new Timer();
-//        swipeTimer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                handler.post(Update);
-//            }
-//        }, 3000, 3000);
 
         // Pager listener over indicator
         tabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -219,6 +204,8 @@ Dialog updateDialog;
             }
         });
     }
+
+
 
 
     @Override

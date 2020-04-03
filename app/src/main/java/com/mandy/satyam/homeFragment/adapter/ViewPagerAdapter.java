@@ -26,7 +26,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     ArrayList<HomePageResponse.Data.Banner> array_image;
     Context context;
-
+    private int pos = 0;
 
 
     public ViewPagerAdapter(Context context, ArrayList<HomePageResponse.Data.Banner> array_image) {
@@ -42,7 +42,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == ((RelativeLayout) object);
+        return view == (object);
     }
 
     @NonNull
@@ -55,22 +55,8 @@ public class ViewPagerAdapter extends PagerAdapter {
         trailimg = itemview.findViewById(R.id.trailImage);
         Glide.with(context).load(array_image.get(position).getImage()).into(trailimg);
         Log.d("Images",array_image.get(position).getImage().toString());
-//        trailimg.setImageResource(array_image.get(position));
-        avLoadingIndicatorView = itemview.findViewById(R.id.avi);
-       /* Glide.with(context).load(array_image.get(position)).listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                return false;
-            }
-
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                avLoadingIndicatorView.setVisibility(View.GONE);
-                return false;
-            }
-        }).into(trailimg);*/
-
         ((ViewPager) container).addView(itemview);
+
 
         return itemview;
     }
@@ -78,6 +64,6 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        ((ViewPager) container).removeView((RelativeLayout) object);
+        (container).removeView((View) object);
     }
 }

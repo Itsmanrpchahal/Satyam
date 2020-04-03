@@ -35,6 +35,7 @@ public class ViewPagerProductImageAdapter extends PagerAdapter {
     boolean abc = false;
     ArrayList<ProductDetailResponse.Data.Image> array_image = new ArrayList<>();
     ImageView trailimg;
+    private int pos = 0;
 
     public ViewPagerProductImageAdapter(Context context, ArrayList<ProductDetailResponse.Data.Image> array_image1) {
         this.context = context;

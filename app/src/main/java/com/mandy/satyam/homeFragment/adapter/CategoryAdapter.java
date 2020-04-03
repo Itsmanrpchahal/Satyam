@@ -73,6 +73,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 intent.putExtra("cateID",categories.get(i).getCategoryId().toString());
                 intent.putExtra("ProductType",categories.get(i).getCategoryName());
                 context.startActivity(intent);
+
             }
         });
     }

@@ -88,9 +88,10 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
 
         }
 
-        if (!categoryProducts.get(position).getProductPrice().equals(""))
+
+        if (!categoryProducts.get(position).getProductPrice().equals("") || categoryProducts.get(position).getProductPrice()!=null || !categoryProducts.get(position).getProductPrice().equals("null"))
         {
-            holder.txtPrice.setText("₹" + categoryProducts.get(position).getProductPrice());
+            holder.txtPrice.setText("₹" + categoryProducts.get(position).getProductPrice().toString());
         }
 
 //        Collections.reverse(categoryProducts);

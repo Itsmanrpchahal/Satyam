@@ -303,15 +303,6 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
 
         Uri dynamicLinkUri = dynamicLink.getUri();
 
-       /* DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink().
-                setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
-                .setDomainUriPrefix("satyam.page.link")
-                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
-                .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
-                .buildDynamicLink();
-
-        Uri dynamicLinkUri = dynamicLink.getUri();*/
-
         if (array_image.size() > 0) {
             Uri uri = dynamicLinkUri;
             Util.shareContent(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString(),String.valueOf(array_image.get(0).getSrc()));
@@ -499,6 +490,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 if (productDetailResponseResponse.body().getData().getRegularPrice() == null || productDetailResponseResponse.body().getData().getPrice() == null || productDetailResponseResponse.body().getData().equals("") || productDetailResponseResponse.body().getData().equals("")) {
                     discounttv.setText("-0%");
                 } else {
+
                     Float discount = Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice()) - Float.valueOf(productDetailResponseResponse.body().getData().getSalePrice());
                     Float getDiscount = discount / Float.valueOf(productDetailResponseResponse.body().getData().getRegularPrice());
 

@@ -5,8 +5,13 @@
     android:versionCode="1"
     android:versionName="1.0">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -16,21 +21,39 @@
     <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
+        android:hardwareAccelerated="false"
         android:icon="@drawable/styam"
         android:label="@string/app_name"
-        android:hardwareAccelerated="false"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".myProfile.UpdateProfile"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".welcomeScreens.WelcomeScreens"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".allCategory.AllCategory"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".myOrderList.GetOrderDetail"
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".myProfile.UpdateProfile"
             android:screenOrientation="portrait" />
-        <activity android:name=".filterScreen.FilterActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".welcomeScreens.WelcomeScreens"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".allCategory.AllCategory"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".myOrderList.GetOrderDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".filterScreen.FilterActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".opt.OTP_verify"
             android:screenOrientation="portrait"
@@ -53,9 +76,10 @@
         <activity android:name=".productList.ProductsActivity" />
         <activity
             android:name=".productDetails.ProductDetailsActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
 
-            <!--<intent-filter>
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -64,7 +88,8 @@
                 <data
                     android:host="satyam.page.link"
                     android:scheme="https" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".home2.SubCategoryActivity"
@@ -107,7 +132,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-           <!-- <intent-filter android:autoVerify="true">
+            <!--
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -116,7 +142,8 @@
                 <data
                     android:host="satyam.page.link"
                     android:scheme="https"/>
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".commonActivity.CustmerActivity"
@@ -124,14 +151,14 @@
         <activity
             android:name=".signup.OtpActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".payment.PaymentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".signup.SignupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateUnchanged|adjustPan"/>
+            android:windowSoftInputMode="stateUnchanged|adjustPan" />
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait"

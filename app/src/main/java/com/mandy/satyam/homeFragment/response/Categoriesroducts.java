@@ -969,9 +969,9 @@ public class Categoriesroducts {
             @SerializedName("url")
             @Expose
             private String url;
-            @SerializedName("address")
+           /* @SerializedName("address")
             @Expose
-            private Address address;
+            private Address address;*/
 
             public Integer getId() {
                 return id;
@@ -1005,14 +1005,14 @@ public class Categoriesroducts {
                 this.url = url;
             }
 
-            public Address getAddress() {
+         /*   public Address getAddress() {
                 return address;
             }
 
             public void setAddress(Address address) {
                 this.address = address;
             }
-
+*/
             public class Address {
 
                 @SerializedName("street_1")
