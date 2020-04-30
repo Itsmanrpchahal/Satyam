@@ -2,6 +2,7 @@ package com.mandy.satyam.controller;
 
 import android.app.LauncherActivity;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.mandy.satyam.KeysResponse;
 import com.mandy.satyam.addressActivity.response.GetAddress;
@@ -25,6 +26,8 @@ import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productDetails.response.VariationResponse;
 import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 import com.mandy.satyam.productList.response.SubCategory;
+import com.mandy.satyam.termsandcondition.PrivacyTD;
+import com.mandy.satyam.utils.Util;
 import com.mandy.satyam.webAPI.WebAPI;
 
 import java.io.Serializable;
@@ -66,6 +69,7 @@ public class Controller {
     public GetZone getZone;
     public GetCities getCities;
     public SocailLogin socailLogin;
+    public PrivacyTD privacyTD;
 
 
     //logincheck
@@ -182,12 +186,19 @@ public class Controller {
     }
 
 
+    //privacyTD
+    public Controller(PrivacyTD privacyTD1)
+    {
+        privacyTD = privacyTD1;
+        webAPI = new WebAPI() ;
+    }
+
     //ToDo: Rest API's
     public void setLoginCheck(String email_phone, String type) {
         webAPI.getApi().loginCheck(email_phone, type).enqueue(new Callback<com.mandy.satyam.login.model.LoginCheck>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.login.model.LoginCheck> call, Response<com.mandy.satyam.login.model.LoginCheck> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.login.model.LoginCheck> loginCheckResponse = response;
                     loginCheck.onSuccessLoginCheck(loginCheckResponse);
                 }
@@ -205,7 +216,7 @@ public class Controller {
         webAPI.getApi().login(email, type, passsword).enqueue(new Callback<com.mandy.satyam.login.model.Login>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.login.model.Login> call, Response<com.mandy.satyam.login.model.Login> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.login.model.Login> loginResponse = response;
                     login.onsetLogin(loginResponse);
                 }
@@ -224,7 +235,7 @@ public class Controller {
         webAPI.getApi().socialLogin(token, type, email, image, first_name, last_name).enqueue(new Callback<SocialLoginResponse>() {
             @Override
             public void onResponse(Call<SocialLoginResponse> call, Response<SocialLoginResponse> response) {
-                if(response!=null)
+                if(response.isSuccessful())
                 {
                     Response<SocialLoginResponse> socailLoginResponse = response;
                     socailLogin.onSuccessSocailLogin(socailLoginResponse);
@@ -242,7 +253,7 @@ public class Controller {
         webAPI.getApi().homepage(token).enqueue(new Callback<HomePageResponse>() {
             @Override
             public void onResponse(Call<HomePageResponse> call, Response<HomePageResponse> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<HomePageResponse> homePageResponseResponse = response;
                     homePage.onSucessHome(homePageResponseResponse);
                 }
@@ -259,7 +270,7 @@ public class Controller {
         webAPI.getApi().keys(token).enqueue(new Callback<KeysResponse>() {
             @Override
             public void onResponse(Call<KeysResponse> call, Response<KeysResponse> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<KeysResponse> keysResponseResponse = response;
                     keys.onSuccess(keysResponseResponse);
                 }
@@ -276,7 +287,7 @@ public class Controller {
         webAPI.getApi().homeResponse(cosumerKey, consumerSecret, category, page,per_page,amr_slug,stock_status).enqueue(new Callback<Categoriesroducts>() {
             @Override
             public void onResponse(Call<Categoriesroducts> call, Response<Categoriesroducts> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<Categoriesroducts> homePageResponseResponse = response;
                     relatedPrducts.onSucessRelated(homePageResponseResponse);
                 }
@@ -293,7 +304,7 @@ public class Controller {
         webAPI.getApi().productDetail(id,token, cosumerKey, consumerSecret).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<ProductDetailResponse> productDetailResponseResponse = response;
                     productDetail.onSuccessProductDetail(productDetailResponseResponse);
                 }
@@ -311,7 +322,7 @@ public class Controller {
         webAPI.getApi().subcategories(category_id).enqueue(new Callback<SubCategory>() {
             @Override
             public void onResponse(Call<SubCategory> call, Response<SubCategory> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<SubCategory> subCategoryResponse = response;
                     subCategory.onSuccessSubcate(subCategoryResponse);
                 }
@@ -328,7 +339,7 @@ public class Controller {
         webAPI.getApi().clearCart().enqueue(new Callback<com.mandy.satyam.login.model.ClearCart>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.login.model.ClearCart> call, Response<com.mandy.satyam.login.model.ClearCart> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.login.model.ClearCart> clearCartResponse = response;
                     clearCart.onSuccessClearCart(clearCartResponse);
                 }
@@ -346,7 +357,7 @@ public class Controller {
         webAPI.getApi().getCartProducts(token).enqueue(new Callback<com.mandy.satyam.myCart.response.GetCartProducts>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.myCart.response.GetCartProducts> call, Response<com.mandy.satyam.myCart.response.GetCartProducts> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.myCart.response.GetCartProducts> cartProductsResponse = response;
                     getCartProducts.onSuccessGetCart(cartProductsResponse);
                 }
@@ -363,7 +374,7 @@ public class Controller {
         webAPI.getApi().addtoCart(product_id, quantity, variation_id, token).enqueue(new Callback<com.mandy.satyam.productDetails.response.AddToCart>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.productDetails.response.AddToCart> call, Response<com.mandy.satyam.productDetails.response.AddToCart> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.productDetails.response.AddToCart> addToCartResponse = response;
                     addToCart.onSuccessAddToCart(addToCartResponse);
                 }
@@ -380,7 +391,7 @@ public class Controller {
         webAPI.getApi().updateCart(cart_id, token, quantity).enqueue(new Callback<com.mandy.satyam.myCart.response.UpdateCart>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.myCart.response.UpdateCart> call, Response<com.mandy.satyam.myCart.response.UpdateCart> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.myCart.response.UpdateCart> updateCartResponse = response;
                     updateCart.onSuccessUpdateCart(updateCartResponse);
                 }
@@ -397,7 +408,7 @@ public class Controller {
         webAPI.getApi().removeCartItem(cart_id, user_id, token).enqueue(new Callback<com.mandy.satyam.myCart.response.RemoveCartItem>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.myCart.response.RemoveCartItem> call, Response<com.mandy.satyam.myCart.response.RemoveCartItem> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.myCart.response.RemoveCartItem> removeCartItemResponse = response;
                     removeCartItem.onSuccessRemoveCartItem(removeCartItemResponse);
                 }
@@ -414,7 +425,7 @@ public class Controller {
         webAPI.getApi().getProfile(token).enqueue(new Callback<com.mandy.satyam.myProfile.response.GetProfile>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.myProfile.response.GetProfile> call, Response<com.mandy.satyam.myProfile.response.GetProfile> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.myProfile.response.GetProfile> getProfileResponse = response;
                     getProfile.onSuccessGetProfile(getProfileResponse);
                 }
@@ -431,7 +442,7 @@ public class Controller {
         webAPI.getApi().updateProfile(token, first_name, last_name, email, password, profile).enqueue(new Callback<com.mandy.satyam.myProfile.response.UpdateProfile>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.myProfile.response.UpdateProfile> call, Response<com.mandy.satyam.myProfile.response.UpdateProfile> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.myProfile.response.UpdateProfile> updateProfileResponse = response;
                     updateProfile.onSuccessUpdateProfile(updateProfileResponse);
                 }
@@ -449,7 +460,7 @@ public class Controller {
         webAPI.getApi().updateProfile1(token,first_name,last_name,email,phone,profile).enqueue(new Callback<com.mandy.satyam.myProfile.response.UpdateProfile>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.myProfile.response.UpdateProfile> call, Response<com.mandy.satyam.myProfile.response.UpdateProfile> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.myProfile.response.UpdateProfile> updateProfileResponse = response;
                     updateProfile1.onSuccessUpdateProfile1(updateProfileResponse);
                 }
@@ -466,7 +477,7 @@ public class Controller {
         webAPI.getApi().getAddress(userID, amr_slug,consumerkey, consumerSecret).enqueue(new Callback<com.mandy.satyam.addressActivity.response.GetAddress>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.addressActivity.response.GetAddress> call, Response<com.mandy.satyam.addressActivity.response.GetAddress> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.addressActivity.response.GetAddress> getAddressResponse = response;
                     getAddress.onSuccessGetAddress(getAddressResponse);
                 }
@@ -484,7 +495,7 @@ public class Controller {
         webAPI.getApi().updateAddress(input,amr_slug, consumer_key, consumer_screat, first_name, lastname,address_1, address_2, city, postcode, state, phone,email,address_type,address_type_text,alternate_phone,ward_number,country).enqueue(new Callback<com.mandy.satyam.addressActivity.response.UpdateAddress>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.addressActivity.response.UpdateAddress> call, Response<com.mandy.satyam.addressActivity.response.UpdateAddress> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<com.mandy.satyam.addressActivity.response.UpdateAddress> updateAddressResponse = response;
                     updateAddress.onSuccessUpdateAddress(updateAddressResponse);
                 }
@@ -506,10 +517,8 @@ public class Controller {
         webAPI.getApi().createOrder(payment_method, payment_method_title, set_paid, first_name, last_name, address_1, address_2, city, state, postcode, country, email, phone, Sfirst_name, Slast_name, Saddress_1, Saddress_2, Scity, Sstate, Spostcode, Scountry, productID_quantity, consumer_key, consumer_secret, customer_id, amr_slug).enqueue(new Callback<CreateOrder>() {
             @Override
             public void onResponse(Call<CreateOrder> call, Response<CreateOrder> response) {
-                if (response != null) {
                     Response<CreateOrder> createOrderResponse = response;
                     placeOrder.onSuccessPlaceOrder(createOrderResponse);
-                }
             }
 
             @Override
@@ -561,7 +570,7 @@ public class Controller {
         webAPI.getApi().createOrder1(createOrderPojo, consumer_key, consumer_secret, customer_id, amr_slug).enqueue(new Callback<CreateOrder>() {
             @Override
             public void onResponse(Call<CreateOrder> call, Response<CreateOrder> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     Response<CreateOrder> createOrderResponse = response;
                     placeOrder.onSuccessPlaceOrder(createOrderResponse);
                 }
@@ -633,7 +642,7 @@ public class Controller {
         webAPI.getApi().variations(prodctID,arrayList).enqueue(new Callback<VariationResponse>() {
             @Override
             public void onResponse(Call<VariationResponse> call, Response<VariationResponse> response) {
-                if (response!=null)
+                if (response.isSuccessful())
                 {
                     Response<VariationResponse> variationResponseResponse = response;
                     getVariations.onSuccessVariations(variationResponseResponse);
@@ -652,7 +661,7 @@ public class Controller {
         webAPI.getApi().getSeacchProduct(search,stock_status).enqueue(new Callback<GetSearchProductsResponse>() {
             @Override
             public void onResponse(Call<GetSearchProductsResponse> call, Response<GetSearchProductsResponse> response) {
-                if (response!=null)
+                if (response.isSuccessful())
                 {
                     Response<GetSearchProductsResponse> getSearchProductsResponseResponse = response;
                     getSerchProducts.onSuccessSearch(getSearchProductsResponseResponse);
@@ -671,7 +680,7 @@ public class Controller {
         webAPI.getApi().getZones().enqueue(new Callback<GetZones>() {
             @Override
             public void onResponse(Call<GetZones> call, Response<GetZones> response) {
-                if (response!=null)
+                if (response.isSuccessful())
                 {
                     Response<GetZones> getZonesResponse = response;
                     getZone.onSuccessZones(getZonesResponse);
@@ -690,7 +699,7 @@ public class Controller {
         webAPI.getApi().getCities(state_id).enqueue(new Callback<com.mandy.satyam.addressActivity.response.GetCities>() {
             @Override
             public void onResponse(Call<com.mandy.satyam.addressActivity.response.GetCities> call, Response<com.mandy.satyam.addressActivity.response.GetCities> response) {
-                if (response!=null)
+                if (response.isSuccessful())
                 {
                     Response<com.mandy.satyam.addressActivity.response.GetCities> getCitiesResponse = response;
                     getCities.onSuccessCities(getCitiesResponse);
@@ -700,6 +709,26 @@ public class Controller {
             @Override
             public void onFailure(Call<com.mandy.satyam.addressActivity.response.GetCities> call, Throwable t) {
                     getCities.onError(t.getMessage());
+            }
+        });
+    }
+
+
+    public void setPrivacyTD()
+    {
+        webAPI.getApi().privacyTD().enqueue(new Callback<com.mandy.satyam.termsandcondition.PrivacyTD>() {
+            @Override
+            public void onResponse(Call<com.mandy.satyam.termsandcondition.PrivacyTD> call, Response<com.mandy.satyam.termsandcondition.PrivacyTD> response) {
+                if (response.isSuccessful())
+                {
+                    Response<com.mandy.satyam.termsandcondition.PrivacyTD> privacyTDResponse= response;
+                    privacyTD.onSuccess(privacyTDResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.mandy.satyam.termsandcondition.PrivacyTD> call, Throwable t) {
+                privacyTD.onError(t.getMessage());
             }
         });
     }
@@ -866,6 +895,11 @@ public class Controller {
 
     public interface SocailLogin{
         void onSuccessSocailLogin(Response<SocialLoginResponse> socialLoginResponse);
+        void onError(String error);
+    }
+
+    public interface PrivacyTD{
+        void onSuccess(Response<com.mandy.satyam.termsandcondition.PrivacyTD> privacyTDResponse);
         void onError(String error);
     }
 }

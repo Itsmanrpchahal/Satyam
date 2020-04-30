@@ -28,6 +28,12 @@
             android:id="@+id/my_profile"
             android:title="Profile"
             android:icon="@drawable/ic_person"/>
+
+        <item
+            android:id="@+id/privacy"
+            android:title="Privacy Policy"
+            android:icon="@drawable/privacy"></item>
+
         <item
             android:id="@+id/term"
             android:title="Term's &amp; Condition"

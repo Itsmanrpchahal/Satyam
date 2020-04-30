@@ -264,8 +264,23 @@ public class EmailLogin extends BaseClass implements Controller.LoginCheck ,Cont
             }else {
                 setStringVal(Constants.MOBILE,"");
             }
-            controller.setClearCart();
+//            controller.setClearCart();
 
+            if (intent.getStringExtra("isFrom")!=null)
+            {
+                if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                {
+                    Intent intent = new Intent(EmailLogin.this, ProductDetailsActivity.class);
+                    intent.putExtra("productID", productID);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+            else {
+                Intent intent = new Intent(EmailLogin.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }else {
             Util.showToastMessage(EmailLogin.this, loginResponse.body().getMessage(), getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
         }

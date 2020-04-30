@@ -26,6 +26,7 @@ import com.mandy.satyam.productDetails.response.ProductDetailResponse;
 import com.mandy.satyam.productDetails.response.VariationResponse;
 import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 import com.mandy.satyam.productList.response.SubCategory;
+import com.mandy.satyam.termsandcondition.PrivacyTD;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -284,5 +285,10 @@ public interface ApiInterface {
     @POST("wp-json/os/v1/get_cities")
     Call<GetCities> getCities(
       @Query("state_id") String state_id
+    );
+
+    @POST("wp-json/os/v1/get_content")
+    Call<PrivacyTD> privacyTD(
+
     );
 }

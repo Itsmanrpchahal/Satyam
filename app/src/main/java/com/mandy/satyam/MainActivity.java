@@ -51,7 +51,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.material.navigation.NavigationView;
 import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
-import com.mandy.satyam.commonActivity.CustmerActivity;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.filterScreen.response.FilterResponse;
 import com.mandy.satyam.homeFragment.HomeFragment;
@@ -67,6 +66,7 @@ import com.mandy.satyam.productDetails.ProductDetailsActivity;
 import com.mandy.satyam.productList.ProductsActivity;
 import com.mandy.satyam.productList.response.GetSearchProductsResponse;
 import com.mandy.satyam.productList.response.SubCategory;
+import com.mandy.satyam.termsandcondition.PrivacyPolicay;
 import com.mandy.satyam.termsandcondition.TermsActivity;
 import com.mandy.satyam.utils.Util;
 
@@ -85,17 +85,8 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
     ActionBarDrawerToggle mToggle;
     FragmentManager manager;
     FragmentTransaction transaction;
-    ArrayList<Categoriesroducts.Datum.Image> images = new ArrayList<>();
-    ArrayList<FilterResponse.Datum.Image> filterImages = new ArrayList<>();
-    ArrayList<Categoriesroducts.Datum> arraylist = new ArrayList<Categoriesroducts.Datum>();
-    ArrayList<FilterResponse.Datum> filterDatumArraylist = new ArrayList<FilterResponse.Datum>();
-    ArrayList<SubCategory.Datum> subCategories = new ArrayList<>();
     ArrayList<String> productname = new ArrayList<>();
     ArrayList<GetSearchProductsResponse.Datum> searchProducts = new ArrayList<>();
-    public static final int MULTIPLE_PERMISSIONS = 10;
-    String[] permissions = new String[]{
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA};
     @BindView(R.id.txtToolbar)
     TextView txtToolbar;
     @BindView(R.id.product_cart)
@@ -386,6 +377,7 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
         MenuItem myorderlist = menu.findItem(R.id.myorderlist);
         MenuItem mycart = menu.findItem(R.id.cart);
         MenuItem profile = menu.findItem(R.id.my_profile);
+        MenuItem term = menu.findItem(R.id.term);
         if (getStringVal(Constants.LOGIN_STATUS).equals("login")) {
             textLogout.setTitle("Logout");
             mycart.setVisible(true);
@@ -457,18 +449,41 @@ public class MainActivity extends BaseClass implements Controller.Keys, Controll
                         intent2.putExtra("T", "T");
                         startActivity(intent2);
                         break;
+
+
+                    case R.id.privacy:
+                        drawerNavigation.closeDrawers();
+                        Intent intent3 = new Intent(MainActivity.this, PrivacyPolicay.class);
+                        startActivity(intent3);
+                        break;
                     case R.id.customer:
                         drawerNavigation.closeDrawers();
-                        try {
+                       /* try {
                             PackageManager pm = getPackageManager();
                             String toNumber = "918889938888";
-                            Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + "" + toNumber + "?body=" + "Hello Testing"));
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND, Uri.parse("smsto:" + "" + toNumber + "?body=" + "Hello Testing"));
                             sendIntent.setPackage("com.whatsapp");
                             startActivity(sendIntent);
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(MainActivity.this, "it may be you dont have whats app", Toast.LENGTH_LONG).show();
+                        }*/
+
+                        try {
+                            String text = "";// Replace with your message.
+
+                            String toNumber = "918889938888"; // Replace with mobile phone number without +Sign or leading zeros, but with country code
+                            //Suppose your country is India and your phone number is “xxxxxxxxxx”, then you need to send “91xxxxxxxxxx”.
+
+
+                            Intent intent5 = new Intent(Intent.ACTION_VIEW);
+                            intent5.setData(Uri.parse("http://api.whatsapp.com/send?phone="+toNumber +"&text="+text));
+                            startActivity(intent5);
                         }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                         break;
                 }
                 return false;

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,13 +15,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.mandy.satyam.MainActivity;
 import com.mandy.satyam.R;
-import com.mandy.satyam.addressActivity.AddressActivity;
 import com.mandy.satyam.addressActivity.response.GetAddress;
 import com.mandy.satyam.addressActivity.response.GetCities;
 import com.mandy.satyam.addressActivity.response.GetZones;
@@ -31,16 +28,9 @@ import com.mandy.satyam.baseclass.BaseClass;
 import com.mandy.satyam.baseclass.Constants;
 import com.mandy.satyam.controller.Controller;
 import com.mandy.satyam.placeorder.CreateOrder;
-import com.mandy.satyam.placeorder.CreateOrderPojo;
 import com.mandy.satyam.utils.Util;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,6 +115,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
         controller = new Controller((Controller.GetAddress) this, (Controller.UpdateAddress) this, (Controller.PlaceOrder) this, (Controller.PlaceOrder1) this, (Controller.GetZone) this, (Controller.GetCities) this);
         controller.setGetAddress(getStringVal(Constants.USER_ID), "get_address", getStringVal(Constants.CONSUMER_KEY), getStringVal(Constants.CONSUMER_SECRET));
         controller.setGetZone();
+        Log.d("keys",getStringVal(Constants.CONSUMER_KEY)+"   "+getStringVal(Constants.CONSUMER_SECRET)+"  "+getStringVal(Constants.USER_ID));
         if (intent != null) {
 
             if (intent.getStringExtra("isFrom").equals("BuyBT")) {
@@ -311,6 +302,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                     }
                 } else {
                     dialog.dismiss();
+
                     if (TextUtils.isEmpty(edtName.getText().toString()) && TextUtils.isEmpty(edtLName.getText().toString()) && TextUtils.isEmpty(edtMobile.getText().toString()) &&
                             TextUtils.isEmpty(edtPostcode.getText().toString()) && TextUtils.isEmpty(edtFlat.getText().toString()) &&
                             TextUtils.isEmpty(edtNear.getText().toString())) {
@@ -351,6 +343,11 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                             }else {
                                 email = edtemail.getText().toString();
                             }
+
+                            Log.d("PLACEORDER1",""+edtName.getText().toString()+"\n"+edtLName.getText().toString()+"\n"+
+                                    edtFlat.getText().toString()+"\n"+ cityTV.getText().toString()+"\n"+stateTV.getText().toString()+"\n"+edtPostcode.getText().toString()+
+                                    "\n"+email+"\n"+"91 "+ edtMobile.getText().toString()+"\n"+product_id_quantity+"\n"+getStringVal(Constants.CONSUMER_KEY)+"\n"+
+                                    getStringVal(Constants.CONSUMER_SECRET)+"\n"+getStringVal(Constants.USER_ID));
                             controller.setPlaceOrder1_("bacs", "Direct Bank Transfer", true, edtName.getText().toString(), edtLName.getText().toString(),
                                     edtFlat.getText().toString(), "", cityTV.getText().toString(), stateTV.getText().toString(), edtPostcode.getText().toString(),
                                     "India",email,"91 "+ edtMobile.getText().toString(), edtName.getText().toString(), edtLName.getText().toString(),
@@ -703,6 +700,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
 
             }
         }
+        Log.d("PLACEORDER",""+response.body().getStatus());
     }
 
     @Override
@@ -745,7 +743,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                 Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
             }
         }else {
-            Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
+            Util.showToastMessage(this, ""+response.code(), getResources().getDrawable(R.drawable.app_icon));
         }
     }
 
@@ -763,7 +761,7 @@ public class ADDAddressActivity extends BaseClass implements Controller.GetAddre
                 Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
             }
         }else {
-            Util.showToastMessage(this, response.body().getMessage(), getResources().getDrawable(R.drawable.app_icon));
+            Util.showToastMessage(this, "Try again", getResources().getDrawable(R.drawable.app_icon));
         }
     }
 

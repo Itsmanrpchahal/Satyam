@@ -18,5 +18,6 @@
      <color name="colorBtnRed">#fe5c00</color>
     <color name="latestColor">#fe5c00</color>
     <color name="colorTrans">#00000000</color>
+    <color name="colorBlack">#48000000</color>
 
 </resources>

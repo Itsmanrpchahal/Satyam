@@ -206,7 +206,21 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
                 setStringVal(Constants.USER_ID, String.valueOf(loginResponse.body().getData().getUserId()));
                 setStringVal(Constants.USERTOKEN,loginResponse.body().getData().getToken());
                 setStringVal(Constants.LOGIN_STATUS, "login");
-                controller.setClearCart();
+                if (intent.getStringExtra("isFrom")!=null)
+                {
+                    if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                    {
+                        Intent intent = new Intent(OTP_verify.this, ProductDetailsActivity.class);
+                        intent.putExtra("productID", productID);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+                else {
+                    Intent intent = new Intent(OTP_verify.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }else {
             Util.showToastMessage(this,loginResponse.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
@@ -215,27 +229,34 @@ public class OTP_verify extends BaseClass implements Controller.LoginCheck, Cont
 
     @Override
     public void onSuccessClearCart(Response<ClearCart> response) {
-        if (response.body().getStatus()==200)
+        if (response.isSuccessful())
         {
-
-            if (intent.getStringExtra("isFrom")!=null)
+            if (response.body().getStatus()==200)
             {
-                if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+
+                if (intent.getStringExtra("isFrom")!=null)
                 {
-                    Intent intent = new Intent(OTP_verify.this, ProductDetailsActivity.class);
-                    intent.putExtra("productID", productID);
+                    if (intent.getStringExtra("isFrom").equals("ProductDetail"))
+                    {
+                        Intent intent = new Intent(OTP_verify.this, ProductDetailsActivity.class);
+                        intent.putExtra("productID", productID);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+                else {
+                    Intent intent = new Intent(OTP_verify.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
-            }
-            else {
-                Intent intent = new Intent(OTP_verify.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
 
 //            controller.setLogin(phonenumber, "phone", otp);
+            }else {
+                Log.d("clearcarterror",response.body().getMessage());
+                Util.showToastMessage(OTP_verify.this,response.body().getMessage(),getResources().getDrawable(R.drawable.ic_error_outline_black_24dp));
+            }
         }
+
     }
 
     @Override

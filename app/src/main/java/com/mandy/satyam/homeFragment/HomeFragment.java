@@ -179,30 +179,9 @@ Dialog updateDialog;
         viewPager.setOffscreenPageLimit(1);
         tabLayout.setViewPager(viewPager);
         NUM_PAGES =banner.size();
-        final float density = getResources().getDisplayMetrics().density;
         //Set circle indicator radius
 //        tabLayout.setRadius(5 * density);
 //        indicator.setVisibility(View.GONE);
-
-
-        // Pager listener over indicator
-        tabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                currentPage = position;
-            }
-
-            @Override
-            public void onPageScrolled(int pos, float arg1, int arg2) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int pos) {
-
-            }
-        });
     }
 
 

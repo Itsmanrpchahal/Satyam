@@ -58,6 +58,7 @@ import com.mandy.satyam.utils.SpacesItemDecoration;
 import com.mandy.satyam.utils.Util;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Timer;
@@ -223,7 +224,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
         sharebt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deeplinking();
+                        deeplinking();
             }
         });
 
@@ -234,7 +235,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink().
                         setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
                         .setDomainUriPrefix("https://satyam.page.link")
-                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                        .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
                         .setIosParameters(new DynamicLink.IosParameters.Builder("satyam.page.link").build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
                         .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().build())
                         .buildDynamicLink();
@@ -253,40 +254,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                     intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
                     startActivity(Intent.createChooser(intent, "Share Product"));
                 }
-
-               /* Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                        .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder()
-                                .setDescription("Hi! Check out this Product").build())
-                        .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
-
-                        .buildShortDynamicLink()
-                        .addOnCompleteListener(ProductDetailsActivity.this, new OnCompleteListener<ShortDynamicLink>() {
-                            @Override
-                            public void onComplete(@NonNull Task<ShortDynamicLink> task) {
-
-                                if (task.isSuccessful()) {
-                                    if (array_image.size() > 0) {
-                                        Uri uri = task.getResult().getShortLink();
-                                        Util.shareContent1(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
-
-                                    } else {
-                                        Uri uri = task.getResult().getShortLink();
-                                        Intent intent = new Intent(Intent.ACTION_SEND);
-                                        intent.setType("text/plain");
-                                        intent.setPackage("com.whatsapp");
-                                        intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
-                                        startActivity(Intent.createChooser(intent, "Share Product"));
-                                    }
-                                }else {
-                                    Toast.makeText(ProductDetailsActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ProductDetailsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
-                            }
-                        });*/
+                
             }
         });
     }
@@ -297,7 +265,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
                 .setLink(Uri.parse("https://www.onlinesatyam.com/" + "productid/" + productID))
                 .setDomainUriPrefix("https://satyam.page.link")
                 // Open links with this app on Android
-                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build()).setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
                 // Open links with com.example.ios on iOS
                 .buildDynamicLink();
 
@@ -314,37 +282,7 @@ public class ProductDetailsActivity extends BaseClass implements Controller.Prod
             intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
             startActivity(Intent.createChooser(intent, "Share Product"));
         }
-      /*  Task<ShortDynamicLink> shortDynamicLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink().setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder().setDescription("Hi! Check out this Product").build())
-                .setLongLink(Uri.parse("https://" + dynamicLink.getUri().toString()))
-                .buildShortDynamicLink()
-                .addOnCompleteListener(ProductDetailsActivity.this, new OnCompleteListener<ShortDynamicLink>() {
-                    @Override
-                    public void onComplete(@NonNull Task<ShortDynamicLink> task) {
-
-                        if (array_image.size() > 0) {
-                            Uri uri = task.getResult().getShortLink();
-                            Util.shareContent(ProductDetailsActivity.this, productimage, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
-
-
-//                                    Intent intent = new Intent(Intent.ACTION_SEND);
-//                                    intent.setType("text/plain");
-//                                    intent.putExtra(Intent.EXTRA_TEXT,"Hi! Check out this Product"+"\n"+"\n"+uri.toString());
-//                                    startActivity(Intent.createChooser(intent,"Share Product"));
-                        } else {
-                            Uri uri = task.getResult().getShortLink();
-                            Intent intent = new Intent(Intent.ACTION_SEND);
-                            intent.setType("text/plain");
-                            intent.putExtra(Intent.EXTRA_TEXT, "Hi! Check out this Product" + "\n" + "\n" + uri.toString());
-                            startActivity(Intent.createChooser(intent, "Share Product"));
-                        }
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });*/
+      
 
     }
 

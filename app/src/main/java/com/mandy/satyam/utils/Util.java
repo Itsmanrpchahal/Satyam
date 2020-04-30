@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,12 +152,13 @@ public class Util {
         return imageEncoded;
     }
 
+
     //share image
     public static void shareContent(Context context, View imageView, String extratext, String s){
 
         Bitmap bitmap =getBitmapFromView(imageView);
         try {
-            File file = new File(context.getCacheDir(),"image.png");
+            File file = new File(context.getCacheDir(),"image.jpg");
             FileOutputStream fOut = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
             fOut.flush();
@@ -166,7 +168,7 @@ public class Util {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Intent.EXTRA_TEXT, extratext);
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-            intent.setType("image/png");
+            intent.setType("image/jpg");
             context.startActivity(Intent.createChooser(intent, "Share Product"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +177,7 @@ public class Util {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Intent.EXTRA_TEXT, extratext);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
-            intent.setType("image/png");
+            intent.setType("image/jpg");
             context.startActivity(Intent.createChooser(intent, "Share Product"));
         }
 
@@ -195,7 +197,7 @@ public class Util {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Intent.EXTRA_TEXT, extratext);
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-            intent.setType("image/png");
+            intent.setType("image/*");
             intent.setPackage("com.whatsapp");
             context.startActivity(Intent.createChooser(intent, "Share Product"));
         } catch (Exception e) {
@@ -205,7 +207,8 @@ public class Util {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Intent.EXTRA_TEXT, extratext);
             intent.putExtra(Intent.EXTRA_STREAM, uri);
-            intent.setType("image/png");
+            intent.setType("image/*");
+            intent.setPackage("com.whatsapp");
             context.startActivity(Intent.createChooser(intent, "Share Product"));
         }
 
@@ -223,6 +226,4 @@ public class Util {
         view.draw(canvas);
         return returnedBitmap;
     }
-
-
 }

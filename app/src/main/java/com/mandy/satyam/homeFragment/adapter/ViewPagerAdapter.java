@@ -1,6 +1,7 @@
 package com.mandy.satyam.homeFragment.adapter;
 
 
+import android.app.Dialog;
 import android.content.Context;
 
 
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -57,10 +59,29 @@ public class ViewPagerAdapter extends PagerAdapter {
         Log.d("Images",array_image.get(position).getImage().toString());
         ((ViewPager) container).addView(itemview);
 
+        trailimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showImage(array_image.get(position).getImage().toString());
+            }
+        });
 
         return itemview;
     }
 
+    private void showImage(String image_drawable) {
+
+        Dialog dialogAlert = new Dialog(context,R.style.Theme_Dialog);
+        dialogAlert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogAlert.setContentView(R.layout.layout_image);
+//        RelativeLayout relativeLayout = dialogAlert.findViewById(R.id.layout_image);
+        ImageView img_selected_item = (ImageView) dialogAlert.findViewById(R.id.img_selected_item);
+//        relativeLayout.setBackgroundResource(Integer.parseInt(image_drawable));
+        Glide.with(context).load(image_drawable).placeholder(R.drawable.ic_satyamplaceholder).into(img_selected_item);
+        dialogAlert.show();
+
+
+    }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {

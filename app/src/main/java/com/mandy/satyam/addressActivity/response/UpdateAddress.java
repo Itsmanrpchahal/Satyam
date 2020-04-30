@@ -85,9 +85,6 @@ this.data = data;
         @SerializedName("avatar_url")
         @Expose
         private String avatarUrl;
-        @SerializedName("meta_data")
-        @Expose
-        private List<MetaDatum> metaData = null;
         @SerializedName("_links")
         @Expose
         private Links links;
@@ -202,14 +199,6 @@ this.data = data;
 
         public void setAvatarUrl(String avatarUrl) {
             this.avatarUrl = avatarUrl;
-        }
-
-        public List<MetaDatum> getMetaData() {
-            return metaData;
-        }
-
-        public void setMetaData(List<MetaDatum> metaData) {
-            this.metaData = metaData;
         }
 
         public Links getLinks() {

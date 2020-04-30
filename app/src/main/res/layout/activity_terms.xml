@@ -11,13 +11,20 @@
         android:id="@+id/tooolbar"
         layout="@layout/toolbar2" />
 
-    <TextView
-        android:id="@+id/textTerms"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tooolbar"
-        android:padding="16dp"
-        android:text="Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book."
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:layout_marginTop="@dimen/margin_dp55">
+
+        <TextView
+            android:id="@+id/textTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tooolbar"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </ScrollView>
+
 </RelativeLayout>
