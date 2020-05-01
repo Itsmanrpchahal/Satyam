@@ -7,7 +7,7 @@
     android:id="@+id/mainActivity_layout"
     android:fitsSystemWindows="true"
     android:background="#B9B6B6"
-    tools:context="com.mandy.satyam.welcomeScreens.WelcomeScreens">
+    tools:context="com.satyam.welcomeScreens.WelcomeScreens">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_viewpager"

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:794694107400:android:0dc01632f858fee2daecbd",
         "android_client_info": {
-          "package_name": "com.mandy.satyam"
+          "package_name": "com.satyam"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "794694107400-94so10m9tbvrjis8q0pmgdk662lgn3si.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mandy.satyam",
+            "package_name": "com.satyam",
             "certificate_hash": "f0c45ab08921ab910c45848534546770b55e5658"
           }
         },
